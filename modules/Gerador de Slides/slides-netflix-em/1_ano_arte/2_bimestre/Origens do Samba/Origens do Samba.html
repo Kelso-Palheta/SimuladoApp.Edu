@@ -1,0 +1,546 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=1024" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <title>As Raízes do Ritmo</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;700&family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #E50914;
+            --accent: #00F0FF;
+            --bg: #000;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            min-height: 740px;
+            background: var(--bg);
+            color: #fff;
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Impress.js core */
+        .fallback-message { display: none; }
+        .impress-not-supported .step { display: inline-block; margin: 20px; }
+        .impress-not-supported .fallback-message { display: block; background: red; color: white; padding: 20px; }
+        
+        .step {
+            position: relative;
+            width: 1600px; /* Largura para 16:9 */
+            padding: 50px;
+            margin: 0 auto;
+            box-sizing: border-box;
+            transition: opacity 1s;
+        }
+
+        .impress-enabled .step { margin: 0; opacity: 0.1; }
+        .impress-enabled .step.active { opacity: 1; }
+
+        /* Typography */
+        h1, h2, h3 {
+            font-family: 'Bebas Neue', sans-serif;
+            text-transform: uppercase;
+            margin: 0;
+            line-height: 1.1;
+        }
+
+        h1 { font-size: 6em; letter-spacing: 5px; color: #fff; }
+        h2 { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 3.5em; color: var(--accent); margin-bottom: 25px; }
+        
+        p {
+            font-size: 1.5em; /* Ajustado para equilíbrio horizontal */
+            line-height: 1.5;
+            color: #FFFFFF;
+            margin-bottom: 20px;
+        }
+
+        /* Glassmorphism & Layout */
+        .glass-container {
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-left: 8px solid var(--accent);
+            padding: 60px;
+            border-radius: 15px;
+            box-shadow: 0 40px 80px rgba(0,0,0,0.9);
+        }
+
+        .capa-container {
+            width: 1200px;
+            margin: 0 auto;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(20px);
+            padding: 100px;
+            border-radius: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .callout-card {
+            background: rgba(20, 20, 20, 0.9);
+            border-top: 4px solid var(--accent);
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            font-size: 1.3em;
+        }
+
+        .grid-layout {
+            display: grid;
+            grid-template-columns: 1.5fr 0.5fr; /* Mais largo para o texto principal */
+            gap: 60px;
+            align-items: start;
+        }
+
+        /* Background Images/Videos in Impress */
+        .bg-layer {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            z-index: -1;
+            overflow: hidden;
+            border-radius: 12px;
+        }
+        
+        .bg-layer img, .bg-layer video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 1; /* Imagem nítida */
+        }
+        
+        .bg-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.1) 100%);
+            z-index: 0;
+        }
+
+        .content-layer {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Glitch Effect */
+        .glitch { position: relative; display: inline-block; }
+        .glitch::before, .glitch::after { content: attr(data-text); position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: transparent; }
+        .glitch::before { left: 2px; text-shadow: -1px 0 #ff00c1; clip: rect(24px, 550px, 90px, 0); animation: glitch-anim 3s infinite linear alternate-reverse; }
+        .glitch::after { left: -2px; text-shadow: -1px 0 #00fff9; animation: glitch-anim2 2s infinite linear alternate-reverse; }
+        @keyframes glitch-anim { 0% { clip: rect(10px, 9999px, 30px, 0); } 100% { clip: rect(50px, 9999px, 60px, 0); } }
+        @keyframes glitch-anim2 { 0% { clip: rect(40px, 9999px, 80px, 0); } 100% { clip: rect(5px, 9999px, 15px, 0); } }
+        
+        /* Fragmentos (Controlados pelo GSAP agora) */
+        .fragment { 
+            opacity: 0; 
+            visibility: hidden; 
+        }
+        
+        .fragment.visible { 
+            opacity: 1; 
+            visibility: visible;
+        }
+        
+        #overview { display: none; }
+    </style>
+</head>
+<body class="impress-not-supported">
+
+<div class="fallback-message">
+    <p>Seu navegador não suporta as funcionalidades exigidas pelo impress.js.</p>
+</div>
+
+<div id="impress" data-transition-duration="1500">
+    
+    <div id="capa" class="step glass-container capa-container" data-x="0" data-y="0" data-z="0" data-scale="2">
+        
+        <div class="bg-layer">
+            <img src="file:///Users/kelsopalheta/.gemini/antigravity/brain/49903eff-05fc-4fce-abd3-a95a392649ca/tia_ciata_cinematic_1778696432841.png" alt="Background">
+        </div>
+        <div class="bg-overlay"></div>
+        
+        <div class="content-layer" style="text-align: center;">
+            <p style="color: var(--accent); font-family: 'Space Grotesk'; letter-spacing: 5px; font-weight: 700; margin-bottom: 30px;">[ ARTE // 1º ANO DO ENSINO MÉDIO ]</p>
+            <h1 class="glitch" data-text="As Raízes do Ritmo" style="font-size: 6em;">As Raízes do Ritmo</h1>
+            <div style="width: 150px; height: 5px; background: var(--primary); margin: 40px auto;"></div>
+            <p style="font-size: 1.5em; max-width: 800px; margin: 0 auto;">Do lundu do século XIX ao funk carioca moderno: a linha do tempo definitiva de como a população marginalizada desenhou a identidade sonora do Brasil.</p>
+            <p style="margin-top: 50px; font-size: 0.8em; color: #888;">[ Use as Setas ou Espaço para Viajar ]</p>
+        </div>
+    </div>
+    
+
+    <div id="capitulo-1" class="step glass-container" data-x="2500" data-y="0" data-z="-1800" data-rotate-x="0" data-rotate-y="35" data-rotate-z="0" data-scale="1.0">
+        
+        <div class="bg-layer">
+            <img src="file:///Users/kelsopalheta/.gemini/antigravity/brain/49903eff-05fc-4fce-abd3-a95a392649ca/chiquinha_gonzaga_cinematic_1778696419110.png" alt="Background">
+        </div>
+        <div class="bg-overlay"></div>
+        
+        <div class="content-layer">
+            <h2>1. O Fim do Século XIX</h2>
+            <div class="grid-layout">
+                <div><p class='fragment'>O Rio de Janeiro no final do século XIX era uma cidade dividida não apenas pela geografia, mas também pela trilha sonora. Nos salões da elite, a música predominante era importada: valsas, polcas e schottisches tocadas ao piano ditaram o compasso da alta sociedade.</p><p class='fragment'>No entanto, nas ruas de terra, cortiços e quintais das casas mais humildes, o som era marcado pelos tambores, palmas e cantos sincopados herdados das populações escravizadas e libertas. O batuque e o lundu africano eram as expressões de um povo que encontrava na música sua forma primária de resistência e pertencimento social.</p><p class='fragment'>Com o fim da escravidão em 1888 e a Proclamação da República no ano seguinte, a tensão entre essas duas &#x27;cidades&#x27; atingiu seu ápice. O Brasil precisava de uma identidade moderna, mas a elite branca repudiava qualquer manifestação cultural que tivesse raízes negras. Foi nesse caldeirão de tensões que a polca europeia começou a ser tocada de uma forma mais ritmada pelos músicos de rua.</p></div>
+                <div>
+        <div class="callout-card fragment">
+          <span style="color: var(--accent); font-family: 'Space Grotesk'; font-size: 0.8em;"># CONTEXTO HISTÓRICO</span>
+          <p style="margin-top: 10px; font-size: 1em; color: #fff;">A abolição (1888) deixou milhares de ex-escravizados à margem da economia formal no Rio.</p>
+        </div>
+        
+        <div class="callout-card fragment">
+          <span style="color: var(--accent); font-family: 'Space Grotesk'; font-size: 0.8em;"># CONCEITO-CHAVE</span>
+          <p style="margin-top: 10px; font-size: 1em; color: #fff;">Síncope: o deslocamento da batida forte do compasso, marca registrada da música africana.</p>
+        </div>
+        </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <div id="capitulo-2" class="step glass-container" data-x="0" data-y="2000" data-z="-3600" data-rotate-x="40" data-rotate-y="0" data-rotate-z="90" data-scale="0.8">
+        
+        <div class="bg-layer">
+            <img src="https://images.unsplash.com/photo-1511192336575-5a79af67a629?q=80&amp;w=2000" alt="Background">
+        </div>
+        <div class="bg-overlay"></div>
+        
+        <div class="content-layer">
+            <h2>2. O Nascimento do Maxixe</h2>
+            <div class="grid-layout">
+                <div><p class='fragment'>Quando os músicos populares, conhecidos como &#x27;chorões&#x27; (por causa do estilo lamentoso como tocavam flautas e violões), começaram a interpretar a polca usando o ritmo do lundu, algo inteiramente novo surgiu. Essa mistura de melodia europeia com síncope africana deu origem ao primeiro gênero urbano puramente brasileiro: o Maxixe.</p><p class='fragment'>O Maxixe era vibrante, acelerado e possuía uma dança considerada escandalosa para os padrões da época. Em vez do distanciamento respeitoso da valsa, o maxixe exigia que os corpos se entrelaçassem, os quadris balançassem e as pernas se cruzassem.</p><p class='fragment'>Imediatamente, o gênero foi classificado pelas autoridades e pela imprensa da época como uma &#x27;dança excomungada&#x27;, imoral e perigosa. A polícia perseguia as rodas de maxixe e os músicos que o tocavam eram constantemente presos sob acusações de vadiagem e perturbação da ordem pública.</p></div>
+                <div>
+        <div class="callout-card fragment">
+          <span style="color: var(--accent); font-family: 'Space Grotesk'; font-size: 0.8em;"># O PRIMEIRO</span>
+          <p style="margin-top: 10px; font-size: 1em; color: #fff;">O Maxixe foi a primeira fusão real que pode ser chamada de &#x27;Música Urbana Brasileira&#x27;.</p>
+        </div>
+        
+        <div class="callout-card fragment">
+          <span style="color: var(--accent); font-family: 'Space Grotesk'; font-size: 0.8em;"># REPRESSÃO</span>
+          <p style="margin-top: 10px; font-size: 1em; color: #fff;">A polícia do RJ tinha ordem expressa para prender qualquer agrupamento tocando instrumentos de percussão.</p>
+        </div>
+        </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <div id="capitulo-3" class="step glass-container" data-x="-2500" data-y="0" data-z="-5400" data-rotate-x="0" data-rotate-y="-35" data-rotate-z="180" data-scale="1.5">
+        
+        <div class="bg-layer">
+            <img src="file:///Users/kelsopalheta/.gemini/antigravity/brain/49903eff-05fc-4fce-abd3-a95a392649ca/chiquinha_gonzaga_cinematic_1778696419110.png" alt="Background">
+        </div>
+        <div class="bg-overlay"></div>
+        
+        <div class="content-layer">
+            <h2>3. O Artifício do &#x27;Tanguinho&#x27;</h2>
+            <div class="grid-layout">
+                <div><p class='fragment'>Para sobreviver economicamente e ter suas músicas tocadas nos teatros de revista (a principal forma de entretenimento de massa da época), os compositores precisaram ser muito estratégicos. A palavra &#x27;maxixe&#x27; nas partituras era um passaporte direto para a censura.</p><p class='fragment'>Foi então que compositoras como a genial Chiquinha Gonzaga encontraram uma brecha: elas compunham maxixes puros, cheios de síncope e ginga, mas escreviam na capa da partitura que a música era um &#x27;Tango Brasileiro&#x27; ou um &#x27;Tanguinho&#x27;. O tango, por vir da Argentina e ser exportado para Paris, já carregava uma aura de &#x27;aceitabilidade&#x27; internacional.</p><p class='fragment'>A obra mais famosa a usar esse artifício foi &#x27;O Corta-jaca&#x27; (1897) de Chiquinha Gonzaga. Quando a Primeira-Dama Nair de Tefé executou essa música ao violão dentro do Palácio do Catete em 1914, o escândalo foi nacional. Rui Barbosa escreveu artigos furiosos nos jornais dizendo que a mais alta corte do país havia sido &#x27;contaminada por essa dança de cortiços&#x27;.</p></div>
+                <div>
+        <div class="callout-card fragment">
+          <span style="color: var(--accent); font-family: 'Space Grotesk'; font-size: 0.8em;"># ESTRATÉGIA</span>
+          <p style="margin-top: 10px; font-size: 1em; color: #fff;">O &#x27;branqueamento&#x27; do nome da música era necessário para a sobrevivência do artista.</p>
+        </div>
+        
+        <div class="callout-card fragment">
+          <span style="color: var(--accent); font-family: 'Space Grotesk'; font-size: 0.8em;"># O CORTA-JACA</span>
+          <p style="margin-top: 10px; font-size: 1em; color: #fff;">A primeira música popular a entrar no salão presidencial (1914).</p>
+        </div>
+        </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <div id="capitulo-4" class="step glass-container" data-x="0" data-y="-2000" data-z="-7200" data-rotate-x="-30" data-rotate-y="30" data-rotate-z="-90" data-scale="1.0">
+        
+        <div class="bg-layer">
+            <img src="file:///Users/kelsopalheta/.gemini/antigravity/brain/49903eff-05fc-4fce-abd3-a95a392649ca/tia_ciata_cinematic_1778696432841.png" alt="Background">
+        </div>
+        <div class="bg-overlay"></div>
+        
+        <div class="content-layer">
+            <h2>4. A Pequena África</h2>
+            <div class="grid-layout">
+                <div><p class='fragment'>No início do século XX, o Rio de Janeiro passou por reformas urbanas brutais que derrubaram os cortiços do centro para criar avenidas parisienses. A população pobre e negra foi empurrada para as encostas dos morros (nascendo as favelas) e para a região portuária.</p><p class='fragment'>Essa área que englobava a Pedra do Sal, a Praça Onze e o bairro da Saúde ficou conhecida como &#x27;Pequena África&#x27;. Era o grande reduto da comunidade baiana que havia migrado para o Rio em busca de emprego após a abolição, trazendo na bagagem o Samba de Roda do Recôncavo Baiano, a culinária do candomblé e a religiosidade.</p><p class='fragment'>O ponto focal de segurança e resistência social nesse território hostil eram as casas das chamadas &#x27;Tias Baianas&#x27;. Elas eram matriarcas, quituteiras e líderes religiosas que mantinham a cultura viva através de festas imensas que duravam dias. A mais famosa delas foi Tia Ciata (Hilária Batista de Almeida).</p></div>
+                <div>
+        <div class="callout-card fragment">
+          <span style="color: var(--accent); font-family: 'Space Grotesk'; font-size: 0.8em;"># GEOGRAFIA</span>
+          <p style="margin-top: 10px; font-size: 1em; color: #fff;">As reformas urbanas de Pereira Passos forçaram a segregação geográfica que existe até hoje.</p>
+        </div>
+        
+        <div class="callout-card fragment">
+          <span style="color: var(--accent); font-family: 'Space Grotesk'; font-size: 0.8em;"># MATRIARCADO</span>
+          <p style="margin-top: 10px; font-size: 1em; color: #fff;">As mulheres negras baianas foram o pilar de proteção da cultura do samba no RJ.</p>
+        </div>
+        </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <div id="capitulo-5" class="step glass-container" data-x="2000" data-y="2000" data-z="-9000" data-rotate-x="20" data-rotate-y="20" data-rotate-z="45" data-scale="0.75">
+        
+        <div class="bg-layer">
+            <img src="file:///Users/kelsopalheta/.gemini/antigravity/brain/49903eff-05fc-4fce-abd3-a95a392649ca/tia_ciata_cinematic_1778696432841.png" alt="Background">
+        </div>
+        <div class="bg-overlay"></div>
+        
+        <div class="content-layer">
+            <h2>5. O Telefone que Tocou a Nação</h2>
+            <div class="grid-layout">
+                <div><p class='fragment'>Foi justamente nas festas da casa de Tia Ciata, após os rituais sagrados e o farto jantar, que as rodas de pagode aconteciam. Nessas rodas noturnas, os músicos fundiram o ritmo do maxixe com o Samba de Roda baiano, criando uma nova cadência, mais fluida e própria para cantar versos improvisados.</p><p class='fragment'>A consagração desse novo som ocorreu em 1917, quando Ernesto dos Santos, o Donga (frequentador assíduo da casa de Tia Ciata), registrou na Biblioteca Nacional e gravou a música &#x27;Pelo Telefone&#x27;. Considerada a primeira gravação fonográfica oficial de um samba.</p><p class='fragment'>O sucesso foi explosivo no Carnaval daquele ano. A letra trazia uma crônica urbana (uma ironia sobre o chefe de polícia que mandava avisar que a roleta estava liberada) e consolidou o samba urbano carioca como o grande porta-voz das narrativas populares.</p></div>
+                <div>
+        <div class="callout-card fragment">
+          <span style="color: var(--accent); font-family: 'Space Grotesk'; font-size: 0.8em;"># MARCO ZERO</span>
+          <p style="margin-top: 10px; font-size: 1em; color: #fff;">&#x27;Pelo Telefone&#x27; (1917) popularizou a palavra Samba no mercado de discos nacional.</p>
+        </div>
+        
+        <div class="callout-card fragment">
+          <span style="color: var(--accent); font-family: 'Space Grotesk'; font-size: 0.8em;"># CRÔNICA URBANA</span>
+          <p style="margin-top: 10px; font-size: 1em; color: #fff;">Desde o início, as letras documentavam a realidade, a corrupção e o dia a dia do povo.</p>
+        </div>
+        </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <div id="capitulo-6" class="step glass-container" data-x="-2000" data-y="-2000" data-z="-10800" data-rotate-x="-20" data-rotate-y="-20" data-rotate-z="-45" data-scale="2.0">
+        
+        <div class="bg-layer">
+            <img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&amp;w=2000" alt="Background">
+        </div>
+        <div class="bg-overlay"></div>
+        
+        <div class="content-layer">
+            <h2>6. A Bossa Nova: O Samba &#x27;Refinado&#x27;</h2>
+            <div class="grid-layout">
+                <div><p class='fragment'>Nas décadas seguintes (Anos 30, 40 e 50), o samba se popularizou com as rádios e foi cooptado pelo Estado durante o governo Vargas, que o transformou em &#x27;Símbolo da Identidade Nacional&#x27; oficial. Porém, a periferia que o criou continuava marginalizada.</p><p class='fragment'>No final da década de 1950, jovens músicos de classe média alta da Zona Sul do Rio (Copacabana e Ipanema), liderados por João Gilberto, Tom Jobim e Vinícius de Moraes, criaram a Bossa Nova.</p><p class='fragment'>Eles pegaram o ritmo sincopado do samba de morro, diminuíram o volume dos instrumentos percussivos, sofisticaram as harmonias com acordes do Jazz norte-americano (Bebop e Cool Jazz) e adotaram um estilo de cantar baixinho, quase falado. O Brasil e o mundo inteiro aplaudiram de pé.</p></div>
+                <div>
+        <div class="callout-card fragment">
+          <span style="color: var(--accent); font-family: 'Space Grotesk'; font-size: 0.8em;"># APROPRIAÇÃO?</span>
+          <p style="margin-top: 10px; font-size: 1em; color: #fff;">A Bossa Nova globalizou o samba, mas afastou o gênero das suas raízes dos morros.</p>
+        </div>
+        
+        <div class="callout-card fragment">
+          <span style="color: var(--accent); font-family: 'Space Grotesk'; font-size: 0.8em;"># JOÃO GILBERTO</span>
+          <p style="margin-top: 10px; font-size: 1em; color: #fff;">A famosa &#x27;batida&#x27; no violão tentava imitar o tamborim do samba original.</p>
+        </div>
+        </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <div id="capitulo-7" class="step glass-container" data-x="2500" data-y="0" data-z="-12600" data-rotate-x="0" data-rotate-y="35" data-rotate-z="0" data-scale="1.0">
+        
+        <div class="bg-layer">
+            <img src="file:///Users/kelsopalheta/.gemini/antigravity/brain/49903eff-05fc-4fce-abd3-a95a392649ca/samba_funk_fusion_1778696450652.png" alt="Background">
+        </div>
+        <div class="bg-overlay"></div>
+        
+        <div class="content-layer">
+            <h2>7. O Funk e a Repetição da História</h2>
+            <div class="grid-layout">
+                <div><p class='fragment'>O preconceito, contudo, é cíclico. O que a sociedade elitista dizia sobre o maxixe no século XIX, ela disse sobre o samba de morro na década de 1920, sobre o pagode nos anos 90, e diz atualmente sobre o Funk Brasileiro.</p><p class='fragment'>Nos anos 80, os bailes da periferia tocavam funk americano. Mas nos anos 90, os DJs brasileiros começaram a usar os potentes subgraves (o famoso bumbo &#x27;Tamborzão&#x27;) com ritmos que remetiam indiretamente aos terreiros de candomblé e aos sambas-enredo. O Funk carioca tornou-se a nova voz da favela.</p><p class='fragment'>Assim como ocorreu no passado com os chorões, o Estado respondeu com tentativas de criminalização. Projetos de lei no Congresso já tentaram proibir bailes e enquadrar o funk como crime de apologia, ignorando que o ritmo é a documentação crua da realidade vivida pelos jovens da periferia.</p></div>
+                <div>
+        <div class="callout-card fragment">
+          <span style="color: var(--accent); font-family: 'Space Grotesk'; font-size: 0.8em;"># CÍCLICO</span>
+          <p style="margin-top: 10px; font-size: 1em; color: #fff;">A polícia reprimia a roda de maxixe; hoje, reprime o baile funk com a mesma justificativa.</p>
+        </div>
+        
+        <div class="callout-card fragment">
+          <span style="color: var(--accent); font-family: 'Space Grotesk'; font-size: 0.8em;"># TAMBORZÃO</span>
+          <p style="margin-top: 10px; font-size: 1em; color: #fff;">A batida eletrônica do funk tem a mesma estrutura de síncope que o batuque africano.</p>
+        </div>
+        </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <div id="capitulo-8" class="step glass-container" data-x="0" data-y="2000" data-z="-14400" data-rotate-x="40" data-rotate-y="0" data-rotate-z="90" data-scale="0.8">
+        
+        <div class="bg-layer">
+            <img src="file:///Users/kelsopalheta/.gemini/antigravity/brain/49903eff-05fc-4fce-abd3-a95a392649ca/samba_funk_fusion_1778696450652.png" alt="Background">
+        </div>
+        <div class="bg-overlay"></div>
+        
+        <div class="content-layer">
+            <h2>8. A Herança Rítmica na Atualidade</h2>
+            <div class="grid-layout">
+                <div><p class='fragment'>O Funk Brasileiro é hoje não apenas o som nacional mais exportado no mundo, mas também uma plataforma de experimentação estética e musical.</p><p class='fragment'>Artistas contemporâneos têm traçado o caminho inverso da Bossa Nova: em vez de levar a periferia para o jazz, eles trazem os sons clássicos e a religiosidade para dentro da batida eletrônica moderna. A cantora paulista MC Tha, por exemplo, faz um brilhante trabalho cruzando as batidas agressivas do funk 150 BPM com cantos de Umbanda, Candomblé e toques de percussão analógica.</p><p class='fragment'>Ao analisarmos essa linha do tempo (Maxixe → Samba → Funk), percebemos que o formato mudou da flauta de madeira para o computador do DJ, mas a essência não. A música do Brasil é o documento vivo da resistência, da criatividade e da sobrevivência de um povo que sempre exigiu o direito de dançar.</p></div>
+                <div>
+        <div class="callout-card fragment">
+          <span style="color: var(--accent); font-family: 'Space Grotesk'; font-size: 0.8em;"># MC THA</span>
+          <p style="margin-top: 10px; font-size: 1em; color: #fff;">Álbum &#x27;Rito de Passá&#x27; prova que não há separação real entre a macumba e a batida eletrônica.</p>
+        </div>
+        
+        <div class="callout-card fragment">
+          <span style="color: var(--accent); font-family: 'Space Grotesk'; font-size: 0.8em;"># CONCLUSÃO</span>
+          <p style="margin-top: 10px; font-size: 1em; color: #fff;">A tecnologia mudou, mas a síncope e a alma marginalizada continuam as mesmas.</p>
+        </div>
+        </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <div id="fim" class="step" data-x="0" data-y="0" data-z="-18200" data-scale="4" style="text-align: center;">
+        <h1 style="font-size: 8em; opacity: 0.1; position: absolute; width: 100%; top: -100px;">FIM</h1>
+        <h2 style="font-size: 3em;">As Raízes do Ritmo</h2>
+        <p style="color: var(--accent); font-size: 1.5em; margin: 40px 0;">"A história do Brasil não está escrita nos livros. Está codificada no grave dos nossos tambores."</p>
+        <p style="color: #666; font-size: 1em;">Prof. Kelso Palheta // Arte</p>
+    </div>
+    
+    
+    <!-- Visão geral -->
+    <div id="overview" class="step" data-x="3000" data-y="1500" data-z="4000" data-scale="10"></div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/impress/impress.js@2.0.0/js/impress.js"></script>
+
+<script>
+    var api = impress();
+    
+    // Função para fatiar texto em palavras (Preservando espaços e fluxo)
+    function splitTextToWords(element) {
+        if (element.classList.contains('splitted')) return;
+        var text = element.textContent;
+        var words = text.split(' ');
+        element.innerHTML = '';
+        
+        words.forEach(function(word, index) {
+            if (word.length > 0) {
+                var span = document.createElement('span');
+                span.className = 'word';
+                span.textContent = word;
+                span.style.opacity = 0;
+                span.style.display = 'inline-block';
+                element.appendChild(span);
+            }
+            // Adiciona o espaço real do navegador entre os spans para manter o fluxo
+            if (index < words.length - 1) {
+                element.appendChild(document.createTextNode(' '));
+            }
+        });
+        element.classList.add('splitted');
+    }
+
+    // SISTEMA DE FRAGMENTOS CUSTOMIZADO
+    var currentFragments = [];
+    var fragmentIndex = -1;
+    var blockNextKeyup = false;
+
+    document.addEventListener("impress:stepenter", function (event) {
+        var step = event.target;
+        
+        currentFragments = Array.from(step.querySelectorAll('.fragment'));
+        fragmentIndex = -1;
+        blockNextKeyup = false;
+        
+        currentFragments.forEach(f => {
+            f.classList.remove('visible');
+            // Prepara as palavras do texto
+            if(f.tagName.toLowerCase() === 'p') {
+                splitTextToWords(f);
+            }
+        });
+
+        var title = step.querySelector('h2');
+        if(title) {
+            gsap.fromTo(title, 
+                { opacity: 0, x: -50 }, 
+                { opacity: 1, x: 0, duration: 1.2, ease: "power3.out" }
+            );
+        }
+    });
+
+    document.addEventListener("impress:stepleave", function (event) {
+        currentFragments = [];
+        fragmentIndex = -1;
+    });
+
+    document.addEventListener("keydown", function(event) {
+        if (event.keyCode === 32 || event.keyCode === 39 || event.keyCode === 40) {
+            if (fragmentIndex < currentFragments.length - 1) {
+                event.stopPropagation();
+                event.preventDefault();
+                blockNextKeyup = true;
+                fragmentIndex++;
+                
+                var el = currentFragments[fragmentIndex];
+                el.classList.add('visible');
+
+                // Animações Mistas GSAP
+                if(el.tagName.toLowerCase() === 'p') {
+                    // Typewriter word-by-word
+                    gsap.fromTo(el.querySelectorAll('.word'),
+                        { opacity: 0, y: 10 },
+                        { opacity: 1, y: 0, duration: 0.4, stagger: 0.04, ease: "power1.out" }
+                    );
+                } else if(el.classList.contains('callout-card')) {
+                    // Escolhe uma animação diferente de forma aleatória para evitar monotonia
+                    var animations = [
+                        // 1. Spin & Pop (Gira e cresce com elasticidade)
+                        function() {
+                            gsap.fromTo(el,
+                                { opacity: 0, scale: 0.2, rotation: -180 },
+                                { opacity: 1, scale: 1, rotation: 0, duration: 0.9, ease: "back.out(1.5)" }
+                            );
+                        },
+                        // 2. Slide In (Vem rápido e fluido do lado direito)
+                        function() {
+                            gsap.fromTo(el,
+                                { opacity: 0, x: 300, skewX: -10 },
+                                { opacity: 1, x: 0, skewX: 0, duration: 0.8, ease: "power3.out" }
+                            );
+                        },
+                        // 3. Drop Bounce (Cai do teto e quica como borracha)
+                        function() {
+                            gsap.fromTo(el,
+                                { opacity: 0, y: -200 },
+                                { opacity: 1, y: 0, duration: 1.0, ease: "bounce.out" }
+                            );
+                        },
+                        // 4. 3D Flip (Gira no eixo X de cabeça para baixo)
+                        function() {
+                            gsap.fromTo(el,
+                                { opacity: 0, scale: 0.8, rotationX: -90 },
+                                { opacity: 1, scale: 1, rotationX: 0, duration: 0.8, ease: "back.out(1.7)" }
+                            );
+                        }
+                    ];
+                    var randomIndex = Math.floor(Math.random() * animations.length);
+                    animations[randomIndex]();
+                }
+
+            }
+        } else if (event.keyCode === 37 || event.keyCode === 38) {
+            if (fragmentIndex >= 0) {
+                event.stopPropagation();
+                event.preventDefault();
+                blockNextKeyup = true;
+                currentFragments[fragmentIndex].classList.remove('visible');
+                fragmentIndex--;
+            }
+        }
+    }, true);
+
+    // Intercepta keyup para não deixar o impress "escapar" quando o keydown foi consumido
+    document.addEventListener("keyup", function(event) {
+        if (blockNextKeyup && (event.keyCode === 32 || event.keyCode === 39 || event.keyCode === 40 || event.keyCode === 37 || event.keyCode === 38)) {
+            event.stopPropagation();
+            event.preventDefault();
+            blockNextKeyup = false;
+        }
+    }, true);
+
+    api.init();
+</script>
+
+</body>
+</html>

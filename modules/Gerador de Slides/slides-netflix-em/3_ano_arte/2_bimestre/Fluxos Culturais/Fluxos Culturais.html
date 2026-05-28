@@ -1,0 +1,582 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=1024" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <title>Fluxos Culturais</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;700&family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #E50914;
+            --accent: #00F0FF;
+            --bg: #000;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            min-height: 740px;
+            background: var(--bg);
+            color: #fff;
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Impress.js core */
+        .fallback-message { display: none; }
+        .impress-not-supported .step { display: inline-block; margin: 20px; }
+        .impress-not-supported .fallback-message { display: block; background: red; color: white; padding: 20px; }
+        
+        .step {
+            position: relative;
+            width: 1600px; /* Largura para 16:9 */
+            padding: 50px;
+            margin: 0 auto;
+            box-sizing: border-box;
+            transition: opacity 1s;
+        }
+
+        .impress-enabled .step { margin: 0; opacity: 0.1; }
+        .impress-enabled .step.active { opacity: 1; }
+
+        /* Typography */
+        h1, h2, h3 {
+            font-family: 'Bebas Neue', sans-serif;
+            text-transform: uppercase;
+            margin: 0;
+            line-height: 1.1;
+        }
+
+        h1 { font-size: 6em; letter-spacing: 5px; color: #fff; }
+        h2 { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 3.5em; color: var(--accent); margin-bottom: 25px; }
+        
+        p {
+            font-size: 1.5em; /* Ajustado para equilíbrio horizontal */
+            line-height: 1.5;
+            color: #FFFFFF;
+            margin-bottom: 20px;
+        }
+
+        /* Glassmorphism & Layout */
+        .glass-container {
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-left: 8px solid var(--accent);
+            padding: 60px;
+            border-radius: 15px;
+            box-shadow: 0 40px 80px rgba(0,0,0,0.9);
+        }
+
+        .capa-container {
+            width: 1200px;
+            margin: 0 auto;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(20px);
+            padding: 100px;
+            border-radius: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .callout-card {
+            background: rgba(20, 20, 20, 0.9);
+            border-top: 4px solid var(--accent);
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            font-size: 1.3em;
+        }
+
+        .grid-layout {
+            display: grid;
+            grid-template-columns: 1.5fr 0.5fr; /* Mais largo para o texto principal */
+            gap: 60px;
+            align-items: start;
+        }
+
+        /* Background Images/Videos in Impress */
+        .bg-layer {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            z-index: -1;
+            overflow: hidden;
+            border-radius: 12px;
+        }
+        
+        .bg-layer img, .bg-layer video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 1; /* Imagem nítida */
+        }
+        
+        .bg-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.1) 100%);
+            z-index: 0;
+        }
+
+        .content-layer {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Glitch Effect */
+        .glitch { position: relative; display: inline-block; }
+        .glitch::before, .glitch::after { content: attr(data-text); position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: transparent; }
+        .glitch::before { left: 2px; text-shadow: -1px 0 #ff00c1; clip: rect(24px, 550px, 90px, 0); animation: glitch-anim 3s infinite linear alternate-reverse; }
+        .glitch::after { left: -2px; text-shadow: -1px 0 #00fff9; animation: glitch-anim2 2s infinite linear alternate-reverse; }
+        @keyframes glitch-anim { 0% { clip: rect(10px, 9999px, 30px, 0); } 100% { clip: rect(50px, 9999px, 60px, 0); } }
+        @keyframes glitch-anim2 { 0% { clip: rect(40px, 9999px, 80px, 0); } 100% { clip: rect(5px, 9999px, 15px, 0); } }
+        
+        /* Fragmentos (Controlados pelo GSAP agora) */
+        .fragment { 
+            opacity: 0; 
+            visibility: hidden; 
+        }
+        
+        .fragment.visible { 
+            opacity: 1; 
+            visibility: visible;
+        }
+        
+        #overview { display: none; }
+    </style>
+</head>
+<body class="impress-not-supported">
+
+<div class="fallback-message">
+    <p>Seu navegador não suporta as funcionalidades exigidas pelo impress.js.</p>
+</div>
+
+<div id="impress" data-transition-duration="1500">
+    
+    <div id="capa" class="step glass-container capa-container" data-x="0" data-y="0" data-z="0" data-scale="2">
+        
+        <div class="bg-layer">
+            <img src="assets/capa.png" alt="Background">
+        </div>
+        <div class="bg-overlay"></div>
+        
+        <div class="content-layer" style="text-align: center;">
+            <p style="color: var(--accent); font-family: 'Space Grotesk'; letter-spacing: 5px; font-weight: 700; margin-bottom: 30px;">[ ARTE // 3º ANO DO ENSINO MÉDIO ]</p>
+            <h1 class="glitch" data-text="Fluxos Culturais" style="font-size: 6em;">Fluxos Culturais</h1>
+            <div style="width: 150px; height: 5px; background: var(--primary); margin: 40px auto;"></div>
+            <p style="font-size: 1.5em; max-width: 800px; margin: 0 auto;">Direitos Humanos, Resistência e Diásporas: Como os deslocamentos forçados e a perseguição de povos redesenharam a arte, a dança e a música ao redor do mundo.</p>
+            <p style="margin-top: 50px; font-size: 0.8em; color: #888;">[ Use as Setas ou Espaço para Viajar ]</p>
+        </div>
+    </div>
+    
+
+    <div id="capitulo-1" class="step glass-container" data-x="2500" data-y="0" data-z="-1800" data-rotate-x="0" data-rotate-y="35" data-rotate-z="0" data-scale="1.0">
+        
+        <div class="bg-layer">
+            <img src="https://images.unsplash.com/photo-1544027993-37dbfe43562a?q=80&amp;w=2000" alt="Background">
+        </div>
+        <div class="bg-overlay"></div>
+        
+        <div class="content-layer">
+            <h2>1. O Direito de Existir</h2>
+            <div class="grid-layout">
+                <div><p class='fragment'>O conceito de refúgio está profundamente atrelado à Declaração Universal dos Direitos Humanos. Segundo a Agência da ONU para Refugiados (Acnur), refugiados são pessoas que se encontram fora de seus países devido a fundados temores de perseguição por raça, religião, nacionalidade, pertencimento a grupo social ou opiniões políticas, ou ainda em razão de graves e generalizadas violações de direitos humanos.</p><p class='fragment'>A Declaração Universal de 1948 estabelece marcos cruciais em seus artigos. O Artigo 2 defende a igualdade incondicional de direitos de todos os seres humanos, independentemente de origem ou soberania do país. O Artigo 6 garante que todos têm o direito de ser reconhecidos como pessoas perante a lei, combatendo a invisibilidade jurídica. Já o Artigo 14 assegura o direito de procurar e gozar asilo em outros países quando vítima de perseguição.</p><p class='fragment'>A migração forçada arranca o indivíduo de sua estabilidade cotidiana, colocando-o em uma jornada repleta de perigos. Longe de ser uma escolha, o refúgio é um ato extremo de sobrevivência humana. Compreender a dimensão desses deslocamentos ajuda-nos a encarar as fronteiras geopolíticas não apenas como barreiras físicas, mas como divisores de direitos humanos fundamentais.</p></div>
+                <div>
+        <div class="callout-card fragment">
+          <span style="color: var(--accent); font-family: 'Space Grotesk'; font-size: 0.8em;"># CONTEXTO GLOBAL</span>
+          <p style="margin-top: 10px; font-size: 1em; color: #fff;">Hoje existem mais de 100 milhões de pessoas deslocadas à força no mundo.</p>
+        </div>
+        
+        <div class="callout-card fragment">
+          <span style="color: var(--accent); font-family: 'Space Grotesk'; font-size: 0.8em;"># ARTIGO 14</span>
+          <p style="margin-top: 10px; font-size: 1em; color: #fff;">Garante o direito humano inalienável de buscar asilo e refúgio em solo estrangeiro.</p>
+        </div>
+        </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <div id="capitulo-2" class="step glass-container" data-x="0" data-y="2000" data-z="-3600" data-rotate-x="40" data-rotate-y="0" data-rotate-z="90" data-scale="0.8">
+        
+        <div class="bg-layer">
+            <img src="assets/brecht.png" alt="Background">
+        </div>
+        <div class="bg-overlay"></div>
+        
+        <div class="content-layer">
+            <h2>2. Abou: A Criança na Mala</h2>
+            <div class="grid-layout">
+                <div><p class='fragment'>O espetáculo teatral &#x27;Quando eu morrer, vou contar tudo a Deus&#x27;, do coletivo O Bonde (São Paulo), baseia-se em um fato real ocorrido em 2015: um menino africano de oito anos chamado Abou foi encontrado pela polícia de fronteira da Espanha escondido dentro de uma mala de viagem.</p><p class='fragment'>A peça reconstrói poeticamente essa terrível travessia. Dentro do espaço claustrofóbico e escuro da mala, a imaginação e a curiosidade de Abou tornam-se mecanismos de defesa para amenizar a dor e a solidão do deslocamento. A narrativa aborda de frente a crise de refugiados africanos que tentam ingressar na Europa através dos enclaves espanhóis de Ceuta e Melilla, no norte da África.</p><p class='fragment'>Ao humanizar a figura do migrante na infância, o grupo O Bonde provoca uma reflexão profunda sobre o Artigo 6 da Declaração dos Direitos Humanos. Abou, ao ser tratado como contrabando em uma mala, tem sua humanidade e direitos básicos negados pelas autoridades de fronteira, demonstrando como a arte atua como ferramenta de denúncia e sensibilização.</p></div>
+                <div>
+        <div class="callout-card fragment">
+          <span style="color: var(--accent); font-family: 'Space Grotesk'; font-size: 0.8em;"># FATO REAL</span>
+          <p style="margin-top: 10px; font-size: 1em; color: #fff;">Em 2015, o menino Abou, da Costa do Marfim, foi radiografado dentro de uma mala na fronteira espanhola.</p>
+        </div>
+        
+        <div class="callout-card fragment">
+          <span style="color: var(--accent); font-family: 'Space Grotesk'; font-size: 0.8em;"># COLETIVO O BONDE</span>
+          <p style="margin-top: 10px; font-size: 1em; color: #fff;">Companhia paulista que usa o teatro documentário para dar voz a questões periféricas.</p>
+        </div>
+        </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <div id="capitulo-3" class="step glass-container" data-x="-2500" data-y="0" data-z="-5400" data-rotate-x="0" data-rotate-y="-35" data-rotate-z="180" data-scale="1.5">
+        
+        <div class="bg-layer">
+            <img src="assets/caricu.png" alt="Background">
+        </div>
+        <div class="bg-overlay"></div>
+        
+        <div class="content-layer">
+            <h2>3. Suspender o Céu</h2>
+            <div class="grid-layout">
+                <div><p class='fragment'>A perda de um território tradicional para os povos indígenas é uma violência que vai além da perda geográfica de habitação. Para os povos originários, o território é o espaço sagrado que abriga sua ancestralidade, sua espiritualidade e a própria natureza da qual fazem parte e que molda sua identidade cultural.</p><p class='fragment'>Segundo o pensador, líder indígena e imortal da Academia Brasileira de Letras Ailton Krenak, práticas como cantar, dançar e viver a experiência sensível do encontro e do movimento constituem a mágica de &#x27;suspender o céu&#x27;. Isso significa expandir o horizonte existencial e situar-se no próprio corpo e vida, contrapondo-se à lógica eurocêntrica e produtivista do consumo.</p><p class='fragment'>A Declaração da ONU sobre os Direitos dos Povos Indígenas (Artigo 25) assegura o direito de manter e fortalecer a relação espiritual com suas terras tradicionais. A resistência indígena manifesta-se vigorosamente na preservação dessas práticas ancestrais, como a dança, que resistem ao longo de séculos contra deslocamentos forçados e violência territorial.</p></div>
+                <div>
+        <div class="callout-card fragment">
+          <span style="color: var(--accent); font-family: 'Space Grotesk'; font-size: 0.8em;"># AILTON KRENAK</span>
+          <p style="margin-top: 10px; font-size: 1em; color: #fff;">Filósofo, ambientalista e ativista, primeiro indígena eleito para a Academia Brasileira de Letras.</p>
+        </div>
+        
+        <div class="callout-card fragment">
+          <span style="color: var(--accent); font-family: 'Space Grotesk'; font-size: 0.8em;"># RESISTÊNCIA</span>
+          <p style="margin-top: 10px; font-size: 1em; color: #fff;">Cantar e dançar são tecnologias de sobrevivência e conexão com a Terra.</p>
+        </div>
+        </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <div id="capitulo-4" class="step glass-container" data-x="0" data-y="-2000" data-z="-7200" data-rotate-x="-30" data-rotate-y="30" data-rotate-z="-90" data-scale="1.0">
+        
+        <div class="bg-layer">
+            <img src="assets/caricu.png" alt="Background">
+        </div>
+        <div class="bg-overlay"></div>
+        
+        <div class="content-layer">
+            <h2>4. O Ritmo do Cariçu</h2>
+            <div class="grid-layout">
+                <div><p class='fragment'>O cariçu (ou kariçu) é uma dança tradicional de celebração praticada por diversos povos indígenas, com destaque para a etnia Tukano do Alto Rio Negro, no Amazonas. Essa manifestação cultua a vida, a fartura e a união comunitária, sendo tradicionalmente ligada a rituais de casamento e trocas sociais.</p><p class='fragment'>A dança é executada em duplas ao som do próprio cariçu, um instrumento de sopro feito de tubos de taquara amarrados com fibras, semelhante à flauta de pã. O andamento da dança inicia suave e vai se intensificando com batidas marcadas dos pés no chão, adornados com tornozeleiras de sementes (chocalhos). As vestimentas incluem cocares, saias de palha, colares e pinturas corporais.</p><p class='fragment'>Mesmo sofrendo com a expropriação de suas terras e a necessidade de se deslocarem para centros urbanos, os Tukano mantêm o cariçu vivo. A apresentação dessa dança em ambientes como universidades públicas (por exemplo, na UFSCar) demonstra como esses saberes tradicionais ganham novas formas de circulação, afirmando o espaço do conhecimento indígena na sociedade.</p></div>
+                <div>
+        <div class="callout-card fragment">
+          <span style="color: var(--accent); font-family: 'Space Grotesk'; font-size: 0.8em;"># TUKANO</span>
+          <p style="margin-top: 10px; font-size: 1em; color: #fff;">Família linguística e étnica de 17 povos que habitam a bacia do Rio Negro e do Uaupés.</p>
+        </div>
+        
+        <div class="callout-card fragment">
+          <span style="color: var(--accent); font-family: 'Space Grotesk'; font-size: 0.8em;"># O INSTRUMENTO</span>
+          <p style="margin-top: 10px; font-size: 1em; color: #fff;">O cariçu é uma flauta de pã de taquara com afinação variável tocada de forma coletiva.</p>
+        </div>
+        </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <div id="capitulo-5" class="step glass-container" data-x="2000" data-y="2000" data-z="-9000" data-rotate-x="20" data-rotate-y="20" data-rotate-z="45" data-scale="0.75">
+        
+        <div class="bg-layer">
+            <img src="https://images.unsplash.com/photo-1505664194779-8bebcb95c557?q=80&amp;w=2000" alt="Background">
+        </div>
+        <div class="bg-overlay"></div>
+        
+        <div class="content-layer">
+            <h2>5. Diários de Guerra: Peça N</h2>
+            <div class="grid-layout">
+                <div><p class='fragment'>O espetáculo &#x27;N&#x27;, criado em 2016 pela Cia Arte-Móvel (Americana, SP), é uma adaptação cênica do célebre livro &#x27;O diário de Anne Frank&#x27;, publicado originalmente em 1947. A montagem explora o processo de remidiação, transportando a literatura íntima de Anne para a linguagem teatral através de animação de objetos, bonecos e projeções digitais.</p><p class='fragment'>A peça reconstrói a trajetória de três pessoas tentando fugir de conflitos armados durante a Segunda Guerra Mundial, traçando um paralelo direto com os milhões de refugiados contemporâneos. A jovem Anne Frank permaneceu oculta dos nazistas em um anexo secreto em Amsterdã por dois anos antes de ser descoberta e morrer no campo de concentração de Bergen-Belsen em 1945.</p><p class='fragment'>Ao integrar elementos estéticos, registros históricos e novas tecnologias no palco, a remidiação permite perpetuar e ressignificar a memória da intolerância. O espetáculo convida a plateia a refletir sobre a repetição da história de perseguição de civis inocentes e a importância do acolhimento humanitário.</p></div>
+                <div>
+        <div class="callout-card fragment">
+          <span style="color: var(--accent); font-family: 'Space Grotesk'; font-size: 0.8em;"># REMIDIAÇÃO</span>
+          <p style="margin-top: 10px; font-size: 1em; color: #fff;">A transposição de uma obra de seu suporte original (livro) para outro meio (teatro multimídia).</p>
+        </div>
+        
+        <div class="callout-card fragment">
+          <span style="color: var(--accent); font-family: 'Space Grotesk'; font-size: 0.8em;"># ANNE FRANK</span>
+          <p style="margin-top: 10px; font-size: 1em; color: #fff;">Jovem judia alemã cujo diário tornou-se o maior testemunho pessoal do Holocausto.</p>
+        </div>
+        </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <div id="capitulo-6" class="step glass-container" data-x="-2000" data-y="-2000" data-z="-10800" data-rotate-x="-20" data-rotate-y="-20" data-rotate-z="-45" data-scale="2.0">
+        
+        <div class="bg-layer">
+            <img src="assets/brecht.png" alt="Background">
+        </div>
+        <div class="bg-overlay"></div>
+        
+        <div class="content-layer">
+            <h2>6. O Estranhamento Brechtiano</h2>
+            <div class="grid-layout">
+                <div><p class='fragment'>Bertolt Brecht desenvolveu o teatro épico na década de 1920 em oposição direta ao teatro clássico dramático. Enquanto o teatro tradicional buscava a identificação imediata e a ilusão emocional do espectador (catarse), o teatro épico visava criar um distanciamento crítico para estimular a reflexão racional sobre problemas sociais.</p><p class='fragment'>Para atingir esse distanciamento, Brecht elaborou o conceito de &#x27;efeito de estranhamento&#x27; (Verfremdungseffekt). Ele consistia em tornar o familiar desconhecido, quebrando a ilusão cênica. Recursos como expor a maquinaria técnica (luzes, cenários), interrupções de cenas, uso de narradores comentando os atos, e atores falando diretamente ao público eram empregados.</p><p class='fragment'>O musical brasileiro &#x27;Malala, a menina que queria ir para a escola&#x27; utiliza essas técnicas de forma brilhante. Durante a representação da luta da jovem paquistanesa contra a opressão extremista, os atores interrompem a ação para dialogar com a plateia sobre os direitos das crianças à educação, transformando o teatro em ferramenta pedagógica direta.</p></div>
+                <div>
+        <div class="callout-card fragment">
+          <span style="color: var(--accent); font-family: 'Space Grotesk'; font-size: 0.8em;"># BERTOLT BRECHT</span>
+          <p style="margin-top: 10px; font-size: 1em; color: #fff;">Dramaturgo alemão que precisou se refugiar nos EUA fugindo do nazismo na 2ª Guerra.</p>
+        </div>
+        
+        <div class="callout-card fragment">
+          <span style="color: var(--accent); font-family: 'Space Grotesk'; font-size: 0.8em;"># ESTRANHAMENTO</span>
+          <p style="margin-top: 10px; font-size: 1em; color: #fff;">Recursos cênicos que quebram a ilusão da peça, convidando o público a pensar e agir politicamente.</p>
+        </div>
+        </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <div id="capitulo-7" class="step glass-container" data-x="2500" data-y="0" data-z="-12600" data-rotate-x="0" data-rotate-y="35" data-rotate-z="0" data-scale="1.0">
+        
+        <div class="bg-layer">
+            <img src="https://images.unsplash.com/photo-1465847899084-d164df4dedc6?q=80&amp;w=2000" alt="Background">
+        </div>
+        <div class="bg-overlay"></div>
+        
+        <div class="content-layer">
+            <h2>7. Latcho Drom: A Boa Viagem</h2>
+            <div class="grid-layout">
+                <div><p class='fragment'>Os povos romani, historicamente referidos pela designação genérica e muitas vezes estereotipada de &#x27;ciganos&#x27;, iniciaram sua diáspora entre os séculos XIV e XV, partindo do noroeste da Índia (região do Rajastão). Ao migrarem pela Europa e Oriente Médio, fundaram ricos subgrupos culturais, como os Rom, os Sinti e os Calón.</p><p class='fragment'>O nomadismo, comumente idealizado de forma romântica como sinônimo de total liberdade e desapego, foi, na verdade, uma tática de sobrevivência em resposta a sucessivas ondas de discriminação, perseguição e políticas de expulsão de vários governos. Estima-se que mais de 500 mil romani foram brutalmente assassinados nos campos de concentração nazistas durante a Segunda Guerra.</p><p class='fragment'>O cineasta romani Tony Gatlif retratou essa jornada no documentário &#x27;Latcho Drom&#x27; (1993) (&#x27;Boa Viagem&#x27; na língua romani). Sem diálogos ou narradores, o filme acompanha a trajetória geográfica da diáspora romani guiado exclusivamente pela música, provando a riqueza identitária e a diversidade das diferentes etnias que a compõem.</p></div>
+                <div>
+        <div class="callout-card fragment">
+          <span style="color: var(--accent); font-family: 'Space Grotesk'; font-size: 0.8em;"># CONGRESSO DE 1971</span>
+          <p style="margin-top: 10px; font-size: 1em; color: #fff;">Estabeleceu a denominação unificada &#x27;Roma&#x27;, a bandeira oficial e o hino do povo romani.</p>
+        </div>
+        
+        <div class="callout-card fragment">
+          <span style="color: var(--accent); font-family: 'Space Grotesk'; font-size: 0.8em;"># GENOCÍDIO</span>
+          <p style="margin-top: 10px; font-size: 1em; color: #fff;">Conhecido como Porajmos, o extermínio de ciganos pelo regime nazista ainda é pouco discutido.</p>
+        </div>
+        </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <div id="capitulo-8" class="step glass-container" data-x="0" data-y="2000" data-z="-14400" data-rotate-x="40" data-rotate-y="0" data-rotate-z="90" data-scale="0.8">
+        
+        <div class="bg-layer">
+            <img src="assets/flamenco.png" alt="Background">
+        </div>
+        <div class="bg-overlay"></div>
+        
+        <div class="content-layer">
+            <h2>8. Alma Flamenca e Calón</h2>
+            <div class="grid-layout">
+                <div><p class='fragment'>O flamenco é uma expressão artística secular que une música, dança e canto no sul da Espanha, principalmente na região da Andaluzia. A manifestação resulta de um caldeirão cultural com influências judaicas, árabes e ciganas. A contribuição decisiva para a sua consolidação veio dos romani da etnia Calón, que estruturaram seus principais ritmos.</p><p class='fragment'>Originalmente confinado aos bairros marginalizados de Sacromonte (Granada) e Triana (Sevilha), o flamenco desenvolveu seus diversos ritmos dramáticos e festivos (os &#x27;palos&#x27;). A sonoridade se apoia no som marcante do sapateado dos dançarinos, da guitarra flamenca (violão flamenco), palmas percussivas ritmadas (palmeado) e castanholas.</p><p class='fragment'>O canto, chamado &#x27;cante jondo&#x27; (canto profundo), é caracterizado pela sua alta dramaticidade, potência vocal e uso de melismas (várias notas rápidas cantadas em uma única sílaba), o que revela a influência árabe direta. A cantaora Estrella Morente, de ascendência Calón, destaca-se internacionalmente ao manter viva essa tradição expressiva.</p></div>
+                <div>
+        <div class="callout-card fragment">
+          <span style="color: var(--accent); font-family: 'Space Grotesk'; font-size: 0.8em;"># CANTE JONDO</span>
+          <p style="margin-top: 10px; font-size: 1em; color: #fff;">O canto tradicional andaluz que expressa sentimentos trágicos de dor e perseguição histórica.</p>
+        </div>
+        
+        <div class="callout-card fragment">
+          <span style="color: var(--accent); font-family: 'Space Grotesk'; font-size: 0.8em;"># ESTRELLA MORENTE</span>
+          <p style="margin-top: 10px; font-size: 1em; color: #fff;">Artista de linhagem Calón que gravou &#x27;Peregrinitos&#x27; e participou do filme &#x27;Volver&#x27; de Almodóvar.</p>
+        </div>
+        </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <div id="capitulo-9" class="step glass-container" data-x="-2500" data-y="0" data-z="-16200" data-rotate-x="0" data-rotate-y="-35" data-rotate-z="180" data-scale="1.5">
+        
+        <div class="bg-layer">
+            <img src="https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?q=80&amp;w=2000" alt="Background">
+        </div>
+        <div class="bg-overlay"></div>
+        
+        <div class="content-layer">
+            <h2>9. O Legado Romani no Brasil</h2>
+            <div class="grid-layout">
+                <div><p class='fragment'>A presença romani no Brasil remonta ao início da colonização no século XVI, impulsionada pelo degredo imposto pelas coroas ibéricas que baniram ciganos Calón de suas terras. Esses grupos adaptaram sua cultura ao longo das gerações no país, desenvolvendo uma variante da língua original (o chibi-caló). Outras levas das etnias Rom e Sinti migraram no século XX.</p><p class='fragment'>Os romani exerceram um papel crucial no entretenimento popular brasileiro, chegando ao país associados a companhias de circo itinerantes, como a notável família Sbano. Artistas ciganos ou descendentes também conquistaram as telas nacionais, a exemplo de Dedé Santana (Os Trapalhões) e da atriz Ana Rosa. Na música, muitos Calón se identificaram com o sertanejo, como a jovem dupla de irmãos Miguel e Nycolas.</p><p class='fragment'>Hoje, com uma população estimada em 2 milhões de pessoas, os ciganos no Brasil enfrentam sérias dificuldades de segregação, preconceito e falta de acesso a direitos básicos como saúde e educação itinerante. Jovens influencers como Jade Kalín e Jussiara Vieira usam as redes sociais como trincheiras digitais para combater visões caricatas e místicas sobre o seu povo.</p></div>
+                <div>
+        <div class="callout-card fragment">
+          <span style="color: var(--accent); font-family: 'Space Grotesk'; font-size: 0.8em;"># DEGREDO COLONIAL</span>
+          <p style="margin-top: 10px; font-size: 1em; color: #fff;">Ciganos Calón foram deportados como degredados no século XVI por leis de banimento de Portugal.</p>
+        </div>
+        
+        <div class="callout-card fragment">
+          <span style="color: var(--accent); font-family: 'Space Grotesk'; font-size: 0.8em;"># TRINCHEIRA DIGITAL</span>
+          <p style="margin-top: 10px; font-size: 1em; color: #fff;">Influenciadores romani usam redes para desmitificar estereótipos propagados por novelas de TV.</p>
+        </div>
+        </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <div id="fim" class="step" data-x="0" data-y="0" data-z="-20000" data-scale="4" style="text-align: center;">
+        <h1 style="font-size: 8em; opacity: 0.1; position: absolute; width: 100%; top: -100px;">FIM</h1>
+        <h2 style="font-size: 3em;">Fluxos Culturais</h2>
+        <p style="color: var(--accent); font-size: 1.5em; margin: 40px 0;">"A arte de um povo é o seu território espiritual. Nenhuma fronteira pode confiscá-la."</p>
+        <p style="color: #666; font-size: 1em;">Prof. Kelso Palheta // Arte</p>
+    </div>
+    
+    
+    <!-- Visão geral -->
+    <div id="overview" class="step" data-x="3000" data-y="1500" data-z="4000" data-scale="10"></div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/impress/impress.js@2.0.0/js/impress.js"></script>
+
+<script>
+    var api = impress();
+    
+    // Função para fatiar texto em palavras (Preservando espaços e fluxo)
+    function splitTextToWords(element) {
+        if (element.classList.contains('splitted')) return;
+        var text = element.textContent;
+        var words = text.split(' ');
+        element.innerHTML = '';
+        
+        words.forEach(function(word, index) {
+            if (word.length > 0) {
+                var span = document.createElement('span');
+                span.className = 'word';
+                span.textContent = word;
+                span.style.opacity = 0;
+                span.style.display = 'inline-block';
+                element.appendChild(span);
+            }
+            // Adiciona o espaço real do navegador entre os spans para manter o fluxo
+            if (index < words.length - 1) {
+                element.appendChild(document.createTextNode(' '));
+            }
+        });
+        element.classList.add('splitted');
+    }
+
+    // SISTEMA DE FRAGMENTOS CUSTOMIZADO
+    var currentFragments = [];
+    var fragmentIndex = -1;
+    var blockNextKeyup = false;
+
+    document.addEventListener("impress:stepenter", function (event) {
+        var step = event.target;
+        
+        currentFragments = Array.from(step.querySelectorAll('.fragment'));
+        fragmentIndex = -1;
+        blockNextKeyup = false;
+        
+        currentFragments.forEach(f => {
+            f.classList.remove('visible');
+            // Prepara as palavras do texto
+            if(f.tagName.toLowerCase() === 'p') {
+                splitTextToWords(f);
+            }
+        });
+
+        var title = step.querySelector('h2');
+        if(title) {
+            gsap.fromTo(title, 
+                { opacity: 0, x: -50 }, 
+                { opacity: 1, x: 0, duration: 1.2, ease: "power3.out" }
+            );
+        }
+    });
+
+    document.addEventListener("impress:stepleave", function (event) {
+        currentFragments = [];
+        fragmentIndex = -1;
+    });
+
+    document.addEventListener("keydown", function(event) {
+        if (event.keyCode === 32 || event.keyCode === 39 || event.keyCode === 40) {
+            if (fragmentIndex < currentFragments.length - 1) {
+                event.stopPropagation();
+                event.preventDefault();
+                blockNextKeyup = true;
+                fragmentIndex++;
+                
+                var el = currentFragments[fragmentIndex];
+                el.classList.add('visible');
+
+                // Animações Mistas GSAP
+                if(el.tagName.toLowerCase() === 'p') {
+                    var words = el.querySelectorAll('.word');
+                    var textAnims = [
+                        // 1. Máquina de escrever caindo (Original)
+                        function() { gsap.fromTo(words, { opacity: 0, y: 15 }, { opacity: 1, y: 0, duration: 0.4, stagger: 0.04, ease: "power1.out" }); },
+                        // 2. Blur / Fade in rápido
+                        function() { gsap.fromTo(words, { opacity: 0, filter: "blur(5px)", scale: 0.9 }, { opacity: 1, filter: "blur(0px)", scale: 1, duration: 0.5, stagger: 0.02, ease: "power2.out" }); },
+                        // 3. Deslizamento vindo da direita (Wind)
+                        function() { gsap.fromTo(words, { opacity: 0, x: 20 }, { opacity: 1, x: 0, duration: 0.4, stagger: 0.03, ease: "back.out(1.2)" }); },
+                        // 4. Salto elástico invertido
+                        function() { gsap.fromTo(words, { opacity: 0, y: -15, rotationX: 90 }, { opacity: 1, y: 0, rotationX: 0, duration: 0.5, stagger: 0.03, ease: "bounce.out" }); }
+                    ];
+                    var rText = Math.floor(Math.random() * textAnims.length);
+                    textAnims[rText]();
+
+                } else if(el.classList.contains('callout-card')) {
+                    // Escolhe uma animação diferente de forma aleatória para evitar monotonia
+                    var animations = [
+                        // 1. Spin & Pop (Gira e cresce com elasticidade)
+                        function() {
+                            gsap.fromTo(el,
+                                { opacity: 0, scale: 0.2, rotation: -180 },
+                                { opacity: 1, scale: 1, rotation: 0, duration: 0.9, ease: "back.out(1.5)" }
+                            );
+                        },
+                        // 2. Slide In (Vem rápido e fluido do lado direito)
+                        function() {
+                            gsap.fromTo(el,
+                                { opacity: 0, x: 300, skewX: -10 },
+                                { opacity: 1, x: 0, skewX: 0, duration: 0.8, ease: "power3.out" }
+                            );
+                        },
+                        // 3. Drop Bounce (Cai do teto e quica como borracha)
+                        function() {
+                            gsap.fromTo(el,
+                                { opacity: 0, y: -200 },
+                                { opacity: 1, y: 0, duration: 1.0, ease: "bounce.out" }
+                            );
+                        },
+                        // 4. 3D Flip (Gira no eixo X de cabeça para baixo)
+                        function() {
+                            gsap.fromTo(el,
+                                { opacity: 0, scale: 0.8, rotationX: -90 },
+                                { opacity: 1, scale: 1, rotationX: 0, duration: 0.8, ease: "back.out(1.7)" }
+                            );
+                        }
+                    ];
+                    var randomIndex = Math.floor(Math.random() * animations.length);
+                    animations[randomIndex]();
+                }
+
+            }
+        } else if (event.keyCode === 37 || event.keyCode === 38) {
+            if (fragmentIndex >= 0) {
+                event.stopPropagation();
+                event.preventDefault();
+                blockNextKeyup = true;
+                currentFragments[fragmentIndex].classList.remove('visible');
+                fragmentIndex--;
+            }
+        }
+    }, true);
+
+    // Intercepta keyup para não deixar o impress "escapar" quando o keydown foi consumido
+    document.addEventListener("keyup", function(event) {
+        if (blockNextKeyup && (event.keyCode === 32 || event.keyCode === 39 || event.keyCode === 40 || event.keyCode === 37 || event.keyCode === 38)) {
+            event.stopPropagation();
+            event.preventDefault();
+            blockNextKeyup = false;
+        }
+    }, true);
+
+    api.init();
+</script>
+
+</body>
+</html>

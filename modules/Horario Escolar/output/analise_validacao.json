@@ -1,0 +1,28 @@
+{
+  "total_slots": 430,
+  "isoladas": 98,
+  "duplas_ok": 160,
+  "triplas": 4,
+  "conflitos_prof": 0,
+  "isoladas_por_disc": {
+    "Ed. Ambiental": 10,
+    "Ed. Física": 6,
+    "Aprof. Matemática": 2,
+    "Matemática": 5,
+    "Prát. Experimentais": 8,
+    "Arte": 8,
+    "Proj. de Vida": 9,
+    "Química": 4,
+    "Inglês": 8,
+    "Aprof. Linguagens": 2,
+    "Física": 6,
+    "Português": 7,
+    "Filosofia": 6,
+    "Sociologia": 6,
+    "E.O. Português": 2,
+    "E.O. Matemática": 4,
+    "Aprof. Natureza": 2,
+    "Biologia": 2,
+    "Inglês 2": 1
+  }
+}

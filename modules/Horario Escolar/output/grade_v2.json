@@ -1,0 +1,1722 @@
+{
+  "Segunda|A1|1º ANO - 101": {
+    "prof": "JOANA",
+    "disc": "Português"
+  },
+  "Segunda|A1|1º ANO - 102": {
+    "prof": "LUCIDALVA",
+    "disc": "Matemática"
+  },
+  "Segunda|A1|1º ANO - 103": {
+    "prof": "MILTON",
+    "disc": "Matemática"
+  },
+  "Segunda|A1|1º ANO - 104": {
+    "prof": "DIJANE",
+    "disc": "Biologia"
+  },
+  "Segunda|A1|2º ANO - 201": {
+    "prof": "ROGÉRIO",
+    "disc": "Matemática"
+  },
+  "Segunda|A1|2º ANO - 202": {
+    "prof": "JHONATAN",
+    "disc": "Ed. Física"
+  },
+  "Segunda|A1|2º ANO - 203": {
+    "prof": "LUCÍLIO",
+    "disc": "Geografia"
+  },
+  "Segunda|A1|2º ANO - 204": {
+    "prof": "LUIZ",
+    "disc": "Matemática"
+  },
+  "Segunda|A1|3º ANO - 301": {
+    "prof": "VANESA",
+    "disc": "Inglês"
+  },
+  "Segunda|A1|3º ANO - 302": {
+    "prof": "ELIANA",
+    "disc": "Português"
+  },
+  "Segunda|A2|1º ANO - 101": {
+    "prof": "JOANA",
+    "disc": "Português"
+  },
+  "Segunda|A2|1º ANO - 102": {
+    "prof": "LUCIDALVA",
+    "disc": "Matemática"
+  },
+  "Segunda|A2|1º ANO - 103": {
+    "prof": "MILTON",
+    "disc": "Matemática"
+  },
+  "Segunda|A2|1º ANO - 104": {
+    "prof": "DIJANE",
+    "disc": "Biologia"
+  },
+  "Segunda|A2|2º ANO - 201": {
+    "prof": "ROGÉRIO",
+    "disc": "Matemática"
+  },
+  "Segunda|A2|2º ANO - 202": {
+    "prof": "JHONATAN",
+    "disc": "Ed. Física"
+  },
+  "Segunda|A2|2º ANO - 203": {
+    "prof": "LUCÍLIO",
+    "disc": "Geografia"
+  },
+  "Segunda|A2|2º ANO - 204": {
+    "prof": "LUIZ",
+    "disc": "Matemática"
+  },
+  "Segunda|A2|3º ANO - 301": {
+    "prof": "VANESA",
+    "disc": "Inglês"
+  },
+  "Segunda|A2|3º ANO - 302": {
+    "prof": "ELIANA",
+    "disc": "Português"
+  },
+  "Segunda|A3|1º ANO - 101": {
+    "prof": "LUCÍLIO",
+    "disc": "Ed. Ambiental"
+  },
+  "Segunda|A3|1º ANO - 102": {
+    "prof": "JHONATAN",
+    "disc": "Ed. Física"
+  },
+  "Segunda|A3|1º ANO - 103": {
+    "prof": "ELINELSON",
+    "disc": "Filosofia"
+  },
+  "Segunda|A3|1º ANO - 104": {
+    "prof": "LUIZ",
+    "disc": "Matemática"
+  },
+  "Segunda|A3|2º ANO - 201": {
+    "prof": "RODRIGO",
+    "disc": "Química"
+  },
+  "Segunda|A3|2º ANO - 202": {
+    "prof": "REGINA",
+    "disc": "Proj. de Vida"
+  },
+  "Segunda|A3|2º ANO - 203": {
+    "prof": "DIJANE",
+    "disc": "Ed. Ambiental"
+  },
+  "Segunda|A3|2º ANO - 204": {
+    "prof": "LOUISE",
+    "disc": "Física"
+  },
+  "Segunda|A3|3º ANO - 301": {
+    "prof": "KELSO",
+    "disc": "Arte"
+  },
+  "Segunda|A3|3º ANO - 302": {
+    "prof": "VANESA",
+    "disc": "Inglês"
+  },
+  "Segunda|A4|1º ANO - 101": {
+    "prof": "LUIZ",
+    "disc": "PPA"
+  },
+  "Segunda|A4|1º ANO - 102": {
+    "prof": "JOANA",
+    "disc": "Português"
+  },
+  "Segunda|A4|1º ANO - 103": {
+    "prof": "ELINELSON",
+    "disc": "Filosofia"
+  },
+  "Segunda|A4|1º ANO - 104": {
+    "prof": "REGINA",
+    "disc": "Português"
+  },
+  "Segunda|A4|2º ANO - 201": {
+    "prof": "DIJANE",
+    "disc": "Ed. Ambiental"
+  },
+  "Segunda|A4|2º ANO - 202": {
+    "prof": "ROGÉRIO",
+    "disc": "Matemática"
+  },
+  "Segunda|A4|2º ANO - 203": {
+    "prof": "MILTON",
+    "disc": "Matemática"
+  },
+  "Segunda|A4|2º ANO - 204": {
+    "prof": "LUCÍLIO",
+    "disc": "Geografia"
+  },
+  "Segunda|A4|3º ANO - 301": {
+    "prof": "ELIANA",
+    "disc": "Português"
+  },
+  "Segunda|A4|3º ANO - 302": {
+    "prof": "VANESA",
+    "disc": "Inglês"
+  },
+  "Segunda|A5|1º ANO - 101": {
+    "prof": "LUIZ",
+    "disc": "PPA"
+  },
+  "Segunda|A5|1º ANO - 102": {
+    "prof": "JOANA",
+    "disc": "Português"
+  },
+  "Segunda|A5|1º ANO - 103": {
+    "prof": "DIJANE",
+    "disc": "Prát. Experimentais"
+  },
+  "Segunda|A5|1º ANO - 104": {
+    "prof": "REGINA",
+    "disc": "Português"
+  },
+  "Segunda|A5|2º ANO - 201": {
+    "prof": "VANESA",
+    "disc": "Inglês"
+  },
+  "Segunda|A5|2º ANO - 202": {
+    "prof": "ROGÉRIO",
+    "disc": "Matemática"
+  },
+  "Segunda|A5|2º ANO - 203": {
+    "prof": "MILTON",
+    "disc": "Matemática"
+  },
+  "Segunda|A5|2º ANO - 204": {
+    "prof": "LUCÍLIO",
+    "disc": "Geografia"
+  },
+  "Segunda|A5|3º ANO - 301": {
+    "prof": "ELIANA",
+    "disc": "Português"
+  },
+  "Segunda|A5|3º ANO - 302": {
+    "prof": "RODRIGO",
+    "disc": "Prát. Experimentais"
+  },
+  "Segunda|A6|1º ANO - 101": {
+    "prof": "ELINELSON",
+    "disc": "Aprof. Humanas"
+  },
+  "Segunda|A6|1º ANO - 102": {
+    "prof": "LUCIDALVA",
+    "disc": "Aprof. Matemática"
+  },
+  "Segunda|A6|1º ANO - 103": {
+    "prof": "VANESA",
+    "disc": "Aprof. Linguagens"
+  },
+  "Segunda|A6|1º ANO - 104": {
+    "prof": "RODRIGO",
+    "disc": "Aprof. Natureza"
+  },
+  "Segunda|A6|2º ANO - 201": {
+    "prof": "JOANA",
+    "disc": "Aprof. Linguagens"
+  },
+  "Segunda|A6|2º ANO - 202": {
+    "prof": "LOUISE",
+    "disc": "Física"
+  },
+  "Segunda|A6|2º ANO - 203": {
+    "prof": "REGINA",
+    "disc": "Português"
+  },
+  "Segunda|A6|2º ANO - 204": {
+    "prof": "DIJANE",
+    "disc": "Biologia"
+  },
+  "Segunda|A6|3º ANO - 301": {
+    "prof": "LUCÍLIO",
+    "disc": "Geografia"
+  },
+  "Segunda|A6|3º ANO - 302": {
+    "prof": "MILTON",
+    "disc": "Aprof. Matemática"
+  },
+  "Segunda|A7|1º ANO - 101": {
+    "prof": "ELINELSON",
+    "disc": "Aprof. Humanas"
+  },
+  "Segunda|A7|1º ANO - 102": {
+    "prof": "LUCIDALVA",
+    "disc": "Matemática"
+  },
+  "Segunda|A7|1º ANO - 103": {
+    "prof": "JOANA",
+    "disc": "Proj. de Vida"
+  },
+  "Segunda|A7|1º ANO - 104": {
+    "prof": "RODRIGO",
+    "disc": "Aprof. Natureza"
+  },
+  "Segunda|A7|2º ANO - 201": {
+    "prof": "KELSO",
+    "disc": "Arte"
+  },
+  "Segunda|A7|2º ANO - 202": {
+    "prof": "LOUISE",
+    "disc": "Física"
+  },
+  "Segunda|A7|2º ANO - 203": {
+    "prof": "REGINA",
+    "disc": "Português"
+  },
+  "Segunda|A7|2º ANO - 204": {
+    "prof": "DIJANE",
+    "disc": "Biologia"
+  },
+  "Segunda|A7|3º ANO - 301": {
+    "prof": "LUCÍLIO",
+    "disc": "Geografia"
+  },
+  "Segunda|A7|3º ANO - 302": {
+    "prof": "MILTON",
+    "disc": "Aprof. Matemática"
+  },
+  "Segunda|A8|1º ANO - 101": {
+    "prof": "LUCIDALVA",
+    "disc": "Aprof. Matemática"
+  },
+  "Segunda|A8|1º ANO - 102": {
+    "prof": "LOUISE",
+    "disc": "Aprof. Natureza"
+  },
+  "Segunda|A8|1º ANO - 103": {
+    "prof": "JOANA",
+    "disc": "Português"
+  },
+  "Segunda|A8|1º ANO - 104": {
+    "prof": "KELSO",
+    "disc": "Arte"
+  },
+  "Segunda|A8|2º ANO - 201": {
+    "prof": "ROGÉRIO",
+    "disc": "Aprof. Matemática"
+  },
+  "Segunda|A8|2º ANO - 202": {
+    "prof": "VANESA",
+    "disc": "PPA"
+  },
+  "Segunda|A8|2º ANO - 203": {
+    "prof": "RODRIGO",
+    "disc": "Aprof. Natureza"
+  },
+  "Segunda|A8|2º ANO - 204": {
+    "prof": "JHONATAN",
+    "disc": "Ed. Física"
+  },
+  "Segunda|A8|3º ANO - 301": {
+    "prof": "LUIZ",
+    "disc": "E.O. Matemática"
+  },
+  "Segunda|A8|3º ANO - 302": {
+    "prof": "ELINELSON",
+    "disc": "Aprof. Humanas"
+  },
+  "Segunda|A9|1º ANO - 101": {
+    "prof": "LUCIDALVA",
+    "disc": "Aprof. Matemática"
+  },
+  "Segunda|A9|1º ANO - 102": {
+    "prof": "LOUISE",
+    "disc": "Aprof. Natureza"
+  },
+  "Segunda|A9|1º ANO - 103": {
+    "prof": "JOANA",
+    "disc": "Português"
+  },
+  "Segunda|A9|1º ANO - 104": {
+    "prof": "KELSO",
+    "disc": "Arte"
+  },
+  "Segunda|A9|2º ANO - 201": {
+    "prof": "ROGÉRIO",
+    "disc": "Aprof. Matemática"
+  },
+  "Segunda|A9|2º ANO - 202": {
+    "prof": "VANESA",
+    "disc": "PPA"
+  },
+  "Segunda|A9|2º ANO - 203": {
+    "prof": "RODRIGO",
+    "disc": "Aprof. Natureza"
+  },
+  "Segunda|A9|2º ANO - 204": {
+    "prof": "JHONATAN",
+    "disc": "Ed. Física"
+  },
+  "Segunda|A9|3º ANO - 301": {
+    "prof": "LUIZ",
+    "disc": "E.O. Matemática"
+  },
+  "Segunda|A9|3º ANO - 302": {
+    "prof": "ELINELSON",
+    "disc": "Aprof. Humanas"
+  },
+  "Terça|A1|1º ANO - 101": {
+    "prof": "JOANA",
+    "disc": "E.O. Português"
+  },
+  "Terça|A1|1º ANO - 102": {
+    "prof": "EDMUNDO",
+    "disc": "Química"
+  },
+  "Terça|A1|1º ANO - 103": {
+    "prof": "CASIANO",
+    "disc": "Sociologia"
+  },
+  "Terça|A1|1º ANO - 104": {
+    "prof": "REGINA",
+    "disc": "Aprof. Linguagens"
+  },
+  "Terça|A1|2º ANO - 201": {
+    "prof": "EUNICE",
+    "disc": "Português"
+  },
+  "Terça|A1|2º ANO - 202": {
+    "prof": "VANESA",
+    "disc": "Inglês"
+  },
+  "Terça|A1|2º ANO - 203": {
+    "prof": "JHONATAN",
+    "disc": "Ed. Física"
+  },
+  "Terça|A1|2º ANO - 204": {
+    "prof": "KELSO",
+    "disc": "Arte"
+  },
+  "Terça|A1|3º ANO - 301": {
+    "prof": "ELIANA",
+    "disc": "Português"
+  },
+  "Terça|A1|3º ANO - 302": {
+    "prof": "DIJANE",
+    "disc": "Biologia"
+  },
+  "Terça|A2|1º ANO - 101": {
+    "prof": "JOANA",
+    "disc": "E.O. Português"
+  },
+  "Terça|A2|1º ANO - 102": {
+    "prof": "EDMUNDO",
+    "disc": "Química"
+  },
+  "Terça|A2|1º ANO - 103": {
+    "prof": "CASIANO",
+    "disc": "Sociologia"
+  },
+  "Terça|A2|1º ANO - 104": {
+    "prof": "REGINA",
+    "disc": "Aprof. Linguagens"
+  },
+  "Terça|A2|2º ANO - 201": {
+    "prof": "EUNICE",
+    "disc": "Português"
+  },
+  "Terça|A2|2º ANO - 202": {
+    "prof": "ELINELSON",
+    "disc": "Filosofia"
+  },
+  "Terça|A2|2º ANO - 203": {
+    "prof": "JHONATAN",
+    "disc": "Ed. Física"
+  },
+  "Terça|A2|2º ANO - 204": {
+    "prof": "LUIZ",
+    "disc": "Matemática"
+  },
+  "Terça|A2|3º ANO - 301": {
+    "prof": "ELIANA",
+    "disc": "Português"
+  },
+  "Terça|A2|3º ANO - 302": {
+    "prof": "DIJANE",
+    "disc": "Biologia"
+  },
+  "Terça|A3|1º ANO - 101": {
+    "prof": "EDMUNDO",
+    "disc": "Prát. Experimentais"
+  },
+  "Terça|A3|1º ANO - 102": {
+    "prof": "DIJANE",
+    "disc": "Biologia"
+  },
+  "Terça|A3|1º ANO - 103": {
+    "prof": "VANESA",
+    "disc": "Inglês"
+  },
+  "Terça|A3|1º ANO - 104": {
+    "prof": "ELINELSON",
+    "disc": "Filosofia"
+  },
+  "Terça|A3|2º ANO - 201": {
+    "prof": "JOANA",
+    "disc": "Aprof. Linguagens"
+  },
+  "Terça|A3|2º ANO - 202": {
+    "prof": "EUNICE",
+    "disc": "Português"
+  },
+  "Terça|A3|2º ANO - 203": {
+    "prof": "KELSO",
+    "disc": "Arte"
+  },
+  "Terça|A3|2º ANO - 204": {
+    "prof": "LUIZ",
+    "disc": "Matemática"
+  },
+  "Terça|A3|3º ANO - 301": {
+    "prof": "CASIANO",
+    "disc": "Sociologia"
+  },
+  "Terça|A3|3º ANO - 302": {
+    "prof": "ELENFLÁVIA",
+    "disc": "Proj. de Vida"
+  },
+  "Terça|A4|1º ANO - 101": {
+    "prof": "CASIANO",
+    "disc": "Sociologia"
+  },
+  "Terça|A4|1º ANO - 102": {
+    "prof": "DIJANE",
+    "disc": "Biologia"
+  },
+  "Terça|A4|1º ANO - 103": {
+    "prof": "EDMUNDO",
+    "disc": "Química"
+  },
+  "Terça|A4|1º ANO - 104": {
+    "prof": "ELINELSON",
+    "disc": "Filosofia"
+  },
+  "Terça|A4|2º ANO - 201": {
+    "prof": "JHONATAN",
+    "disc": "Ed. Física"
+  },
+  "Terça|A4|2º ANO - 202": {
+    "prof": "EUNICE",
+    "disc": "Português"
+  },
+  "Terça|A4|2º ANO - 203": {
+    "prof": "VANESA",
+    "disc": "Inglês"
+  },
+  "Terça|A4|2º ANO - 204": {
+    "prof": "ELENFLÁVIA",
+    "disc": "História"
+  },
+  "Terça|A4|3º ANO - 301": {
+    "prof": "LUIZ",
+    "disc": "Matemática"
+  },
+  "Terça|A4|3º ANO - 302": {
+    "prof": "ELIANA",
+    "disc": "Português"
+  },
+  "Terça|A5|1º ANO - 101": {
+    "prof": "CASIANO",
+    "disc": "Sociologia"
+  },
+  "Terça|A5|1º ANO - 102": {
+    "prof": "JOANA",
+    "disc": "Português"
+  },
+  "Terça|A5|1º ANO - 103": {
+    "prof": "EDMUNDO",
+    "disc": "Química"
+  },
+  "Terça|A5|1º ANO - 104": {
+    "prof": "VANESA",
+    "disc": "Inglês"
+  },
+  "Terça|A5|2º ANO - 201": {
+    "prof": "JHONATAN",
+    "disc": "Ed. Física"
+  },
+  "Terça|A5|2º ANO - 202": {
+    "prof": "DIJANE",
+    "disc": "Ed. Ambiental"
+  },
+  "Terça|A5|2º ANO - 203": {
+    "prof": "REGINA",
+    "disc": "Proj. de Vida"
+  },
+  "Terça|A5|2º ANO - 204": {
+    "prof": "ELENFLÁVIA",
+    "disc": "História"
+  },
+  "Terça|A5|3º ANO - 301": {
+    "prof": "LUIZ",
+    "disc": "Matemática"
+  },
+  "Terça|A5|3º ANO - 302": {
+    "prof": "ELIANA",
+    "disc": "E.O. Português"
+  },
+  "Terça|A6|1º ANO - 101": {
+    "prof": "EDMUNDO",
+    "disc": "Química"
+  },
+  "Terça|A6|1º ANO - 102": {
+    "prof": "KELSO",
+    "disc": "Arte"
+  },
+  "Terça|A6|1º ANO - 103": {
+    "prof": "JOANA",
+    "disc": "E.O. Português"
+  },
+  "Terça|A6|1º ANO - 104": {
+    "prof": "CASIANO",
+    "disc": "Aprof. Humanas"
+  },
+  "Terça|A6|2º ANO - 201": {
+    "prof": "ELENFLÁVIA",
+    "disc": "Eletiva"
+  },
+  "Terça|A6|2º ANO - 202": {
+    "prof": "REGINA",
+    "disc": "Aprof. Linguagens"
+  },
+  "Terça|A6|2º ANO - 203": {
+    "prof": "JHONATAN",
+    "disc": "PPA"
+  },
+  "Terça|A6|2º ANO - 204": {
+    "prof": "EUNICE",
+    "disc": "E.O. Português"
+  },
+  "Terça|A6|3º ANO - 301": {
+    "prof": "ELINELSON",
+    "disc": "Aprof. Humanas"
+  },
+  "Terça|A6|3º ANO - 302": {
+    "prof": "VANESA",
+    "disc": "PPA"
+  },
+  "Terça|A7|1º ANO - 101": {
+    "prof": "EDMUNDO",
+    "disc": "Química"
+  },
+  "Terça|A7|1º ANO - 102": {
+    "prof": "KELSO",
+    "disc": "Arte"
+  },
+  "Terça|A7|1º ANO - 103": {
+    "prof": "JOANA",
+    "disc": "E.O. Português"
+  },
+  "Terça|A7|1º ANO - 104": {
+    "prof": "CASIANO",
+    "disc": "Aprof. Humanas"
+  },
+  "Terça|A7|2º ANO - 201": {
+    "prof": "ELENFLÁVIA",
+    "disc": "Eletiva"
+  },
+  "Terça|A7|2º ANO - 202": {
+    "prof": "REGINA",
+    "disc": "Aprof. Linguagens"
+  },
+  "Terça|A7|2º ANO - 203": {
+    "prof": "JHONATAN",
+    "disc": "PPA"
+  },
+  "Terça|A7|2º ANO - 204": {
+    "prof": "EUNICE",
+    "disc": "E.O. Português"
+  },
+  "Terça|A7|3º ANO - 301": {
+    "prof": "ELINELSON",
+    "disc": "Aprof. Humanas"
+  },
+  "Terça|A7|3º ANO - 302": {
+    "prof": "VANESA",
+    "disc": "PPA"
+  },
+  "Terça|A8|1º ANO - 101": {
+    "prof": "JHONATAN",
+    "disc": "Eletiva"
+  },
+  "Terça|A8|1º ANO - 102": {
+    "prof": "VANESA",
+    "disc": "Eletiva"
+  },
+  "Terça|A8|1º ANO - 103": {
+    "prof": "KELSO",
+    "disc": "Eletiva"
+  },
+  "Terça|A8|1º ANO - 104": {
+    "prof": "LUIZ",
+    "disc": "Aprof. Matemática"
+  },
+  "Terça|A8|2º ANO - 201": {
+    "prof": "ELINELSON",
+    "disc": "PPA"
+  },
+  "Terça|A8|2º ANO - 202": {
+    "prof": "JOANA",
+    "disc": "Eletiva"
+  },
+  "Terça|A8|2º ANO - 203": {
+    "prof": "DIJANE",
+    "disc": "Biologia"
+  },
+  "Terça|A8|2º ANO - 204": {
+    "prof": "REGINA",
+    "disc": "Proj. de Vida"
+  },
+  "Terça|A8|3º ANO - 301": {
+    "prof": "EUNICE",
+    "disc": "PPA"
+  },
+  "Terça|A8|3º ANO - 302": {
+    "prof": "ELENFLÁVIA",
+    "disc": "História"
+  },
+  "Terça|A9|1º ANO - 101": {
+    "prof": "JHONATAN",
+    "disc": "Eletiva"
+  },
+  "Terça|A9|1º ANO - 102": {
+    "prof": "VANESA",
+    "disc": "Eletiva"
+  },
+  "Terça|A9|1º ANO - 103": {
+    "prof": "KELSO",
+    "disc": "Eletiva"
+  },
+  "Terça|A9|1º ANO - 104": {
+    "prof": "LUIZ",
+    "disc": "Aprof. Matemática"
+  },
+  "Terça|A9|2º ANO - 201": {
+    "prof": "ELINELSON",
+    "disc": "PPA"
+  },
+  "Terça|A9|2º ANO - 202": {
+    "prof": "JOANA",
+    "disc": "Eletiva"
+  },
+  "Terça|A9|2º ANO - 203": {
+    "prof": "DIJANE",
+    "disc": "Biologia"
+  },
+  "Terça|A9|2º ANO - 204": {
+    "prof": "REGINA",
+    "disc": "Proj. de Vida"
+  },
+  "Terça|A9|3º ANO - 301": {
+    "prof": "EUNICE",
+    "disc": "PPA"
+  },
+  "Terça|A9|3º ANO - 302": {
+    "prof": "ELENFLÁVIA",
+    "disc": "História"
+  },
+  "Quarta|A1|1º ANO - 101": {
+    "prof": "LUCIDALVA",
+    "disc": "Matemática"
+  },
+  "Quarta|A1|1º ANO - 102": {
+    "prof": "ELINELSON",
+    "disc": "Filosofia"
+  },
+  "Quarta|A1|1º ANO - 103": {
+    "prof": "DIJANE",
+    "disc": "Biologia"
+  },
+  "Quarta|A1|1º ANO - 104": {
+    "prof": "EDMUNDO",
+    "disc": "Química"
+  },
+  "Quarta|A1|2º ANO - 201": {
+    "prof": "LUCÍLIO",
+    "disc": "Geografia"
+  },
+  "Quarta|A1|2º ANO - 202": {
+    "prof": "CASIANO",
+    "disc": "Sociologia"
+  },
+  "Quarta|A1|2º ANO - 203": {
+    "prof": "REGINA",
+    "disc": "Português"
+  },
+  "Quarta|A1|2º ANO - 204": {
+    "prof": "EUNICE",
+    "disc": "Português"
+  },
+  "Quarta|A1|3º ANO - 301": {
+    "prof": "LUIZ",
+    "disc": "Matemática"
+  },
+  "Quarta|A1|3º ANO - 302": {
+    "prof": "KELSO",
+    "disc": "Arte"
+  },
+  "Quarta|A2|1º ANO - 101": {
+    "prof": "LUCIDALVA",
+    "disc": "Matemática"
+  },
+  "Quarta|A2|1º ANO - 102": {
+    "prof": "ELINELSON",
+    "disc": "Filosofia"
+  },
+  "Quarta|A2|1º ANO - 103": {
+    "prof": "VANESA",
+    "disc": "Aprof. Linguagens"
+  },
+  "Quarta|A2|1º ANO - 104": {
+    "prof": "EDMUNDO",
+    "disc": "Química"
+  },
+  "Quarta|A2|2º ANO - 201": {
+    "prof": "LUCÍLIO",
+    "disc": "Geografia"
+  },
+  "Quarta|A2|2º ANO - 202": {
+    "prof": "RODRIGO",
+    "disc": "Prát. Experimentais"
+  },
+  "Quarta|A2|2º ANO - 203": {
+    "prof": "REGINA",
+    "disc": "Português"
+  },
+  "Quarta|A2|2º ANO - 204": {
+    "prof": "EUNICE",
+    "disc": "Português"
+  },
+  "Quarta|A2|3º ANO - 301": {
+    "prof": "LUIZ",
+    "disc": "Matemática"
+  },
+  "Quarta|A2|3º ANO - 302": {
+    "prof": "ELIANA",
+    "disc": "Português"
+  },
+  "Quarta|A3|1º ANO - 101": {
+    "prof": "KELSO",
+    "disc": "Arte"
+  },
+  "Quarta|A3|1º ANO - 102": {
+    "prof": "VANESA",
+    "disc": "Aprof. Linguagens"
+  },
+  "Quarta|A3|1º ANO - 103": {
+    "prof": "DIJANE",
+    "disc": "Biologia"
+  },
+  "Quarta|A3|1º ANO - 104": {
+    "prof": "LOUISE",
+    "disc": "Física"
+  },
+  "Quarta|A3|2º ANO - 201": {
+    "prof": "CASIANO",
+    "disc": "Sociologia"
+  },
+  "Quarta|A3|2º ANO - 202": {
+    "prof": "LUCÍLIO",
+    "disc": "Geografia"
+  },
+  "Quarta|A3|2º ANO - 203": {
+    "prof": "ELENFLÁVIA",
+    "disc": "História"
+  },
+  "Quarta|A3|2º ANO - 204": {
+    "prof": "RODRIGO",
+    "disc": "Química"
+  },
+  "Quarta|A3|3º ANO - 301": {
+    "prof": "EDMUNDO",
+    "disc": "Química"
+  },
+  "Quarta|A3|3º ANO - 302": {
+    "prof": "ELIANA",
+    "disc": "E.O. Português"
+  },
+  "Quarta|A4|1º ANO - 101": {
+    "prof": "KELSO",
+    "disc": "Arte"
+  },
+  "Quarta|A4|1º ANO - 102": {
+    "prof": "VANESA",
+    "disc": "Aprof. Linguagens"
+  },
+  "Quarta|A4|1º ANO - 103": {
+    "prof": "LOUISE",
+    "disc": "Física"
+  },
+  "Quarta|A4|1º ANO - 104": {
+    "prof": "LUIZ",
+    "disc": "Matemática"
+  },
+  "Quarta|A4|2º ANO - 201": {
+    "prof": "EUNICE",
+    "disc": "Português"
+  },
+  "Quarta|A4|2º ANO - 202": {
+    "prof": "LUCÍLIO",
+    "disc": "Geografia"
+  },
+  "Quarta|A4|2º ANO - 203": {
+    "prof": "ELENFLÁVIA",
+    "disc": "História"
+  },
+  "Quarta|A4|2º ANO - 204": {
+    "prof": "RODRIGO",
+    "disc": "Química"
+  },
+  "Quarta|A4|3º ANO - 301": {
+    "prof": "EDMUNDO",
+    "disc": "Química"
+  },
+  "Quarta|A4|3º ANO - 302": {
+    "prof": "MILTON",
+    "disc": "Matemática"
+  },
+  "Quarta|A5|1º ANO - 101": {
+    "prof": "VANESA",
+    "disc": "Inglês"
+  },
+  "Quarta|A5|1º ANO - 102": {
+    "prof": "EDMUNDO",
+    "disc": "Prát. Experimentais"
+  },
+  "Quarta|A5|1º ANO - 103": {
+    "prof": "LOUISE",
+    "disc": "Física"
+  },
+  "Quarta|A5|1º ANO - 104": {
+    "prof": "LUIZ",
+    "disc": "Matemática"
+  },
+  "Quarta|A5|2º ANO - 201": {
+    "prof": "EUNICE",
+    "disc": "Português"
+  },
+  "Quarta|A5|2º ANO - 202": {
+    "prof": "KELSO",
+    "disc": "Arte"
+  },
+  "Quarta|A5|2º ANO - 203": {
+    "prof": "RODRIGO",
+    "disc": "Química"
+  },
+  "Quarta|A5|2º ANO - 204": {
+    "prof": "ELINELSON",
+    "disc": "Filosofia"
+  },
+  "Quarta|A5|3º ANO - 301": {
+    "prof": "JHONATAN",
+    "disc": "Ed. Física"
+  },
+  "Quarta|A5|3º ANO - 302": {
+    "prof": "MILTON",
+    "disc": "Matemática"
+  },
+  "Quarta|A6|1º ANO - 101": {
+    "prof": "ELINELSON",
+    "disc": "Filosofia"
+  },
+  "Quarta|A6|1º ANO - 102": {
+    "prof": "LUCIDALVA",
+    "disc": "E.O. Matemática"
+  },
+  "Quarta|A6|1º ANO - 103": {
+    "prof": "MILTON",
+    "disc": "E.O. Matemática"
+  },
+  "Quarta|A6|1º ANO - 104": {
+    "prof": "ELENFLÁVIA",
+    "disc": "História"
+  },
+  "Quarta|A6|2º ANO - 201": {
+    "prof": "CASIANO",
+    "disc": "Aprof. Humanas"
+  },
+  "Quarta|A6|2º ANO - 202": {
+    "prof": "DIJANE",
+    "disc": "Biologia"
+  },
+  "Quarta|A6|2º ANO - 203": {
+    "prof": "REGINA",
+    "disc": "E.O. Português"
+  },
+  "Quarta|A6|2º ANO - 204": {
+    "prof": "MARÍLIA",
+    "disc": "Técnico"
+  },
+  "Quarta|A6|3º ANO - 301": {
+    "prof": "ELIANA",
+    "disc": "Aprof. Linguagens"
+  },
+  "Quarta|A6|3º ANO - 302": {
+    "prof": "JHONATAN",
+    "disc": "Eletiva"
+  },
+  "Quarta|A7|1º ANO - 101": {
+    "prof": "ELINELSON",
+    "disc": "Filosofia"
+  },
+  "Quarta|A7|1º ANO - 102": {
+    "prof": "LUCIDALVA",
+    "disc": "E.O. Matemática"
+  },
+  "Quarta|A7|1º ANO - 103": {
+    "prof": "MILTON",
+    "disc": "E.O. Matemática"
+  },
+  "Quarta|A7|1º ANO - 104": {
+    "prof": "ELENFLÁVIA",
+    "disc": "História"
+  },
+  "Quarta|A7|2º ANO - 201": {
+    "prof": "CASIANO",
+    "disc": "Aprof. Humanas"
+  },
+  "Quarta|A7|2º ANO - 202": {
+    "prof": "ROGÉRIO",
+    "disc": "E.O. Matemática"
+  },
+  "Quarta|A7|2º ANO - 203": {
+    "prof": "REGINA",
+    "disc": "E.O. Português"
+  },
+  "Quarta|A7|2º ANO - 204": {
+    "prof": "MARÍLIA",
+    "disc": "Técnico"
+  },
+  "Quarta|A7|3º ANO - 301": {
+    "prof": "ELIANA",
+    "disc": "Aprof. Linguagens"
+  },
+  "Quarta|A7|3º ANO - 302": {
+    "prof": "JHONATAN",
+    "disc": "Eletiva"
+  },
+  "Quinta|A1|1º ANO - 101": {
+    "prof": "LUCIDALVA",
+    "disc": "Matemática"
+  },
+  "Quinta|A1|1º ANO - 102": {
+    "prof": "ELENFLÁVIA",
+    "disc": "História"
+  },
+  "Quinta|A1|1º ANO - 103": {
+    "prof": "LUCÍLIO",
+    "disc": "Geografia"
+  },
+  "Quinta|A1|1º ANO - 104": {
+    "prof": "CASIANO",
+    "disc": "Sociologia"
+  },
+  "Quinta|A1|2º ANO - 201": {
+    "prof": "LOUISE",
+    "disc": "Física"
+  },
+  "Quinta|A1|2º ANO - 202": {
+    "prof": "EUNICE",
+    "disc": "Português"
+  },
+  "Quinta|A1|2º ANO - 203": {
+    "prof": "REGINA",
+    "disc": "Aprof. Linguagens"
+  },
+  "Quinta|A1|2º ANO - 204": {
+    "prof": "MARÍLIA",
+    "disc": "Técnico"
+  },
+  "Quinta|A1|3º ANO - 301": {
+    "prof": "ROGÉRIO",
+    "disc": "Aprof. Matemática"
+  },
+  "Quinta|A1|3º ANO - 302": {
+    "prof": "MILTON",
+    "disc": "Matemática"
+  },
+  "Quinta|A2|1º ANO - 101": {
+    "prof": "LUCIDALVA",
+    "disc": "E.O. Matemática"
+  },
+  "Quinta|A2|1º ANO - 102": {
+    "prof": "ELENFLÁVIA",
+    "disc": "História"
+  },
+  "Quinta|A2|1º ANO - 103": {
+    "prof": "LUCÍLIO",
+    "disc": "Geografia"
+  },
+  "Quinta|A2|1º ANO - 104": {
+    "prof": "CASIANO",
+    "disc": "Sociologia"
+  },
+  "Quinta|A2|2º ANO - 201": {
+    "prof": "LOUISE",
+    "disc": "Física"
+  },
+  "Quinta|A2|2º ANO - 202": {
+    "prof": "EUNICE",
+    "disc": "Português"
+  },
+  "Quinta|A2|2º ANO - 203": {
+    "prof": "REGINA",
+    "disc": "Aprof. Linguagens"
+  },
+  "Quinta|A2|2º ANO - 204": {
+    "prof": "MARÍLIA",
+    "disc": "Técnico"
+  },
+  "Quinta|A2|3º ANO - 301": {
+    "prof": "ROGÉRIO",
+    "disc": "Aprof. Matemática"
+  },
+  "Quinta|A2|3º ANO - 302": {
+    "prof": "MILTON",
+    "disc": "Matemática"
+  },
+  "Quinta|A3|1º ANO - 101": {
+    "prof": "REGINA",
+    "disc": "Proj. de Vida"
+  },
+  "Quinta|A3|1º ANO - 102": {
+    "prof": "LUCIDALVA",
+    "disc": "Aprof. Matemática"
+  },
+  "Quinta|A3|1º ANO - 103": {
+    "prof": "KELSO",
+    "disc": "Arte"
+  },
+  "Quinta|A3|1º ANO - 104": {
+    "prof": "LOUISE",
+    "disc": "Física"
+  },
+  "Quinta|A3|2º ANO - 201": {
+    "prof": "ROGÉRIO",
+    "disc": "E.O. Matemática"
+  },
+  "Quinta|A3|2º ANO - 202": {
+    "prof": "RODRIGO",
+    "disc": "Química"
+  },
+  "Quinta|A3|2º ANO - 203": {
+    "prof": "MILTON",
+    "disc": "Matemática"
+  },
+  "Quinta|A3|2º ANO - 204": {
+    "prof": "MARÍLIA",
+    "disc": "Técnico"
+  },
+  "Quinta|A3|3º ANO - 301": {
+    "prof": "LUCÍLIO",
+    "disc": "Ed. Ambiental"
+  },
+  "Quinta|A3|3º ANO - 302": {
+    "prof": "CASIANO",
+    "disc": "Sociologia"
+  },
+  "Quinta|A4|1º ANO - 101": {
+    "prof": "ELENFLÁVIA",
+    "disc": "História"
+  },
+  "Quinta|A4|1º ANO - 102": {
+    "prof": "CASIANO",
+    "disc": "Sociologia"
+  },
+  "Quinta|A4|1º ANO - 103": {
+    "prof": "KELSO",
+    "disc": "Arte"
+  },
+  "Quinta|A4|1º ANO - 104": {
+    "prof": "MARÍLIA",
+    "disc": "Técnico"
+  },
+  "Quinta|A4|2º ANO - 201": {
+    "prof": "ROGÉRIO",
+    "disc": "E.O. Matemática"
+  },
+  "Quinta|A4|2º ANO - 202": {
+    "prof": "RODRIGO",
+    "disc": "Química"
+  },
+  "Quinta|A4|2º ANO - 203": {
+    "prof": "MILTON",
+    "disc": "Matemática"
+  },
+  "Quinta|A4|2º ANO - 204": {
+    "prof": "LUIZ",
+    "disc": "E.O. Matemática"
+  },
+  "Quinta|A4|3º ANO - 301": {
+    "prof": "LOUISE",
+    "disc": "Física"
+  },
+  "Quinta|A4|3º ANO - 302": {
+    "prof": "LUCÍLIO",
+    "disc": "Geografia"
+  },
+  "Quinta|A5|1º ANO - 101": {
+    "prof": "ELENFLÁVIA",
+    "disc": "História"
+  },
+  "Quinta|A5|1º ANO - 102": {
+    "prof": "CASIANO",
+    "disc": "Sociologia"
+  },
+  "Quinta|A5|1º ANO - 103": {
+    "prof": "MILTON",
+    "disc": "Matemática"
+  },
+  "Quinta|A5|1º ANO - 104": {
+    "prof": "MARÍLIA",
+    "disc": "Técnico"
+  },
+  "Quinta|A5|2º ANO - 201": {
+    "prof": "REGINA",
+    "disc": "Proj. de Vida"
+  },
+  "Quinta|A5|2º ANO - 202": {
+    "prof": "ROGÉRIO",
+    "disc": "E.O. Matemática"
+  },
+  "Quinta|A5|2º ANO - 203": {
+    "prof": "RODRIGO",
+    "disc": "Química"
+  },
+  "Quinta|A5|2º ANO - 204": {
+    "prof": "LUIZ",
+    "disc": "Matemática"
+  },
+  "Quinta|A5|3º ANO - 301": {
+    "prof": "LOUISE",
+    "disc": "Física"
+  },
+  "Quinta|A5|3º ANO - 302": {
+    "prof": "LUCÍLIO",
+    "disc": "Geografia"
+  },
+  "Quinta|A6|1º ANO - 101": {
+    "prof": "LUCÍLIO",
+    "disc": "Geografia"
+  },
+  "Quinta|A6|1º ANO - 102": {
+    "prof": "LOUISE",
+    "disc": "Física"
+  },
+  "Quinta|A6|1º ANO - 103": {
+    "prof": "ELENFLÁVIA",
+    "disc": "História"
+  },
+  "Quinta|A6|1º ANO - 104": {
+    "prof": "REGINA",
+    "disc": "Português"
+  },
+  "Quinta|A6|2º ANO - 201": {
+    "prof": "RODRIGO",
+    "disc": "Aprof. Natureza"
+  },
+  "Quinta|A6|2º ANO - 202": {
+    "prof": "ROGÉRIO",
+    "disc": "Aprof. Matemática"
+  },
+  "Quinta|A6|2º ANO - 203": {
+    "prof": "CASIANO",
+    "disc": "Aprof. Humanas"
+  },
+  "Quinta|A6|2º ANO - 204": {
+    "prof": "LUIZ",
+    "disc": "E.O. Matemática"
+  },
+  "Quinta|A6|3º ANO - 301": {
+    "prof": "ELIANA",
+    "disc": "E.O. Português"
+  },
+  "Quinta|A6|3º ANO - 302": {
+    "prof": "EDMUNDO",
+    "disc": "Aprof. Natureza"
+  },
+  "Quinta|A7|1º ANO - 101": {
+    "prof": "LUCÍLIO",
+    "disc": "Geografia"
+  },
+  "Quinta|A7|1º ANO - 102": {
+    "prof": "LOUISE",
+    "disc": "Física"
+  },
+  "Quinta|A7|1º ANO - 103": {
+    "prof": "ELENFLÁVIA",
+    "disc": "História"
+  },
+  "Quinta|A7|1º ANO - 104": {
+    "prof": "MARÍLIA",
+    "disc": "Técnico"
+  },
+  "Quinta|A7|2º ANO - 201": {
+    "prof": "RODRIGO",
+    "disc": "Química"
+  },
+  "Quinta|A7|2º ANO - 202": {
+    "prof": "ROGÉRIO",
+    "disc": "Aprof. Matemática"
+  },
+  "Quinta|A7|2º ANO - 203": {
+    "prof": "CASIANO",
+    "disc": "Aprof. Humanas"
+  },
+  "Quinta|A7|2º ANO - 204": {
+    "prof": "REGINA",
+    "disc": "Proj. de Vida"
+  },
+  "Quinta|A7|3º ANO - 301": {
+    "prof": "ELIANA",
+    "disc": "E.O. Português"
+  },
+  "Quinta|A7|3º ANO - 302": {
+    "prof": "EDMUNDO",
+    "disc": "Aprof. Natureza"
+  },
+  "Quinta|A8|1º ANO - 101": {
+    "prof": "LUCIDALVA",
+    "disc": "E.O. Matemática"
+  },
+  "Quinta|A8|1º ANO - 102": {
+    "prof": "LUCÍLIO",
+    "disc": "Geografia"
+  },
+  "Quinta|A8|1º ANO - 103": {
+    "prof": "RODRIGO",
+    "disc": "Aprof. Natureza"
+  },
+  "Quinta|A8|1º ANO - 104": {
+    "prof": "MARÍLIA",
+    "disc": "Técnico"
+  },
+  "Quinta|A8|2º ANO - 201": {
+    "prof": "ELENFLÁVIA",
+    "disc": "História"
+  },
+  "Quinta|A8|2º ANO - 202": {
+    "prof": "CASIANO",
+    "disc": "Aprof. Humanas"
+  },
+  "Quinta|A8|2º ANO - 203": {
+    "prof": "ROGÉRIO",
+    "disc": "Eletiva"
+  },
+  "Quinta|A8|2º ANO - 204": {
+    "prof": "EUNICE",
+    "disc": "Português"
+  },
+  "Quinta|A8|3º ANO - 301": {
+    "prof": "EDMUNDO",
+    "disc": "Aprof. Natureza"
+  },
+  "Quinta|A8|3º ANO - 302": {
+    "prof": "REGINA",
+    "disc": "Aprof. Linguagens"
+  },
+  "Quinta|A9|1º ANO - 101": {
+    "prof": "LOUISE",
+    "disc": "Física"
+  },
+  "Quinta|A9|1º ANO - 102": {
+    "prof": "LUCÍLIO",
+    "disc": "Geografia"
+  },
+  "Quinta|A9|1º ANO - 103": {
+    "prof": "RODRIGO",
+    "disc": "Aprof. Natureza"
+  },
+  "Quinta|A9|1º ANO - 104": {
+    "prof": "MARÍLIA",
+    "disc": "Técnico"
+  },
+  "Quinta|A9|2º ANO - 201": {
+    "prof": "ELENFLÁVIA",
+    "disc": "História"
+  },
+  "Quinta|A9|2º ANO - 202": {
+    "prof": "CASIANO",
+    "disc": "Aprof. Humanas"
+  },
+  "Quinta|A9|2º ANO - 203": {
+    "prof": "ROGÉRIO",
+    "disc": "Eletiva"
+  },
+  "Quinta|A9|2º ANO - 204": {
+    "prof": "EUNICE",
+    "disc": "Português"
+  },
+  "Quinta|A9|3º ANO - 301": {
+    "prof": "EDMUNDO",
+    "disc": "Aprof. Natureza"
+  },
+  "Quinta|A9|3º ANO - 302": {
+    "prof": "REGINA",
+    "disc": "Aprof. Linguagens"
+  },
+  "Sexta|A1|1º ANO - 101": {
+    "prof": "VANESA",
+    "disc": "Aprof. Linguagens"
+  },
+  "Sexta|A1|1º ANO - 102": {
+    "prof": "JOANA",
+    "disc": "E.O. Português"
+  },
+  "Sexta|A1|1º ANO - 103": {
+    "prof": "JHONATAN",
+    "disc": "Ed. Física"
+  },
+  "Sexta|A1|1º ANO - 104": {
+    "prof": "LUCÍLIO",
+    "disc": "Geografia"
+  },
+  "Sexta|A1|2º ANO - 201": {
+    "prof": "ROGÉRIO",
+    "disc": "Matemática"
+  },
+  "Sexta|A1|2º ANO - 202": {
+    "prof": "EUNICE",
+    "disc": "E.O. Português"
+  },
+  "Sexta|A1|2º ANO - 203": {
+    "prof": "RODRIGO",
+    "disc": "Prát. Experimentais"
+  },
+  "Sexta|A1|2º ANO - 204": {
+    "prof": "MARÍLIA",
+    "disc": "Técnico"
+  },
+  "Sexta|A1|3º ANO - 301": {
+    "prof": "DIJANE",
+    "disc": "Biologia"
+  },
+  "Sexta|A1|3º ANO - 302": {
+    "prof": "ELINELSON",
+    "disc": "Filosofia"
+  },
+  "Sexta|A2|1º ANO - 101": {
+    "prof": "VANESA",
+    "disc": "Aprof. Linguagens"
+  },
+  "Sexta|A2|1º ANO - 102": {
+    "prof": "JOANA",
+    "disc": "E.O. Português"
+  },
+  "Sexta|A2|1º ANO - 103": {
+    "prof": "ELINELSON",
+    "disc": "Aprof. Humanas"
+  },
+  "Sexta|A2|1º ANO - 104": {
+    "prof": "LUCÍLIO",
+    "disc": "Geografia"
+  },
+  "Sexta|A2|2º ANO - 201": {
+    "prof": "ROGÉRIO",
+    "disc": "Matemática"
+  },
+  "Sexta|A2|2º ANO - 202": {
+    "prof": "EUNICE",
+    "disc": "E.O. Português"
+  },
+  "Sexta|A2|2º ANO - 203": {
+    "prof": "LOUISE",
+    "disc": "Física"
+  },
+  "Sexta|A2|2º ANO - 204": {
+    "prof": "MARÍLIA",
+    "disc": "Técnico"
+  },
+  "Sexta|A2|3º ANO - 301": {
+    "prof": "DIJANE",
+    "disc": "Biologia"
+  },
+  "Sexta|A2|3º ANO - 302": {
+    "prof": "JHONATAN",
+    "disc": "Ed. Física"
+  },
+  "Sexta|A3|1º ANO - 101": {
+    "prof": "JOANA",
+    "disc": "Português"
+  },
+  "Sexta|A3|1º ANO - 102": {
+    "prof": "CASIANO",
+    "disc": "Aprof. Humanas"
+  },
+  "Sexta|A3|1º ANO - 103": {
+    "prof": "ELINELSON",
+    "disc": "Aprof. Humanas"
+  },
+  "Sexta|A3|1º ANO - 104": {
+    "prof": "JHONATAN",
+    "disc": "Ed. Física"
+  },
+  "Sexta|A3|2º ANO - 201": {
+    "prof": "DIJANE",
+    "disc": "Biologia"
+  },
+  "Sexta|A3|2º ANO - 202": {
+    "prof": "ROGÉRIO",
+    "disc": "Matemática"
+  },
+  "Sexta|A3|2º ANO - 203": {
+    "prof": "LOUISE",
+    "disc": "Física"
+  },
+  "Sexta|A3|2º ANO - 204": {
+    "prof": "MARÍLIA",
+    "disc": "Técnico"
+  },
+  "Sexta|A3|3º ANO - 301": {
+    "prof": "RODRIGO",
+    "disc": "Prát. Experimentais"
+  },
+  "Sexta|A3|3º ANO - 302": {
+    "prof": "LUCÍLIO",
+    "disc": "Ed. Ambiental"
+  },
+  "Sexta|A4|1º ANO - 101": {
+    "prof": "JHONATAN",
+    "disc": "Ed. Física"
+  },
+  "Sexta|A4|1º ANO - 102": {
+    "prof": "CASIANO",
+    "disc": "Aprof. Humanas"
+  },
+  "Sexta|A4|1º ANO - 103": {
+    "prof": "LUCÍLIO",
+    "disc": "Ed. Ambiental"
+  },
+  "Sexta|A4|1º ANO - 104": {
+    "prof": "MARÍLIA",
+    "disc": "Técnico"
+  },
+  "Sexta|A4|2º ANO - 201": {
+    "prof": "DIJANE",
+    "disc": "Biologia"
+  },
+  "Sexta|A4|2º ANO - 202": {
+    "prof": "ROGÉRIO",
+    "disc": "Matemática"
+  },
+  "Sexta|A4|2º ANO - 203": {
+    "prof": "MILTON",
+    "disc": "E.O. Matemática"
+  },
+  "Sexta|A4|2º ANO - 204": {
+    "prof": "LOUISE",
+    "disc": "Física"
+  },
+  "Sexta|A4|3º ANO - 301": {
+    "prof": "ELENFLÁVIA",
+    "disc": "História"
+  },
+  "Sexta|A4|3º ANO - 302": {
+    "prof": "RODRIGO",
+    "disc": "Química"
+  },
+  "Sexta|A5|1º ANO - 101": {
+    "prof": "LOUISE",
+    "disc": "Física"
+  },
+  "Sexta|A5|1º ANO - 102": {
+    "prof": "LUCÍLIO",
+    "disc": "Ed. Ambiental"
+  },
+  "Sexta|A5|1º ANO - 103": {
+    "prof": "JOANA",
+    "disc": "Português"
+  },
+  "Sexta|A5|1º ANO - 104": {
+    "prof": "MARÍLIA",
+    "disc": "Técnico"
+  },
+  "Sexta|A5|2º ANO - 201": {
+    "prof": "ELINELSON",
+    "disc": "Filosofia"
+  },
+  "Sexta|A5|2º ANO - 202": {
+    "prof": "DIJANE",
+    "disc": "Biologia"
+  },
+  "Sexta|A5|2º ANO - 203": {
+    "prof": "MILTON",
+    "disc": "E.O. Matemática"
+  },
+  "Sexta|A5|2º ANO - 204": {
+    "prof": "CASIANO",
+    "disc": "Sociologia"
+  },
+  "Sexta|A5|3º ANO - 301": {
+    "prof": "ELENFLÁVIA",
+    "disc": "História"
+  },
+  "Sexta|A5|3º ANO - 302": {
+    "prof": "RODRIGO",
+    "disc": "Química"
+  },
+  "Sexta|A6|1º ANO - 101": {
+    "prof": "DIJANE",
+    "disc": "Biologia"
+  },
+  "Sexta|A6|1º ANO - 102": {
+    "prof": "JHONATAN",
+    "disc": "PPA"
+  },
+  "Sexta|A6|1º ANO - 103": {
+    "prof": "ROGÉRIO",
+    "disc": "Aprof. Matemática"
+  },
+  "Sexta|A6|1º ANO - 104": {
+    "prof": "LUCÍLIO",
+    "disc": "Ed. Ambiental"
+  },
+  "Sexta|A6|2º ANO - 201": {
+    "prof": "EUNICE",
+    "disc": "E.O. Português"
+  },
+  "Sexta|A6|2º ANO - 202": {
+    "prof": "RODRIGO",
+    "disc": "Aprof. Natureza"
+  },
+  "Sexta|A6|2º ANO - 203": {
+    "prof": "MILTON",
+    "disc": "Aprof. Matemática"
+  },
+  "Sexta|A6|2º ANO - 204": {
+    "prof": "VANESA",
+    "disc": "Inglês 2"
+  },
+  "Sexta|A6|3º ANO - 301": {
+    "prof": "ELENFLÁVIA",
+    "disc": "Proj. de Vida"
+  },
+  "Sexta|A6|3º ANO - 302": {
+    "prof": "LOUISE",
+    "disc": "Física"
+  },
+  "Sexta|A7|1º ANO - 101": {
+    "prof": "DIJANE",
+    "disc": "Biologia"
+  },
+  "Sexta|A7|1º ANO - 102": {
+    "prof": "JHONATAN",
+    "disc": "PPA"
+  },
+  "Sexta|A7|1º ANO - 103": {
+    "prof": "ROGÉRIO",
+    "disc": "Aprof. Matemática"
+  },
+  "Sexta|A7|1º ANO - 104": {
+    "prof": "MARÍLIA",
+    "disc": "Técnico"
+  },
+  "Sexta|A7|2º ANO - 201": {
+    "prof": "EUNICE",
+    "disc": "E.O. Português"
+  },
+  "Sexta|A7|2º ANO - 202": {
+    "prof": "RODRIGO",
+    "disc": "Aprof. Natureza"
+  },
+  "Sexta|A7|2º ANO - 203": {
+    "prof": "MILTON",
+    "disc": "Aprof. Matemática"
+  },
+  "Sexta|A7|2º ANO - 204": {
+    "prof": "VANESA",
+    "disc": "Inglês"
+  },
+  "Sexta|A7|3º ANO - 301": {
+    "prof": "ELINELSON",
+    "disc": "Filosofia"
+  },
+  "Sexta|A7|3º ANO - 302": {
+    "prof": "LOUISE",
+    "disc": "Física"
+  },
+  "Sexta|A8|1º ANO - 101": {
+    "prof": "LOUISE",
+    "disc": "Aprof. Natureza"
+  },
+  "Sexta|A8|1º ANO - 102": {
+    "prof": "VANESA",
+    "disc": "Proj. de Vida"
+  },
+  "Sexta|A8|1º ANO - 103": {
+    "prof": "JOANA",
+    "disc": "PPA"
+  },
+  "Sexta|A8|1º ANO - 104": {
+    "prof": "MARÍLIA",
+    "disc": "Técnico"
+  },
+  "Sexta|A8|2º ANO - 201": {
+    "prof": "RODRIGO",
+    "disc": "Prát. Experimentais"
+  },
+  "Sexta|A8|2º ANO - 202": {
+    "prof": "ELENFLÁVIA",
+    "disc": "História"
+  },
+  "Sexta|A8|2º ANO - 203": {
+    "prof": "CASIANO",
+    "disc": "Sociologia"
+  },
+  "Sexta|A8|2º ANO - 204": {
+    "prof": "EUNICE",
+    "disc": "Português"
+  },
+  "Sexta|A8|3º ANO - 301": {
+    "prof": "JHONATAN",
+    "disc": "Eletiva"
+  },
+  "Sexta|A8|3º ANO - 302": {
+    "prof": "MILTON",
+    "disc": "E.O. Matemática"
+  },
+  "Sexta|A9|1º ANO - 101": {
+    "prof": "LOUISE",
+    "disc": "Aprof. Natureza"
+  },
+  "Sexta|A9|1º ANO - 102": {
+    "prof": "VANESA",
+    "disc": "Inglês"
+  },
+  "Sexta|A9|1º ANO - 103": {
+    "prof": "JOANA",
+    "disc": "PPA"
+  },
+  "Sexta|A9|1º ANO - 104": {
+    "prof": "MARÍLIA",
+    "disc": "Técnico"
+  },
+  "Sexta|A9|2º ANO - 201": {
+    "prof": "RODRIGO",
+    "disc": "Aprof. Natureza"
+  },
+  "Sexta|A9|2º ANO - 202": {
+    "prof": "ELENFLÁVIA",
+    "disc": "História"
+  },
+  "Sexta|A9|2º ANO - 203": {
+    "prof": "ELINELSON",
+    "disc": "Filosofia"
+  },
+  "Sexta|A9|2º ANO - 204": {
+    "prof": "DIJANE",
+    "disc": "Ed. Ambiental"
+  },
+  "Sexta|A9|3º ANO - 301": {
+    "prof": "JHONATAN",
+    "disc": "Eletiva"
+  },
+  "Sexta|A9|3º ANO - 302": {
+    "prof": "MILTON",
+    "disc": "E.O. Matemática"
+  }
+}

@@ -1,0 +1,2852 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Horário Escolar — Sistema de Horários</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    darkMode: 'class',
+    theme: {
+      extend: {
+        colors: {
+          primary: { 50:'#fff7ed', 100:'#ffedd5', 200:'#fed7aa', 300:'#fdba74', 400:'#fb923c', 500:'#FFA203', 600:'#ea580c', 700:'#c2410c', 800:'#9a3412', 900:'#7c2d12' },
+          surface: { 50:'#fafafa', 100:'#f4f4f5', 200:'#e4e4e7', 300:'#d4d4d8', 700:'#3f3f46', 800:'#27272a', 850:'#1f1f23', 900:'#18181b', 950:'#09090b' }
+        },
+        animation: { 'fade-in':'fadeIn .3s ease-out', 'slide-in':'slideIn .25s ease-out' },
+        keyframes: {
+          fadeIn: { '0%':{opacity:'0'}, '100%':{opacity:'1'} },
+          slideIn: { '0%':{opacity:'0',transform:'translateY(8px)'}, '100%':{opacity:'1',transform:'translateY(0)'} }
+        }
+      }
+    }
+  };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<script src="data_embed.js"></script>
+<script src="js/modules/pdf-parser.js"></script>
+<script src="js/modules/room-mapper.js"></script>
+<script src="js/modules/reference-mapper.js"></script>
+<script src="js/modules/maritaca-client.js"></script>
+<script src="js/maritaca-config.local.js"></script>
+<style>
+  body { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  .glass { background: rgba(39,39,42,0.6); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.08); }
+  .light .glass { background: rgba(255,255,255,0.95); border: 1px solid rgba(0,0,0,0.12); }
+  .area-Linguagens { background: rgba(96, 165, 250, 0.15); border-left: 3px solid #60a5fa; }
+  .area-Matemática { background: rgba(251, 146, 60, 0.15); border-left: 3px solid #fb923c; }
+  .area-Natureza   { background: rgba(74, 222, 128, 0.15); border-left: 3px solid #4ade80; }
+  .area-Humanas    { background: rgba(250, 204, 21, 0.15); border-left: 3px solid #facc15; }
+  .area-Itinerário { background: rgba(168, 162, 158, 0.15); border-left: 3px solid #a8a29e; }
+  .area-Clube      { background: rgba(244, 114, 182, 0.2); border-left: 3px solid #f472b6; }
+  .area-Planejamento { background: rgba(234, 179, 8, 0.25); border-left: 3px solid #eab308; }
+
+  .light .area-Linguagens { background: #dbeafe; border-left-color: #0284c7; }
+  .light .area-Matemática { background: #ffedd5; border-left-color: #d97706; }
+  .light .area-Natureza   { background: #dcfce7; border-left-color: #059669; }
+  .light .area-Humanas    { background: #fef9c3; border-left-color: #b45309; }
+  .light .area-Itinerário { background: #f1f5f9; border-left-color: #57534e; }
+  .light .area-Clube      { background: #fce7f3; border-left-color: #be185d; }
+  .light .area-Planejamento { background: #fef3c7; border-left-color: #b45309; }
+
+  .grid-cell { transition: all .15s; min-height: 60px; }
+  .grid-cell:hover { transform: scale(1.02); z-index: 10; box-shadow: 0 4px 20px rgba(255,162,3,0.3); }
+  .grid-cell.editable { cursor: pointer; }
+  .grid-cell.editable:hover { outline: 2px solid #FFA203; }
+
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: #52525b; border-radius: 4px; }
+  ::-webkit-scrollbar-thumb:hover { background: #71717a; }
+  .light ::-webkit-scrollbar-thumb { background: #cbd5e1; }
+
+  .light input, .light select, .light textarea { background: #f3f4f6 !important; border-color: #d1d5db !important; color: #1f2937 !important; }
+  .light input::placeholder { color: #9ca3af; }
+
+  .nav-item { transition: all .15s; }
+  .nav-item.active { background: linear-gradient(135deg, rgba(255,162,3,0.2), rgba(255,162,3,0.05)); border-left: 3px solid #FFA203; color:#FFA203; }
+  .nav-item:not(.active):hover { background: rgba(255,255,255,0.05); }
+  .light .nav-item { color: #374151; }
+  .light .nav-item.active { background: linear-gradient(135deg, rgba(255,162,3,0.15), rgba(255,162,3,0.05)); color: #d97706; border-left-color: #d97706; }
+  .light .nav-item:not(.active):hover { background: rgba(0,0,0,0.06); }
+
+  .badge { display:inline-flex; align-items:center; padding: 2px 8px; border-radius:999px; font-size:11px; font-weight:600; }
+  .stat-card { transition: all .2s; }
+  .stat-card:hover { transform: translateY(-2px); }
+
+  .conflict-indicator { animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.5} }
+
+  .light .bg-surface-800 { background: #e5e7eb !important; color: #1f2937 !important; }
+  .light .bg-surface-700 { background: #d1d5db !important; color: #1f2937 !important; }
+  .light .bg-red-600, .light .bg-green-600, .light .bg-blue-600 { color: white !important; }
+  .light .text-surface-400 { color: #6b7280 !important; }
+  .light .text-surface-100 { color: #1f2937 !important; }
+
+  @media print {
+    .no-print { display:none !important; }
+    body { background:white !important; color:black !important; }
+    .glass { background:white !important; border:1px solid #ccc !important; }
+  }
+
+  .ico { width: 18px; height: 18px; }
+  table.grade-table td { border: 1px solid rgba(255,255,255,0.08); padding: 0; }
+  .light table.grade-table td { border-color: #e5e7eb; }
+
+  .light body { background: #f9fafb; color: #111827; }
+  .light h1, .light h2, .light h3, .light h4, .light h5, .light h6 { color: #111827; }
+  .light p, .light span, .light div { color: #374151; }
+
+  .light button { color: #1f2937; }
+  .light button:not(:disabled) { background: #e5e7eb; }
+  .light button:hover { background: #d1d5db; }
+
+  .light .stat-card { background: #ffffff; border: 1px solid #e5e7eb; }
+  .light .badge { background: #dbeafe; color: #0284c7; }
+
+  .light div[style*="background: rgba(39,39,42"] { background: #f3f4f6 !important; }
+  .light div[class*="space-y"], .light div[class*="rounded-lg"] { color: #1f2937; }
+
+  .light [class*="bg-gray"], .light [class*="bg-slate"] { background: #f3f4f6 !important; color: #1f2937 !important; }
+
+  .light .bg-black, .light .bg-surface-950, .light [style*="background: rgba(9,9,11"] { background: #e5e7eb !important; color: #1f2937 !important; }
+  .light tr { background: transparent !important; }
+  .light tr:not(:last-child) { border-bottom: 1px solid #e5e7eb; }
+
+  .light td:first-child { background: #f3f4f6 !important; color: #d97706 !important; }
+  .light table td[style*="background"] { background: transparent !important; }
+</style>
+</head>
+<body class="bg-surface-950 text-surface-100 transition-colors duration-300">
+
+<div class="flex min-h-screen">
+
+  <!-- SIDEBAR -->
+  <aside class="no-print w-64 glass border-r border-white/10 flex flex-col flex-shrink-0">
+    <div class="p-5 border-b border-white/10">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-lg bg-primary-500 flex items-center justify-center text-surface-950 font-black text-xl">H</div>
+        <div>
+          <h1 class="font-bold text-lg leading-tight">Horário Escolar</h1>
+          <p class="text-xs text-surface-400">Gestão de Grade</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Escola selector -->
+    <div class="p-4 border-b border-white/10">
+      <label class="text-xs text-surface-400 font-medium block mb-1">ESCOLA</label>
+      <select id="schoolSelect" onchange="switchSchool()" class="w-full bg-surface-800 text-surface-100 px-3 py-2 rounded text-sm border border-white/10"></select>
+      <div class="flex gap-1 mt-2">
+        <button onclick="newSchool()" class="flex-1 text-xs bg-surface-800 hover:bg-surface-700 px-2 py-1 rounded" title="Nova escola">+ Nova</button>
+        <button onclick="deleteSchool()" class="flex-1 text-xs bg-surface-800 hover:bg-red-900 px-2 py-1 rounded" title="Apagar">🗑</button>
+      </div>
+    </div>
+
+    <!-- Nav -->
+    <nav class="flex-1 py-3">
+      <button onclick="setView('dashboard')" class="nav-item w-full flex items-center gap-3 px-5 py-3 text-sm active" data-view="dashboard">
+        <i data-lucide="layout-dashboard" class="ico"></i> Dashboard
+      </button>
+      <button onclick="setView('turmas')" class="nav-item w-full flex items-center gap-3 px-5 py-3 text-sm" data-view="turmas">
+        <i data-lucide="users" class="ico"></i> Por Turma
+      </button>
+      <button onclick="setView('profs')" class="nav-item w-full flex items-center gap-3 px-5 py-3 text-sm" data-view="profs">
+        <i data-lucide="graduation-cap" class="ico"></i> Por Professor
+      </button>
+      <button onclick="setView('salas')" class="nav-item w-full flex items-center gap-3 px-5 py-3 text-sm" data-view="salas">
+        <i data-lucide="door-open" class="ico"></i> Por Sala
+      </button>
+      <button onclick="setView('completo')" class="nav-item w-full flex items-center gap-3 px-5 py-3 text-sm" data-view="completo">
+        <i data-lucide="grid-3x3" class="ico"></i> Quadro Completo
+      </button>
+      <button onclick="setView('regras')" class="nav-item w-full flex items-center gap-3 px-5 py-3 text-sm" data-view="regras">
+        <i data-lucide="settings" class="ico"></i> Regras
+      </button>
+      <button onclick="setView('auditoria')" class="nav-item w-full flex items-center gap-3 px-5 py-3 text-sm" data-view="auditoria">
+        <i data-lucide="shield-check" class="ico"></i> Auditoria
+      </button>
+    </nav>
+
+    <!-- Actions -->
+    <div class="p-3 border-t border-white/10 space-y-1">
+      <div class="relative">
+        <button onclick="toggleExportMenu()" class="w-full flex items-center gap-2 px-3 py-2 text-sm bg-red-600/20 hover:bg-red-600/40 text-red-300 rounded transition">
+          <i data-lucide="file-text" class="ico"></i> Exportar PDF <i data-lucide="chevron-down" class="ico ml-auto w-3 h-3"></i>
+        </button>
+        <div id="exportMenu" class="hidden absolute bottom-full left-0 right-0 mb-1 bg-surface-800 border border-white/10 rounded shadow-xl z-50 overflow-hidden">
+          <button onclick="exportPDF();toggleExportMenu()" class="w-full flex items-center gap-2 px-3 py-2.5 text-sm hover:bg-surface-700 text-red-300">
+            <i data-lucide="file-text" class="ico w-4 h-4"></i> Vista atual
+          </button>
+          <button onclick="exportFullPDF();toggleExportMenu()" class="w-full flex items-center gap-2 px-3 py-2.5 text-sm hover:bg-surface-700 text-amber-300">
+            <i data-lucide="files" class="ico w-4 h-4"></i> PDF Completo (todas as vistas)
+          </button>
+        </div>
+      </div>
+      <button onclick="exportXLSX()" class="w-full flex items-center gap-2 px-3 py-2 text-sm bg-green-600/20 hover:bg-green-600/40 text-green-300 rounded transition">
+        <i data-lucide="table" class="ico"></i> Exportar Excel
+      </button>
+      <button onclick="saveJSON()" class="w-full flex items-center gap-2 px-3 py-2 text-sm bg-blue-600/20 hover:bg-blue-600/40 text-blue-300 rounded transition">
+        <i data-lucide="save" class="ico"></i> Salvar JSON
+      </button>
+      <input type="file" id="loadFile" accept=".json" class="hidden" onchange="loadJSON(event)">
+      <button onclick="document.getElementById('loadFile').click()" class="w-full flex items-center gap-2 px-3 py-2 text-sm bg-surface-800 hover:bg-surface-700 rounded transition">
+        <i data-lucide="upload" class="ico"></i> Importar JSON
+      </button>
+      <input type="file" id="loadPDF" accept=".pdf" class="hidden" onchange="loadPDFFile(event)">
+      <button onclick="document.getElementById('loadPDF').click()" class="w-full flex items-center gap-2 px-3 py-2 text-sm bg-purple-600/20 hover:bg-purple-600/40 text-purple-300 rounded transition">
+        <i data-lucide="file-up" class="ico"></i> Importar PDF
+      </button>
+      <button onclick="openAIModal()" class="w-full flex items-center gap-2 px-3 py-2 text-sm bg-gradient-to-r from-pink-600/30 to-purple-600/30 hover:from-pink-600/50 hover:to-purple-600/50 text-pink-200 rounded transition border border-pink-500/30">
+        <i data-lucide="sparkles" class="ico"></i> Assistente IA
+      </button>
+      <button onclick="openHorariosModal()" class="w-full flex items-center gap-2 px-3 py-2 text-sm bg-amber-600/20 hover:bg-amber-600/40 text-amber-200 rounded transition">
+        <i data-lucide="clock" class="ico"></i> Editar Horários
+      </button>
+      <button onclick="openSyncModal()" class="w-full flex items-center gap-2 px-3 py-2 text-sm bg-cyan-600/20 hover:bg-cyan-600/40 text-cyan-300 rounded transition">
+        <i data-lucide="cloud-upload" class="ico"></i> Nuvem
+      </button>
+      <button onclick="toggleTheme()" class="w-full flex items-center gap-2 px-3 py-2 text-sm bg-surface-800 hover:bg-surface-700 rounded transition">
+        <i data-lucide="palette" class="ico"></i> <span id="themeLabel">Modo claro</span>
+      </button>
+    </div>
+
+    <div class="p-3 text-[10px] text-surface-500 border-t border-white/10">
+      v2.0 · horario-escolar · MIT
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="flex-1 overflow-x-auto">
+    <!-- Header -->
+    <div class="no-print sticky top-0 z-20 glass border-b border-white/10 px-6 py-4 flex items-center justify-between">
+      <div>
+        <h2 id="viewTitle" class="text-xl font-bold">Dashboard</h2>
+        <p id="viewSubtitle" class="text-xs text-surface-400 mt-0.5">Visão geral do sistema</p>
+      </div>
+      <div class="flex items-center gap-3">
+        <select id="selector" onchange="render()" class="bg-surface-800 text-surface-100 px-3 py-2 rounded text-sm border border-white/10 hidden"></select>
+        <label class="flex items-center gap-2 text-sm cursor-pointer">
+          <input type="checkbox" id="editMode" onchange="render()" class="w-4 h-4 accent-primary-500">
+          <span>Modo edição</span>
+        </label>
+      </div>
+    </div>
+
+    <div id="content" class="p-6 animate-fade-in"></div>
+  </main>
+</div>
+
+<!-- Edit Modal -->
+<div id="editModal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+  <div class="glass rounded-xl p-6 w-full max-w-md animate-slide-in">
+    <h3 class="text-lg font-bold mb-4 flex items-center gap-2"><i data-lucide="edit-3" class="ico"></i> Editar Slot</h3>
+    <div class="space-y-4">
+      <div><label class="text-xs text-surface-400 font-medium">Localização</label><div id="editSlotInfo" class="text-sm font-semibold"></div></div>
+      <div><label class="text-xs text-surface-400 font-medium">Professor</label>
+        <select id="editProf" class="w-full bg-surface-800 px-3 py-2 rounded mt-1 border border-white/10"></select>
+      </div>
+      <div><label class="text-xs text-surface-400 font-medium">Disciplina</label>
+        <input id="editDisc" type="text" class="w-full bg-surface-800 px-3 py-2 rounded mt-1 border border-white/10">
+      </div>
+      <div><label class="text-xs text-surface-400 font-medium">Sala</label>
+        <select id="editSala" class="w-full bg-surface-800 px-3 py-2 rounded mt-1 border border-white/10"></select>
+      </div>
+      <div id="editConflicts" class="text-xs"></div>
+    </div>
+    <div class="flex justify-end gap-2 mt-6">
+      <button onclick="clearSlot()" class="px-4 py-2 bg-red-600/20 text-red-300 hover:bg-red-600/40 rounded text-sm">Limpar</button>
+      <button onclick="closeEdit()" class="px-4 py-2 bg-surface-800 hover:bg-surface-700 rounded text-sm">Cancelar</button>
+      <button onclick="saveEdit()" class="px-4 py-2 bg-primary-500 hover:bg-primary-600 text-surface-950 font-semibold rounded text-sm">Salvar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Prof Edit Modal -->
+<div id="profEditModal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+  <div class="glass rounded-xl p-6 w-full max-w-lg animate-slide-in">
+    <div class="flex items-center justify-between mb-5">
+      <h3 class="text-lg font-bold flex items-center gap-2"><i data-lucide="user-cog" class="ico text-primary-500"></i> Editar Professor</h3>
+      <button onclick="closeProfEdit()" class="text-surface-400 hover:text-surface-100"><i data-lucide="x" class="ico"></i></button>
+    </div>
+    <div class="space-y-4">
+      <div>
+        <label class="text-xs text-surface-400 font-medium block mb-1">Nome atual</label>
+        <div id="profEditOrigName" class="text-sm font-semibold text-surface-300 bg-surface-900/50 px-3 py-2 rounded"></div>
+      </div>
+      <div>
+        <label class="text-xs text-surface-400 font-medium block mb-1">Novo nome <span class="text-surface-500">(deixe igual para não alterar)</span></label>
+        <input id="profEditName" type="text" class="w-full bg-surface-800 px-3 py-2 rounded border border-white/10 text-sm" placeholder="Nome do professor">
+      </div>
+      <div>
+        <label class="text-xs text-surface-400 font-medium block mb-1">Área de atuação</label>
+        <select id="profEditArea" class="w-full bg-surface-800 px-3 py-2 rounded border border-white/10 text-sm">
+          <option value="FGB">FGB — Formação Geral Básica</option>
+          <option value="Itinerário">Itinerário Formativo</option>
+          <option value="Clube">Clube / Atividade Extracurricular</option>
+          <option value="Gestão">Gestão / Coordenação</option>
+        </select>
+      </div>
+      <div>
+        <label class="text-xs text-surface-400 font-medium block mb-1">Disciplina principal</label>
+        <input id="profEditDisc" type="text" class="w-full bg-surface-800 px-3 py-2 rounded border border-white/10 text-sm" placeholder="Ex: Matemática">
+      </div>
+      <div id="profEditStats" class="text-xs text-surface-400 bg-surface-900/40 rounded p-3"></div>
+    </div>
+    <div class="flex justify-between items-center mt-6 pt-4 border-t border-white/10">
+      <button onclick="deleteProfSlots()" class="px-4 py-2 bg-red-600/20 text-red-300 hover:bg-red-600/40 rounded text-sm flex items-center gap-2">
+        <i data-lucide="trash-2" class="w-3 h-3"></i> Remover todos os slots
+      </button>
+      <div class="flex gap-2">
+        <button onclick="closeProfEdit()" class="px-4 py-2 bg-surface-800 hover:bg-surface-700 rounded text-sm">Cancelar</button>
+        <button onclick="saveProfEdit()" class="px-4 py-2 bg-primary-500 hover:bg-primary-600 text-surface-950 font-semibold rounded text-sm">Salvar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Sync Modal -->
+<div id="syncModal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+  <div class="glass rounded-xl p-6 w-full max-w-md animate-slide-in">
+    <h3 class="text-lg font-bold mb-4 flex items-center gap-2"><i data-lucide="cloud-upload" class="ico"></i> Sincronizar na Nuvem</h3>
+    <div class="space-y-4">
+      <div>
+        <label class="text-xs text-surface-400 font-medium block mb-1">Email</label>
+        <input id="syncEmail" type="email" placeholder="seu@email.com" class="w-full bg-surface-800 px-3 py-2 rounded border border-white/10">
+      </div>
+      <div>
+        <label class="text-xs text-surface-400 font-medium block mb-1">URL Servidor</label>
+        <input id="syncServer" type="text" placeholder="https://seu-dominio.vercel.app" class="w-full bg-surface-800 px-3 py-2 rounded border border-white/10" value="https://horario-escolar-git-main-seu.vercel.app">
+      </div>
+      <div id="syncStatus" class="text-xs text-surface-400"></div>
+    </div>
+    <div class="flex justify-end gap-2 mt-6">
+      <button onclick="closeSyncModal()" class="px-4 py-2 bg-surface-800 hover:bg-surface-700 rounded text-sm">Cancelar</button>
+      <button onclick="syncToCloud()" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded text-sm">↑ Salvar</button>
+      <button onclick="syncFromCloud()" class="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded text-sm">↓ Carregar</button>
+    </div>
+  </div>
+</div>
+
+<!-- PDF Import Modal -->
+<div id="pdfModal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+  <div class="glass rounded-xl p-6 w-full max-w-4xl max-h-[90vh] overflow-y-auto animate-slide-in">
+    <div class="flex justify-between items-start mb-4">
+      <div>
+        <h3 class="text-lg font-bold flex items-center gap-2"><i data-lucide="file-up" class="ico text-purple-400"></i> Importar Horário do PDF</h3>
+        <p class="text-xs text-surface-400 mt-1">Aloca cada aula na sala temática do professor cadastrado</p>
+      </div>
+      <button onclick="closePDFModal()" class="text-surface-400 hover:text-surface-100"><i data-lucide="x" class="ico"></i></button>
+    </div>
+
+    <!-- Reference School Selector -->
+    <div class="bg-indigo-900/20 border border-indigo-500/30 rounded p-3 mb-4">
+      <label class="text-xs text-indigo-200 font-bold block mb-1">📚 Usar como referência (prof → disciplina → sala):</label>
+      <select id="pdfRefSchool" onchange="reprocessPDFWithReference()" class="w-full bg-surface-800 px-3 py-2 rounded text-sm border border-white/10"></select>
+      <div class="text-[10px] text-indigo-300 mt-1">O importador vai copiar as alocações corretas (sala temática) desta escola</div>
+    </div>
+
+    <div id="pdfStatus" class="text-sm text-surface-400 mb-4">⏳ Processando PDF...</div>
+
+    <!-- Stats -->
+    <div id="pdfStats" class="hidden grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
+      <div class="bg-surface-900/50 rounded p-3">
+        <div class="text-2xl font-bold" id="pdfStatTotal">0</div>
+        <div class="text-xs text-surface-400">Aulas no PDF</div>
+      </div>
+      <div class="bg-surface-900/50 rounded p-3">
+        <div class="text-2xl font-bold text-green-400" id="pdfStatMapped">0</div>
+        <div class="text-xs text-surface-400">✅ Com sala</div>
+      </div>
+      <div class="bg-surface-900/50 rounded p-3">
+        <div class="text-2xl font-bold text-orange-400" id="pdfStatUnknown">0</div>
+        <div class="text-xs text-surface-400">⚠️ Sem sala</div>
+      </div>
+      <div class="bg-surface-900/50 rounded p-3">
+        <div class="text-2xl font-bold text-purple-400" id="pdfStatProfs">0</div>
+        <div class="text-xs text-surface-400">👨‍🏫 Professores</div>
+      </div>
+    </div>
+
+    <!-- Unknown profs auto-register form -->
+    <div id="pdfUnknown" class="hidden bg-orange-900/20 border border-orange-700/40 rounded p-3 mb-4">
+      <div class="font-bold text-orange-400 text-sm mb-2">⚠️ Cadastrar professores novos:</div>
+      <div class="text-[11px] text-surface-400 mb-2">Atribua uma área e sala temática pra cada professor. Eles serão salvos no cadastro da escola.</div>
+      <div id="pdfUnknownProfsForm" class="space-y-2 max-h-[300px] overflow-y-auto"></div>
+      <button onclick="registerUnknownProfs()" class="mt-3 px-4 py-2 bg-orange-600 hover:bg-orange-700 text-white rounded text-sm font-bold w-full">
+        💾 Cadastrar todos e reprocessar
+      </button>
+    </div>
+
+    <!-- Preview table -->
+    <div id="pdfPreviewWrap" class="hidden mb-4">
+      <div class="text-xs text-surface-400 mb-2">Preview das primeiras 30 aulas alocadas:</div>
+      <div class="max-h-64 overflow-y-auto bg-surface-900/30 rounded">
+        <table class="w-full text-xs">
+          <thead class="sticky top-0 bg-surface-900">
+            <tr>
+              <th class="text-left px-2 py-1">Turma</th>
+              <th class="text-left px-2 py-1">Dia</th>
+              <th class="text-left px-2 py-1">Aula</th>
+              <th class="text-left px-2 py-1">Professor</th>
+              <th class="text-left px-2 py-1">Disciplina</th>
+              <th class="text-left px-2 py-1">Sala</th>
+            </tr>
+          </thead>
+          <tbody id="pdfPreview"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Actions -->
+    <div id="pdfActions" class="hidden flex flex-wrap gap-2 justify-end pt-3 border-t border-white/10">
+      <button onclick="closePDFModal()" class="px-4 py-2 bg-surface-800 hover:bg-surface-700 rounded text-sm">Cancelar</button>
+      <button onclick="applyPDFAsNewVersion()" class="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded text-sm font-bold">
+        💾 Criar como Nova Escola
+      </button>
+      <button onclick="applyPDFToCurrent()" class="px-4 py-2 bg-primary-500 hover:bg-primary-600 text-surface-950 rounded text-sm font-bold">
+        ✅ Substituir Horário Atual
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- New School Wizard Modal -->
+<div id="newSchoolModal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+  <div class="glass rounded-xl p-6 w-full max-w-2xl max-h-[90vh] overflow-y-auto animate-slide-in">
+    <div class="flex justify-between items-start mb-4">
+      <div>
+        <h3 class="text-lg font-bold flex items-center gap-2"><i data-lucide="school" class="ico text-green-400"></i> Nova Escola</h3>
+        <p class="text-xs text-surface-400 mt-1">Configure a estrutura de salas. Depois importe o PDF do horário para cadastrar os professores.</p>
+      </div>
+      <button onclick="closeNewSchoolModal()" class="text-surface-400 hover:text-surface-100"><i data-lucide="x" class="ico"></i></button>
+    </div>
+
+    <!-- Step 1: Nome -->
+    <div class="mb-4">
+      <label class="text-xs font-bold text-surface-300 block mb-1">📛 Nome da escola</label>
+      <input id="nsName" type="text" placeholder="Ex: Escola Municipal Centro" class="w-full bg-surface-800 px-3 py-2 rounded text-sm border border-white/10">
+    </div>
+
+    <!-- Step 2: Salas por área -->
+    <div class="bg-surface-900/40 rounded p-4 mb-4">
+      <div class="text-sm font-bold mb-3">🏫 Quantas salas temáticas por área?</div>
+      <div class="space-y-2" id="nsAreaInputs">
+        <div class="flex items-center gap-3">
+          <span class="w-32 text-sm">📘 Linguagens</span>
+          <input id="nsLing" type="number" min="0" max="20" value="3" class="w-20 bg-surface-800 px-2 py-1 rounded text-sm border border-white/10" oninput="updateNsTotal()">
+          <span class="text-xs text-surface-500">Português, Inglês, Arte, Ed. Física</span>
+        </div>
+        <div class="flex items-center gap-3">
+          <span class="w-32 text-sm">📐 Matemática</span>
+          <input id="nsMat" type="number" min="0" max="20" value="3" class="w-20 bg-surface-800 px-2 py-1 rounded text-sm border border-white/10" oninput="updateNsTotal()">
+          <span class="text-xs text-surface-500">Matemática</span>
+        </div>
+        <div class="flex items-center gap-3">
+          <span class="w-32 text-sm">🌿 Natureza</span>
+          <input id="nsNat" type="number" min="0" max="20" value="3" class="w-20 bg-surface-800 px-2 py-1 rounded text-sm border border-white/10" oninput="updateNsTotal()">
+          <span class="text-xs text-surface-500">Biologia, Química, Física</span>
+        </div>
+        <div class="flex items-center gap-3">
+          <span class="w-32 text-sm">🌎 Humanas</span>
+          <input id="nsHum" type="number" min="0" max="20" value="2" class="w-20 bg-surface-800 px-2 py-1 rounded text-sm border border-white/10" oninput="updateNsTotal()">
+          <span class="text-xs text-surface-500">História, Geografia, Filosofia, Sociologia</span>
+        </div>
+        <div class="flex items-center gap-3">
+          <span class="w-32 text-sm">⭐ Especiais</span>
+          <input id="nsEsp" type="number" min="0" max="20" value="3" class="w-20 bg-surface-800 px-2 py-1 rounded text-sm border border-white/10" oninput="updateNsTotal()">
+          <span class="text-xs text-surface-500">Eletivas, PPA, Itinerários</span>
+        </div>
+      </div>
+      <div class="mt-3 pt-3 border-t border-white/10 flex justify-between items-center">
+        <span class="text-xs text-surface-400">Total de salas:</span>
+        <span class="text-2xl font-bold text-green-400" id="nsTotal">14</span>
+      </div>
+    </div>
+
+    <!-- Step 3: Duração da aula -->
+    <div class="bg-surface-900/40 rounded p-4 mb-4">
+      <div class="text-sm font-bold mb-2">⏱️ Duração padrão da aula</div>
+      <div class="flex gap-3">
+        <label class="flex items-center gap-2 cursor-pointer">
+          <input type="radio" name="nsDuracao" value="50" checked class="text-primary-500">
+          <span class="text-sm">50 minutos (padrão)</span>
+        </label>
+        <label class="flex items-center gap-2 cursor-pointer">
+          <input type="radio" name="nsDuracao" value="45" class="text-primary-500">
+          <span class="text-sm">45 minutos (adaptado)</span>
+        </label>
+      </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="flex gap-2 justify-end pt-3 border-t border-white/10">
+      <button onclick="closeNewSchoolModal()" class="px-4 py-2 bg-surface-800 hover:bg-surface-700 rounded text-sm">Cancelar</button>
+      <button onclick="createSchoolFromWizard()" class="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded text-sm font-bold">
+        ✅ Criar escola
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Edit Horarios Modal -->
+<div id="horariosModal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+  <div class="glass rounded-xl p-6 w-full max-w-2xl max-h-[90vh] overflow-y-auto animate-slide-in">
+    <div class="flex justify-between items-start mb-4">
+      <div>
+        <h3 class="text-lg font-bold flex items-center gap-2"><i data-lucide="clock" class="ico text-amber-400"></i> Editar Horários da Escola</h3>
+        <p class="text-xs text-surface-400 mt-1">Configure o horário de cada aula. Útil quando a duração ou o horário de início mudam.</p>
+      </div>
+      <button onclick="closeHorariosModal()" class="text-surface-400 hover:text-surface-100"><i data-lucide="x" class="ico"></i></button>
+    </div>
+
+    <!-- Quick recompute -->
+    <div class="bg-amber-900/20 border border-amber-700/40 rounded p-3 mb-4">
+      <div class="text-xs font-bold text-amber-300 mb-2">⚡ Recalcular automaticamente</div>
+      <div class="grid grid-cols-12 gap-2 items-end">
+        <div class="col-span-4">
+          <label class="text-[10px] text-surface-400 block">Início (1ª aula)</label>
+          <input id="hrStart" type="time" value="07:30" class="w-full bg-surface-800 px-2 py-1.5 rounded text-sm border border-white/10">
+        </div>
+        <div class="col-span-3">
+          <label class="text-[10px] text-surface-400 block">Duração (min)</label>
+          <input id="hrDur" type="number" min="30" max="60" value="45" class="w-full bg-surface-800 px-2 py-1.5 rounded text-sm border border-white/10">
+        </div>
+        <div class="col-span-3">
+          <label class="text-[10px] text-surface-400 block">Intervalo (min)</label>
+          <input id="hrBreak" type="number" min="0" max="30" value="15" class="w-full bg-surface-800 px-2 py-1.5 rounded text-sm border border-white/10">
+        </div>
+        <div class="col-span-2">
+          <button onclick="recomputeHorarios()" class="w-full bg-amber-600 hover:bg-amber-700 text-white px-2 py-1.5 rounded text-xs font-bold">Aplicar</button>
+        </div>
+      </div>
+      <div class="text-[10px] text-surface-500 mt-1">Aplica após aula 2 e aula 8 (intervalos) e antes da aula 7 (almoço, 1h fixa)</div>
+    </div>
+
+    <!-- Per-aula inputs -->
+    <div id="hrAulasList" class="space-y-1.5 mb-4"></div>
+
+    <div class="flex gap-2 justify-end pt-3 border-t border-white/10">
+      <button onclick="closeHorariosModal()" class="px-4 py-2 bg-surface-800 hover:bg-surface-700 rounded text-sm">Cancelar</button>
+      <button onclick="saveHorarios()" class="px-4 py-2 bg-primary-500 hover:bg-primary-600 text-surface-950 rounded text-sm font-bold">
+        💾 Salvar horários
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- AI Assistant Modal -->
+<div id="aiModal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+  <div class="glass rounded-xl w-full max-w-3xl max-h-[90vh] flex flex-col animate-slide-in">
+    <!-- Header -->
+    <div class="flex justify-between items-start p-5 border-b border-white/10">
+      <div>
+        <h3 class="text-lg font-bold flex items-center gap-2">
+          <i data-lucide="sparkles" class="ico text-pink-400"></i>
+          Assistente IA
+          <span class="text-xs font-normal text-surface-400">Maritaca Sabiá</span>
+        </h3>
+        <p class="text-xs text-surface-400 mt-1">Peça mudanças em português · A IA aplica respeitando todas as regras</p>
+      </div>
+      <button onclick="closeAIModal()" class="text-surface-400 hover:text-surface-100"><i data-lucide="x" class="ico"></i></button>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="p-4 border-b border-white/10 bg-surface-900/30">
+      <div class="text-xs text-surface-400 mb-2 font-semibold">💫 AÇÕES RÁPIDAS</div>
+      <div class="grid grid-cols-2 gap-2">
+        <button onclick="aiQuickAction('importar_pdf')" class="text-left text-xs p-2 rounded bg-purple-600/20 hover:bg-purple-600/40 text-purple-200 flex items-center gap-2">
+          <i data-lucide="file-up" class="w-3 h-3"></i> Importar PDF com IA
+        </button>
+        <button onclick="aiQuickAction('resolver_conflitos')" class="text-left text-xs p-2 rounded bg-amber-600/20 hover:bg-amber-600/40 text-amber-200 flex items-center gap-2">
+          <i data-lucide="wand-2" class="w-3 h-3"></i> Resolver Conflitos
+        </button>
+        <button onclick="aiQuickAction('analisar')" class="text-left text-xs p-2 rounded bg-blue-600/20 hover:bg-blue-600/40 text-blue-200 flex items-center gap-2">
+          <i data-lucide="bar-chart" class="w-3 h-3"></i> Analisar Horário
+        </button>
+        <button onclick="aiQuickAction('sugestoes')" class="text-left text-xs p-2 rounded bg-green-600/20 hover:bg-green-600/40 text-green-200 flex items-center gap-2">
+          <i data-lucide="lightbulb" class="w-3 h-3"></i> Sugestões de Melhoria
+        </button>
+      </div>
+    </div>
+
+    <!-- Chat Messages -->
+    <div id="aiChat" class="flex-1 overflow-y-auto p-4 space-y-3 min-h-[300px] max-h-[400px]">
+      <div class="bg-surface-900/50 rounded-lg p-3 text-sm">
+        <div class="flex items-start gap-2">
+          <i data-lucide="sparkles" class="ico text-pink-400 mt-0.5"></i>
+          <div class="flex-1">
+            <div class="font-bold text-pink-300 text-xs mb-1">Assistente IA</div>
+            <div class="text-surface-200">Olá! Sou seu assistente para horários escolares. Como posso ajudar?</div>
+            <div class="text-xs text-surface-500 mt-2">Exemplos: "Mover Matemática para primeiras aulas", "A profa Joana só pode às terças", "Quantas aulas tem Vanesa?"</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pending Changes Preview -->
+    <div id="aiPendingChanges" class="hidden border-t border-white/10 p-4 bg-amber-900/10">
+      <div class="text-xs font-bold text-amber-300 mb-2">⏳ Mudanças Sugeridas (revisar antes de aplicar):</div>
+      <div id="aiPendingContent" class="text-xs max-h-32 overflow-y-auto"></div>
+      <div class="flex gap-2 mt-3">
+        <button onclick="aiApplyChanges()" class="flex-1 bg-green-600 hover:bg-green-700 text-white py-2 px-3 rounded text-xs font-bold">✅ Aplicar Mudanças</button>
+        <button onclick="aiRejectChanges()" class="flex-1 bg-surface-700 hover:bg-surface-600 text-white py-2 px-3 rounded text-xs">❌ Rejeitar</button>
+      </div>
+    </div>
+
+    <!-- Input -->
+    <div class="border-t border-white/10 p-4">
+      <div class="flex gap-2">
+        <input
+          type="text"
+          id="aiInput"
+          placeholder="Digite seu pedido em português..."
+          class="flex-1 bg-surface-800 px-3 py-2 rounded border border-white/10 text-sm"
+          onkeydown="if(event.key==='Enter') aiSend()"
+        >
+        <button onclick="aiSend()" id="aiSendBtn" class="bg-pink-600 hover:bg-pink-700 text-white px-4 py-2 rounded text-sm font-bold">
+          <i data-lucide="send" class="w-4 h-4"></i>
+        </button>
+      </div>
+      <div class="text-[10px] text-surface-500 mt-2 flex items-center gap-2">
+        <i data-lucide="info" class="w-3 h-3"></i>
+        <span id="aiStatus">Pronto · Modelo: sabia-3</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Hidden file input for AI PDF import -->
+<input type="file" id="aiPdfInput" accept=".pdf" class="hidden" onchange="aiHandlePDF(event)">
+
+<!-- Toast -->
+<div id="toast" class="hidden fixed bottom-6 right-6 z-50 glass rounded-lg px-4 py-3 animate-slide-in flex items-center gap-2">
+  <i data-lucide="check-circle" class="ico text-green-400"></i>
+  <span id="toastMsg" class="text-sm font-medium"></span>
+</div>
+
+<script>
+// ====== STATE ======
+let state = {
+  currentSchoolId: null,
+  schools: {},  // id -> {name, data}
+  currentView: 'dashboard',
+  editingSlot: null,
+  theme: 'dark'
+};
+
+// Default 45-min schedule starting 07:30 (used as fallback when school
+// data doesn't have horarios_aula populated)
+const HORARIOS_DEFAULT = {
+  1:'07:30-08:15', 2:'08:15-09:00', 3:'09:15-10:00', 4:'10:00-10:45', 5:'10:45-11:30',
+  6:'11:30-12:15', 7:'13:15-14:00', 8:'14:00-14:45', 9:'15:00-15:45', 10:'15:45-16:30'
+};
+
+// Dynamic getter — reads horarios_aula from current school's data.
+// Falls back to HORARIOS_DEFAULT so every aula always has a time.
+const HORARIOS = new Proxy({}, {
+  get(_, a) {
+    const d = currentData();
+    const ha = d?.horarios_aula;
+    if (ha) {
+      const v = ha[a] || ha[String(a)];
+      if (v) return v;
+    }
+    return HORARIOS_DEFAULT[a] || HORARIOS_DEFAULT[String(a)] || '';
+  }
+});
+
+// Helper: get the break/lunch time range between aula N and aula N+1
+// Returns something like "09:00-09:15" by parsing end of N and start of N+1
+function getBreakTime(aulaAntes) {
+  const before = HORARIOS[aulaAntes] || '';
+  const after  = HORARIOS[aulaAntes + 1] || '';
+  const endBefore = before.split('-')[1] || '';
+  const startAfter = after.split('-')[0] || '';
+  if (endBefore && startAfter) return `${endBefore}-${startAfter}`;
+  return '';
+}
+
+const AREA_MAP_CACHE = {};
+function rebuildAreaMap() {
+  Object.keys(AREA_MAP_CACHE).forEach(k => delete AREA_MAP_CACHE[k]);
+  const d = currentData();
+  if (!d || !d.areas) return; // safe fallback for stripped-down JSON
+  for (const [area, discs] of Object.entries(d.areas)) {
+    for (const di of discs) AREA_MAP_CACHE[di] = area;
+  }
+}
+function getArea(disc) { return AREA_MAP_CACHE[disc] || 'Itinerário'; }
+// Returns max aula number for a given day (or global max)
+function maxAula(dia) {
+  const d = currentData();
+  if (d?.meta?.aulas_por_dia) {
+    if (dia) return d.meta.aulas_por_dia[dia] || 10;
+    return Math.max(...Object.values(d.meta.aulas_por_dia));
+  }
+  return 9; // fallback for old format
+}
+
+// ====== STORAGE ======
+function loadFromStorage() {
+  try {
+    const s = localStorage.getItem('horario_escolar_schools');
+    if (s) state.schools = JSON.parse(s);
+    state.currentSchoolId = localStorage.getItem('horario_escolar_current') || null;
+    state.theme = localStorage.getItem('horario_escolar_theme') || 'dark';
+  } catch(e) { console.error(e); }
+}
+function saveToStorage() {
+  localStorage.setItem('horario_escolar_schools', JSON.stringify(state.schools));
+  if (state.currentSchoolId) localStorage.setItem('horario_escolar_current', state.currentSchoolId);
+  localStorage.setItem('horario_escolar_theme', state.theme);
+}
+
+function currentData() {
+  if (!state.currentSchoolId) return null;
+  return state.schools[state.currentSchoolId]?.data || null;
+}
+
+function bootSchool() {
+  // Auto-migrate: if stored data has older versao_grade than DEFAULT_DATA, reset to new default
+  const defaultVer = window.DEFAULT_DATA?.meta?.versao_grade || '';
+  const storedSchools = state.schools;
+  if (Object.keys(storedSchools).length > 0) {
+    const firstSchool = storedSchools[Object.keys(storedSchools)[0]];
+    const storedVer = firstSchool?.data?.meta?.versao_grade || '';
+    if (storedVer && defaultVer && storedVer !== defaultVer) {
+      // New version available — migrate the default school automatically
+      if (storedSchools['escola_001']) {
+        storedSchools['escola_001'].data = JSON.parse(JSON.stringify(window.DEFAULT_DATA));
+      }
+      console.info(`[boot] Migrated grade: ${storedVer} → ${defaultVer}`);
+    }
+  }
+  // Defensive: ensure every school has horarios_aula populated.
+  // If missing or incomplete, fill from DEFAULT_DATA's horarios_aula (or HORARIOS_DEFAULT).
+  for (const id of Object.keys(state.schools)) {
+    const sd = state.schools[id]?.data;
+    if (!sd) continue;
+    sd.horarios_aula = sd.horarios_aula || {};
+    const src = window.DEFAULT_DATA?.horarios_aula || HORARIOS_DEFAULT;
+    for (let a = 1; a <= 10; a++) {
+      const key = String(a);
+      if (!sd.horarios_aula[key] && !sd.horarios_aula[a]) {
+        sd.horarios_aula[key] = src[key] || src[a] || HORARIOS_DEFAULT[key] || HORARIOS_DEFAULT[a];
+      }
+    }
+  }
+  if (Object.keys(state.schools).length === 0) {
+    const id = 'escola_001';
+    state.schools[id] = {
+      name: 'Escola Ensino Médio Integral',
+      data: JSON.parse(JSON.stringify(window.DEFAULT_DATA))
+    };
+    state.currentSchoolId = id;
+    saveToStorage();
+  } else if (!state.currentSchoolId || !state.schools[state.currentSchoolId]) {
+    state.currentSchoolId = Object.keys(state.schools)[0];
+  }
+  rebuildAreaMap();
+}
+
+// ====== SCHOOL CRUD ======
+function populateSchoolSelect() {
+  const sel = document.getElementById('schoolSelect');
+  sel.innerHTML = '';
+  for (const [id, s] of Object.entries(state.schools)) {
+    const opt = document.createElement('option');
+    opt.value = id; opt.textContent = s.name;
+    if (id === state.currentSchoolId) opt.selected = true;
+    sel.appendChild(opt);
+  }
+}
+function switchSchool() {
+  state.currentSchoolId = document.getElementById('schoolSelect').value;
+  saveToStorage();
+  rebuildAreaMap();
+  render();
+}
+function newSchool() {
+  // Opens the wizard modal instead of a simple prompt
+  document.getElementById('nsName').value = '';
+  ['nsLing','nsMat','nsNat','nsHum','nsEsp'].forEach(id => {
+    const def = {nsLing:3, nsMat:3, nsNat:3, nsHum:2, nsEsp:3}[id];
+    document.getElementById(id).value = def;
+  });
+  updateNsTotal();
+  document.getElementById('newSchoolModal').classList.remove('hidden');
+}
+
+function closeNewSchoolModal() {
+  document.getElementById('newSchoolModal').classList.add('hidden');
+}
+
+// ====== EDITAR HORÁRIOS ======
+function openHorariosModal() {
+  const d = currentData();
+  if (!d) return;
+  d.horarios_aula = d.horarios_aula || {};
+  renderHorariosList();
+  document.getElementById('horariosModal').classList.remove('hidden');
+}
+
+function closeHorariosModal() {
+  document.getElementById('horariosModal').classList.add('hidden');
+}
+
+function renderHorariosList() {
+  const d = currentData();
+  const horarios = d.horarios_aula || {};
+  // Determine number of aulas to show: from aulas_por_dia max, fallback to 10
+  const totalAulas = Math.max(maxAula(), 10);
+
+  const html = [];
+  for (let a = 1; a <= totalAulas; a++) {
+    // Use stored value OR fallback to HORARIOS_DEFAULT so inputs are never blank
+    const current = horarios[a] || horarios[String(a)] || HORARIOS_DEFAULT[a] || HORARIOS_DEFAULT[String(a)] || '';
+    // Parse "HH:MM-HH:MM" if present
+    const [start='', end=''] = current.split('-');
+    html.push(`
+      <div class="grid grid-cols-12 gap-2 items-center bg-surface-900/40 rounded p-2">
+        <div class="col-span-2 font-bold text-sm text-amber-300">Aula ${a}</div>
+        <div class="col-span-4">
+          <input id="hrAula_${a}_start" type="time" value="${start}" class="w-full bg-surface-800 px-2 py-1 rounded text-xs border border-white/10">
+        </div>
+        <div class="col-span-1 text-center text-surface-500 text-xs">até</div>
+        <div class="col-span-4">
+          <input id="hrAula_${a}_end" type="time" value="${end}" class="w-full bg-surface-800 px-2 py-1 rounded text-xs border border-white/10">
+        </div>
+        <div class="col-span-1 text-[10px] text-surface-500 text-center" id="hrAula_${a}_dur"></div>
+      </div>
+    `);
+    // Add visual marker for breaks
+    if (a === 2 || a === 8) html.push('<div class="text-center text-xs text-surface-500 py-1">— ☕ Intervalo —</div>');
+    if (a === 6) html.push('<div class="text-center text-xs text-surface-500 py-1">— 🍽 Almoço —</div>');
+  }
+  document.getElementById('hrAulasList').innerHTML = html.join('');
+
+  // Auto-compute duration display
+  for (let a = 1; a <= totalAulas; a++) {
+    const updateDur = () => {
+      const s = document.getElementById(`hrAula_${a}_start`).value;
+      const e = document.getElementById(`hrAula_${a}_end`).value;
+      const el = document.getElementById(`hrAula_${a}_dur`);
+      if (!s || !e || !el) return;
+      const mins = (parseInt(e.slice(0,2))*60 + parseInt(e.slice(3))) - (parseInt(s.slice(0,2))*60 + parseInt(s.slice(3)));
+      el.textContent = mins > 0 ? `${mins}min` : '';
+    };
+    document.getElementById(`hrAula_${a}_start`)?.addEventListener('input', updateDur);
+    document.getElementById(`hrAula_${a}_end`)?.addEventListener('input', updateDur);
+    updateDur();
+  }
+}
+
+// Auto-recompute all horarios based on start time + duration + break
+function recomputeHorarios() {
+  const start = document.getElementById('hrStart').value || '07:30';
+  const dur = parseInt(document.getElementById('hrDur').value) || 45;
+  const brk = parseInt(document.getElementById('hrBreak').value) || 15;
+  const totalAulas = Math.max(maxAula(), 10);
+
+  const addMin = (t, m) => {
+    const [h, mn] = t.split(':').map(Number);
+    const total = h * 60 + mn + m;
+    const hh = String(Math.floor(total / 60) % 24).padStart(2, '0');
+    const mm = String(total % 60).padStart(2, '0');
+    return `${hh}:${mm}`;
+  };
+
+  let t = start;
+  for (let a = 1; a <= totalAulas; a++) {
+    const end = addMin(t, dur);
+    document.getElementById(`hrAula_${a}_start`).value = t;
+    document.getElementById(`hrAula_${a}_end`).value = end;
+    document.getElementById(`hrAula_${a}_start`).dispatchEvent(new Event('input'));
+    t = end;
+    // Intervalo após aula 2 e aula 8
+    if (a === 2 || a === 8) t = addMin(t, brk);
+    // Almoço de 1h após aula 6
+    if (a === 6) t = addMin(t, 60);
+  }
+  toast('⚡ Horários recalculados — clique em Salvar pra aplicar');
+}
+
+function saveHorarios() {
+  const d = currentData();
+  if (!d) return;
+  d.horarios_aula = {};
+  const totalAulas = Math.max(maxAula(), 10);
+  for (let a = 1; a <= totalAulas; a++) {
+    const s = document.getElementById(`hrAula_${a}_start`)?.value;
+    const e = document.getElementById(`hrAula_${a}_end`)?.value;
+    if (s && e) d.horarios_aula[String(a)] = `${s}-${e}`;
+  }
+  saveToStorage();
+  render();
+  closeHorariosModal();
+  toast('✅ Horários atualizados');
+}
+
+function updateNsTotal() {
+  const total = ['nsLing','nsMat','nsNat','nsHum','nsEsp']
+    .reduce((sum, id) => sum + (parseInt(document.getElementById(id).value) || 0), 0);
+  document.getElementById('nsTotal').textContent = total;
+}
+
+function createSchoolFromWizard() {
+  const name = document.getElementById('nsName').value.trim();
+  if (!name) { alert('Nome da escola é obrigatório'); return; }
+
+  const counts = {
+    'Linguagens': parseInt(document.getElementById('nsLing').value) || 0,
+    'Matemática': parseInt(document.getElementById('nsMat').value) || 0,
+    'Natureza':   parseInt(document.getElementById('nsNat').value) || 0,
+    'Humanas':    parseInt(document.getElementById('nsHum').value) || 0,
+    'Itinerário': parseInt(document.getElementById('nsEsp').value) || 0
+  };
+
+  const totalSalas = Object.values(counts).reduce((s,v)=>s+v, 0);
+  if (totalSalas === 0) { alert('Cadastre ao menos 1 sala temática'); return; }
+
+  const duracao = parseInt(document.querySelector('input[name="nsDuracao"]:checked').value) || 50;
+  const prefix = { 'Linguagens':'L', 'Matemática':'M', 'Natureza':'N', 'Humanas':'H', 'Itinerário':'E' };
+  const salas = [];
+  const salas_alocacao = {};
+
+  for (const area of Object.keys(counts)) {
+    const areaSalas = [];
+    for (let i = 1; i <= counts[area]; i++) {
+      const sala = `Sala ${prefix[area]}${i}`;
+      areaSalas.push(sala);
+      salas.push(sala);
+    }
+    salas_alocacao[area] = { salas: areaSalas, profs: [] };
+  }
+
+  // Default disciplinas por área (template editável depois)
+  const areas = {
+    'Linguagens': ['Português','Inglês','Inglês 2','Arte','Ed. Física','E.O. Português','Aprof. Linguagens'],
+    'Matemática': ['Matemática','E.O. Matemática','Aprof. Matemática'],
+    'Natureza':   ['Biologia','Química','Física','Ed. Ambiental','Prát. Experimentais','Aprof. Natureza'],
+    'Humanas':    ['História','Geografia','Filosofia','Sociologia','Aprof. Humanas'],
+    'Itinerário': ['Eletiva','PPA','Proj. de Vida','Técnico']
+  };
+
+  // Horários: 50min (padrão) ou 45min (adaptado)
+  const horarios_aula = duracao === 45 ? {
+    "1":"07:30-08:15","2":"08:15-09:00","3":"09:15-10:00","4":"10:00-10:45","5":"10:45-11:30",
+    "6":"11:30-12:15","7":"13:15-14:00","8":"14:00-14:45","9":"15:00-15:45","10":"15:45-16:30"
+  } : {
+    "1":"07:20-08:10","2":"08:10-09:00","3":"09:20-10:10","4":"10:10-11:00","5":"11:00-11:45",
+    "6":"13:15-14:00","7":"14:00-14:45","8":"15:00-15:45","9":"15:45-16:30"
+  };
+
+  const aulasMax = duracao === 45 ? 10 : 9;
+  const aulas_por_dia = {};
+  ['Segunda','Terça','Quarta','Quinta','Sexta'].forEach(d => aulas_por_dia[d] = aulasMax);
+
+  const data = {
+    meta: {
+      nome_escola: name,
+      versao_grade: 'nova-' + new Date().toISOString().split('T')[0],
+      data_geracao: new Date().toISOString().split('T')[0],
+      total_slots: 0,
+      aulas_por_dia,
+      duracao_aula_min: duracao,
+      origem: 'Wizard'
+    },
+    slots: [],
+    dias: ['Segunda','Terça','Quarta','Quinta','Sexta'],
+    turmas: [],
+    profs: [],
+    profs_detail: {},
+    prof_area: {},
+    salas,
+    areas,
+    planejamento: {},
+    quarta_clubes: {},
+    historico_mudancas: [],
+    salas_alocacao,
+    horarios_aula
+  };
+
+  const id = 'escola_' + Date.now();
+  state.schools[id] = { name, data };
+  state.currentSchoolId = id;
+
+  saveToStorage();
+  populateSchoolSelect();
+  rebuildAreaMap();
+  render();
+  closeNewSchoolModal();
+  toast(`✅ Escola "${name}" criada com ${totalSalas} salas. Agora importe o PDF do horário.`);
+}
+function deleteSchool() {
+  if (Object.keys(state.schools).length <= 1) { alert('Mantenha ao menos 1 escola.'); return; }
+  if (!confirm('Apagar escola "' + state.schools[state.currentSchoolId].name + '"?')) return;
+  delete state.schools[state.currentSchoolId];
+  state.currentSchoolId = Object.keys(state.schools)[0];
+  saveToStorage();
+  populateSchoolSelect();
+  rebuildAreaMap();
+  render();
+}
+
+// ====== UTILS ======
+function getSlot(dia, aula, turma) {
+  const d = currentData();
+  return d.slots.find(s => s.dia===dia && s.aula===aula && s.turma===turma);
+}
+function isPlanningOff(prof, dia, aula) {
+  const list = currentData().planejamento[dia] || [];
+  for (const p of list) {
+    if (p.prof === prof) {
+      if (p.periodo === 'all') return true;
+      if (p.periodo === 'tarde' && aula >= 6) return true;
+    }
+  }
+  return false;
+}
+function isProfBusyElsewhere(prof, dia, aula, exceptTurma) {
+  return currentData().slots.some(s =>
+    s.dia===dia && s.aula===aula && s.prof===prof && s.turma!==exceptTurma
+  );
+}
+function detectConflicts() {
+  const d = currentData(); const conflicts = [];
+  const map = {};
+  for (const s of d.slots) {
+    const key = `${s.dia}|${s.aula}|${s.prof}`;
+    if (!map[key]) map[key] = [];
+    map[key].push(s);
+  }
+  for (const [k, ss] of Object.entries(map)) {
+    if (ss.length > 1) conflicts.push({type:'prof', key:k, slots:ss});
+  }
+  for (const s of d.slots) {
+    if (isPlanningOff(s.prof, s.dia, s.aula)) {
+      conflicts.push({type:'planejamento', slot:s});
+    }
+  }
+  return conflicts;
+}
+
+// ====== TOAST ======
+function toast(msg) {
+  const t = document.getElementById('toast');
+  document.getElementById('toastMsg').textContent = msg;
+  t.classList.remove('hidden');
+  setTimeout(() => t.classList.add('hidden'), 2500);
+}
+
+// ====== THEME ======
+function toggleTheme() {
+  state.theme = state.theme === 'dark' ? 'light' : 'dark';
+  applyTheme();
+  saveToStorage();
+}
+function applyTheme() {
+  const html = document.documentElement;
+  if (state.theme === 'light') {
+    html.classList.remove('dark'); html.classList.add('light');
+    document.body.className = 'bg-surface-100 text-surface-900 transition-colors';
+    document.getElementById('themeLabel').textContent = 'Modo escuro';
+  } else {
+    html.classList.remove('light'); html.classList.add('dark');
+    document.body.className = 'bg-surface-950 text-surface-100 transition-colors';
+    document.getElementById('themeLabel').textContent = 'Modo claro';
+  }
+}
+
+// ====== VIEWS ======
+function setView(v) {
+  state.currentView = v;
+  document.querySelectorAll('.nav-item').forEach(b => b.classList.toggle('active', b.dataset.view===v));
+  const sel = document.getElementById('selector');
+  if (['turmas','profs','salas'].includes(v)) {
+    sel.classList.remove('hidden');
+    let items = [];
+    if (v==='turmas') items = currentData().turmas;
+    else if (v==='profs') items = currentData().profs;
+    else items = currentData().salas;
+    sel.innerHTML = items.map(i => `<option>${i}</option>`).join('');
+  } else sel.classList.add('hidden');
+
+  const titles = {
+    dashboard: ['Dashboard', 'Visão geral do sistema'],
+    turmas: ['Por Turma', 'Grade horária da turma'],
+    profs: ['Por Professor', 'Agenda individual do professor'],
+    salas: ['Por Sala', 'Ocupação dos espaços'],
+    completo: ['Quadro Completo', 'Todas as turmas lado a lado'],
+    regras: ['Regras & Configurações', 'Edite planejamento, áreas, salas'],
+    auditoria: ['Auditoria', 'Conflitos e validações']
+  };
+  document.getElementById('viewTitle').textContent = titles[v][0];
+  document.getElementById('viewSubtitle').textContent = titles[v][1];
+  render();
+}
+
+function render() {
+  const v = state.currentView;
+  let html = '';
+  if (v==='dashboard') html = renderDashboard();
+  else if (v==='turmas') html = renderTurma(document.getElementById('selector').value);
+  else if (v==='profs') html = renderProf(document.getElementById('selector').value);
+  else if (v==='salas') html = renderSala(document.getElementById('selector').value);
+  else if (v==='completo') html = renderCompleto();
+  else if (v==='regras') html = renderRegras();
+  else if (v==='auditoria') html = renderAuditoria();
+  document.getElementById('content').innerHTML = html;
+  if (window.lucide) lucide.createIcons();
+}
+
+// ====== CELL RENDER ======
+function cellHTML(slot, opts={}) {
+  if (!slot) return '<td class="text-surface-500 text-center text-xs">—</td>';
+  const area = getArea(slot.disc);
+  const edit = document.getElementById('editMode')?.checked;
+  const onclick = edit ? `onclick="openEdit('${slot.dia}',${slot.aula},'${slot.turma.replace(/'/g,"\\'")}')"` : '';
+  const cls = edit ? 'editable' : '';
+  return `<td class="grid-cell area-${area} ${cls}" ${onclick}>
+    <div class="px-2 py-2">
+      ${opts.hideProf ? '' : `<div class="font-bold text-xs leading-tight">${slot.prof}</div>`}
+      <div class="text-[11px] leading-tight mt-0.5 text-surface-300">${slot.disc}</div>
+      ${opts.hideSala ? '' : `<div class="text-[10px] text-surface-400 mt-0.5">📍 ${slot.sala}</div>`}
+      ${opts.extra || ''}
+    </div></td>`;
+}
+
+// ====== DASHBOARD ======
+function renderDashboard() {
+  const d = currentData();
+  const totalSlots = d.slots.length;
+  const conflicts = detectConflicts();
+  const profCount = {};
+  d.slots.forEach(s => profCount[s.prof] = (profCount[s.prof]||0)+1);
+  const areaCount = {};
+  d.slots.forEach(s => {
+    const a = getArea(s.disc);
+    areaCount[a] = (areaCount[a]||0)+1;
+  });
+  const isoladas = countIsoladas();
+  const meta = d.meta || {};
+  const salaOcup = {};
+  d.slots.forEach(s => salaOcup[s.sala] = (salaOcup[s.sala]||0)+1);
+
+  return `
+  <div class="space-y-6">
+    <!-- Header escola -->
+    <div class="glass rounded-xl p-6 bg-gradient-to-r from-primary-500/10 to-transparent">
+      <div class="flex items-start justify-between flex-wrap gap-4">
+        <div>
+          <h2 class="text-2xl font-bold flex items-center gap-2">
+            <i data-lucide="school" class="w-6 h-6 text-primary-500"></i>
+            ${meta.nome_escola || 'Escola'}
+          </h2>
+          <p class="text-sm text-surface-400 mt-1">Grade ${meta.versao_grade || 'v1'} · Gerada em ${meta.data_geracao || '—'}</p>
+        </div>
+        <div class="flex gap-2 flex-wrap">
+          ${meta.violacoes_planejamento === 0 ? '<span class="badge bg-green-500/20 text-green-400">✓ 0 violações</span>' : `<span class="badge bg-red-500/20 text-red-400">⚠️ ${meta.violacoes_planejamento} violações</span>`}
+          ${meta.conflitos_prof === 0 ? '<span class="badge bg-green-500/20 text-green-400">✓ 0 conflitos</span>' : `<span class="badge bg-red-500/20 text-red-400">⚠️ ${meta.conflitos_prof} conflitos</span>`}
+          ${meta.ch_preservada ? '<span class="badge bg-blue-500/20 text-blue-400">✓ CH preservada</span>' : ''}
+        </div>
+      </div>
+    </div>
+
+    <!-- KPIs -->
+    <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
+      ${kpiCard('users','Turmas', d.turmas.length, 'primary-500')}
+      ${kpiCard('graduation-cap','Professores', d.profs.length, 'blue-400')}
+      ${kpiCard('calendar', 'Slots/sem', totalSlots, 'green-400')}
+      ${kpiCard('door-open', 'Espaços', d.salas.length, 'purple-400')}
+      ${kpiCard('alert-triangle', 'Conflitos', conflicts.length, conflicts.length===0?'green-400':'red-400')}
+    </div>
+
+    <!-- Alocação Salas por Área -->
+    <div class="glass rounded-xl p-5">
+      <h3 class="font-bold mb-4 flex items-center gap-2"><i data-lucide="layout-grid" class="ico text-primary-500"></i> Alocação de Salas por Área (v3)</h3>
+      <div class="grid md:grid-cols-2 lg:grid-cols-5 gap-3">
+        ${Object.entries(d.salas_alocacao || {}).map(([area, info])=>{
+          const totalDem = info.salas.reduce((acc, s) => acc + (salaOcup[s]||0), 0);
+          const cap = info.salas.length * 45;
+          const pct = Math.round(totalDem/cap*100);
+          const areaCls = area === 'Especiais' ? 'Itinerário' : area;
+          return `<div class="bg-surface-900/40 rounded p-3 border-l-4 area-${areaCls}">
+            <div class="font-bold text-sm mb-1">${area}</div>
+            <div class="text-xs text-surface-400 mb-2">${info.salas.length} espaços · ${totalDem}/${cap} (${pct}%)</div>
+            <div class="text-[10px] space-y-0.5 text-surface-300">${info.salas.map(s=>`<div>📍 ${s}</div>`).join('')}</div>
+            <div class="text-[10px] text-surface-400 mt-2 italic">${info.profs.join(', ')}</div>
+          </div>`;
+        }).join('')}
+      </div>
+    </div>
+
+    <!-- Two-column -->
+    <div class="grid lg:grid-cols-2 gap-6">
+      <div class="glass rounded-xl p-5">
+        <h3 class="font-bold mb-4 flex items-center gap-2"><i data-lucide="bar-chart-3" class="ico"></i> Distribuição por Área</h3>
+        <div class="space-y-2">
+          ${Object.entries(areaCount).sort((a,b)=>b[1]-a[1]).map(([a,c])=>{
+            const pct = Math.round(c/totalSlots*100);
+            return `<div>
+              <div class="flex justify-between text-sm mb-1"><span>${a}</span><span class="font-bold">${c} (${pct}%)</span></div>
+              <div class="h-2 bg-surface-800 rounded overflow-hidden"><div class="h-full area-${a}" style="width:${pct}%"></div></div>
+            </div>`;
+          }).join('')}
+        </div>
+      </div>
+
+      <div class="glass rounded-xl p-5">
+        <h3 class="font-bold mb-4 flex items-center gap-2"><i data-lucide="trophy" class="ico"></i> Top 8 Cargas</h3>
+        <div class="space-y-1">
+          ${Object.entries(profCount).sort((a,b)=>b[1]-a[1]).slice(0,8).map(([p,c],i)=>{
+            const area = (d.prof_area || {})[p] || 'Itinerário';
+            return `<div class="flex items-center gap-3 p-2 rounded hover:bg-white/5 transition area-${area}">
+              <div class="w-7 h-7 rounded-full bg-primary-500/20 text-primary-500 flex items-center justify-center font-bold text-xs">${i+1}</div>
+              <div class="flex-1 font-medium text-sm">${p}</div>
+              <span class="text-[10px] text-surface-400">${area}</span>
+              <div class="font-bold text-primary-500">${c}</div>
+            </div>`;
+          }).join('')}
+        </div>
+      </div>
+    </div>
+
+    <!-- Planejamento Pedagógico -->
+    <div class="glass rounded-xl p-5">
+      <h3 class="font-bold mb-4 flex items-center gap-2"><i data-lucide="calendar-clock" class="ico text-primary-500"></i> Planejamento Pedagógico (Profs fora da escola)</h3>
+      <div class="grid grid-cols-2 md:grid-cols-5 gap-3">
+        ${d.dias.map(dia=>{
+          const list = d.planejamento[dia] || [];
+          return `<div class="bg-surface-900/40 rounded p-3">
+            <div class="font-bold text-sm mb-2">${dia}</div>
+            <div class="text-xs space-y-1">
+              ${list.length===0 ? '<div class="text-surface-500 italic">Ninguém</div>' :
+                list.map(p=>`<div class="bg-surface-800 px-2 py-1 rounded">${p.prof}${p.periodo!=='all'?` <span class="text-[10px] text-amber-400">(${p.periodo})</span>`:''}</div>`).join('')}
+            </div>
+          </div>`;
+        }).join('')}
+      </div>
+      ${d.quarta_clubes ? `<div class="mt-3 text-xs text-surface-400 italic">🎯 Quarta A${d.quarta_clubes.aulas.join(', A')} = ${d.quarta_clubes.descricao}</div>` : ''}
+    </div>
+
+    <!-- Histórico de Mudanças -->
+    ${d.historico_mudancas && d.historico_mudancas.length > 0 ? `
+    <div class="glass rounded-xl p-5">
+      <h3 class="font-bold mb-4 flex items-center gap-2"><i data-lucide="history" class="ico text-primary-500"></i> Histórico de Mudanças Aplicadas</h3>
+      <div class="space-y-2">
+        ${d.historico_mudancas.map(h=>`
+          <div class="flex items-start gap-3 p-2 rounded bg-surface-900/40">
+            <div class="text-xs text-surface-400 font-mono">${h.data}</div>
+            <span class="badge bg-primary-500/20 text-primary-500">${h.tipo}</span>
+            <div class="text-xs flex-1">${h.descricao}</div>
+          </div>
+        `).join('')}
+      </div>
+    </div>` : ''}
+
+    <!-- Status -->
+    <div class="glass rounded-xl p-5">
+      <h3 class="font-bold mb-4 flex items-center gap-2">
+        <i data-lucide="shield-check" class="ico ${conflicts.length===0?'text-green-400':'text-red-400'}"></i>
+        Status de Validação
+      </h3>
+      ${conflicts.length===0 ?
+        `<div class="flex items-center gap-3 text-green-400">
+          <i data-lucide="check-circle-2" class="ico"></i>
+          <span class="font-medium">Todas as regras estão sendo respeitadas. ${isoladas} aulas isoladas (informativo).</span>
+        </div>` :
+        `<div class="space-y-2">${conflicts.slice(0,5).map(c=>{
+          if (c.type==='prof') return `<div class="flex items-center gap-2 text-red-300 text-sm"><i data-lucide="user-x" class="ico"></i> Conflito prof: ${c.slots[0].prof} em ${c.slots.map(s=>s.turma).join(', ')} (${c.slots[0].dia} A${c.slots[0].aula})</div>`;
+          return `<div class="flex items-center gap-2 text-amber-300 text-sm"><i data-lucide="calendar-x" class="ico"></i> ${c.slot.prof} em planejamento: ${c.slot.dia} A${c.slot.aula} (${c.slot.turma})</div>`;
+        }).join('')}
+        ${conflicts.length>5?`<div class="text-xs text-surface-400">+${conflicts.length-5} adicionais</div>`:''}
+        </div>`
+      }
+    </div>
+  </div>`;
+}
+
+function kpiCard(icon, label, value, color) {
+  return `<div class="glass rounded-xl p-4 stat-card">
+    <div class="flex items-center justify-between mb-2">
+      <span class="text-xs text-surface-400 uppercase tracking-wide">${label}</span>
+      <i data-lucide="${icon}" class="ico text-${color}"></i>
+    </div>
+    <div class="text-3xl font-bold">${value}</div>
+  </div>`;
+}
+
+function countIsoladas() {
+  const d = currentData();
+  let cnt = 0;
+  for (const turma of d.turmas) {
+    for (const dia of d.dias) {
+      let cur = null;
+      for (let a = 1; a <= 9; a++) {
+        if (dia==='Quarta' && a >= 8) {
+          if (cur && cur.count===1) cnt++;
+          cur = null; continue;
+        }
+        const sl = getSlot(dia, a, turma);
+        if (sl) {
+          if (cur && cur.prof===sl.prof && cur.disc===sl.disc) cur.count++;
+          else {
+            if (cur && cur.count===1) cnt++;
+            cur = {prof:sl.prof, disc:sl.disc, count:1};
+          }
+        } else {
+          if (cur && cur.count===1) cnt++;
+          cur = null;
+        }
+      }
+      if (cur && cur.count===1) cnt++;
+    }
+  }
+  return cnt;
+}
+
+// ====== TURMA VIEW ======
+function renderTurma(turma) {
+  const d = currentData();
+  const dias = d.dias || ['Segunda','Terça','Quarta','Quinta','Sexta'];
+  const aulaMax = maxAula();
+  let html = `<div class="glass rounded-xl p-6 overflow-x-auto">`;
+  html += `<table class="grade-table w-full">
+    <thead><tr>
+      <th class="bg-surface-800 px-3 py-2 text-xs text-surface-400 font-semibold">Aula</th>
+      <th class="bg-surface-800 px-2 py-2 text-xs text-surface-400 font-semibold">Horário</th>
+      ${dias.map(di=>`<th class="bg-surface-800 px-3 py-2 text-xs font-semibold">${di}</th>`).join('')}
+    </tr></thead><tbody>`;
+  for (let a=1; a<=aulaMax; a++) {
+    html += `<tr><td class="font-bold text-center bg-surface-900 text-primary-500 px-3">A${a}</td><td onclick="openHorariosModal()" title="Clique para editar horários" class="text-xs text-amber-300 text-center px-2 cursor-pointer hover:bg-amber-900/30 font-mono">${HORARIOS[a]||'<i data-lucide=&quot;edit-3&quot; class=&quot;ico-xs&quot;></i>'}</td>`;
+    for (const dia of dias) {
+      const diaMax = maxAula(dia);
+      if (a > diaMax) { html += `<td class="text-surface-700 text-center text-xs bg-surface-900/50">—</td>`; continue; }
+      if (dia==='Quarta' && a >= 9) { html += `<td class="grid-cell area-Clube"><div class="px-2 py-2 text-center"><div class="font-bold text-sm">🎯 CLUBES</div><div class="text-[10px]">Tutoria</div></div></td>`; continue; }
+      html += cellHTML(getSlot(dia, a, turma));
+    }
+    html += '</tr>';
+    if (a===2 || a===6 || a===8) {
+      const lbl = a===2?'☕ Intervalo':a===6?'🍽 Almoço':'☕ Intervalo';
+      const time = getBreakTime(a);
+      html += `<tr onclick="openHorariosModal()" title="Clique para editar horários" class="cursor-pointer hover:bg-amber-900/20"><td colspan="${dias.length+2}" class="text-center text-xs text-surface-400 py-1 bg-surface-900">${time?`<span class="font-mono text-amber-300">${time}</span> · `:''}${lbl}</td></tr>`;
+    }
+  }
+  html += '</tbody></table></div>';
+  return html;
+}
+
+// ====== PROF VIEW ======
+function renderProf(prof) {
+  const d = currentData();
+  const dias = d.dias || ['Segunda','Terça','Quarta','Quinta','Sexta'];
+  const aulaMax = maxAula();
+  const myslots = d.slots.filter(s=>s.prof===prof);
+  const disciplinas = [...new Set(myslots.map(s=>s.disc))];
+  let html = `<div class="grid lg:grid-cols-3 gap-4 mb-6">
+    ${kpiCard('clock','Aulas/sem', myslots.length, 'primary-500')}
+    ${kpiCard('book-open','Disciplinas', disciplinas.length, 'blue-400')}
+    ${kpiCard('users','Turmas', new Set(myslots.map(s=>s.turma)).size, 'green-400')}
+  </div>`;
+
+  html += `<div class="glass rounded-xl p-6 overflow-x-auto"><table class="grade-table w-full">
+    <thead><tr>
+      <th class="bg-surface-800 px-3 py-2 text-xs">Aula</th>
+      <th class="bg-surface-800 px-2 py-2 text-xs">Horário</th>
+      ${dias.map(di=>`<th class="bg-surface-800 px-3 py-2 text-xs">${di}</th>`).join('')}
+    </tr></thead><tbody>`;
+  for (let a=1; a<=aulaMax; a++) {
+    html += `<tr><td class="font-bold text-center bg-surface-900 text-primary-500 px-3">A${a}</td><td onclick="openHorariosModal()" title="Clique para editar horários" class="text-xs text-amber-300 text-center px-2 cursor-pointer hover:bg-amber-900/30 font-mono">${HORARIOS[a]||'<i data-lucide=&quot;edit-3&quot; class=&quot;ico-xs&quot;></i>'}</td>`;
+    for (const dia of dias) {
+      const diaMax = maxAula(dia);
+      if (a > diaMax) { html += `<td class="text-surface-700 text-center text-xs bg-surface-900/50">—</td>`; continue; }
+      if (dia==='Quarta' && a >= 9) { html += `<td class="grid-cell area-Clube"><div class="px-2 py-2 text-center text-xs font-bold">🎯 CLUBES</div></td>`; continue; }
+      if (isPlanningOff(prof, dia, a)) { html += `<td class="grid-cell area-Planejamento"><div class="px-2 py-2 text-center text-xs font-bold">📚 PLANEJAMENTO</div></td>`; continue; }
+      const sl = d.slots.find(s=>s.dia===dia && s.aula===a && s.prof===prof);
+      const editModeP = document.getElementById('editMode')?.checked;
+      if (sl) {
+        const area = getArea(sl.disc);
+        const oc = editModeP ? `onclick="openEdit('${sl.dia}',${sl.aula},'${sl.turma.replace(/'/g,"\\'")}')"` : '';
+        html += `<td class="grid-cell area-${area}${editModeP?' editable':''}" ${oc}><div class="px-2 py-2">
+          <div class="font-bold text-xs">${sl.turma}</div>
+          <div class="text-[11px] text-surface-300 mt-0.5">${sl.disc}</div>
+          <div class="text-[10px] text-surface-400 mt-0.5">📍 ${sl.sala}</div></div></td>`;
+      } else html += `<td class="text-surface-500 text-center text-xs">—</td>`;
+    }
+    html += '</tr>';
+    if (a===2 || a===6 || a===8) {
+      const lbl = a===2?'☕ Intervalo':a===6?'🍽 Almoço':'☕ Intervalo';
+      const time = getBreakTime(a);
+      html += `<tr onclick="openHorariosModal()" title="Clique para editar horários" class="cursor-pointer hover:bg-amber-900/20"><td colspan="${dias.length+2}" class="text-center text-xs text-surface-400 py-1 bg-surface-900">${time?`<span class="font-mono text-amber-300">${time}</span> · `:''}${lbl}</td></tr>`;
+    }
+  }
+  html += '</tbody></table></div>';
+  return html;
+}
+
+// ====== SALA VIEW ======
+function renderSala(sala) {
+  const d = currentData();
+  const dias = d.dias || ['Segunda','Terça','Quarta','Quinta','Sexta'];
+  const aulaMax = maxAula();
+  const occ = d.slots.filter(s=>s.sala===sala);
+  const maxSlots = aulaMax * dias.length;
+  const pct = Math.round(occ.length/maxSlots*100);
+  let html = `<div class="grid lg:grid-cols-3 gap-4 mb-6">
+    ${kpiCard('activity','Ocupação', occ.length+'/'+maxSlots, 'primary-500')}
+    ${kpiCard('percent','% Uso', pct+'%', pct>80?'red-400':pct>50?'amber-400':'green-400')}
+    ${kpiCard('users','Profs distintos', new Set(occ.map(s=>s.prof)).size, 'blue-400')}
+  </div>`;
+  html += `<div class="glass rounded-xl p-6 overflow-x-auto"><table class="grade-table w-full">
+    <thead><tr><th class="bg-surface-800 px-3 py-2 text-xs">Aula</th><th class="bg-surface-800 px-2 py-2 text-xs">Horário</th>
+    ${dias.map(di=>`<th class="bg-surface-800 px-3 py-2 text-xs">${di}</th>`).join('')}</tr></thead><tbody>`;
+  for (let a=1; a<=aulaMax; a++) {
+    html += `<tr><td class="font-bold text-center bg-surface-900 text-primary-500 px-3">A${a}</td><td onclick="openHorariosModal()" title="Clique para editar horários" class="text-xs text-amber-300 text-center px-2 cursor-pointer hover:bg-amber-900/30 font-mono">${HORARIOS[a]||'<i data-lucide=&quot;edit-3&quot; class=&quot;ico-xs&quot;></i>'}</td>`;
+    for (const dia of dias) {
+      const diaMax = maxAula(dia);
+      if (a > diaMax) { html += `<td class="text-surface-700 text-center text-xs bg-surface-900/50">—</td>`; continue; }
+      if (dia==='Quarta' && a >= 9) { html += `<td class="grid-cell area-Clube"><div class="px-2 py-2 text-center text-xs font-bold">🎯 CLUBES</div></td>`; continue; }
+      const sl = d.slots.find(s=>s.dia===dia && s.aula===a && s.sala===sala);
+      const editModeS = document.getElementById('editMode')?.checked;
+      if (sl) {
+        const area = getArea(sl.disc);
+        const oc = editModeS ? `onclick="openEdit('${sl.dia}',${sl.aula},'${sl.turma.replace(/'/g,"\\'")}')"` : '';
+        html += `<td class="grid-cell area-${area}${editModeS?' editable':''}" ${oc}><div class="px-2 py-2">
+          <div class="font-bold text-xs">${sl.turma}</div>
+          <div class="text-[11px] mt-0.5">${sl.prof}</div>
+          <div class="text-[10px] text-surface-400 mt-0.5">${sl.disc}</div></div></td>`;
+      } else html += `<td class="text-surface-500 text-center text-xs">—</td>`;
+    }
+    html += '</tr>';
+    if (a===2 || a===6 || a===8) {
+      const lbl = a===2?'☕ Intervalo':a===6?'🍽 Almoço':'☕ Intervalo';
+      const time = getBreakTime(a);
+      html += `<tr onclick="openHorariosModal()" title="Clique para editar horários" class="cursor-pointer hover:bg-amber-900/20"><td colspan="${dias.length+2}" class="text-center text-xs text-surface-400 py-1 bg-surface-900">${time?`<span class="font-mono text-amber-300">${time}</span> · `:''}${lbl}</td></tr>`;
+    }
+  }
+  html += '</tbody></table></div>';
+  return html;
+}
+
+// ====== COMPLETO VIEW ======
+function renderCompleto() {
+  const d = currentData();
+  const dias = d.dias || ['Segunda','Terça','Quarta','Quinta','Sexta'];
+  const turmas = d.turmas || [...new Set(d.slots.map(s=>s.turma))].sort();
+  let html = '';
+  for (const dia of dias) {
+    const aulaMaxDia = maxAula(dia);
+    html += `<div class="glass rounded-xl p-4 mb-4 overflow-x-auto">
+      <h3 class="text-lg font-bold mb-3 flex items-center gap-2"><i data-lucide="calendar-days" class="ico text-primary-500"></i> ${dia}</h3>
+      <table class="grade-table w-full text-[10px]">
+        <thead><tr><th class="bg-surface-800 px-2 py-1">Aula</th>
+        ${turmas.map(t=>`<th class="bg-surface-800 px-1 py-1">${t.replace('ANO - ','')}</th>`).join('')}</tr></thead><tbody>`;
+    for (let a=1; a<=aulaMaxDia; a++) {
+      html += `<tr><td class="font-bold bg-surface-900 text-primary-500 px-1 text-center">A${a}<div class="text-[8px] text-amber-300" onclick="event.stopPropagation(); openHorariosModal()" style="cursor:pointer">${HORARIOS[a]||'editar'}</div></td>`;
+      for (const turma of turmas) {
+        if (dia==='Quarta' && a >= 9) { html += `<td class="grid-cell area-Clube text-center"><div class="px-1 py-1 font-bold">🎯</div></td>`; continue; }
+        const sl = getSlot(dia, a, turma);
+        if (sl) {
+          const area = getArea(sl.disc);
+          html += `<td class="grid-cell area-${area}"><div class="px-1 py-1">
+            <div class="font-bold">${sl.prof}</div>
+            <div class="text-[9px]">${sl.disc}</div>
+            <div class="text-[8px] text-surface-400">📍${sl.sala}</div></div></td>`;
+        } else html += '<td>—</td>';
+      }
+      html += '</tr>';
+      if (a===2 || a===6 || a===8) {
+        const lbl = a===2?'☕ Intervalo':a===6?'🍽 Almoço':'☕ Intervalo';
+        const time = getBreakTime(a);
+        html += `<tr onclick="openHorariosModal()" title="Clique para editar horários" class="cursor-pointer hover:bg-amber-900/20"><td colspan="${turmas.length+1}" class="text-center text-xs text-surface-400 py-1 bg-surface-900">${time?`<span class="font-mono text-amber-300">${time}</span> · `:''}${lbl}</td></tr>`;
+      }
+    }
+    html += '</tbody></table></div>';
+  }
+  return html;
+}
+
+// ====== REGRAS VIEW ======
+function renderRegras() {
+  const d = currentData();
+  let html = '<div class="grid lg:grid-cols-2 gap-6">';
+
+  // PLANEJAMENTO
+  html += `<div class="glass rounded-xl p-5">
+    <h3 class="font-bold mb-4 flex items-center gap-2"><i data-lucide="calendar-x" class="ico text-primary-500"></i> Planejamento Pedagógico</h3>
+    <div class="space-y-3">`;
+  for (const dia of d.dias) {
+    const list = d.planejamento[dia] || [];
+    html += `<div class="bg-surface-900/50 rounded p-3">
+      <div class="font-semibold text-sm mb-2 flex items-center justify-between">
+        <span>${dia}</span>
+        <button onclick="addPlanejamento('${dia}')" class="text-xs text-primary-500 hover:underline">+ adicionar</button>
+      </div>
+      <div class="space-y-1">
+        ${list.length===0?'<div class="text-xs text-surface-500">Nenhum prof em planejamento</div>':
+          list.map((p,i)=>`<div class="flex items-center gap-2 text-xs bg-surface-800 px-2 py-1 rounded">
+            <span class="font-medium flex-1">${p.prof}</span>
+            <select onchange="updatePlanPeriod('${dia}',${i},this.value)" class="bg-surface-700 px-2 py-0.5 rounded text-xs">
+              <option value="all" ${p.periodo==='all'?'selected':''}>dia todo</option>
+              <option value="tarde" ${p.periodo==='tarde'?'selected':''}>só tarde</option>
+              <option value="manha" ${p.periodo==='manha'?'selected':''}>só manhã</option>
+            </select>
+            <button onclick="removePlanejamento('${dia}',${i})" class="text-red-400 hover:text-red-300"><i data-lucide="x" class="w-3 h-3"></i></button>
+          </div>`).join('')}
+      </div>
+    </div>`;
+  }
+  html += `</div></div>`;
+
+  // ÁREAS
+  html += `<div class="glass rounded-xl p-5">
+    <h3 class="font-bold mb-4 flex items-center gap-2"><i data-lucide="layers" class="ico text-primary-500"></i> Áreas de Conhecimento</h3>
+    <div class="space-y-3">`;
+  for (const [area, discs] of Object.entries(d.areas)) {
+    html += `<div class="bg-surface-900/50 rounded p-3">
+      <div class="font-semibold text-sm mb-2 flex items-center gap-2">
+        <span class="badge area-${area}">${area}</span>
+      </div>
+      <div class="flex flex-wrap gap-1">
+        ${discs.map((di,i)=>`<span class="text-xs bg-surface-800 px-2 py-1 rounded flex items-center gap-1">${di}
+          <button onclick="removeDiscArea('${area}',${i})" class="text-red-400 ml-1"><i data-lucide="x" class="w-3 h-3"></i></button></span>`).join('')}
+        <input type="text" placeholder="+ disciplina" onkeydown="if(event.key==='Enter'){addDiscArea('${area}',this.value);this.value=''}" class="text-xs bg-surface-800 px-2 py-1 rounded border border-white/10 w-32">
+      </div>
+    </div>`;
+  }
+  html += `</div></div>`;
+
+  // SALAS
+  html += `<div class="glass rounded-xl p-5 lg:col-span-2">
+    <h3 class="font-bold mb-4 flex items-center gap-2"><i data-lucide="door-open" class="ico text-primary-500"></i> Salas</h3>
+    <div class="grid md:grid-cols-3 lg:grid-cols-4 gap-2">
+      ${d.salas.map((s,i)=>`<div class="bg-surface-900/50 rounded p-2 flex items-center justify-between gap-2 text-sm">
+        <input value="${s}" onchange="updateSala(${i},this.value)" class="bg-transparent flex-1 outline-none">
+        <button onclick="removeSala(${i})" class="text-red-400 hover:text-red-300"><i data-lucide="x" class="w-3 h-3"></i></button>
+      </div>`).join('')}
+    </div>
+    <button onclick="addSala()" class="mt-3 text-xs text-primary-500 hover:underline">+ adicionar sala</button>
+  </div>`;
+
+  // PROFESSORES
+  html += `<div class="glass rounded-xl p-5 lg:col-span-2">
+    <div class="flex items-center justify-between mb-4">
+      <h3 class="font-bold flex items-center gap-2"><i data-lucide="users" class="ico text-primary-500"></i> Cadastro de Professores</h3>
+      <input type="text" id="profSearchInput" oninput="filterProfTable(this.value)" placeholder="🔍 Buscar professor..." class="bg-surface-800 px-3 py-1.5 rounded text-sm border border-white/10 w-48">
+    </div>
+    <div class="overflow-x-auto">
+      <table class="w-full text-sm" id="profCatalogTable">
+        <thead><tr class="text-xs text-surface-400 border-b border-white/10">
+          <th class="text-left py-2 px-2">Professor</th>
+          <th class="text-left py-2 px-2">Área</th>
+          <th class="text-center py-2 px-2">Aulas/sem</th>
+          <th class="text-left py-2 px-2">Disciplinas</th>
+          <th class="py-2 px-2"></th>
+        </tr></thead>
+        <tbody>
+          ${(d.profs||[]).map(p => {
+            const count = d.slots.filter(s=>s.prof===p).length;
+            const area = (d.prof_area||{})[p] || 'FGB';
+            const discs = [...new Set(d.slots.filter(s=>s.prof===p).map(s=>s.disc))];
+            return `<tr class="border-b border-white/5 hover:bg-white/5 prof-row" data-prof="${p.toLowerCase()}">
+              <td class="py-2 px-2 font-medium">${p}</td>
+              <td class="py-2 px-2"><span class="badge area-${area} text-[10px] px-2 py-0.5 rounded">${area}</span></td>
+              <td class="py-2 px-2 text-center font-bold text-primary-500">${count}</td>
+              <td class="py-2 px-2 text-xs text-surface-400">${discs.slice(0,3).join(', ')}${discs.length>3?` +${discs.length-3}`:''}</td>
+              <td class="py-2 px-2 text-right">
+                <button onclick="openProfEdit('${p.replace(/'/g,"\\'")}')" class="text-xs px-3 py-1 bg-primary-500/20 hover:bg-primary-500/40 text-primary-400 rounded transition flex items-center gap-1 ml-auto">
+                  <i data-lucide="edit-3" class="w-3 h-3"></i> Editar
+                </button>
+              </td>
+            </tr>`;
+          }).join('')}
+        </tbody>
+      </table>
+    </div>
+  </div>`;
+
+  // CONFIG
+  html += `<div class="glass rounded-xl p-5 lg:col-span-2">
+    <h3 class="font-bold mb-4 flex items-center gap-2"><i data-lucide="sliders" class="ico text-primary-500"></i> Configurações Gerais</h3>
+    <div class="grid md:grid-cols-2 gap-4 text-sm">
+      <label class="block">
+        <span class="text-xs text-surface-400">Nome da escola</span>
+        <input value="${state.schools[state.currentSchoolId].name}" onchange="renameSchool(this.value)" class="w-full bg-surface-800 px-3 py-2 rounded mt-1 border border-white/10">
+      </label>
+      <label class="block">
+        <span class="text-xs text-surface-400">Turmas (lista, separada por vírgula)</span>
+        <input value="${d.turmas.join(', ')}" onchange="updateTurmas(this.value)" class="w-full bg-surface-800 px-3 py-2 rounded mt-1 border border-white/10">
+      </label>
+      <label class="block">
+        <span class="text-xs text-surface-400">Professores</span>
+        <textarea onchange="updateProfs(this.value)" class="w-full bg-surface-800 px-3 py-2 rounded mt-1 border border-white/10 h-20">${d.profs.join(', ')}</textarea>
+      </label>
+      <label class="block">
+        <span class="text-xs text-surface-400">Dias da semana</span>
+        <input value="${d.dias.join(', ')}" onchange="updateDias(this.value)" class="w-full bg-surface-800 px-3 py-2 rounded mt-1 border border-white/10">
+      </label>
+    </div>
+    <div class="mt-4 text-xs text-surface-400">
+      💡 Mudanças nas listas afetam apenas opções disponíveis. Slots existentes mantidos.
+    </div>
+  </div>`;
+
+  html += '</div>';
+  return html;
+}
+
+// ====== AUDITORIA ======
+function renderAuditoria() {
+  const conflicts = detectConflicts();
+  const iso = countIsoladas();
+  const d = currentData();
+  // CH por prof
+  const chProf = {};
+  d.slots.forEach(s => chProf[s.prof] = (chProf[s.prof]||0)+1);
+
+  let html = `<div class="grid md:grid-cols-3 gap-4 mb-6">
+    ${kpiCard('alert-triangle','Conflitos', conflicts.length, conflicts.length===0?'green-400':'red-400')}
+    ${kpiCard('split','Isoladas', iso, 'amber-400')}
+    ${kpiCard('check-circle-2','Status', conflicts.length===0?'OK':'⚠️', conflicts.length===0?'green-400':'red-400')}
+  </div>`;
+
+  html += `<div class="glass rounded-xl p-5 mb-4">
+    <h3 class="font-bold mb-4 flex items-center gap-2"><i data-lucide="shield-alert" class="ico"></i> Conflitos Detectados</h3>`;
+  if (conflicts.length===0) {
+    html += `<div class="flex items-center gap-2 text-green-400"><i data-lucide="check-circle-2" class="ico"></i> Nenhum conflito.</div>`;
+  } else {
+    html += `<div class="space-y-2 text-sm">${conflicts.map(c=>{
+      if (c.type==='prof') return `<div class="bg-red-500/10 border border-red-500/20 rounded p-2 flex items-center gap-2">
+        <i data-lucide="user-x" class="ico text-red-400"></i>
+        <div><strong>${c.slots[0].prof}</strong> em ${c.slots.length} turmas simultaneamente: ${c.slots.map(s=>s.turma).join(', ')} (${c.slots[0].dia} A${c.slots[0].aula})</div></div>`;
+      return `<div class="bg-amber-500/10 border border-amber-500/20 rounded p-2 flex items-center gap-2">
+        <i data-lucide="calendar-x" class="ico text-amber-400"></i>
+        <div><strong>${c.slot.prof}</strong> em planejamento pedagógico: ${c.slot.dia} A${c.slot.aula} (${c.slot.turma} / ${c.slot.disc})</div></div>`;
+    }).join('')}</div>`;
+  }
+  html += `</div>`;
+
+  // CH detail
+  html += `<div class="glass rounded-xl p-5">
+    <h3 class="font-bold mb-4 flex items-center gap-2"><i data-lucide="bar-chart-3" class="ico"></i> Carga Horária por Professor</h3>
+    <div class="grid md:grid-cols-2 gap-2">
+      ${Object.entries(chProf).sort((a,b)=>b[1]-a[1]).map(([p,c])=>`
+        <div class="flex items-center justify-between bg-surface-900/50 rounded p-2 text-sm">
+          <span class="font-medium">${p}</span>
+          <span class="badge bg-primary-500/20 text-primary-500">${c} aulas</span>
+        </div>`).join('')}
+    </div>
+  </div>`;
+  return html;
+}
+
+// ====== EDIT MODAL ======
+function openEdit(dia, aula, turma) {
+  const d = currentData();
+  let slot = getSlot(dia, parseInt(aula), turma);
+  if (!slot) {
+    slot = {dia, aula:parseInt(aula), turma, prof:d.profs[0], disc:'', sala:d.salas[0]};
+    d.slots.push(slot);
+  }
+  state.editingSlot = slot;
+  document.getElementById('editSlotInfo').textContent = `${turma} · ${dia} · Aula ${aula} (${HORARIOS[aula]})`;
+  document.getElementById('editProf').innerHTML = d.profs.map(p=>`<option ${p===slot.prof?'selected':''}>${p}</option>`).join('');
+  document.getElementById('editDisc').value = slot.disc;
+  document.getElementById('editSala').innerHTML = d.salas.map(s=>`<option ${s===slot.sala?'selected':''}>${s}</option>`).join('');
+  document.getElementById('editConflicts').innerHTML = '';
+  document.getElementById('editModal').classList.remove('hidden');
+  // Real-time conflict check
+  document.getElementById('editProf').onchange = checkEditConflicts;
+  checkEditConflicts();
+}
+function checkEditConflicts() {
+  const prof = document.getElementById('editProf').value;
+  const slot = state.editingSlot;
+  const warnings = [];
+  if (isPlanningOff(prof, slot.dia, slot.aula)) warnings.push(`⚠️ ${prof} está em planejamento ${slot.dia} A${slot.aula}`);
+  if (isProfBusyElsewhere(prof, slot.dia, slot.aula, slot.turma)) warnings.push(`⚠️ ${prof} já tem aula em outra turma neste slot`);
+  document.getElementById('editConflicts').innerHTML = warnings.length===0
+    ? '<span class="text-green-400 text-xs">✓ Sem conflitos</span>'
+    : warnings.map(w=>`<div class="text-red-300">${w}</div>`).join('');
+}
+function closeEdit() { document.getElementById('editModal').classList.add('hidden'); state.editingSlot = null; }
+function saveEdit() {
+  if (!state.editingSlot) return;
+  state.editingSlot.prof = document.getElementById('editProf').value;
+  state.editingSlot.disc = document.getElementById('editDisc').value;
+  state.editingSlot.sala = document.getElementById('editSala').value;
+  saveToStorage();
+  closeEdit(); render(); toast('Slot atualizado');
+}
+function clearSlot() {
+  if (!state.editingSlot) return;
+  const d = currentData();
+  d.slots = d.slots.filter(s=>s!==state.editingSlot);
+  saveToStorage();
+  closeEdit(); render(); toast('Slot removido');
+}
+
+// ====== EDIT RULES ======
+function addPlanejamento(dia) {
+  const d = currentData();
+  const prof = prompt('Nome do professor:');
+  if (!prof) return;
+  d.planejamento[dia].push({prof, periodo:'all'});
+  saveToStorage(); render();
+}
+function removePlanejamento(dia, idx) {
+  currentData().planejamento[dia].splice(idx, 1);
+  saveToStorage(); render();
+}
+function updatePlanPeriod(dia, idx, periodo) {
+  currentData().planejamento[dia][idx].periodo = periodo;
+  saveToStorage();
+}
+function addDiscArea(area, disc) {
+  if (!disc) return;
+  currentData().areas[area].push(disc.trim());
+  rebuildAreaMap();
+  saveToStorage(); render();
+}
+function removeDiscArea(area, idx) {
+  currentData().areas[area].splice(idx, 1);
+  rebuildAreaMap();
+  saveToStorage(); render();
+}
+function addSala() {
+  const name = prompt('Nome da sala:');
+  if (!name) return;
+  currentData().salas.push(name);
+  saveToStorage(); render();
+}
+function updateSala(idx, val) {
+  currentData().salas[idx] = val;
+  saveToStorage();
+}
+function removeSala(idx) {
+  currentData().salas.splice(idx, 1);
+  saveToStorage(); render();
+}
+function renameSchool(name) {
+  state.schools[state.currentSchoolId].name = name;
+  saveToStorage(); populateSchoolSelect();
+}
+function updateTurmas(val) {
+  currentData().turmas = val.split(',').map(s=>s.trim()).filter(Boolean);
+  saveToStorage();
+}
+function updateProfs(val) {
+  currentData().profs = val.split(',').map(s=>s.trim()).filter(Boolean);
+  saveToStorage();
+}
+function updateDias(val) {
+  currentData().dias = val.split(',').map(s=>s.trim()).filter(Boolean);
+  saveToStorage();
+}
+
+// ====== EXPORT ======
+function toggleExportMenu() {
+  document.getElementById('exportMenu').classList.toggle('hidden');
+}
+document.addEventListener('click', e => {
+  const menu = document.getElementById('exportMenu');
+  if (menu && !menu.closest('.relative')?.contains(e.target)) menu.classList.add('hidden');
+});
+
+async function exportPDF() {
+  const d = currentData();
+  const sel = document.getElementById('selector');
+  const selVal = sel && !sel.classList.contains('hidden') ? sel.value : '';
+  const v = state.currentView;
+  toast('⏳ Gerando PDF...');
+
+  const turmas = d.turmas || [...new Set(d.slots.map(s=>s.turma))].sort();
+  const profs = d.profs || [...new Set(d.slots.map(s=>s.prof))].sort();
+  const salas = d.salas || [...new Set(d.slots.map(s=>s.sala))].sort();
+  const isWide = turmas.length > 7;
+  const format = isWide ? 'a2' : 'a3';
+  const filename = `horario_${(selVal||v).replace(/\s+/g,'_')}_${Date.now()}.pdf`;
+
+  if (v === 'completo') {
+    // Render completo layout, then capture each day's container separately
+    setViewSilent('completo');
+    await sleep(500);
+    const contentEl = document.getElementById('content');
+    contentEl.classList.remove('animate-fade-in');
+
+    // Each day is a .glass.rounded-xl div inside #content
+    const dayBlocks = contentEl.querySelectorAll('.glass.rounded-xl');
+    if (dayBlocks.length === 0) {
+      toast('❌ Erro: não foi possível encontrar os dias no quadro completo');
+      contentEl.classList.add('animate-fade-in');
+      return;
+    }
+
+    // Capture each day block into its own PDF page
+    await captureDayBlocksToPDF(dayBlocks, filename, format);
+    contentEl.classList.add('animate-fade-in');
+    return;
+  }
+
+  // For all other views: render each item, capture individually
+  const captureFns = [];
+  if (v === 'turmas') {
+    const items = selVal ? [selVal] : turmas;
+    for (const t of items) captureFns.push(async () => { setViewSilent('turmas', t); });
+  } else if (v === 'profs') {
+    const items = selVal ? [selVal] : profs;
+    for (const p of items) captureFns.push(async () => { setViewSilent('profs', p); });
+  } else if (v === 'salas') {
+    const items = selVal ? [selVal] : salas;
+    for (const s of items) captureFns.push(async () => { setViewSilent('salas', s); });
+  } else {
+    captureFns.push(async () => {}); // keep current view
+  }
+
+  const prevView = state.currentView;
+  try {
+    await capturePagesToPDF(captureFns, filename, format);
+  } finally {
+    if (prevView === 'turmas' || prevView === 'profs' || prevView === 'salas') {
+      setViewSilent(prevView, selVal);
+    } else {
+      setViewSilent(prevView);
+    }
+    document.getElementById('content').classList.add('animate-fade-in');
+  }
+}
+
+// Capture a tall DOM element and split into multiple PDF pages
+async function captureDayBlocksToPDF(dayBlocks, filename, format) {
+  const { jsPDF } = window.jspdf || {};
+  if (!jsPDF) { toast('❌ jsPDF não disponível'); return; }
+
+  toast('⏳ Renderizando ' + dayBlocks.length + ' dias...');
+  const pdf = new jsPDF({ orientation: 'landscape', unit: 'mm', format });
+  const pageW = pdf.internal.pageSize.getWidth();
+  const pageH = pdf.internal.pageSize.getHeight();
+
+  for (let i=0; i<dayBlocks.length; i++) {
+    const block = dayBlocks[i];
+    // Temporarily highlight this block for capture
+    const canvas = await html2canvas(block, {
+      scale: 2,
+      useCORS: true,
+      backgroundColor: '#18181b',
+      logging: false,
+      allowTaint: true
+    });
+
+    if (i > 0) pdf.addPage();
+    const imgData = canvas.toDataURL('image/jpeg', 0.98);
+    const imgRatio = canvas.width / canvas.height;
+    const pageRatio = pageW / pageH;
+
+    let w, h;
+    if (imgRatio > pageRatio) { w = pageW - 2; h = w / imgRatio; }
+    else { h = pageH - 2; w = h * imgRatio; }
+    pdf.addImage(imgData, 'JPEG', (pageW-w)/2, (pageH-h)/2, w, h);
+  }
+  pdf.save(filename);
+  toast('✅ PDF exportado');
+}
+
+
+async function capturePagesToPDF(captureFns, filename, format) {
+  const { jsPDF } = window.jspdf || {};
+  if (!jsPDF) {
+    toast('❌ jsPDF não disponível');
+    return;
+  }
+  toast('⏳ Renderizando páginas...');
+  const pdf = new jsPDF({ orientation: 'landscape', unit: 'mm', format });
+  const pageW = pdf.internal.pageSize.getWidth();
+  const pageH = pdf.internal.pageSize.getHeight();
+  const contentEl = document.getElementById('content');
+
+  for (let i=0; i<captureFns.length; i++) {
+    await captureFns[i]();  // this renders the view into #content
+    // Small delay for render to complete
+    await sleep(200);
+    // Capture the LIVE element in the DOM
+    const canvas = await html2canvas(contentEl, { scale: 2, useCORS: true, backgroundColor: '#18181b', logging: false, allowTaint: true });
+
+    if (i > 0) pdf.addPage();
+    const imgData = canvas.toDataURL('image/jpeg', 0.98);
+    const imgRatio = canvas.width / canvas.height;
+    const pageRatio = pageW / pageH;
+
+    let w, h;
+    if (imgRatio > pageRatio) { w = pageW - 2; h = w / imgRatio; }
+    else { h = pageH - 2; w = h * imgRatio; }
+    pdf.addImage(imgData, 'JPEG', (pageW-w)/2, (pageH-h)/2, w, h);
+  }
+  pdf.save(filename);
+  toast('✅ PDF exportado');
+}
+
+async function exportFullPDF() {
+  const d = currentData();
+  const school = state.schools[state.currentSchoolId];
+  const schoolName = school?.name || 'Escola';
+  const turmas = d.turmas || [...new Set(d.slots.map(s=>s.turma))].sort();
+  const profs = d.profs || [...new Set(d.slots.map(s=>s.prof))].sort();
+  const isWide = turmas.length > 7;
+  const format = isWide ? 'a2' : 'a3';
+  toast('⏳ Gerando PDF completo...');
+
+  // Save current view state
+  const prevView = state.currentView;
+  const sel = document.getElementById('selector');
+  const prevSelVal = sel && !sel.classList.contains('hidden') ? sel.value : '';
+
+  const captureFns = [];
+
+  // Cover page: capture dashboard
+  captureFns.push(async () => { setViewSilent('dashboard'); });
+
+  // Each turma
+  for (const turma of turmas) {
+    captureFns.push(async () => { setViewSilent('turmas', turma); });
+  }
+
+  // Each professor
+  for (const prof of profs) {
+    captureFns.push(async () => { setViewSilent('profs', prof); });
+  }
+
+  try {
+    await capturePagesToPDF(captureFns, `horario_completo_${schoolName.replace(/\s+/g,'_')}_${Date.now()}.pdf`, format);
+  } finally {
+    // Restore original view
+    if (prevView === 'turmas' || prevView === 'profs' || prevView === 'salas') {
+      setViewSilent(prevView, prevSelVal);
+    } else {
+      setViewSilent(prevView);
+    }
+  }
+}
+
+// Set view without animation, for PDF capture
+function setViewSilent(v, selVal) {
+  state.currentView = v;
+  const sel = document.getElementById('selector');
+  if (['turmas','profs','salas'].includes(v)) {
+    sel.classList.remove('hidden');
+    let items = [];
+    if (v==='turmas') items = currentData().turmas;
+    else if (v==='profs') items = currentData().profs;
+    else items = currentData().salas;
+    sel.innerHTML = items.map(i => `<option>${i}</option>`).join('');
+    if (selVal) sel.value = selVal;
+  } else {
+    sel.classList.add('hidden');
+  }
+  let html = '';
+  if (v==='dashboard') html = renderDashboard();
+  else if (v==='turmas') html = renderTurma(sel.value);
+  else if (v==='profs') html = renderProf(sel.value);
+  else if (v==='salas') html = renderSala(sel.value);
+  else if (v==='completo') html = renderCompleto();
+  document.getElementById('content').innerHTML = html;
+  document.getElementById('content').classList.remove('animate-fade-in');
+}
+
+function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+// ====== PROF EDIT ======
+function openProfEdit(prof) {
+  const d = currentData();
+  state._editingProf = prof;
+  document.getElementById('profEditOrigName').textContent = prof;
+  document.getElementById('profEditName').value = prof;
+  const area = (d.prof_area||{})[prof] || 'FGB';
+  document.getElementById('profEditArea').value = area;
+  const mySlots = d.slots.filter(s=>s.prof===prof);
+  const discs = [...new Set(mySlots.map(s=>s.disc))];
+  document.getElementById('profEditDisc').value = discs[0] || '';
+  const turmas = [...new Set(mySlots.map(s=>s.turma))];
+  document.getElementById('profEditStats').innerHTML =
+    `<b>${mySlots.length}</b> aulas/semana · <b>${turmas.length}</b> turma${turmas.length!==1?'s':''} · Disciplinas: ${discs.join(', ')||'—'}`;
+  document.getElementById('profEditModal').classList.remove('hidden');
+}
+function closeProfEdit() {
+  document.getElementById('profEditModal').classList.add('hidden');
+  state._editingProf = null;
+}
+function saveProfEdit() {
+  const d = currentData();
+  const origName = state._editingProf;
+  if (!origName) return;
+  const newName = document.getElementById('profEditName').value.trim();
+  const newArea = document.getElementById('profEditArea').value;
+
+  if (!newName) { toast('❌ Nome não pode ser vazio'); return; }
+
+  // Rename across all slots
+  if (newName !== origName) {
+    d.slots.forEach(s => { if (s.prof===origName) s.prof = newName; });
+    // Update profs list
+    const idx = (d.profs||[]).indexOf(origName);
+    if (idx >= 0) d.profs[idx] = newName;
+    else if (d.profs) d.profs.push(newName);
+    // Update prof_area & profs_detail keys
+    if (d.prof_area && d.prof_area[origName] !== undefined) {
+      d.prof_area[newName] = d.prof_area[origName];
+      delete d.prof_area[origName];
+    }
+    if (d.profs_detail && d.profs_detail[origName]) {
+      d.profs_detail[newName] = d.profs_detail[origName];
+      delete d.profs_detail[origName];
+    }
+    // Update planejamento
+    for (const dia of Object.keys(d.planejamento||{})) {
+      (d.planejamento[dia]||[]).forEach(p => { if (p.prof===origName) p.prof = newName; });
+    }
+    state._editingProf = newName;
+  }
+
+  // Update area
+  d.prof_area = d.prof_area || {};
+  d.prof_area[state._editingProf] = newArea;
+  rebuildAreaMap();
+  saveToStorage();
+  closeProfEdit();
+  render();
+  toast(`✅ Professor "${newName}" atualizado`);
+}
+function deleteProfSlots() {
+  const prof = state._editingProf;
+  if (!prof) return;
+  if (!confirm(`Remover todos os slots de "${prof}"? Não pode ser desfeito.`)) return;
+  const d = currentData();
+  d.slots = d.slots.filter(s=>s.prof!==prof);
+  saveToStorage();
+  closeProfEdit();
+  render();
+  toast(`🗑 Slots de "${prof}" removidos`);
+}
+function filterProfTable(q) {
+  document.querySelectorAll('#profCatalogTable .prof-row').forEach(row => {
+    row.style.display = row.dataset.prof.includes(q.toLowerCase()) ? '' : 'none';
+  });
+}
+function exportXLSX() {
+  const wb = XLSX.utils.book_new();
+  const d = currentData();
+  for (const turma of d.turmas) {
+    const aoa = [['Aula','Horário', ...d.dias]];
+    for (let a=1; a<=9; a++) {
+      const row = [`A${a}`, HORARIOS[a]||''];
+      for (const dia of d.dias) {
+        if (dia==='Quarta' && a >= 8) { row.push('CLUBES'); continue; }
+        const s = getSlot(dia, a, turma);
+        row.push(s?`${s.prof}\n${s.disc}\n${s.sala}`:'—');
+      }
+      aoa.push(row);
+    }
+    const ws = XLSX.utils.aoa_to_sheet(aoa);
+    XLSX.utils.book_append_sheet(wb, ws, turma.substring(0,30).replace(/[\\/?*\[\]]/g,''));
+  }
+  // Profs
+  const chProf = {}; d.slots.forEach(s => chProf[s.prof] = (chProf[s.prof]||0)+1);
+  const profsAoa = [['Professor','Aulas/sem']];
+  Object.entries(chProf).sort((a,b)=>b[1]-a[1]).forEach(([p,c])=>profsAoa.push([p,c]));
+  XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(profsAoa), 'Carga Profs');
+  XLSX.writeFile(wb, `horario_${state.schools[state.currentSchoolId].name.replace(/\s/g,'_')}_${Date.now()}.xlsx`);
+  toast('Excel exportado');
+}
+function saveJSON() {
+  const blob = new Blob([JSON.stringify({schools:state.schools, current:state.currentSchoolId}, null, 2)], {type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a'); a.href = url;
+  a.download = `horario_escolar_backup_${Date.now()}.json`; a.click();
+  URL.revokeObjectURL(url);
+  toast('JSON salvo');
+}
+function loadJSON(e) {
+  const file = e.target.files[0]; if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (ev) => {
+    try {
+      const obj = JSON.parse(ev.target.result);
+      if (obj.schools) {
+        state.schools = obj.schools;
+        state.currentSchoolId = obj.current || Object.keys(obj.schools)[0];
+      } else if (obj.slots) {
+        // single-school format — auto-enrich missing aux fields from current school
+        const id = 'imported_' + Date.now();
+        const baseSchool = state.schools[state.currentSchoolId];
+        const enriched = JSON.parse(JSON.stringify(obj));
+        if (baseSchool?.data) {
+          const tmpl = baseSchool.data;
+          // Copy missing auxiliary fields (areas, prof_area, salas, etc.)
+          ['dias','turmas','profs','profs_detail','prof_area','salas','areas',
+           'planejamento','quarta_clubes','salas_alocacao','horarios_aula'].forEach(k => {
+            if (enriched[k] == null && tmpl[k] != null) enriched[k] = JSON.parse(JSON.stringify(tmpl[k]));
+          });
+        }
+        // Auto-derive meta + turmas + dias from slots (handles new schedule structures)
+        enriched.meta = deriveMetaFromSlots(enriched.slots, enriched.meta || {});
+        if (!enriched.turmas?.length) enriched.turmas = [...new Set(enriched.slots.map(s => s.turma))].sort();
+        if (!enriched.dias?.length)   enriched.dias   = [...new Set(enriched.slots.map(s => s.dia))];
+
+        state.schools[id] = {name: 'Importada ' + new Date().toLocaleDateString(), data: enriched};
+        state.currentSchoolId = id;
+      }
+      saveToStorage(); populateSchoolSelect(); rebuildAreaMap(); render();
+      toast(`✅ Dados importados (${currentData()?.slots?.length || 0} aulas)`);
+    } catch(err) { alert('Erro: ' + err.message); }
+  };
+  reader.readAsText(file);
+}
+
+// ====== SYNC (Cloud) ======
+function openSyncModal() {
+  document.getElementById('syncModal').classList.remove('hidden');
+  const saved = localStorage.getItem('horario_escolar_sync_email');
+  if (saved) document.getElementById('syncEmail').value = saved;
+}
+function closeSyncModal() {
+  document.getElementById('syncModal').classList.add('hidden');
+  document.getElementById('syncStatus').textContent = '';
+}
+async function syncToCloud() {
+  const email = document.getElementById('syncEmail').value.trim();
+  const server = document.getElementById('syncServer').value.trim();
+  const status = document.getElementById('syncStatus');
+
+  if (!email || !server) {
+    status.textContent = '❌ Email e URL obrigatórios';
+    return;
+  }
+
+  status.textContent = '⏳ Salvando...';
+  try {
+    const d = currentData();
+    const response = await fetch(`${server}/api/save-grade`, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        email,
+        schoolName: state.schools[state.currentSchoolId].name,
+        gradeData: d
+      })
+    });
+
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    const result = await response.json();
+
+    localStorage.setItem('horario_escolar_sync_email', email);
+    localStorage.setItem('horario_escolar_sync_server', server);
+    status.textContent = '✅ Salvo na nuvem';
+    setTimeout(() => closeSyncModal(), 1500);
+    toast('Sincronizado');
+  } catch(e) {
+    status.textContent = `❌ ${e.message}`;
+  }
+}
+async function syncFromCloud() {
+  const email = document.getElementById('syncEmail').value.trim();
+  const server = document.getElementById('syncServer').value.trim();
+  const status = document.getElementById('syncStatus');
+
+  if (!email || !server) {
+    status.textContent = '❌ Email e URL obrigatórios';
+    return;
+  }
+
+  status.textContent = '⏳ Carregando...';
+  try {
+    const schoolName = state.schools[state.currentSchoolId].name;
+    const response = await fetch(`${server}/api/load-grade?email=${encodeURIComponent(email)}&schoolName=${encodeURIComponent(schoolName)}`);
+
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    const result = await response.json();
+
+    state.schools[state.currentSchoolId].data = result.gradeData;
+    saveToStorage();
+    rebuildAreaMap();
+    render();
+
+    status.textContent = '✅ Carregado';
+    setTimeout(() => closeSyncModal(), 1500);
+    toast('Dados atualizados');
+  } catch(e) {
+    status.textContent = `❌ ${e.message}`;
+  }
+}
+
+// ====== PDF IMPORT ======
+let pdfImportState = {
+  rawRows: null,
+  newSlots: null,
+  summary: null,
+  fileName: ''
+};
+
+// Setup pdf.js worker
+setTimeout(() => {
+  const lib = window.pdfjsLib || window.pdfjs;
+  if (lib) {
+    lib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+  }
+}, 200);
+
+async function loadPDFFile(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  // Reset file input so same file can be re-selected
+  event.target.value = '';
+
+  pdfImportState.fileName = file.name;
+  document.getElementById('pdfModal').classList.remove('hidden');
+  document.getElementById('pdfStatus').innerHTML = '⏳ Lendo PDF...';
+  document.getElementById('pdfStats').classList.add('hidden');
+  document.getElementById('pdfUnknown').classList.add('hidden');
+  document.getElementById('pdfPreviewWrap').classList.add('hidden');
+  document.getElementById('pdfActions').classList.add('hidden');
+
+  // Populate reference school selector
+  populateReferenceSelector();
+
+  try {
+    const pdfLib = window.pdfjsLib || window.pdfjs;
+    if (!pdfLib) throw new Error('pdf.js não carregou');
+
+    // Parse PDF
+    const parser = new PDFParser({ pdfjsLib: pdfLib, debug: true });
+    const rawRows = await parser.parseFile(file);
+    pdfImportState.rawRows = rawRows;
+
+    document.getElementById('pdfStatus').innerHTML = `✅ Extraídas <strong>${rawRows.length}</strong> linhas. Processando com referência...`;
+
+    // Process using reference school
+    processPDFWithReference();
+
+  } catch (err) {
+    document.getElementById('pdfStatus').innerHTML = `❌ <span class="text-red-400">${err.message}</span>`;
+    console.error(err);
+  }
+}
+
+function populateReferenceSelector() {
+  const sel = document.getElementById('pdfRefSchool');
+  sel.innerHTML = '';
+  for (const [id, school] of Object.entries(state.schools)) {
+    const opt = document.createElement('option');
+    opt.value = id;
+    opt.textContent = `${school.name} (${school.data?.slots?.length || 0} slots)`;
+    if (id === state.currentSchoolId) opt.selected = true;
+    sel.appendChild(opt);
+  }
+}
+
+function reprocessPDFWithReference() {
+  if (!pdfImportState.rawRows) return;
+  processPDFWithReference();
+}
+
+function processPDFWithReference() {
+  const rawRows = pdfImportState.rawRows;
+  if (!rawRows) return;
+
+  // Get selected reference school
+  const refSchoolId = document.getElementById('pdfRefSchool').value;
+  const refSchool = state.schools[refSchoolId];
+  if (!refSchool) {
+    document.getElementById('pdfStatus').innerHTML = '❌ Escola de referência não encontrada';
+    return;
+  }
+
+  // Convert raw rows to slot format
+  const pdfSlots = rawRows.map(r => ({
+    dia: r.dia,
+    aula: parseInt(r.horario) || parseInt(r.aula) || 0,
+    turma: r.turma,
+    prof: r.professorOriginal || r.prof || '',
+    disc: r.disciplinaOriginal || r.disc || ''
+  })).filter(s => s.aula > 0 && s.turma && s.prof);
+
+  // Deduplicate by (turma + dia + aula + prof)
+  const seen = new Set();
+  const uniqueSlots = [];
+  for (const s of pdfSlots) {
+    const key = `${s.turma}|${s.dia}|${s.aula}|${s.prof}`;
+    if (!seen.has(key)) {
+      seen.add(key);
+      uniqueSlots.push(s);
+    }
+  }
+
+  // Enrich with reference data
+  const refMapper = new ReferenceMapper({
+    referenceSlots: refSchool.data.slots,
+    debug: true
+  });
+
+  const result = refMapper.enrichAll(uniqueSlots);
+  const enriched = result.enriched;
+  const stats = result.stats;
+  const unknownProfs = result.unknownProfs;
+
+  // Store as final slots
+  const newSlots = enriched.map(s => ({
+    dia: s.dia,
+    aula: s.aula,
+    turma: s.turma,
+    prof: s.prof,
+    disc: s.disc || '',
+    sala: s.sala || ''
+  }));
+
+  pdfImportState.newSlots = newSlots;
+  pdfImportState.summary = {
+    total: newSlots.length,
+    mapped: stats.exact + stats.prof_disc + stats.prof_only,
+    unknown: stats.no_match,
+    uniqueProfs: new Set(newSlots.map(s => s.prof)).size,
+    unknownProfs,
+    successRate: newSlots.length > 0 ? Math.round(((stats.exact + stats.prof_disc + stats.prof_only) / newSlots.length) * 100) : 0
+  };
+
+  // Update UI
+  document.getElementById('pdfStatTotal').textContent = newSlots.length;
+  document.getElementById('pdfStatMapped').textContent = pdfImportState.summary.mapped;
+  document.getElementById('pdfStatUnknown').textContent = pdfImportState.summary.unknown;
+  document.getElementById('pdfStatProfs').textContent = pdfImportState.summary.uniqueProfs;
+  document.getElementById('pdfStats').classList.remove('hidden');
+
+  if (unknownProfs.length > 0) {
+    renderUnknownProfsForm(unknownProfs);
+    document.getElementById('pdfUnknown').classList.remove('hidden');
+  } else {
+    document.getElementById('pdfUnknown').classList.add('hidden');
+  }
+
+  // Preview with match badges
+  const tbody = document.getElementById('pdfPreview');
+  tbody.innerHTML = enriched.slice(0, 30).map(s => {
+    const matchBadge = s.match_type === 'exact' ? '<span class="text-green-400">✓✓</span>' :
+                       s.match_type === 'prof_disc' ? '<span class="text-green-300">✓</span>' :
+                       s.match_type === 'prof_only' ? '<span class="text-yellow-400">~</span>' :
+                       '<span class="text-red-400">✗</span>';
+    return `
+      <tr class="border-b border-white/5">
+        <td class="px-2 py-1 font-mono">${s.turma}</td>
+        <td class="px-2 py-1">${s.dia}</td>
+        <td class="px-2 py-1 text-center">A${s.aula}</td>
+        <td class="px-2 py-1 font-bold">${s.prof} ${matchBadge}</td>
+        <td class="px-2 py-1 text-surface-400">${s.disc}</td>
+        <td class="px-2 py-1">${s.sala ? `<span class="badge bg-indigo-500/20 text-indigo-300">${s.sala}</span>` : '<span class="text-red-400 text-xs">sem sala</span>'}</td>
+      </tr>
+    `;
+  }).join('');
+  document.getElementById('pdfPreviewWrap').classList.remove('hidden');
+
+  const successColor = pdfImportState.summary.successRate >= 90 ? 'text-green-400' :
+                      pdfImportState.summary.successRate >= 70 ? 'text-yellow-400' : 'text-red-400';
+
+  document.getElementById('pdfStatus').innerHTML =
+    `✅ <strong class="${successColor}">${pdfImportState.summary.successRate}%</strong> alocados via referência "${refSchool.name}" ` +
+    `(${stats.exact} exatos · ${stats.prof_disc} por disciplina · ${stats.prof_only} só por prof · ${stats.no_match} sem match)`;
+
+  document.getElementById('pdfActions').classList.remove('hidden');
+}
+
+// Helper: derive meta.aulas_por_dia and totals from slots
+// CRITICAL: makes render work correctly after PDF import with different
+// schedule structures (e.g. 45min with 6 aulas Seg/Ter, 10 Qui/Sex)
+function deriveMetaFromSlots(slots, baseMeta = {}) {
+  const aulasPorDia = {};
+  const turmasSet = new Set();
+  const profsSet = new Set();
+  const salasSet = new Set();
+  for (const s of slots) {
+    const a = parseInt(s.aula) || 0;
+    if (a > 0) aulasPorDia[s.dia] = Math.max(aulasPorDia[s.dia] || 0, a);
+    if (s.turma) turmasSet.add(s.turma);
+    if (s.prof) profsSet.add(s.prof);
+    if (s.sala) salasSet.add(s.sala);
+  }
+  // Infer duracao_aula_min from total aulas (Seg/Ter ≤ 6 → 45min; ≥ 9 → 50min)
+  const maxAulasAnyDay = Math.max(0, ...Object.values(aulasPorDia));
+  const duracao = maxAulasAnyDay >= 10 ? 45 : (baseMeta.duracao_aula_min || 50);
+  return {
+    ...baseMeta,
+    total_slots: slots.length,
+    aulas_por_dia: aulasPorDia,
+    duracao_aula_min: duracao
+  };
+}
+
+function applyPDFToCurrent() {
+  if (!pdfImportState.newSlots) return;
+  if (!confirm(`Substituir o horário atual com ${pdfImportState.newSlots.length} aulas do PDF?\n\n⚠️ Esta ação substitui todos os slots existentes.`)) return;
+
+  const d = currentData();
+  d.slots = pdfImportState.newSlots;
+
+  // Update meta — derive aulas_por_dia from the new slots
+  d.meta = deriveMetaFromSlots(d.slots, {
+    ...(d.meta || {}),
+    versao_grade: 'pdf-' + new Date().toISOString().split('T')[0],
+    data_geracao: new Date().toISOString().split('T')[0],
+    origem: 'PDF: ' + pdfImportState.fileName
+  });
+
+  // Update derived lists if missing
+  const turmasFromSlots = [...new Set(d.slots.map(s => s.turma))].sort();
+  if (!d.turmas || d.turmas.length === 0) d.turmas = turmasFromSlots;
+  const diasFromSlots = [...new Set(d.slots.map(s => s.dia))];
+  if (!d.dias || d.dias.length === 0) d.dias = diasFromSlots;
+
+  saveToStorage();
+  rebuildAreaMap();
+  render();
+  closePDFModal();
+  toast(`✅ Horário atualizado: ${d.slots.length} aulas, ${Object.keys(d.meta.aulas_por_dia).length} dias`);
+}
+
+function applyPDFAsNewVersion() {
+  if (!pdfImportState.newSlots) return;
+
+  const name = prompt('Nome da nova escola/versão:', 'Horário Adaptado (PDF)');
+  if (!name) return;
+
+  // Clone current school data as base (preserves areas, prof_area, salas, etc.)
+  const currentSchool = state.schools[state.currentSchoolId];
+  const newData = JSON.parse(JSON.stringify(currentSchool.data));
+
+  // Replace slots with PDF data
+  newData.slots = pdfImportState.newSlots;
+  newData.meta = deriveMetaFromSlots(newData.slots, {
+    ...(newData.meta || {}),
+    versao_grade: 'pdf-' + new Date().toISOString().split('T')[0],
+    data_geracao: new Date().toISOString().split('T')[0],
+    origem: 'PDF: ' + pdfImportState.fileName
+  });
+
+  // Update derived lists from new slots
+  newData.turmas = [...new Set(newData.slots.map(s => s.turma))].sort();
+  newData.dias = [...new Set(newData.slots.map(s => s.dia))];
+
+  // Create new school
+  const id = 'escola_' + Date.now();
+  state.schools[id] = { name, data: newData };
+  state.currentSchoolId = id;
+
+  saveToStorage();
+  populateSchoolSelect();
+  rebuildAreaMap();
+  render();
+  closePDFModal();
+  toast(`✅ Nova escola criada: ${name} (${newData.slots.length} aulas)`);
+}
+
+// Render form to register unknown profs found in the PDF
+function renderUnknownProfsForm(unknownProfs) {
+  const refSchoolId = document.getElementById('pdfRefSchool').value;
+  const refSchool = state.schools[refSchoolId];
+  const d = refSchool?.data || currentData();
+  const areas = Object.keys(d.areas || { 'Linguagens':[], 'Matemática':[], 'Natureza':[], 'Humanas':[], 'Itinerário':[] });
+  const salas_alocacao = d.salas_alocacao || {};
+
+  const html = unknownProfs.map((prof, i) => {
+    // Guess area from disciplinas seen in the PDF rows for this prof
+    const profRows = (pdfImportState.newSlots || []).filter(s => s.prof === prof);
+    const guessedDisc = profRows[0]?.disc || '';
+    const guessedArea = guessAreaFromDisc(guessedDisc, d) || areas[0];
+
+    const salasOfGuessedArea = salas_alocacao[guessedArea]?.salas || d.salas || [];
+
+    return `
+      <div class="grid grid-cols-12 gap-2 items-center bg-surface-900/40 rounded p-2 border border-orange-500/20">
+        <div class="col-span-3 font-bold text-sm text-orange-300" title="${profRows.length} aulas no PDF">
+          ${prof}
+          <div class="text-[10px] text-surface-500 font-normal">${profRows.length} aulas · ${guessedDisc || '—'}</div>
+        </div>
+        <select id="unkArea_${i}" data-prof="${prof}" onchange="filterSalasForProf(${i})" class="col-span-3 bg-surface-800 px-2 py-1 rounded text-xs border border-white/10">
+          ${areas.map(a => `<option value="${a}" ${a===guessedArea?'selected':''}>${a}</option>`).join('')}
+        </select>
+        <select id="unkSala_${i}" class="col-span-5 bg-surface-800 px-2 py-1 rounded text-xs border border-white/10">
+          ${salasOfGuessedArea.map(s => `<option value="${s}">${s}</option>`).join('')}
+          <option value="__new__">➕ Nova sala...</option>
+        </select>
+        <button onclick="skipUnknownProf(${i})" class="col-span-1 text-surface-500 hover:text-red-400 text-xs" title="Pular este prof (importa sem sala)">×</button>
+      </div>
+    `;
+  }).join('');
+
+  document.getElementById('pdfUnknownProfsForm').innerHTML = html;
+}
+
+// Guess area from disciplina by looking it up in areas mapping
+function guessAreaFromDisc(disc, d) {
+  if (!disc || !d?.areas) return null;
+  const discNorm = disc.toLowerCase().trim();
+  for (const [area, discs] of Object.entries(d.areas)) {
+    if (discs.some(x => x.toLowerCase().includes(discNorm) || discNorm.includes(x.toLowerCase()))) {
+      return area;
+    }
+  }
+  return null;
+}
+
+// When area changes, update sala options to only show salas of that area
+function filterSalasForProf(i) {
+  const refSchoolId = document.getElementById('pdfRefSchool').value;
+  const d = state.schools[refSchoolId]?.data || currentData();
+  const area = document.getElementById('unkArea_' + i).value;
+  const salasOfArea = d.salas_alocacao?.[area]?.salas || d.salas || [];
+  const salaSel = document.getElementById('unkSala_' + i);
+  salaSel.innerHTML = salasOfArea.map(s => `<option value="${s}">${s}</option>`).join('') +
+                      `<option value="__new__">➕ Nova sala...</option>`;
+}
+
+// Skip a prof — remove their row from the form (will stay unmapped)
+function skipUnknownProf(i) {
+  const row = document.getElementById('unkArea_' + i)?.closest('.grid');
+  if (row) row.remove();
+}
+
+// Register all profs in the form, then reprocess the PDF
+function registerUnknownProfs() {
+  const refSchoolId = document.getElementById('pdfRefSchool').value;
+  const refSchool = state.schools[refSchoolId];
+  if (!refSchool) { alert('Escola de referência não encontrada'); return; }
+  const d = refSchool.data;
+
+  // Initialize structures if missing
+  d.profs = d.profs || [];
+  d.prof_area = d.prof_area || {};
+  d.salas = d.salas || [];
+  d.salas_alocacao = d.salas_alocacao || {};
+  d.areas = d.areas || {};
+
+  const allInputs = document.querySelectorAll('#pdfUnknownProfsForm select[id^="unkArea_"]');
+  let registered = 0;
+  const newProfSalaMap = {}; // prof → sala (for immediate slot enrichment)
+
+  for (const areaSel of allInputs) {
+    const i = areaSel.id.split('_')[1];
+    const prof = areaSel.dataset.prof;
+    const area = areaSel.value;
+    const salaSel = document.getElementById('unkSala_' + i);
+    let sala = salaSel.value;
+
+    if (sala === '__new__') {
+      const newSalaName = prompt(`Nome da nova sala temática para ${prof} (área ${area}):`, `Sala ${area[0]}${(d.salas_alocacao[area]?.salas?.length || 0) + 1}`);
+      if (!newSalaName) continue;
+      sala = newSalaName.trim();
+    }
+
+    // Save to school config
+    if (!d.profs.includes(prof)) d.profs.push(prof);
+    d.prof_area[prof] = area;
+    if (!d.salas.includes(sala)) d.salas.push(sala);
+    if (!d.salas_alocacao[area]) d.salas_alocacao[area] = { salas: [], profs: [] };
+    if (!d.salas_alocacao[area].salas.includes(sala)) d.salas_alocacao[area].salas.push(sala);
+    if (!d.salas_alocacao[area].profs.includes(prof)) d.salas_alocacao[area].profs.push(prof);
+
+    newProfSalaMap[prof] = sala;
+    registered++;
+  }
+
+  if (registered === 0) { toast('Nenhum professor cadastrado'); return; }
+
+  // Apply new sala to existing slots immediately (no full reprocess needed)
+  let enrichedCount = 0;
+  pdfImportState.newSlots = pdfImportState.newSlots.map(s => {
+    if (!s.sala && newProfSalaMap[s.prof]) {
+      enrichedCount++;
+      return { ...s, sala: newProfSalaMap[s.prof] };
+    }
+    return s;
+  });
+
+  // Recompute summary
+  const remainingUnknown = (pdfImportState.summary.unknownProfs || []).filter(p => !newProfSalaMap[p]);
+  pdfImportState.summary.mapped += enrichedCount;
+  pdfImportState.summary.unknown = pdfImportState.newSlots.filter(s => !s.sala).length;
+  pdfImportState.summary.unknownProfs = remainingUnknown;
+  pdfImportState.summary.successRate = pdfImportState.newSlots.length > 0
+    ? Math.round((pdfImportState.summary.mapped / pdfImportState.newSlots.length) * 100) : 0;
+
+  saveToStorage();
+
+  // Update UI: stats + unknown section
+  document.getElementById('pdfStatMapped').textContent = pdfImportState.summary.mapped;
+  document.getElementById('pdfStatUnknown').textContent = pdfImportState.summary.unknown;
+  if (remainingUnknown.length === 0) {
+    document.getElementById('pdfUnknown').classList.add('hidden');
+  } else {
+    renderUnknownProfsForm(remainingUnknown);
+  }
+
+  // Refresh preview
+  const tbody = document.getElementById('pdfPreview');
+  tbody.innerHTML = pdfImportState.newSlots.slice(0, 30).map(s => {
+    const matchBadge = s.sala ? '<span class="text-green-400">✓</span>' : '<span class="text-red-400">✗</span>';
+    return `
+      <tr class="border-b border-white/5">
+        <td class="px-2 py-1 font-mono">${s.turma}</td>
+        <td class="px-2 py-1">${s.dia}</td>
+        <td class="px-2 py-1 text-center">A${s.aula}</td>
+        <td class="px-2 py-1 font-bold">${s.prof} ${matchBadge}</td>
+        <td class="px-2 py-1 text-surface-400">${s.disc || ''}</td>
+        <td class="px-2 py-1">${s.sala ? `<span class="badge bg-indigo-500/20 text-indigo-300">${s.sala}</span>` : '<span class="text-red-400 text-xs">sem sala</span>'}</td>
+      </tr>
+    `;
+  }).join('');
+
+  toast(`✅ ${registered} professor(es) cadastrado(s) · ${enrichedCount} aulas alocadas`);
+}
+
+function closePDFModal() {
+  document.getElementById('pdfModal').classList.add('hidden');
+  pdfImportState = { rawRows: null, newSlots: null, summary: null, fileName: '' };
+}
+
+// ====== AI ASSISTANT (Maritaca) ======
+let aiState = {
+  client: null,
+  pendingChanges: null,
+  history: []
+};
+
+function getAIClient() {
+  if (!aiState.client) {
+    aiState.client = new MaritacaClient({
+      apiKey: window.MARITACA_API_KEY,
+      model: 'sabia-3',
+      debug: true
+    });
+  }
+  return aiState.client;
+}
+
+function openAIModal() {
+  if (!window.MARITACA_API_KEY) {
+    alert('⚠️ Chave Maritaca não configurada.\n\nVerifique o arquivo js/maritaca-config.local.js');
+    return;
+  }
+  document.getElementById('aiModal').classList.remove('hidden');
+  if (window.lucide) lucide.createIcons();
+  setTimeout(() => document.getElementById('aiInput').focus(), 100);
+}
+
+function closeAIModal() {
+  document.getElementById('aiModal').classList.add('hidden');
+}
+
+function aiAddMessage(role, content, isHTML = false) {
+  const chat = document.getElementById('aiChat');
+  const div = document.createElement('div');
+
+  if (role === 'user') {
+    div.className = 'bg-pink-900/20 border border-pink-500/30 rounded-lg p-3 text-sm ml-8';
+    div.innerHTML = `<div class="flex items-start gap-2">
+      <i data-lucide="user" class="ico text-pink-400 mt-0.5"></i>
+      <div class="flex-1 text-pink-100">${isHTML ? content : escapeHTML(content)}</div>
+    </div>`;
+  } else if (role === 'ai') {
+    div.className = 'bg-surface-900/50 rounded-lg p-3 text-sm';
+    div.innerHTML = `<div class="flex items-start gap-2">
+      <i data-lucide="sparkles" class="ico text-pink-400 mt-0.5"></i>
+      <div class="flex-1">
+        <div class="font-bold text-pink-300 text-xs mb-1">Assistente IA</div>
+        <div class="text-surface-200 whitespace-pre-wrap">${isHTML ? content : escapeHTML(content)}</div>
+      </div>
+    </div>`;
+  } else {
+    div.className = 'bg-amber-900/20 border border-amber-500/30 rounded p-2 text-xs text-amber-200';
+    div.textContent = content;
+  }
+
+  chat.appendChild(div);
+  chat.scrollTop = chat.scrollHeight;
+  if (window.lucide) lucide.createIcons();
+}
+
+function escapeHTML(s) {
+  return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+function aiSetStatus(text, busy = false) {
+  document.getElementById('aiStatus').innerHTML = busy
+    ? `<span class="text-pink-400">⏳ ${text}</span>`
+    : text;
+  document.getElementById('aiSendBtn').disabled = busy;
+}
+
+async function aiSend() {
+  const input = document.getElementById('aiInput');
+  const text = input.value.trim();
+  if (!text) return;
+
+  input.value = '';
+  aiAddMessage('user', text);
+  aiSetStatus('Pensando...', true);
+
+  try {
+    const client = getAIClient();
+    const result = await client.chat(text, currentData());
+
+    aiAddMessage('ai', result.message);
+    aiSetStatus(`Pronto · ${result.usage?.total_tokens || '?'} tokens`);
+  } catch (err) {
+    aiAddMessage('system', '❌ Erro: ' + err.message);
+    aiSetStatus('Erro · tente novamente');
+  }
+}
+
+async function aiQuickAction(action) {
+  if (action === 'importar_pdf') {
+    document.getElementById('aiPdfInput').click();
+    return;
+  }
+
+  const prompts = {
+    resolver_conflitos: 'Analise o horário atual e identifique todos os conflitos. Para cada conflito, sugira como resolver.',
+    analisar: 'Faça uma análise completa do horário atual: distribuição de aulas, cargas dos professores, ocupação das salas, e pontos de atenção pedagógica.',
+    sugestoes: 'Sugira 3-5 melhorias específicas que podem ser feitas no horário atual para melhorar a qualidade pedagógica.'
+  };
+
+  const prompt = prompts[action];
+  if (!prompt) return;
+
+  document.getElementById('aiInput').value = prompt;
+  await aiSend();
+}
+
+async function aiHandlePDF(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  event.target.value = '';
+
+  aiAddMessage('user', `📄 PDF enviado: ${file.name}`);
+  aiSetStatus('Extraindo texto do PDF...', true);
+
+  try {
+    const pdfLib = window.pdfjsLib || window.pdfjs;
+    if (!pdfLib) throw new Error('pdf.js não carregou');
+
+    // Extract raw text from PDF
+    const arrayBuffer = await file.arrayBuffer();
+    const pdf = await pdfLib.getDocument({ data: arrayBuffer }).promise;
+    let fullText = '';
+
+    for (let i = 1; i <= Math.min(pdf.numPages, 10); i++) {
+      const page = await pdf.getPage(i);
+      const content = await page.getTextContent();
+      const pageText = content.items.map(item => item.str).join(' ');
+      fullText += `\n=== PÁGINA ${i} ===\n${pageText}\n`;
+    }
+
+    aiSetStatus('IA analisando estrutura do PDF...', true);
+    aiAddMessage('ai', '🤖 Analisando o PDF com IA — isso pode levar 15-30 segundos...');
+
+    const client = getAIClient();
+    const result = await client.parsePDF(fullText, currentData());
+
+    if (result.data && result.data.slots) {
+      const slots = result.data.slots;
+      const notFound = result.data.professores_nao_cadastrados || [];
+
+      aiAddMessage('ai', `✅ Análise concluída!\n\n• ${slots.length} aulas identificadas\n• ${notFound.length} professores não cadastrados${notFound.length ? ': ' + notFound.join(', ') : ''}\n\n${result.data.observacoes || ''}`);
+
+      // Show preview and confirm
+      aiState.pendingChanges = {
+        type: 'replace_all',
+        slots: slots,
+        meta: { origem: 'PDF IA: ' + file.name, data: new Date().toISOString() }
+      };
+      showPendingChanges(`Substituir horário atual por ${slots.length} aulas extraídas do PDF.`);
+    } else {
+      aiAddMessage('ai', result.message);
+    }
+
+    aiSetStatus(`Pronto · ${result.usage?.total_tokens || '?'} tokens`);
+  } catch (err) {
+    aiAddMessage('system', '❌ Erro ao processar PDF: ' + err.message);
+    aiSetStatus('Erro');
+    console.error(err);
+  }
+}
+
+function showPendingChanges(summary) {
+  if (!aiState.pendingChanges) return;
+  const wrap = document.getElementById('aiPendingChanges');
+  const content = document.getElementById('aiPendingContent');
+  content.innerHTML = `<div class="text-amber-100">${summary}</div>`;
+
+  if (aiState.pendingChanges.slots) {
+    const preview = aiState.pendingChanges.slots.slice(0, 5);
+    content.innerHTML += `<div class="mt-2 font-mono text-[10px] text-surface-400">Preview: ${preview.map(s => `${s.turma}/${s.dia} A${s.aula}: ${s.prof} (${s.sala})`).join('; ')}...</div>`;
+  }
+  wrap.classList.remove('hidden');
+}
+
+function aiApplyChanges() {
+  if (!aiState.pendingChanges) return;
+  const ch = aiState.pendingChanges;
+  const d = currentData();
+
+  if (ch.type === 'replace_all' && ch.slots) {
+    d.slots = ch.slots;
+    if (ch.meta) {
+      d.meta = d.meta || {};
+      Object.assign(d.meta, ch.meta);
+    }
+  } else if (ch.slots_alterados || ch.slots_removidos) {
+    // Apply incremental changes
+    if (ch.slots_removidos) {
+      for (const r of ch.slots_removidos) {
+        d.slots = d.slots.filter(s => !(s.dia===r.dia && s.aula===r.aula && s.turma===r.turma));
+      }
+    }
+    if (ch.slots_alterados) {
+      for (const a of ch.slots_alterados) {
+        const idx = d.slots.findIndex(s => s.dia===a.dia && s.aula===a.aula && s.turma===a.turma);
+        if (idx >= 0) d.slots[idx] = { ...d.slots[idx], ...a };
+        else d.slots.push(a);
+      }
+    }
+  }
+
+  saveToStorage();
+  rebuildAreaMap();
+  render();
+
+  aiState.pendingChanges = null;
+  document.getElementById('aiPendingChanges').classList.add('hidden');
+  aiAddMessage('system', '✅ Mudanças aplicadas ao horário!');
+  toast('Horário atualizado pela IA');
+}
+
+function aiRejectChanges() {
+  aiState.pendingChanges = null;
+  document.getElementById('aiPendingChanges').classList.add('hidden');
+  aiAddMessage('system', '❌ Mudanças descartadas');
+}
+
+// ====== INIT ======
+loadFromStorage();
+bootSchool();
+applyTheme();
+populateSchoolSelect();
+setView('dashboard');
+if (window.lucide) lucide.createIcons();
+</script>
+</body>
+</html>

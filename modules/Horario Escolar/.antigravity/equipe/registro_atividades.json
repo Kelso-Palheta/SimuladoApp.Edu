@@ -1,0 +1,41 @@
+{
+  "pipeline_id": "horario-escolar-2026",
+  "data_inicio": "2026-05-11",
+  "atividades": [
+    {
+      "id": "T1",
+      "agente": "Explorador",
+      "tarefa": "Reextrair CH do PDF por turma/disciplina FGB+Itinerário",
+      "estado": "EM_EXECUCAO",
+      "pre_requisitos": []
+    },
+    {
+      "id": "T2",
+      "agente": "Projetista",
+      "tarefa": "Validar regras PRD v1.1 (duplas, salas área, planejamento)",
+      "estado": "PENDENTE",
+      "pre_requisitos": ["T1"]
+    },
+    {
+      "id": "T3",
+      "agente": "Executor",
+      "tarefa": "Gerar Excel grade completa",
+      "estado": "PENDENTE",
+      "pre_requisitos": ["T1", "T2"]
+    },
+    {
+      "id": "T4",
+      "agente": "Comunicador",
+      "tarefa": "Relatório docx",
+      "estado": "PENDENTE",
+      "pre_requisitos": ["T3"]
+    },
+    {
+      "id": "T5",
+      "agente": "Auditor",
+      "tarefa": "Validação conflitos + gargalos",
+      "estado": "PENDENTE",
+      "pre_requisitos": ["T3"]
+    }
+  ]
+}

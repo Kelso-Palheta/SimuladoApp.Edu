@@ -1,0 +1,658 @@
+{
+  "JOANA": {
+    "area": "Linguagens",
+    "turmas": {
+      "1º ANO - 101": {
+        "Português": 3,
+        "E.O. Português": 2
+      },
+      "1º ANO - 102": {
+        "Português": 3,
+        "E.O. Português": 2
+      },
+      "2º ANO - 201": {
+        "Aprof. Linguagens": 2
+      },
+      "1º ANO - 103": {
+        "Proj. de Vida": 1,
+        "Português": 3,
+        "E.O. Português": 2,
+        "PPA": 2
+      },
+      "2º ANO - 202": {
+        "Eletiva": 2
+      }
+    },
+    "total": 22,
+    "fgb": 9,
+    "iti": 13
+  },
+  "LUCIDALVA": {
+    "area": "Matemática",
+    "turmas": {
+      "1º ANO - 102": {
+        "Matemática": 3,
+        "Aprof. Matemática": 2,
+        "E.O. Matemática": 2
+      },
+      "1º ANO - 101": {
+        "Aprof. Matemática": 2,
+        "Matemática": 3,
+        "E.O. Matemática": 2
+      }
+    },
+    "total": 14,
+    "fgb": 6,
+    "iti": 8
+  },
+  "MILTON": {
+    "area": "Matemática",
+    "turmas": {
+      "1º ANO - 103": {
+        "Matemática": 3,
+        "E.O. Matemática": 2
+      },
+      "2º ANO - 203": {
+        "Matemática": 4,
+        "E.O. Matemática": 2,
+        "Aprof. Matemática": 2
+      },
+      "3º ANO - 302": {
+        "Aprof. Matemática": 2,
+        "Matemática": 4,
+        "E.O. Matemática": 2
+      }
+    },
+    "total": 21,
+    "fgb": 11,
+    "iti": 10
+  },
+  "DIJANE": {
+    "area": "Natureza",
+    "turmas": {
+      "1º ANO - 104": {
+        "Biologia": 2
+      },
+      "2º ANO - 203": {
+        "Ed. Ambiental": 1,
+        "Biologia": 2
+      },
+      "2º ANO - 201": {
+        "Ed. Ambiental": 1,
+        "Biologia": 2
+      },
+      "1º ANO - 103": {
+        "Prát. Experimentais": 1,
+        "Biologia": 2
+      },
+      "2º ANO - 204": {
+        "Biologia": 2,
+        "Ed. Ambiental": 1
+      },
+      "3º ANO - 302": {
+        "Biologia": 2
+      },
+      "1º ANO - 102": {
+        "Biologia": 2
+      },
+      "2º ANO - 202": {
+        "Ed. Ambiental": 1,
+        "Biologia": 2
+      },
+      "3º ANO - 301": {
+        "Biologia": 2
+      },
+      "1º ANO - 101": {
+        "Biologia": 2
+      }
+    },
+    "total": 25,
+    "fgb": 20,
+    "iti": 5
+  },
+  "ROGÉRIO": {
+    "area": "Matemática",
+    "turmas": {
+      "2º ANO - 201": {
+        "Matemática": 4,
+        "Aprof. Matemática": 2,
+        "E.O. Matemática": 2
+      },
+      "2º ANO - 202": {
+        "Matemática": 4,
+        "E.O. Matemática": 2,
+        "Aprof. Matemática": 2
+      },
+      "3º ANO - 301": {
+        "Aprof. Matemática": 2
+      },
+      "2º ANO - 203": {
+        "Eletiva": 2
+      },
+      "1º ANO - 103": {
+        "Aprof. Matemática": 2
+      }
+    },
+    "total": 22,
+    "fgb": 8,
+    "iti": 14
+  },
+  "JHONATAN": {
+    "area": "Linguagens",
+    "turmas": {
+      "2º ANO - 202": {
+        "Ed. Física": 2
+      },
+      "1º ANO - 102": {
+        "Ed. Física": 1,
+        "PPA": 2
+      },
+      "2º ANO - 204": {
+        "Ed. Física": 2
+      },
+      "2º ANO - 203": {
+        "Ed. Física": 2,
+        "PPA": 2
+      },
+      "2º ANO - 201": {
+        "Ed. Física": 2
+      },
+      "1º ANO - 103": {
+        "Eletiva": 2,
+        "Ed. Física": 1
+      },
+      "3º ANO - 301": {
+        "Ed. Física": 1,
+        "Eletiva": 2
+      },
+      "3º ANO - 302": {
+        "Eletiva": 2,
+        "Ed. Física": 1
+      },
+      "1º ANO - 104": {
+        "Ed. Física": 1
+      },
+      "1º ANO - 101": {
+        "Ed. Física": 1
+      }
+    },
+    "total": 24,
+    "fgb": 14,
+    "iti": 10
+  },
+  "LUCÍLIO": {
+    "area": "Humanas",
+    "turmas": {
+      "2º ANO - 203": {
+        "Geografia": 2
+      },
+      "1º ANO - 101": {
+        "Ed. Ambiental": 1,
+        "Geografia": 2
+      },
+      "2º ANO - 204": {
+        "Geografia": 2
+      },
+      "3º ANO - 301": {
+        "Geografia": 2,
+        "Ed. Ambiental": 1
+      },
+      "2º ANO - 201": {
+        "Geografia": 2
+      },
+      "2º ANO - 202": {
+        "Geografia": 2
+      },
+      "1º ANO - 103": {
+        "Geografia": 2,
+        "Ed. Ambiental": 1
+      },
+      "3º ANO - 302": {
+        "Geografia": 2,
+        "Ed. Ambiental": 1
+      },
+      "1º ANO - 102": {
+        "Geografia": 2,
+        "Ed. Ambiental": 1
+      },
+      "1º ANO - 104": {
+        "Geografia": 2,
+        "Ed. Ambiental": 1
+      }
+    },
+    "total": 26,
+    "fgb": 20,
+    "iti": 6
+  },
+  "LUIZ": {
+    "area": "Matemática",
+    "turmas": {
+      "2º ANO - 204": {
+        "Matemática": 5,
+        "E.O. Matemática": 2
+      },
+      "1º ANO - 104": {
+        "Matemática": 3,
+        "Aprof. Matemática": 2
+      },
+      "1º ANO - 101": {
+        "PPA": 2
+      },
+      "3º ANO - 301": {
+        "E.O. Matemática": 2,
+        "Matemática": 4
+      }
+    },
+    "total": 20,
+    "fgb": 12,
+    "iti": 8
+  },
+  "VANESA": {
+    "area": "Linguagens",
+    "turmas": {
+      "3º ANO - 301": {
+        "Inglês": 2
+      },
+      "3º ANO - 302": {
+        "Inglês": 2,
+        "PPA": 2
+      },
+      "2º ANO - 201": {
+        "Inglês": 1
+      },
+      "2º ANO - 202": {
+        "PPA": 2,
+        "Inglês": 1
+      },
+      "1º ANO - 103": {
+        "Inglês": 1,
+        "Aprof. Linguagens": 2
+      },
+      "2º ANO - 203": {
+        "Inglês": 1
+      },
+      "1º ANO - 104": {
+        "Inglês": 1
+      },
+      "1º ANO - 102": {
+        "Eletiva": 2,
+        "Aprof. Linguagens": 2,
+        "Proj. de Vida": 1,
+        "Inglês": 1
+      },
+      "1º ANO - 101": {
+        "Inglês": 1,
+        "Aprof. Linguagens": 2
+      },
+      "2º ANO - 204": {
+        "Inglês 2": 1,
+        "Inglês": 1
+      }
+    },
+    "total": 26,
+    "fgb": 13,
+    "iti": 13
+  },
+  "ELIANA": {
+    "area": "Linguagens",
+    "turmas": {
+      "3º ANO - 302": {
+        "Português": 4,
+        "E.O. Português": 2
+      },
+      "3º ANO - 301": {
+        "Português": 4,
+        "Aprof. Linguagens": 2,
+        "E.O. Português": 2
+      }
+    },
+    "total": 14,
+    "fgb": 8,
+    "iti": 6
+  },
+  "ELINELSON": {
+    "area": "Humanas",
+    "turmas": {
+      "1º ANO - 103": {
+        "Filosofia": 2,
+        "Aprof. Humanas": 2
+      },
+      "1º ANO - 101": {
+        "Aprof. Humanas": 2,
+        "Filosofia": 2
+      },
+      "3º ANO - 302": {
+        "Aprof. Humanas": 2,
+        "Filosofia": 1
+      },
+      "2º ANO - 202": {
+        "Filosofia": 1
+      },
+      "1º ANO - 104": {
+        "Filosofia": 2
+      },
+      "3º ANO - 301": {
+        "Aprof. Humanas": 2,
+        "Filosofia": 1
+      },
+      "2º ANO - 201": {
+        "PPA": 2,
+        "Filosofia": 1
+      },
+      "1º ANO - 102": {
+        "Filosofia": 2
+      },
+      "2º ANO - 204": {
+        "Filosofia": 1
+      },
+      "2º ANO - 203": {
+        "Filosofia": 1
+      }
+    },
+    "total": 24,
+    "fgb": 14,
+    "iti": 10
+  },
+  "RODRIGO": {
+    "area": "Natureza",
+    "turmas": {
+      "2º ANO - 201": {
+        "Química": 2,
+        "Aprof. Natureza": 2,
+        "Prát. Experimentais": 1
+      },
+      "3º ANO - 302": {
+        "Prát. Experimentais": 1,
+        "Química": 2
+      },
+      "1º ANO - 104": {
+        "Aprof. Natureza": 2
+      },
+      "2º ANO - 203": {
+        "Aprof. Natureza": 2,
+        "Química": 2,
+        "Prát. Experimentais": 1
+      },
+      "2º ANO - 202": {
+        "Prát. Experimentais": 1,
+        "Química": 2,
+        "Aprof. Natureza": 2
+      },
+      "2º ANO - 204": {
+        "Química": 2
+      },
+      "1º ANO - 103": {
+        "Aprof. Natureza": 2
+      },
+      "3º ANO - 301": {
+        "Prát. Experimentais": 1
+      }
+    },
+    "total": 25,
+    "fgb": 10,
+    "iti": 15
+  },
+  "REGINA": {
+    "area": "Linguagens",
+    "turmas": {
+      "2º ANO - 202": {
+        "Proj. de Vida": 1,
+        "Aprof. Linguagens": 2
+      },
+      "1º ANO - 104": {
+        "Português": 3,
+        "Aprof. Linguagens": 2
+      },
+      "2º ANO - 203": {
+        "Português": 4,
+        "Proj. de Vida": 1,
+        "E.O. Português": 2,
+        "Aprof. Linguagens": 2
+      },
+      "2º ANO - 204": {
+        "Proj. de Vida": 3
+      },
+      "1º ANO - 101": {
+        "Proj. de Vida": 1
+      },
+      "2º ANO - 201": {
+        "Proj. de Vida": 1
+      },
+      "3º ANO - 302": {
+        "Aprof. Linguagens": 2
+      }
+    },
+    "total": 24,
+    "fgb": 7,
+    "iti": 17
+  },
+  "LOUISE": {
+    "area": "Natureza",
+    "turmas": {
+      "2º ANO - 204": {
+        "Física": 2
+      },
+      "2º ANO - 202": {
+        "Física": 2
+      },
+      "1º ANO - 102": {
+        "Aprof. Natureza": 2,
+        "Física": 2
+      },
+      "1º ANO - 104": {
+        "Física": 2
+      },
+      "1º ANO - 103": {
+        "Física": 2
+      },
+      "2º ANO - 201": {
+        "Física": 2
+      },
+      "3º ANO - 301": {
+        "Física": 2
+      },
+      "1º ANO - 101": {
+        "Física": 2,
+        "Aprof. Natureza": 2
+      },
+      "2º ANO - 203": {
+        "Física": 2
+      },
+      "3º ANO - 302": {
+        "Física": 2
+      }
+    },
+    "total": 24,
+    "fgb": 20,
+    "iti": 4
+  },
+  "KELSO": {
+    "area": "Linguagens",
+    "turmas": {
+      "3º ANO - 301": {
+        "Arte": 1
+      },
+      "1º ANO - 103": {
+        "Arte": 2
+      },
+      "2º ANO - 201": {
+        "Arte": 1
+      },
+      "1º ANO - 104": {
+        "Arte": 2
+      },
+      "2º ANO - 204": {
+        "Arte": 1
+      },
+      "2º ANO - 203": {
+        "Arte": 1
+      },
+      "1º ANO - 102": {
+        "Arte": 2
+      },
+      "1º ANO - 101": {
+        "Eletiva": 2,
+        "Arte": 2
+      },
+      "3º ANO - 302": {
+        "Arte": 1
+      },
+      "2º ANO - 202": {
+        "Arte": 1
+      }
+    },
+    "total": 16,
+    "fgb": 14,
+    "iti": 2
+  },
+  "EDMUNDO": {
+    "area": "Natureza",
+    "turmas": {
+      "1º ANO - 102": {
+        "Química": 2,
+        "Prát. Experimentais": 1
+      },
+      "1º ANO - 101": {
+        "Prát. Experimentais": 1,
+        "Química": 2
+      },
+      "1º ANO - 103": {
+        "Química": 2
+      },
+      "1º ANO - 104": {
+        "Química": 2
+      },
+      "3º ANO - 301": {
+        "Química": 2,
+        "Aprof. Natureza": 2
+      },
+      "3º ANO - 302": {
+        "Aprof. Natureza": 2
+      }
+    },
+    "total": 16,
+    "fgb": 10,
+    "iti": 6
+  },
+  "CASIANO": {
+    "area": "Humanas",
+    "turmas": {
+      "1º ANO - 103": {
+        "Sociologia": 2
+      },
+      "3º ANO - 301": {
+        "Sociologia": 1
+      },
+      "1º ANO - 101": {
+        "Sociologia": 2
+      },
+      "1º ANO - 104": {
+        "Aprof. Humanas": 2,
+        "Sociologia": 2
+      },
+      "2º ANO - 202": {
+        "Sociologia": 1,
+        "Aprof. Humanas": 2
+      },
+      "2º ANO - 201": {
+        "Sociologia": 1,
+        "Aprof. Humanas": 2
+      },
+      "3º ANO - 302": {
+        "Sociologia": 1
+      },
+      "1º ANO - 102": {
+        "Sociologia": 2,
+        "Aprof. Humanas": 2
+      },
+      "2º ANO - 203": {
+        "Aprof. Humanas": 2,
+        "Sociologia": 1
+      },
+      "2º ANO - 204": {
+        "Sociologia": 1
+      }
+    },
+    "total": 24,
+    "fgb": 14,
+    "iti": 10
+  },
+  "EUNICE": {
+    "area": "Linguagens",
+    "turmas": {
+      "2º ANO - 201": {
+        "Português": 4,
+        "E.O. Português": 2
+      },
+      "2º ANO - 202": {
+        "Português": 4,
+        "E.O. Português": 2
+      },
+      "2º ANO - 204": {
+        "E.O. Português": 2,
+        "Português": 5
+      },
+      "3º ANO - 301": {
+        "PPA": 2
+      }
+    },
+    "total": 21,
+    "fgb": 13,
+    "iti": 8
+  },
+  "ELENFLÁVIA": {
+    "area": "Humanas",
+    "turmas": {
+      "3º ANO - 302": {
+        "Proj. de Vida": 1,
+        "História": 2
+      },
+      "2º ANO - 204": {
+        "História": 2
+      },
+      "2º ANO - 201": {
+        "Eletiva": 2,
+        "História": 2
+      },
+      "2º ANO - 203": {
+        "História": 2
+      },
+      "1º ANO - 104": {
+        "História": 2
+      },
+      "1º ANO - 102": {
+        "História": 2
+      },
+      "1º ANO - 101": {
+        "História": 2
+      },
+      "1º ANO - 103": {
+        "História": 2
+      },
+      "3º ANO - 301": {
+        "História": 2,
+        "Proj. de Vida": 1
+      },
+      "2º ANO - 202": {
+        "História": 2
+      }
+    },
+    "total": 24,
+    "fgb": 20,
+    "iti": 4
+  },
+  "MARÍLIA": {
+    "area": "Itinerário",
+    "turmas": {
+      "2º ANO - 204": {
+        "Técnico": 8
+      },
+      "1º ANO - 104": {
+        "Técnico": 10
+      }
+    },
+    "total": 18,
+    "fgb": 0,
+    "iti": 18
+  }
+}

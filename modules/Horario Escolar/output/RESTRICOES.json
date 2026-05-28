@@ -1,0 +1,112 @@
+{
+  "versao": "1.0",
+  "data": "2026-05-11",
+  "turmas": [
+    "1º ANO - 101", "1º ANO - 102", "1º ANO - 103", "1º ANO - 104",
+    "2º ANO - 201", "2º ANO - 202", "2º ANO - 203", "2º ANO - 204",
+    "3º ANO - 301", "3º ANO - 302"
+  ],
+  "dias": ["Segunda", "Terça", "Quarta", "Quinta", "Sexta"],
+  "aulas_por_dia": {
+    "Segunda": 9, "Terça": 9, "Quarta": 9, "Quinta": 9, "Sexta": 9
+  },
+  "quarta_clubes": {
+    "aulas": [8, 9],
+    "descricao": "Aulas 8-9 quarta = Clubes/Tutoria. Distribuição livre por professor padrinho. Espaço pode ser sala da área do prof ou outros livres.",
+    "fixo_todas_turmas": true
+  },
+  "planejamento_pedagogico": {
+    "Segunda": [
+      {"prof": "EDMUNDO", "periodo": "all"},
+      {"prof": "EUNICE", "periodo": "all"},
+      {"prof": "CASIANO", "periodo": "all"},
+      {"prof": "ELENFLÁVIA", "periodo": "all"},
+      {"prof": "ELIANA", "periodo": "tarde"}
+    ],
+    "Terça": [
+      {"prof": "LUCÍLIO", "periodo": "all"},
+      {"prof": "MILTON", "periodo": "all"},
+      {"prof": "ROGÉRIO", "periodo": "all"},
+      {"prof": "LOUISE", "periodo": "all"},
+      {"prof": "RODRIGO", "periodo": "all"},
+      {"prof": "ELIANA", "periodo": "tarde"}
+    ],
+    "Quarta": [],
+    "Quinta": [
+      {"prof": "JHONATAN", "periodo": "all"},
+      {"prof": "VANESA", "periodo": "all"},
+      {"prof": "ELINELSON", "periodo": "all"},
+      {"prof": "JOANA", "periodo": "all"},
+      {"prof": "DIJANE", "periodo": "all"}
+    ],
+    "Sexta": [
+      {"prof": "LUIZ", "periodo": "all"},
+      {"prof": "KELSO", "periodo": "all"},
+      {"prof": "REGINA", "periodo": "all"},
+      {"prof": "LUCIDALVA", "periodo": "all"}
+    ]
+  },
+  "tarde_inicio_aula": 6,
+  "areas_disciplinas": {
+    "Linguagens": ["Português", "Inglês", "Inglês 2", "Arte", "Ed. Física", "E.O. Português", "Aprof. Linguagens"],
+    "Matemática": ["Matemática", "E.O. Matemática", "Aprof. Matemática"],
+    "Natureza": ["Biologia", "Química", "Física", "Ed. Ambiental", "Prát. Experimentais", "Aprof. Natureza"],
+    "Humanas": ["História", "Geografia", "Filosofia", "Sociologia", "Aprof. Humanas"],
+    "Itinerário": ["Eletiva", "PPA", "Proj. de Vida", "Técnico"]
+  },
+  "salas": {
+    "Sala L1": {"area": "Linguagens", "profs": ["ELIANA", "EUNICE"], "cap_dia": 9, "uso_quarta": 7},
+    "Sala L2": {"area": "Linguagens", "profs": ["JOANA", "REGINA"], "cap_dia": 9, "uso_quarta": 7},
+    "Sala L3": {"area": "Linguagens", "profs": ["VANESA", "JHONATAN_itin"], "cap_dia": 9, "uso_quarta": 7},
+    "Sala Leitura": {"area": "Linguagens", "prioridade": "Português", "cap_dia": 9, "uso_quarta": 7},
+    "Sala M1": {"area": "Matemática", "profs": ["LUCIDALVA"], "cap_dia": 9, "uso_quarta": 7},
+    "Sala M2": {"area": "Matemática", "profs": ["MILTON"], "cap_dia": 9, "uso_quarta": 7},
+    "Sala M3": {"area": "Matemática", "profs": ["LUIZ", "ROGÉRIO"], "cap_dia": 9, "uso_quarta": 7},
+    "Sala N1": {"area": "Natureza", "profs": ["DIJANE"], "cap_dia": 9, "uso_quarta": 7},
+    "Sala N2": {"area": "Natureza", "profs": ["EDMUNDO", "LOUISE", "RODRIGO"], "cap_dia": 9, "uso_quarta": 7},
+    "Lab Multidisciplinar": {"area": "Natureza", "uso": "Prát. Experimentais + overflow", "cap_dia": 9, "uso_quarta": 7},
+    "Sala H1": {"area": "Humanas", "profs": ["ELENFLÁVIA", "LUCÍLIO"], "cap_dia": 9, "uso_quarta": 7},
+    "Sala H2": {"area": "Humanas", "profs": ["ELINELSON", "CASIANO"], "cap_dia": 9, "uso_quarta": 7},
+    "Auditório": {"area": "Humanas", "uso": "Aprof.Hum, debates, seminários", "cap_dia": 9, "uso_quarta": 7},
+    "Sala Arte": {"prof_exclusivo": "KELSO", "disciplinas": ["Arte", "Eletiva"], "cap_dia": 9, "uso_quarta": 7},
+    "Sala Informática": {"prof_exclusivo": "MARÍLIA", "disciplinas": ["Técnico"], "cap_dia": 9, "uso_quarta": 7},
+    "Quadra": {"area": "Linguagens", "disciplinas": ["Ed. Física"], "prof_exclusivo": "JHONATAN", "cap_dia": 9, "uso_quarta": 7}
+  },
+  "regras": {
+    "duplas_minimo": {
+      "descricao": "Toda disciplina deve estar em pelo menos 2 aulas seguidas",
+      "excecoes": ["Proj. de Vida", "Eletiva", "PPA"]
+    },
+    "triplas_permitidas": ["Português", "Matemática"],
+    "max_aulas_seguidas_mesma_disc": {
+      "Português": 3,
+      "Matemática": 3,
+      "default": 2
+    },
+    "conflito_prof": "Mesmo prof não pode estar em 2 turmas/slot",
+    "conflito_turma": "Mesma turma não pode ter 2 aulas no mesmo slot",
+    "conflito_sala": "Mesma sala não pode ter 2 turmas no mesmo slot",
+    "itinerario_sala_area_prof": "Itinerário (Aprof./PPA/Eletiva/Proj.V) ocupa sala da área do prof",
+    "tarde_aulas": "Aulas 6-9 = período tarde"
+  },
+  "carga_horaria_por_serie": {
+    "comentario": "Extraída da grade atual do PDF — manter valores fixos",
+    "1º Ano": {"comentario": "Variável por turma 101-104"},
+    "2º Ano": {"comentario": "Variável por turma 201-204"},
+    "3º Ano": {"comentario": "Variável por turma 301-302"}
+  },
+  "alertas_atuais": {
+    "violacoes_planejamento": [
+      {"dia": "Quinta", "aula": 3, "turma": "1º ANO - 103", "prof": "DIJANE", "disc": "Biologia"},
+      {"dia": "Quinta", "aula": 4, "turma": "1º ANO - 103", "prof": "DIJANE", "disc": "Biologia"},
+      {"dia": "Quinta", "aula": 5, "turma": "2º ANO - 202", "prof": "DIJANE", "disc": "Biologia"}
+    ],
+    "aulas_isoladas_total": 98,
+    "gargalos_dia_area": [
+      {"dia": "Terça", "area": "Matemática", "profs_disponiveis": 2, "obs": "Lucidalva+Luiz"},
+      {"dia": "Sexta", "area": "Matemática", "profs_disponiveis": 2, "obs": "Milton+Rogério"},
+      {"dia": "Terça", "area": "Natureza", "profs_disponiveis": 2, "obs": "Dijane+Edmundo"},
+      {"dia": "Segunda", "area": "Humanas", "profs_disponiveis": 2, "obs": "Elinelson+Lucílio"}
+    ]
+  }
+}

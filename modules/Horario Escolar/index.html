@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EECR — Dashboard Horário Escolar</title>
+  <meta name="description" content="Dashboard de organização de horário escolar para Escola Estadual de Ensino Médio em Tempo Integral com salas temáticas">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <!-- Top Navigation -->
+  <header id="main-header">
+    <div class="header-left">
+      <div class="logo">
+        <span class="logo-icon">🏫</span>
+        <div class="logo-text">
+          <h1>EECR</h1>
+          <span class="subtitle">Dashboard Horário Escolar 2026</span>
+        </div>
+      </div>
+    </div>
+    <nav class="header-nav" id="main-nav">
+      <button class="nav-btn active" data-view="geral" id="nav-geral">
+        <span class="nav-icon">📋</span> Visão Geral
+      </button>
+      <button class="nav-btn" data-view="turma" id="nav-turma">
+        <span class="nav-icon">👨‍🎓</span> Por Turma
+      </button>
+      <button class="nav-btn" data-view="professor" id="nav-professor">
+        <span class="nav-icon">👩‍🏫</span> Por Professor
+      </button>
+      <button class="nav-btn" data-view="salas" id="nav-salas">
+        <span class="nav-icon">🚪</span> Salas
+      </button>
+      <button class="nav-btn" data-view="stats" id="nav-stats">
+        <span class="nav-icon">📊</span> Estatísticas
+      </button>
+    </nav>
+    <div class="header-right">
+      <div class="legend-toggle" id="legend-toggle" title="Legenda de cores">
+        <span>🎨</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Color Legend Popover -->
+  <div class="legend-popover" id="legend-popover">
+    <h3>Áreas de Conhecimento</h3>
+    <div class="legend-item"><span class="legend-dot" style="background:#3B82F6"></span> Linguagens</div>
+    <div class="legend-item"><span class="legend-dot" style="background:#EF4444"></span> Matemática</div>
+    <div class="legend-item"><span class="legend-dot" style="background:#10B981"></span> Ciências da Natureza</div>
+    <div class="legend-item"><span class="legend-dot" style="background:#8B5CF6"></span> Ciências Humanas</div>
+    <div class="legend-item"><span class="legend-dot" style="background:#7C3AED"></span> Itinerário Formativo</div>
+    <div class="legend-item"><span class="legend-dot" style="background:#6B7280"></span> Proj. Vida / Clubes</div>
+  </div>
+
+  <!-- Main Content -->
+  <main id="main-content">
+    <!-- Day selector bar -->
+    <div class="controls-bar" id="controls-bar">
+      <div class="day-selector" id="day-selector">
+        <button class="day-btn active" data-day="seg">Segunda</button>
+        <button class="day-btn" data-day="ter">Terça</button>
+        <button class="day-btn" data-day="qua">Quarta</button>
+        <button class="day-btn" data-day="qui">Quinta</button>
+        <button class="day-btn" data-day="sex">Sexta</button>
+      </div>
+      <div class="controls-right">
+        <select id="filter-turma" class="filter-select" style="display:none">
+          <option value="">Selecionar Turma</option>
+        </select>
+        <select id="filter-professor" class="filter-select" style="display:none">
+          <option value="">Selecionar Professor</option>
+        </select>
+        <div class="validation-badge" id="validation-badge">
+          <span class="badge-icon">✅</span>
+          <span class="badge-text">Sem conflitos</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- View: Visão Geral -->
+    <section class="view-container" id="view-geral">
+      <div class="grid-wrapper" id="grid-geral"></div>
+    </section>
+
+    <!-- View: Por Turma -->
+    <section class="view-container hidden" id="view-turma">
+      <div class="single-grid-wrapper" id="grid-turma"></div>
+    </section>
+
+    <!-- View: Por Professor -->
+    <section class="view-container hidden" id="view-professor">
+      <div class="single-grid-wrapper" id="grid-professor"></div>
+    </section>
+
+    <!-- View: Salas -->
+    <section class="view-container hidden" id="view-salas">
+      <div class="salas-grid" id="grid-salas"></div>
+    </section>
+
+    <!-- View: Estatísticas -->
+    <section class="view-container hidden" id="view-stats">
+      <div class="stats-grid" id="grid-stats"></div>
+    </section>
+  </main>
+
+  <!-- Aula Detail Modal -->
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal-card" id="modal-card">
+      <button class="modal-close" id="modal-close">&times;</button>
+      <div class="modal-content" id="modal-content"></div>
+    </div>
+  </div>
+
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

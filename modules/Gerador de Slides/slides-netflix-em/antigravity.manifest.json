@@ -1,0 +1,96 @@
+{
+  "id": "slides-netflix-em",
+  "name": "Slides Netflix EM",
+  "version": "1.0.0",
+  "description": "Gerador ultraespecialista de apresentações de aula para Ensino Médio em estilo documentário Netflix com visual cinematográfico, Reveal.js 5.x e conteúdo denso",
+  "author": "Kelso Palheta",
+  "category": "education",
+  "keywords": ["slides", "apresentações", "ensino médio", "BNCC", "netflix", "aula"],
+  "activation": {
+    "commands": ["slides-netflix-em.generate"],
+    "filetypes": ["pdf", "docx", "md"],
+    "triggers": ["/slides-em", "/slides-netflix-em", "gere slides"]
+  },
+  "entry": {
+    "type": "python",
+    "path": "scripts/gerador_v2.py",
+    "function": "construir_aula_v2"
+  },
+  "inputs": {
+    "material": {
+      "type": "file",
+      "description": "PDF, DOCX ou texto com conteúdo da aula",
+      "required": true
+    },
+    "materia": {
+      "type": "string",
+      "description": "Matéria/disciplina (ex: História, Biologia, Português)",
+      "required": true
+    },
+    "serie": {
+      "type": "enum",
+      "values": ["1º Ano", "2º Ano", "3º Ano"],
+      "description": "Série do Ensino Médio",
+      "default": "2º Ano"
+    },
+    "duracao": {
+      "type": "number",
+      "description": "Duração da aula em minutos (ex: 50, 90, 100)",
+      "default": 50
+    }
+  },
+  "outputs": {
+    "html": {
+      "type": "file",
+      "format": "text/html",
+      "description": "Apresentação HTML5 standalone com Reveal.js",
+      "naming": "aula_{materia}_{slugfied}.html"
+    },
+    "pptx": {
+      "type": "file",
+      "format": "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+      "description": "Versão PowerPoint editável (opcional)",
+      "optional": true
+    }
+  },
+  "configuration": {
+    "visual_theme": "netflix-dark",
+    "colors": {
+      "primary": "#E50914",
+      "secondary": "#00F0FF",
+      "background": "#000000"
+    },
+    "fonts": {
+      "heading": "Bebas Neue",
+      "body": "Montserrat",
+      "monospace": "Fira Code"
+    },
+    "transitions": {
+      "default": "fade",
+      "speed": "fast"
+    }
+  },
+  "features": [
+    "video-backgrounds-theme-mapped",
+    "interactive-quiz",
+    "speaker-notes",
+    "glossary",
+    "media-recommendations",
+    "bncc-alignment",
+    "content-density-validation",
+    "auto-animate-transitions",
+    "responsive-design"
+  ],
+  "dependencies": [
+    "reveal.js@5.0.4",
+    "chart.js@4.4.1",
+    "mathjax@3",
+    "qrcode.js@1.0.0"
+  ],
+  "author_note": "Skill para gerar slides cinematográficos que equilibram visual atrativo (estilo Netflix) com conteúdo denso o suficiente para aluno estudar sozinho. Cada slide contém 200-400 palavras de prosa estruturada, não apenas bullets.",
+  "usage_examples": [
+    "/slides-em PDF sobre Revolução Francesa para 3º ano, 90 min",
+    "/slides-netflix-em Baseie-se nesse PDF de biologia pra criar slides sobre fotossíntese (1º ano)",
+    "gere slides para aula de história sobre escravidão no Brasil, 2º ano"
+  ]
+}

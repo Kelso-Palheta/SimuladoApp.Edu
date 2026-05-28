@@ -1,0 +1,333 @@
+{
+  "versao": "2.0-45min",
+  "data": "2026-05-26",
+  "descricao": "Grade adaptada 45 minutos - Segunda/Terça só manhã (6 aulas), Quarta aulas 1-8 + Clubes 9-10, Quinta/Sexta dia completo (10 aulas)",
+  "turmas": [
+    "1º ANO - 101",
+    "1º ANO - 102",
+    "1º ANO - 103",
+    "1º ANO - 104",
+    "2º ANO - 201",
+    "2º ANO - 202",
+    "2º ANO - 203",
+    "2º ANO - 204",
+    "3º ANO - 301",
+    "3º ANO - 302"
+  ],
+  "dias": [
+    "Segunda",
+    "Terça",
+    "Quarta",
+    "Quinta",
+    "Sexta"
+  ],
+  "aulas_por_dia": {
+    "Segunda": 6,
+    "Terça": 6,
+    "Quarta": 10,
+    "Quinta": 10,
+    "Sexta": 10
+  },
+  "horarios_aulas": {
+    "1": "07:30 - 08:15",
+    "2": "08:15 - 09:00",
+    "3": "09:00 - 09:45",
+    "intervalo_manha": "09:45 - 10:00",
+    "4": "10:00 - 10:45",
+    "5": "10:45 - 11:30",
+    "6": "11:30 - 12:15",
+    "almoco": "12:15 - 13:30",
+    "7": "13:30 - 14:15",
+    "8": "14:15 - 15:00",
+    "intervalo_tarde": "15:00 - 15:15",
+    "9": "15:15 - 16:00",
+    "10": "16:00 - 16:45"
+  },
+  "dias_so_manha": [
+    "Segunda",
+    "Terça"
+  ],
+  "quarta_clubes": {
+    "aulas": [
+      9,
+      10
+    ],
+    "descricao": "Aulas 9-10 quarta = Clubes/Tutoria. Distribuição livre por professor padrinho.",
+    "fixo_todas_turmas": true
+  },
+  "planejamento_pedagogico": {
+    "Segunda": [
+      {
+        "prof": "EDMUNDO",
+        "periodo": "manha"
+      },
+      {
+        "prof": "EUNICE",
+        "periodo": "manha"
+      },
+      {
+        "prof": "CASIANO",
+        "periodo": "manha"
+      },
+      {
+        "prof": "ELENFLÁVIA",
+        "periodo": "manha"
+      },
+      {
+        "prof": "ELIANA",
+        "periodo": "manha"
+      }
+    ],
+    "Terça": [
+      {
+        "prof": "LUCÍLIO",
+        "periodo": "manha"
+      },
+      {
+        "prof": "MILTON",
+        "periodo": "manha"
+      },
+      {
+        "prof": "ROGÉRIO",
+        "periodo": "manha"
+      },
+      {
+        "prof": "LOUISE",
+        "periodo": "manha"
+      },
+      {
+        "prof": "RODRIGO",
+        "periodo": "manha"
+      },
+      {
+        "prof": "ELIANA",
+        "periodo": "manha"
+      }
+    ],
+    "Quarta": [],
+    "Quinta": [
+      {
+        "prof": "JHONATAN",
+        "periodo": "all"
+      },
+      {
+        "prof": "VANESA",
+        "periodo": "all"
+      },
+      {
+        "prof": "ELINELSON",
+        "periodo": "all"
+      },
+      {
+        "prof": "JOANA",
+        "periodo": "all"
+      },
+      {
+        "prof": "DIJANE",
+        "periodo": "all"
+      }
+    ],
+    "Sexta": [
+      {
+        "prof": "LUIZ",
+        "periodo": "all"
+      },
+      {
+        "prof": "KELSO",
+        "periodo": "all"
+      },
+      {
+        "prof": "REGINA",
+        "periodo": "all"
+      },
+      {
+        "prof": "LUCIDALVA",
+        "periodo": "all"
+      }
+    ]
+  },
+  "tarde_inicio_aula": 7,
+  "areas_disciplinas": {
+    "Linguagens": [
+      "Português",
+      "Inglês",
+      "Inglês 2",
+      "Arte",
+      "Ed. Física",
+      "E.O. Português",
+      "Aprof. Linguagens"
+    ],
+    "Matemática": [
+      "Matemática",
+      "E.O. Matemática",
+      "Aprof. Matemática"
+    ],
+    "Natureza": [
+      "Biologia",
+      "Química",
+      "Física",
+      "Ed. Ambiental",
+      "Prát. Experimentais",
+      "Aprof. Natureza"
+    ],
+    "Humanas": [
+      "História",
+      "Geografia",
+      "Filosofia",
+      "Sociologia",
+      "Aprof. Humanas"
+    ],
+    "Itinerário": [
+      "Eletiva",
+      "PPA",
+      "Proj. de Vida",
+      "Técnico",
+      "Clube/Tutoria"
+    ]
+  },
+  "salas": {
+    "Sala L1": {
+      "area": "Linguagens",
+      "profs": [
+        "ELIANA",
+        "EUNICE"
+      ],
+      "cap_dia": 10,
+      "obs": "Sala Linguagens 1"
+    },
+    "Sala L2": {
+      "area": "Linguagens",
+      "profs": [
+        "JOANA",
+        "REGINA"
+      ],
+      "cap_dia": 10
+    },
+    "Sala L3": {
+      "area": "Linguagens",
+      "profs": [
+        "VANESA",
+        "JHONATAN"
+      ],
+      "cap_dia": 10
+    },
+    "Sala Leitura": {
+      "area": "Linguagens",
+      "prioridade": "Português",
+      "cap_dia": 10
+    },
+    "Sala M1": {
+      "area": "Matemática",
+      "profs": [
+        "LUCIDALVA"
+      ],
+      "cap_dia": 10
+    },
+    "Sala M2": {
+      "area": "Matemática",
+      "profs": [
+        "MILTON"
+      ],
+      "cap_dia": 10
+    },
+    "Sala M3": {
+      "area": "Matemática",
+      "profs": [
+        "LUIZ",
+        "ROGÉRIO"
+      ],
+      "cap_dia": 10
+    },
+    "Sala N1": {
+      "area": "Natureza",
+      "profs": [
+        "DIJANE"
+      ],
+      "cap_dia": 10
+    },
+    "Sala N2": {
+      "area": "Natureza",
+      "profs": [
+        "EDMUNDO",
+        "LOUISE",
+        "RODRIGO"
+      ],
+      "cap_dia": 10
+    },
+    "Lab Multidisciplinar": {
+      "area": "Natureza",
+      "uso": "Prát. Experimentais + overflow",
+      "cap_dia": 10
+    },
+    "Sala H1": {
+      "area": "Humanas",
+      "profs": [
+        "ELENFLÁVIA",
+        "LUCÍLIO"
+      ],
+      "cap_dia": 10
+    },
+    "Sala H2": {
+      "area": "Humanas",
+      "profs": [
+        "ELINELSON",
+        "CASIANO"
+      ],
+      "cap_dia": 10
+    },
+    "Auditório": {
+      "area": "Humanas",
+      "uso": "Aprof.Hum, debates, seminários",
+      "cap_dia": 10
+    },
+    "Sala Arte": {
+      "prof_exclusivo": "KELSO",
+      "disciplinas": [
+        "Arte",
+        "Eletiva"
+      ],
+      "cap_dia": 10
+    },
+    "Sala Informática": {
+      "prof_exclusivo": "MARÍLIA",
+      "disciplinas": [
+        "Técnico"
+      ],
+      "cap_dia": 10
+    },
+    "Quadra": {
+      "area": "Linguagens",
+      "disciplinas": [
+        "Ed. Física"
+      ],
+      "prof_exclusivo": "JHONATAN",
+      "cap_dia": 10
+    }
+  },
+  "regras": {
+    "duplas_minimo": {
+      "descricao": "Toda disciplina deve estar em pelo menos 2 aulas seguidas",
+      "excecoes": [
+        "Proj. de Vida",
+        "Eletiva",
+        "PPA",
+        "Clube/Tutoria"
+      ]
+    },
+    "triplas_permitidas": [
+      "Português",
+      "Matemática"
+    ],
+    "max_aulas_seguidas_mesma_disc": {
+      "Português": 3,
+      "Matemática": 3,
+      "default": 2
+    },
+    "conflito_prof": "Mesmo prof não pode estar em 2 turmas/slot",
+    "conflito_turma": "Mesma turma não pode ter 2 aulas no mesmo slot",
+    "conflito_sala": "Mesma sala não pode ter 2 turmas no mesmo slot",
+    "itinerario_sala_area_prof": "Itinerário (Aprof./PPA/Eletiva/Proj.V) ocupa sala da área do prof",
+    "tarde_aulas": "Aulas 7-10 = período tarde (apenas Quarta, Quinta, Sexta)",
+    "segunda_terca_sem_tarde": "Segunda e Terça sem aulas no período da tarde"
+  }
+}

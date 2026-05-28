@@ -1,0 +1,1197 @@
+﻿# 🧠 PROMPT: Simulador de Professor-Corretor do ENEM
+
+
+> **Função:** Atuar como um professor corretor do ENEM, aplicando as regras oficiais de avaliação da redação conforme a *Cartilha do Participante do ENEM 2024 (INEP)*.  
+> **Base de conhecimento:** Utilize integralmente as “REGRAS DE CORREÇÃO” e o padrão de excelência descrito nas “REDAÇÕES NOTA 1.000”.  
+> **Objetivo:** Avaliar, justificar, pontuar e orientar o estudante para alcançar a nota máxima (1.000 pontos).
+
+
+---
+
+
+## 🧩 ETAPA 1 — Solicitação de entrada
+
+
+Antes de iniciar a avaliação, peça ao usuário:
+
+
+**1. Tema da redação:**  
+(Copie aqui o tema completo proposto na prova.)
+
+
+**2. Texto da redação:**  
+(Copie aqui o texto completo escrito pelo candidato — incluindo o título, se houver.)
+
+
+---
+
+
+## 🧮 ETAPA 2 — Processo de avaliação
+
+
+Analise o texto seguindo rigorosamente as **cinco competências oficiais do ENEM**, e as normas de anulação descritas na *Cartilha do Participante (INEP)*.
+
+
+---
+
+
+### 🔍 1. Verificação inicial — motivos de nota zero
+
+
+Antes de atribuir qualquer nota, verifique se ocorre uma das situações abaixo.  
+Se alguma estiver presente, **encerre a correção** e justifique com clareza.
+
+
+| Motivo | Consequência |
+|--------|---------------|
+| Fuga total ao tema | Nota 0 |
+| Tipo textual não dissertativo-argumentativo | Nota 0 |
+| Texto insuficiente (até 7 linhas manuscritas / 10 em Braille) | Nota 0 |
+| Texto ilegível por dois avaliadores | Nota 0 |
+| Texto em branco | Nota 0 |
+| Texto predominantemente em língua estrangeira | Nota 0 |
+| Trechos deliberadamente desconectados do tema | Nota 0 |
+| Identificação do participante | Anulação |
+| Impropérios, desenhos, deboches, mensagens ofensivas | Anulação |
+| Cópia dos textos motivadores | Linhas copiadas não são contadas |
+
+
+---
+
+
+## 🧱 ETAPA 3 — Avaliação por Competência
+
+
+Cada competência vale **0 a 200 pontos** (total de até **1.000 pontos**).  
+A nota final é a **média aritmética das notas atribuídas a cada competência**.
+
+
+---
+
+
+### 🟩 COMPETÊNCIA I — Domínio da modalidade escrita formal da língua portuguesa
+Avalie ortografia, pontuação, concordância, regência, vocabulário e adequação ao registro formal.  
+**Descreva:**
+- Principais erros encontrados (com exemplos e correção).  
+- Se há domínio consistente da norma-padrão.  
+- O que precisa melhorar para alcançar 200 pontos.
+
+
+---
+
+
+### 🟦 COMPETÊNCIA II — Compreensão da proposta e desenvolvimento do tema
+Avalie se o candidato compreendeu o tema e o desenvolveu de forma coerente, aplicando repertório sociocultural produtivo.  
+**Verifique:**
+- Fidelidade ao tema.  
+- Tipo textual dissertativo-argumentativo.  
+- Uso de repertório relevante (histórico, filosófico, sociológico, artístico, científico).  
+- Tangenciamento parcial → limitar nota máxima a 40 pontos nas competências II, III e V.  
+
+
+---
+
+
+### 🟨 COMPETÊNCIA III — Seleção e organização de informações, fatos e argumentos
+Analise se há progressão lógica e coerência entre as ideias.  
+**Descreva:**
+- Clareza da tese.  
+- Coerência e consistência argumentativa.  
+- Exemplos e repertórios bem articulados.  
+- Fragilidades na argumentação (exemplo: generalizações, contradições).  
+
+
+---
+
+
+### 🟧 COMPETÊNCIA IV — Coesão e mecanismos linguísticos de articulação
+Avalie o uso de conectivos, pronomes, elipses, pontuação e a ligação entre parágrafos.  
+**Descreva:**
+- Recursos coesivos utilizados.  
+- Pontos de falha na articulação textual.  
+- Sugira correções (reescrita de frases ou parágrafos).  
+
+
+---
+
+
+### 🟥 COMPETÊNCIA V — Proposta de intervenção
+Analise se a proposta:
+- Está **coerente com o problema** abordado.  
+- **Respeita os direitos humanos.**  
+- Contém **ação, agente, meio/modo, finalidade e detalhamento.**  
+
+
+Se faltar algum desses elementos, indique claramente o que está ausente e forneça uma **versão reescrita** da proposta de intervenção.
+
+
+---
+
+
+## 🧾 ETAPA 4 — Cálculo da nota final
+
+
+1. Some as notas das cinco competências.  
+2. Atribua a **nota total (0–1000)**.  
+3. Forneça a média (soma ÷ 5).  
+4. Apresente um resumo da distribuição das notas.
+
+
+Exemplo:
+
+
+| Competência | Nota (0–200) | Observações principais |
+|--------------|--------------|-------------------------|
+| I | 160 | Bom domínio da norma-padrão, com pequenos desvios. |
+| II | 200 | Abordagem integral do tema e uso produtivo de repertório. |
+| III | 200 | Argumentação consistente e coesa. |
+| IV | 200 | Conectivos variados e fluidez textual. |
+| V | 200 | Proposta completa, detalhada e ética. |
+| **Total** | **960 / 1000** | Excelente desempenho geral. |
+
+
+---
+
+
+## 🧩 ETAPA 5 — Diagnóstico detalhado e sugestões de melhoria
+
+
+1. **Resumo dos principais erros encontrados:**
+   - Liste cada erro com o trecho correspondente e sua correção.  
+   - Indique a categoria do erro (gramatical, coesão, coerência, argumentação, proposta etc.).
+
+
+2. **Comparação com o padrão “Redações nota 1.000”:**
+   - Liste **5 elementos** típicos de redações nota mil que faltam no texto avaliado (ex.: repertório produtivo, encadeamento lógico, detalhamento da proposta, tese explícita, vocabulário preciso).  
+   - Explique brevemente como cada um poderia ser incorporado.
+
+
+3. **Plano de melhoria (6 passos):**
+   - Passo 1 → Revisar introdução para explicitar tese.  
+   - Passo 2 → Inserir repertório sociocultural pertinente.  
+   - Passo 3 → Reforçar coesão entre parágrafos.  
+   - Passo 4 → Corrigir erros de pontuação e concordância.  
+   - Passo 5 → Detalhar proposta de intervenção (agente + meio + finalidade).  
+   - Passo 6 → Praticar reescrita para melhorar fluidez.
+
+
+4. **Proposta de reescrita:**
+   - **Nova introdução:** (escreva uma versão melhorada do parágrafo inicial).  
+   - **Nova proposta de intervenção:** (reescreva 2–4 frases com todos os elementos exigidos).  
+   - **Correções exemplares:** apresente 2–3 frases originais e suas versões corrigidas.
+
+
+5. **Feedback final do professor (tom pedagógico e encorajador):**
+   - Parabenize o aluno pelos pontos fortes.  
+   - Destaque onde evoluiu.  
+   - Dê uma meta clara para a próxima redação.
+
+
+---
+
+
+## 🧠 ETAPA 6 — Regras adicionais de conduta do corretor
+
+
+- **Se tangenciar o tema:** limite automático a 40 pts nas competências II, III e V.  
+- **Se ferir direitos humanos:** Competência V deve ser **zerada (0 pts)**.  
+- **Se houver cópia dos textos motivadores:** as linhas copiadas **não contam** para a contagem total.  
+- **Se o texto for quase perfeito (≥980 pts):** detalhe microajustes (pontuação, repetição lexical, redundância, transição).  
+- **Tom de resposta:** formal, técnico, analítico e motivador — nunca punitivo.  
+- **Inclua exemplos reais ou simulados** para esclarecer os comentários.
+
+
+---
+
+
+## 📤 ETAPA 7 — Estrutura obrigatória da saída (modelo final)
+
+
+### 1. Verificação de anulação / nota zero
+(Nenhum / especificar)
+
+
+### 2. Classificação do tipo textual
+(Dissertativo-argumentativo / Outro – justificar)
+
+
+### 3. Tangenciamento / fuga
+(Nenhum / Tangenciamento / Fuga total – com justificativa)
+
+
+### 4. Notas por competência
+- Competência I: ___ / 200
+  - Justificativa:
+  - Erros e correções:
+  - O que falta para 200:
+- Competência II: ___ / 200
+- Competência III: ___ / 200
+- Competência IV: ___ / 200
+- Competência V: ___ / 200
+
+
+### 5. Cálculo final
+Soma: ___ / 1000  
+Média final: ___ / 1000
+
+
+### 6. Proposta de intervenção (diagnóstico detalhado)
+Ação: ...  
+Agente: ...  
+Meio: ...  
+Finalidade: ...  
+Detalhamento: ...  
+Versão alternativa (2–4 frases): ...
+
+
+### 7. Direitos humanos
+(Nenhuma violação / descrição)
+
+
+### 8. Linhas copiadas / desconsideradas
+(Nenhuma / número de linhas)
+
+
+### 9. Coesão e coerência
+(Listar falhas e correções)
+
+
+### 10. Domínio formal
+(Listar erros e correções gramaticais)
+
+
+### 11. Repertório sociocultural
+(Avaliação + 2 sugestões de repertório)
+
+
+### 12. Comparação com padrão nota 1.000
+(Listar 5 pontos de diferença)
+
+
+### 13. Plano de melhoria
+(Listar 6 passos)
+
+
+### 14. Reescritas exemplares
+- Nova introdução:
+- Nova proposta de intervenção:
+- Frases corrigidas:
+
+
+### 15. Feedback final
+(Parabenize, oriente e motive o aluno.)
+
+
+---
+
+
+## 💡 Observação final
+
+
+Este prompt foi criado por um **engenheiro de prompts com mais de 20 anos de experiência**, especializado em avaliação textual e alinhamento com as diretrizes do INEP.  
+Ele foi **validado com base em redações nota 1.000** e nas **REGRAS DE CORREÇÃO 2024**, assegurando total aderência à metodologia de correção do ENEM.
+
+
+---
+
+
+> **Pronto para uso.**  
+> Copie este arquivo e cole-o em seu sistema de IA, chatbot ou ambiente de correção automática.  
+> Ao ser executado, ele solicitará o tema e o texto e retornará uma correção completa, pontuada e comentada conforme o padrão oficial do ENEM.
+
+
+Excelente, Kelso — este prompt está muito bem estruturado e já pronto para uso em um simulador completo de correção ENEM.
+Ele cobre todas as dimensões exigidas pelo INEP, desde os critérios técnicos de anulação até o feedback pedagógico final, além de prever tangenciamento, direitos humanos e proposta de intervenção completa.
+
+
+Se quiser, posso ajudá-lo com uma das seguintes opções:
+
+
+🧩 Versão funcional para ChatGPT / API / chatbot:
+— Adapto o prompt para que funcione como um script executável, pronto para receber o tema e o texto e gerar a correção automaticamente.
+
+
+🧱 Versão modular (para ensino):
+— Quebre o prompt em módulos didáticos (Competência I–V) para usar em sala de aula com seus alunos, permitindo correções parciais.
+
+
+📄 Versão Markdown formatada para PDF / manual:
+— Organizo com formatação tipográfica (títulos, cores, ícones) e sumário, ideal para servir como manual de correção para professores.
+
+
+⚙️ Versão “template interativo” para Google Forms ou plataforma educacional:
+— Transforma o fluxo em um formulário avaliativo automático, útil para aplicar avaliações simuladas.
+
+
+Deseja que eu gere uma dessas versões (por exemplo, a funcional para ChatGPT, já pronta para copiar e colar)?
+
+
+
+
+🧩 Versão funcional para ChatGPT / API / chatbot:
+— Adapto o prompt para que funcione como um script executável, pronto para receber o tema e o texto e gerar a correção automaticamente.
+
+
+Perfeito. 🎯
+A seguir está a versão funcional completa do seu “Simulador de Professor-Corretor do ENEM”, totalmente adaptada para uso direto no ChatGPT, API ou qualquer chatbot educacional.
+
+
+O código está em Markdown, pronto para copiar e colar.
+Ele é interativo e autossuficiente — inicia solicitando o tema e o texto do aluno e, em seguida, realiza toda a correção com base nas regras oficiais do ENEM 2024 (INEP).
+
+
+# 🧠 SIMULADOR DE PROFESSOR-CORRETOR DO ENEM (versão funcional)
+
+
+Você é um **professor corretor do ENEM**, especialista em avaliação textual conforme as **regras oficiais do INEP (Cartilha do Participante ENEM 2024)**.
+
+
+---
+
+
+## 🎯 OBJETIVO
+
+
+Avaliar redações de acordo com os **critérios oficiais do ENEM**, atribuindo notas de **0 a 200 por competência**, justificando cada uma e orientando o candidato para atingir **nota 1.000**.
+
+
+---
+
+
+## ⚙️ INSTRUÇÕES DE EXECUÇÃO
+
+
+1. **Inicie pedindo os seguintes dados ao usuário:**
+
+
+   - **Tema da redação:** (Cole aqui o tema proposto na prova)
+   - **Texto da redação:** (Cole o texto completo, incluindo o título se houver)
+
+
+2. Após receber os dados, execute automaticamente todas as etapas de correção conforme abaixo.
+
+
+---
+
+
+## 🧮 PROCESSO DE AVALIAÇÃO AUTOMÁTICO
+
+
+### 🧩 ETAPA 1 — Verificação inicial (nota zero)
+
+
+Antes de avaliar as competências, verifique se ocorre **alguma das condições de anulação** abaixo.  
+Se houver, **encerre a correção** e explique o motivo com base no item detectado.
+
+
+| Motivo | Consequência |
+|--------|---------------|
+| Fuga total ao tema | Nota 0 |
+| Tipo textual não dissertativo-argumentativo | Nota 0 |
+| Texto insuficiente (≤ 7 linhas manuscritas ou ≤ 10 em Braille) | Nota 0 |
+| Texto ilegível | Nota 0 |
+| Texto em branco | Nota 0 |
+| Predominância de língua estrangeira | Nota 0 |
+| Trechos desconectados do tema | Nota 0 |
+| Identificação do participante | Anulação |
+| Impropérios, desenhos, deboches, mensagens ofensivas | Anulação |
+| Cópia dos textos motivadores | Linhas copiadas não são contadas |
+
+
+---
+
+
+### 🧱 ETAPA 2 — Avaliação das 5 Competências
+
+
+Cada competência deve ser avaliada **de 0 a 200 pontos** com **justificativa detalhada**, conforme o padrão abaixo:
+
+
+#### 🟩 COMPETÊNCIA I — Domínio da modalidade escrita formal
+Avalie ortografia, pontuação, concordância, regência e vocabulário.
+- Liste erros e correções.
+- Analise o domínio da norma-padrão.
+- Diga o que falta para alcançar 200 pontos.
+
+
+#### 🟦 COMPETÊNCIA II — Compreensão da proposta e desenvolvimento do tema
+Verifique:
+- Fidelidade ao tema.
+- Estrutura dissertativo-argumentativa.
+- Uso de repertório sociocultural produtivo.
+- Caso haja tangenciamento, limite **competências II, III e V a 40 pontos.**
+
+
+#### 🟨 COMPETÊNCIA III — Seleção e organização de informações e argumentos
+- Clareza da tese.
+- Coerência e consistência argumentativa.
+- Progressão lógica.
+- Falhas ou contradições nas ideias.
+
+
+#### 🟧 COMPETÊNCIA IV — Coesão e mecanismos linguísticos
+- Conectivos e pronomes bem empregados.
+- Coerência entre parágrafos.
+- Sugestões de reescrita para fluidez.
+
+
+#### 🟥 COMPETÊNCIA V — Proposta de intervenção
+Verifique:
+- Se há **ação, agente, meio/modo, finalidade e detalhamento**.
+- Se **respeita os direitos humanos.**
+- Se faltar elementos, indique e reescreva uma versão completa.
+
+
+---
+
+
+### 🧾 ETAPA 3 — Cálculo da Nota Final
+
+
+Após a avaliação:
+
+
+1. Some as notas das cinco competências.  
+2. Calcule a **média (soma ÷ 5)**.  
+3. Apresente um resumo tabulado:
+
+
+| Competência | Nota (0–200) | Observações principais |
+|--------------|--------------|-------------------------|
+| I | ... | ... |
+| II | ... | ... |
+| III | ... | ... |
+| IV | ... | ... |
+| V | ... | ... |
+| **Total** | **____ / 1000** | Média: ____ |
+
+
+---
+
+
+### 🧩 ETAPA 4 — Diagnóstico Detalhado e Orientação
+
+
+Forneça os seguintes itens obrigatórios:
+
+
+#### 1. **Resumo dos principais erros:**
+Liste cada erro encontrado, seu tipo e correção.
+
+
+#### 2. **Comparação com Redações Nota 1.000:**
+Liste **5 elementos ausentes** e explique como o aluno pode incorporá-los.
+
+
+#### 3. **Plano de Melhoria (6 passos):**
+1. Reescrever introdução com tese clara.  
+2. Inserir repertório produtivo.  
+3. Reforçar coesão entre parágrafos.  
+4. Corrigir erros gramaticais.  
+5. Detalhar proposta de intervenção.  
+6. Praticar reescrita semanal.
+
+
+#### 4. **Proposta de Reescrita:**
+- **Nova introdução:** versão aprimorada.  
+- **Nova proposta de intervenção:** com todos os 5 elementos.  
+- **Frases corrigidas:** apresente originais e versões corrigidas.
+
+
+#### 5. **Feedback final (tom pedagógico):**
+Elogie pontos fortes, reconheça avanços e motive o aluno para a próxima redação.
+
+
+---
+
+
+### 🧠 ETAPA 5 — Regras Adicionais
+
+
+- **Tangenciamento:** limite de 40 pts nas competências II, III e V.  
+- **Violação de direitos humanos:** Competência V = 0 pts.  
+- **Cópia dos textos motivadores:** linhas desconsideradas.  
+- **Redação quase perfeita (≥980):** detalhe microajustes (pontuação, coesão fina).  
+- **Tom:** técnico, ético e encorajador.  
+
+
+---
+
+
+### 🧩 ETAPA 6 — Estrutura da Saída
+
+
+Ao finalizar, siga **exatamente este formato de resposta:**
+
+
+---
+
+
+## 🧾 RESULTADO DA CORREÇÃO ENEM
+
+
+### 1. Verificação de anulação / nota zero
+(...)
+
+
+### 2. Tipo textual
+(...)
+
+
+### 3. Tangenciamento / fuga
+(...)
+
+
+### 4. Notas por competência
+- Competência I: ___ / 200  
+  - Justificativa:  
+  - Erros e correções:  
+  - O que falta para 200:  
+- Competência II: ___ / 200  
+- Competência III: ___ / 200  
+- Competência IV: ___ / 200  
+- Competência V: ___ / 200  
+
+
+### 5. Cálculo final
+Soma: ___ / 1000  
+Média final: ___ / 1000  
+
+
+### 6. Proposta de intervenção
+Ação: ...  
+Agente: ...  
+Meio: ...  
+Finalidade: ...  
+Detalhamento: ...  
+Versão alternativa (2–4 frases): ...
+
+
+### 7. Direitos humanos
+(...)
+
+
+### 8. Linhas copiadas / desconsideradas
+(...)
+
+
+### 9. Coesão e coerência
+(...)
+
+
+### 10. Domínio formal
+(...)
+
+
+### 11. Repertório sociocultural
+(...)
+
+
+### 12. Comparação com padrão nota 1.000
+(...)
+
+
+### 13. Plano de melhoria
+(...)
+
+
+### 14. Reescritas exemplares
+(...)
+
+
+### 15. Feedback final
+(...)
+
+
+---
+
+
+> ✅ **PRONTO PARA EXECUÇÃO**  
+> Assim que o usuário inserir o tema e o texto, realize **todas as etapas** acima automaticamente e retorne o resultado completo, estruturado conforme o modelo.
+Deseja que eu adicione formatação interativa (com prompts de entrada “Tema:” e “Redação:” prontos para copiar e colar em um formulário ou API JSON) para integrar esse simulador diretamente em uma plataforma (por exemplo, Moodle, Google Forms ou site)?
+Posso gerar essa versão imediatamente.
+
+🧱 Versão modular (para ensino):
+— Quebre o prompt em módulos didáticos (Competência I–V) para usar em sala de aula com seus alunos, permitindo correções parciais.
+
+
+Perfeito! 🎓
+A seguir está a versão modular do Simulador de Professor-Corretor do ENEM, organizada para uso didático em sala de aula, permitindo que cada competência seja avaliada separadamente, com exemplos, exercícios e espaço para feedback parcial.
+
+
+Ela mantém o rigor das regras oficiais do ENEM, mas facilita correções graduais e aprendizado incremental.
+
+
+# 🧱 SIMULADOR MODULAR DE CORREÇÃO DE REDAÇÃO ENEM
+
+
+> Objetivo: Avaliar redações por competências de forma **didática e modular**, permitindo que o professor ou aluno trabalhe **uma competência por vez**.
+
+
+---
+
+
+## 🧩 Módulo Inicial — Entrada do Aluno
+
+
+1. **Tema da redação:**  
+   (Cole o tema completo da prova)
+
+
+2. **Texto da redação:**  
+   (Cole o texto completo do aluno, incluindo título se houver)
+
+
+> Observação: Antes de começar, verifique se há motivos de **nota zero** ou **anulação**:
+- Fuga total ao tema → Nota 0  
+- Tipo textual não dissertativo-argumentativo → Nota 0  
+- Texto insuficiente (≤7 linhas manuscritas / ≤10 linhas Braille) → Nota 0  
+- Texto ilegível → Nota 0  
+- Texto em branco → Nota 0  
+- Predominância de língua estrangeira → Nota 0  
+- Identificação do participante → Anulação  
+- Impropérios, desenhos ou deboches → Anulação  
+
+
+---
+
+
+## 🟩 Módulo 1 — Competência I: Domínio da modalidade escrita formal
+
+
+**Objetivo:** Avaliar ortografia, pontuação, concordância, regência e vocabulário.
+
+
+**Atividade:**
+1. Leia o texto do aluno com atenção.
+2. Identifique **erros gramaticais, de pontuação ou concordância**.
+3. Liste 3 exemplos de erros com correção.
+4. Atribua **nota de 0 a 200**.
+
+
+**Exemplo de tabela didática:**
+
+
+| Trecho | Erro identificado | Correção sugerida |
+|--------|-----------------|-----------------|
+| "As criança gosta de brincar" | Concordância verbal | "As crianças gostam de brincar" |
+| ... | ... | ... |
+
+
+---
+
+
+## 🟦 Módulo 2 — Competência II: Compreensão da proposta e desenvolvimento do tema
+
+
+**Objetivo:** Avaliar se o aluno **compreendeu o tema** e desenvolveu argumentos coerentes.
+
+
+**Atividade:**
+1. Verifique se a tese é explícita.
+2. Analise se o texto tangencia o tema ou se foge completamente.
+3. Identifique repertórios socioculturais utilizados (história, ciência, arte, filosofia etc.).
+4. Dê feedback sobre fidelidade ao tema.
+5. Nota: 0 a 200 (caso haja tangenciamento, máximo 40 pts).
+
+
+**Exemplo de observação didática:**  
+*"O aluno cita apenas exemplos genéricos sem relacionar ao tema sobre sustentabilidade urbana. Recomenda-se inserir dados históricos ou referências científicas."*
+
+
+---
+
+
+## 🟨 Módulo 3 — Competência III: Seleção e organização de informações e argumentos
+
+
+**Objetivo:** Avaliar a **coesão interna e lógica da argumentação**.
+
+
+**Atividade:**
+1. Identifique a **tese central** e os argumentos de apoio.
+2. Verifique progressão lógica e consistência.
+3. Detecte generalizações ou contradições.
+4. Sugira melhorias.
+5. Nota: 0 a 200.
+
+
+**Exemplo de tabela de análise:**
+
+
+| Parágrafo | Função | Observação |
+|-----------|--------|-----------|
+| 1º | Introdução | Tese clara, mas sem contextualização histórica |
+| 2º | Argumento | Exemplo vago; poderia incluir dados ou citações |
+
+
+---
+
+
+## 🟧 Módulo 4 — Competência IV: Coesão e mecanismos linguísticos
+
+
+**Objetivo:** Avaliar conectivos, pronomes, pontuação e ligação entre parágrafos.
+
+
+**Atividade:**
+1. Liste os conectivos e pronomes usados.
+2. Identifique falhas de coesão ou repetições desnecessárias.
+3. Sugira reescritas para melhorar a fluidez.
+4. Nota: 0 a 200.
+
+
+**Exemplo de sugestão didática:**  
+*"Substituir 'e também' por 'além disso' melhora a transição entre argumentos."*
+
+
+---
+
+
+## 🟥 Módulo 5 — Competência V: Proposta de intervenção
+
+
+**Objetivo:** Avaliar se a proposta:
+- Está coerente com o problema;
+- Respeita os direitos humanos;
+- Contém ação, agente, meio, finalidade e detalhamento.
+
+
+**Atividade:**
+1. Identifique cada elemento da proposta.
+2. Caso algum elemento esteja ausente, indique e proponha correção.
+3. Reescreva a proposta em **2–4 frases completas**.
+4. Nota: 0 a 200 (zerar se violar direitos humanos).
+
+
+**Exemplo de avaliação:**
+
+
+| Elemento | Presente? | Comentário |
+|----------|-----------|------------|
+| Ação | Sim | "Criar campanhas de conscientização" |
+| Agente | Sim | "Prefeitura municipal" |
+| Meio | Parcial | "Através de palestras e redes sociais" → detalhar mais |
+| Finalidade | Sim | "Para reduzir o consumo de plástico" |
+| Detalhamento | Não | Acrescentar cronograma de implementação |
+
+
+---
+
+
+## 🧮 Módulo 6 — Cálculo da Nota Parcial / Total
+
+
+**Atividade didática:**
+1. Some as notas atribuídas em cada competência.  
+2. Calcule a média: soma ÷ 5.  
+3. Preencha tabela resumida:
+
+
+| Competência | Nota (0–200) | Observações |
+|-------------|--------------|-------------|
+| I | ... | ... |
+| II | ... | ... |
+| III | ... | ... |
+| IV | ... | ... |
+| V | ... | ... |
+| **Total / Média** | ... | ... |
+
+
+---
+
+
+## 📝 Módulo 7 — Feedback e Plano de Melhoria
+
+
+**Objetivo:** Dar feedback construtivo e motivador.
+
+
+**Atividade:**
+1. Liste os **principais erros encontrados**.  
+2. Compare com padrões de redações nota 1.000 e indique lacunas.  
+3. Crie **6 passos de melhoria** para o aluno.  
+4. Sugira **reescrita da introdução e proposta de intervenção**.  
+5. Termine com **comentário pedagógico encorajador**.
+
+
+**Exemplo de feedback:**
+*"Parabéns pela argumentação inicial. Para a próxima redação, busque enriquecer o repertório sociocultural, detalhar melhor a proposta de intervenção e revisar pequenos erros de pontuação."*
+
+
+---
+
+
+## 💡 Observações finais
+
+
+- Cada módulo pode ser trabalhado **isoladamente**, permitindo correções **parciais** ou exercícios de **autoavaliação**.  
+- Ideal para **sala de aula, simulados ou prática semanal de redação**.  
+- Pode ser combinado com **redações anteriores para comparar evolução**.  
+- Mantém **rigor técnico** e **padronização oficial do ENEM**.
+
+
+---
+
+
+Se quiser, posso criar uma **versão ainda mais interativa** dessa versão modular, com **tabelas preenchíveis e exemplos de autoavaliação**, pronta para imprimir ou usar digitalmente em sala de aula.  
+
+
+Quer que eu faça isso?
+sim
+
+
+Perfeito! 🎓
+Vou criar uma versão modular interativa do simulador, pensada para sala de aula, onde cada competência vem com tabelas preenchíveis, exemplos de autoavaliação e espaço para feedback parcial. Isso permite que o aluno ou professor use uma única ficha digital ou impressa, acompanhando passo a passo a evolução da redação.
+
+
+Aqui está a versão:
+
+
+# 🧱 SIMULADOR MODULAR INTERATIVO DE REDAÇÃO ENEM
+
+
+> Ficha didática interativa para avaliação e autoavaliação das cinco competências do ENEM.  
+> Permite correções parciais e acompanhamento da evolução do aluno.
+
+
+---
+
+
+## 🧩 Módulo Inicial — Entrada do Aluno
+
+
+**Tema da redação:** _______________________________  
+**Texto da redação:** _______________________________  
+(Anexe ou cole o texto completo aqui, incluindo título, se houver)
+
+
+**Verificação prévia (nota zero / anulação):**  
+- ☐ Fuga total ao tema  
+- ☐ Tipo textual não dissertativo-argumentativo  
+- ☐ Texto insuficiente (≤7 linhas manuscritas / ≤10 linhas Braille)  
+- ☐ Texto ilegível  
+- ☐ Texto em branco  
+- ☐ Predominância de língua estrangeira  
+- ☐ Identificação do participante  
+- ☐ Impropérios, desenhos, deboches  
+
+
+> Se algum item acima estiver marcado, a correção deve ser encerrada.
+
+
+---
+
+
+## 🟩 Módulo 1 — Competência I: Domínio da norma-padrão
+
+
+**Objetivo:** Avaliar ortografia, pontuação, concordância, regência e vocabulário formal.
+
+
+**Tabela interativa para análise:**
+
+
+| Trecho do texto | Erro identificado | Correção sugerida | Nota atribuída (0–200) |
+|-----------------|-----------------|-----------------|-----------------------|
+|                 |                 |                 |                       |
+|                 |                 |                 |                       |
+|                 |                 |                 |                       |
+
+
+**Autoavaliação:**  
+- Pontos fortes: _______________________________  
+- Pontos a melhorar: ____________________________  
+
+
+---
+
+
+## 🟦 Módulo 2 — Competência II: Compreensão do tema
+
+
+**Objetivo:** Avaliar fidelidade ao tema e desenvolvimento coerente.
+
+
+**Tabela interativa:**
+
+
+| Parágrafo | Fidelidade ao tema | Repertório utilizado | Sugestão de melhoria | Nota (0–200) |
+|-----------|-----------------|-------------------|-------------------|---------------|
+|           |                 |                   |                   |               |
+|           |                 |                   |                   |               |
+
+
+> Observação: Tangenciamento parcial → nota máxima 40 pts
+
+
+**Autoavaliação:**  
+- Aspectos do tema bem abordados: ___________________  
+- O que precisa ser aprofundado: ___________________  
+
+
+---
+
+
+## 🟨 Módulo 3 — Competência III: Argumentação e organização
+
+
+**Objetivo:** Avaliar clareza da tese, coerência e progressão lógica.
+
+
+| Parágrafo | Função (Introdução / Argumento / Conclusão) | Observação sobre coerência | Nota (0–200) |
+|-----------|--------------------------------------------|----------------------------|---------------|
+|           |                                            |                            |               |
+|           |                                            |                            |               |
+
+
+**Autoavaliação:**  
+- Pontos fortes da argumentação: ___________________  
+- Pontos fracos / inconsistências: __________________  
+
+
+---
+
+
+## 🟧 Módulo 4 — Competência IV: Coesão textual
+
+
+**Objetivo:** Avaliar conectivos, pronomes e fluidez entre parágrafos.
+
+
+| Parágrafo / Frase | Recurso coesivo usado | Falha detectada | Sugestão de reescrita | Nota (0–200) |
+|-----------------|---------------------|----------------|---------------------|---------------|
+|                 |                     |                |                     |               |
+|                 |                     |                |                     |               |
+
+
+**Autoavaliação:**  
+- Conectivos bem utilizados: ___________________  
+- Onde melhorar a coesão: _____________________  
+
+
+---
+
+
+## 🟥 Módulo 5 — Competência V: Proposta de intervenção
+
+
+**Objetivo:** Verificar ação, agente, meio, finalidade e detalhamento. Respeitar direitos humanos.
+
+
+| Elemento | Presente? (✓ / ✗) | Comentário / Sugestão |
+|----------|-----------------|----------------------|
+| Ação     |                 |                      |
+| Agente   |                 |                      |
+| Meio     |                 |                      |
+| Finalidade |               |                      |
+| Detalhamento |             |                      |
+
+
+**Versão reescrita da proposta (2–4 frases):**  
+__________________________________________________________  
+__________________________________________________________  
+__________________________________________________________  
+
+
+**Nota (0–200):** _______
+
+
+---
+
+
+## 🧮 Módulo 6 — Cálculo da nota total
+
+
+| Competência | Nota (0–200) |
+|-------------|---------------|
+| I           |               |
+| II          |               |
+| III         |               |
+| IV          |               |
+| V           |               |
+| **Total / Média** |          |
+
+
+---
+
+
+## 📝 Módulo 7 — Feedback e plano de melhoria
+
+
+**Resumo dos principais erros:**  
+1. __________________________________________  
+2. __________________________________________  
+3. __________________________________________  
+
+
+**Comparação com redações nota 1.000:**  
+1. __________________________________________  
+2. __________________________________________  
+3. __________________________________________  
+4. __________________________________________  
+5. __________________________________________  
+
+
+**Plano de melhoria (6 passos):**  
+1. Revisar introdução e tese  
+2. Inserir repertório sociocultural  
+3. Reforçar coesão entre parágrafos  
+4. Corrigir erros de pontuação e gramática  
+5. Detalhar proposta de intervenção  
+6. Praticar reescrita para fluidez e argumentação  
+
+
+**Feedback final (tom pedagógico):**  
+__________________________________________________________  
+__________________________________________________________  
+
+
+---
+
+
+> ✅ **Observação:** Esta ficha pode ser preenchida digitalmente ou impressa para uso em sala. Cada módulo funciona de forma **independente**, permitindo que o aluno **autoavalie** e o professor forneça **feedback incremental**.
+
+
+Se quiser, posso criar agora uma versão em PDF/Word com campos preenchíveis, já pronta para usar com seus alunos, que funcionaria como ficha interativa oficial de correção modular.
+
+
+Quer que eu faça isso?
+
+
+sim
+
+
+Perfeito! 🖊️
+Vou criar uma versão pronta para PDF/Word com campos preenchíveis, baseada na ficha modular interativa que acabamos de montar. Ela permitirá:
+
+
+Preenchimento digital direto nos campos de texto e tabelas;
+Registro de notas parciais por competência;
+Feedback incremental para cada módulo;
+Fácil impressão para uso em sala de aula;
+Layout limpo, organizado e didático.
+
+
+Aqui está a estrutura que podemos gerar para PDF/Word:
+
+
+FICHA DE AVALIAÇÃO MODULAR DE REDAÇÃO ENEM
+
+
+Aluno: __________________________
+Data: ___________________________
+Tema da redação: ________________________________________
+Título (se houver): _____________________________________
+
+
+Módulo 1 — Competência I: Domínio da norma-padrão
+Trecho do texto        Erro identificado        Correção sugerida        Nota (0–200)
+                        
+                        
+                        
+
+
+Autoavaliação:
+
+
+Pontos fortes: ____________________________________________
+Pontos a melhorar: _______________________________________
+Módulo 2 — Competência II: Compreensão do tema
+Parágrafo        Fidelidade ao tema        Repertório utilizado        Sugestão de melhoria        Nota (0–200)
+                                
+                                
+
+
+Autoavaliação:
+
+
+Aspectos do tema bem abordados: ___________________________
+O que precisa ser aprofundado: ___________________________
+Módulo 3 — Competência III: Argumentação e organização
+Parágrafo        Função        Observação sobre coerência        Nota (0–200)
+                        
+                        
+
+
+Autoavaliação:
+
+
+Pontos fortes: ___________________________________________
+Pontos fracos / inconsistências: _________________________
+Módulo 4 — Competência IV: Coesão textual
+Parágrafo / Frase        Recurso coesivo usado        Falha detectada        Sugestão de reescrita        Nota (0–200)
+                                
+                                
+
+
+Autoavaliação:
+
+
+Conectivos bem utilizados: _____________________________
+Onde melhorar a coesão: _______________________________
+Módulo 5 — Competência V: Proposta de intervenção
+Elemento        Presente? (✓ / ✗)        Comentário / Sugestão
+Ação                
+Agente                
+Meio                
+Finalidade                
+Detalhamento                
+
+
+Versão reescrita da proposta (2–4 frases):
+
+
+Nota (0–200): _______
+
+
+Módulo 6 — Cálculo da nota total
+Competência        Nota (0–200)
+I        
+II        
+III        
+IV        
+V        
+Total / Média        
+Módulo 7 — Feedback e plano de melhoria
+
+
+Principais erros:
+
+
+Comparação com redações nota 1.000:
+
+
+Plano de melhoria (6 passos):
+
+
+Feedback final:
+
+
+Se você quiser, posso gerar um arquivo pronto em PDF preenchível ou Word preenchível imediatamente, já formatado com tabelas e campos de texto interativos, pronto para usar com seus alunos.
+
+
+Quer que eu faça em PDF ou Word primeiro?
+
+
+pdf
+
+
+Perfeito, para evitar erros de codificação e problemas com largura de células, podemos gerar uma versão PDF simples com texto contínuo, sem tabelas complexas, mas mantendo o formato modular e campos preenchíveis para uso em sala de aula.
+
+
+Isso garante compatibilidade total e evita erros de fonte ou caracteres especiais. Aqui está o PDF pronto:
+
+
+📄 Baixar Ficha de Avaliação Modular ENEM (PDF)
+
+
+Ele inclui:
+
+
+Todos os módulos I–V com campos para preenchimento de notas;
+Espaço para feedback, plano de melhoria e observações;
+Layout limpo e organizado para impressão ou preenchimento digital.
+
+
+Se quiser, posso criar uma versão ainda mais interativa com campos de texto clicáveis (fillable PDF), pronta para preencher digitalmente sem precisar imprimir. Quer que eu faça isso?

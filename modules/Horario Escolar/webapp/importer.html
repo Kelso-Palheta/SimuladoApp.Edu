@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Importador PDF — Horário Adaptado</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <style>
+    body { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .glass { background: rgba(39,39,42,0.6); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.08); }
+    .loading { animation: spin 1s linear infinite; }
+    @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    .badge-ok { background: rgba(34, 197, 94, 0.15); border: 1px solid rgba(34, 197, 94, 0.4); color: #22c55e; }
+    .badge-warn { background: rgba(251, 146, 60, 0.15); border: 1px solid rgba(251, 146, 60, 0.4); color: #fb923c; }
+    .badge-err { background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.4); color: #ef4444; }
+    .sala-pill { background: rgba(99, 102, 241, 0.15); border: 1px solid rgba(99, 102, 241, 0.4); color: #818cf8; padding: 2px 8px; border-radius: 12px; font-size: 11px; }
+  </style>
+</head>
+<body class="bg-zinc-950 text-zinc-100">
+
+<div class="min-h-screen bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-950">
+  <header class="sticky top-0 z-40 glass border-b border-zinc-800">
+    <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
+      <div>
+        <h1 class="text-2xl font-bold text-indigo-400">📑 Importador PDF — Horário Adaptado</h1>
+        <p class="text-zinc-400 text-sm mt-1">Aloca cada aula na sala temática do professor</p>
+      </div>
+      <a href="index.html" class="text-zinc-400 hover:text-indigo-400 text-sm">← Voltar</a>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-6 py-8">
+
+    <!-- STEP 1: Upload -->
+    <div class="glass rounded-lg p-8 mb-6">
+      <h2 class="text-xl font-bold mb-4 flex items-center gap-2">
+        <span class="bg-indigo-500 text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold">1</span>
+        Upload do PDF
+      </h2>
+
+      <div class="space-y-4">
+        <input
+          type="file"
+          id="pdf-input"
+          accept=".pdf"
+          class="block w-full p-3 border border-zinc-700 rounded bg-zinc-800 text-zinc-100 cursor-pointer hover:border-indigo-500 transition"
+        />
+        <button
+          id="upload-btn"
+          onclick="handleUpload()"
+          class="w-full bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-3 rounded transition disabled:opacity-50 disabled:cursor-not-allowed"
+          disabled
+        >
+          Processar PDF
+        </button>
+        <div id="upload-status" class="text-sm text-zinc-400"></div>
+      </div>
+    </div>
+
+    <!-- STEP 2: Extracted Data -->
+    <div class="glass rounded-lg p-8 mb-6" id="parse-section" style="opacity: 0.5; pointer-events: none;">
+      <h2 class="text-xl font-bold mb-4 flex items-center gap-2">
+        <span class="bg-indigo-500 text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold">2</span>
+        Dados Extraídos
+      </h2>
+      <div id="parse-status" class="text-sm text-zinc-400 mb-4">Aguardando upload...</div>
+    </div>
+
+    <!-- STEP 3: New Schedule with Sala Temática -->
+    <div class="glass rounded-lg p-8 mb-6" id="map-section" style="opacity: 0.5; pointer-events: none;">
+      <h2 class="text-xl font-bold mb-4 flex items-center gap-2">
+        <span class="bg-indigo-500 text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold">3</span>
+        Novo Horário com Salas Temáticas
+      </h2>
+
+      <div id="map-status" class="text-sm text-zinc-400 mb-4">Aguardando processamento...</div>
+
+      <!-- Stats -->
+      <div id="summary-section" class="grid grid-cols-2 md:grid-cols-5 gap-3 mb-6 hidden">
+        <div class="bg-zinc-800 rounded p-4">
+          <div class="text-2xl font-bold text-zinc-100" id="stat-total">0</div>
+          <div class="text-xs text-zinc-400">Total Aulas</div>
+        </div>
+        <div class="bg-zinc-800 rounded p-4">
+          <div class="text-2xl font-bold text-green-400" id="stat-mapped">0</div>
+          <div class="text-xs text-zinc-400">✅ Alocadas</div>
+        </div>
+        <div class="bg-zinc-800 rounded p-4">
+          <div class="text-2xl font-bold text-orange-400" id="stat-unknown">0</div>
+          <div class="text-xs text-zinc-400">⚠️ Sem Sala</div>
+        </div>
+        <div class="bg-zinc-800 rounded p-4">
+          <div class="text-2xl font-bold text-indigo-400" id="stat-profs">0</div>
+          <div class="text-xs text-zinc-400">👨‍🏫 Professores</div>
+        </div>
+        <div class="bg-zinc-800 rounded p-4">
+          <div class="text-2xl font-bold text-purple-400" id="stat-salas">0</div>
+          <div class="text-xs text-zinc-400">🏫 Salas Usadas</div>
+        </div>
+      </div>
+
+      <!-- Unknown Professors Warning -->
+      <div id="unknown-section" class="bg-orange-900/20 border border-orange-700/40 rounded p-4 mb-4 hidden">
+        <div class="font-bold text-orange-400 mb-2">⚠️ Professores não encontrados no cadastro:</div>
+        <div id="unknown-list" class="text-xs text-orange-300"></div>
+      </div>
+
+      <!-- Schedule Table -->
+      <div id="schedule-results" class="max-h-[500px] overflow-y-auto rounded bg-zinc-900 p-4 hidden">
+        <table class="w-full text-xs">
+          <thead class="sticky top-0 bg-zinc-900">
+            <tr class="text-zinc-300 border-b border-zinc-700">
+              <th class="text-left py-2 px-2">Turma</th>
+              <th class="text-left py-2 px-2">Dia</th>
+              <th class="text-left py-2 px-2">Aula</th>
+              <th class="text-left py-2 px-2">Professor</th>
+              <th class="text-left py-2 px-2">Disciplina</th>
+              <th class="text-left py-2 px-2">🏫 Sala Temática</th>
+            </tr>
+          </thead>
+          <tbody id="schedule-table-body"></tbody>
+        </table>
+      </div>
+
+      <!-- Export Actions -->
+      <div id="export-section" class="mt-6 flex gap-3 hidden">
+        <button onclick="exportJSON()" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded text-sm font-bold">
+          📥 Baixar JSON
+        </button>
+        <button onclick="exportCSV()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded text-sm font-bold">
+          📊 Baixar CSV
+        </button>
+        <button onclick="saveAsVersion()" class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded text-sm font-bold">
+          💾 Salvar como Nova Versão
+        </button>
+      </div>
+    </div>
+
+    <!-- Data Source Info -->
+    <div class="glass rounded-lg p-6">
+      <h3 class="font-bold mb-3 text-sm">📊 Origem dos Dados</h3>
+      <div id="data-source-info" class="text-xs text-zinc-400">
+        Carregando data.json...
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- Scripts -->
+<script src="js/modules/pdf-upload.js"></script>
+<script src="js/modules/pdf-parser.js"></script>
+<script src="js/modules/room-mapper.js"></script>
+
+<script>
+// Setup pdf.js worker
+setTimeout(() => {
+  const lib = window.pdfjsLib || window.pdfjs;
+  if (lib) {
+    lib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+  }
+}, 200);
+
+// Global state
+let state = {
+  uploadedFile: null,
+  rawRows: null,
+  enrichedRows: null,
+  schoolData: null,
+  roomMapper: null
+};
+
+// Load existing schedule data on page load
+async function loadSchoolData() {
+  try {
+    const response = await fetch('data.json');
+    if (!response.ok) throw new Error('data.json não encontrado');
+    state.schoolData = await response.json();
+
+    state.roomMapper = new RoomMapper({
+      slots: state.schoolData.slots,
+      debug: true
+    });
+
+    const profCount = Object.keys(state.roomMapper.profSalaMap).length;
+    const slotCount = state.schoolData.slots.length;
+    const salas = [...new Set(state.schoolData.slots.map(s => s.sala))];
+
+    document.getElementById('data-source-info').innerHTML = `
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-3 text-xs">
+        <div><span class="text-zinc-500">Origem:</span> <strong>data.json</strong></div>
+        <div><span class="text-zinc-500">Slots base:</span> <strong>${slotCount}</strong></div>
+        <div><span class="text-zinc-500">Professores cadastrados:</span> <strong>${profCount}</strong></div>
+        <div><span class="text-zinc-500">Salas temáticas:</span> <strong>${salas.length}</strong></div>
+      </div>
+      <div class="mt-2 text-zinc-500">Salas: ${salas.sort().join(', ')}</div>
+    `;
+  } catch (err) {
+    document.getElementById('data-source-info').innerHTML =
+      `<span class="text-red-400">❌ Erro ao carregar data.json: ${err.message}</span>`;
+  }
+}
+
+loadSchoolData();
+
+// Enable upload on file selection
+document.getElementById('pdf-input').addEventListener('change', (e) => {
+  document.getElementById('upload-btn').disabled = !e.target.files.length;
+});
+
+// STEP 1: Upload + Parse
+async function handleUpload() {
+  const input = document.getElementById('pdf-input');
+  const file = input.files[0];
+  if (!file) return;
+
+  const btn = document.getElementById('upload-btn');
+  btn.disabled = true;
+  btn.textContent = '⏳ Processando...';
+
+  try {
+    const uploader = new PDFUpload({ maxSize: 10 * 1024 * 1024 });
+    const metadata = await uploader.handleUpload(file);
+
+    state.uploadedFile = file;
+
+    document.getElementById('upload-status').innerHTML =
+      `✅ <strong>${metadata.fileName}</strong> (${(metadata.fileSize / 1024).toFixed(0)}KB)`;
+
+    btn.textContent = 'Processar PDF';
+
+    // Enable parse section
+    document.getElementById('parse-section').style.opacity = '1';
+    document.getElementById('parse-section').style.pointerEvents = 'auto';
+    document.getElementById('parse-status').innerHTML = '⏳ Extraindo dados...';
+
+    await handleParse();
+  } catch (error) {
+    document.getElementById('upload-status').innerHTML =
+      `❌ <span class="text-red-400">${error.message}</span>`;
+    btn.textContent = 'Processar PDF';
+    btn.disabled = false;
+  }
+}
+
+// STEP 2: Parse PDF
+async function handleParse() {
+  if (!state.uploadedFile) return;
+
+  try {
+    const pdfLib = window.pdfjsLib || window.pdfjs;
+    if (!pdfLib) throw new Error('pdf.js não carregou');
+
+    const parser = new PDFParser({ pdfjsLib: pdfLib, debug: true });
+    state.rawRows = await parser.parseFile(state.uploadedFile);
+
+    document.getElementById('parse-status').innerHTML =
+      `✅ Extraídas <strong>${state.rawRows.length}</strong> linhas brutas do PDF`;
+
+    // Enable map section
+    document.getElementById('map-section').style.opacity = '1';
+    document.getElementById('map-section').style.pointerEvents = 'auto';
+    document.getElementById('map-status').textContent = '⏳ Alocando salas temáticas...';
+
+    await handleMap();
+  } catch (error) {
+    document.getElementById('parse-status').innerHTML =
+      `❌ <span class="text-red-400">${error.message}</span>`;
+  }
+}
+
+// STEP 3: Map professors → sala temática
+async function handleMap() {
+  if (!state.rawRows || !state.roomMapper) return;
+
+  try {
+    // Map and deduplicate
+    let mapped = state.roomMapper.mapRows(state.rawRows);
+    mapped = state.roomMapper.deduplicate(mapped);
+    state.enrichedRows = mapped;
+
+    const summary = state.roomMapper.getSummary(mapped);
+
+    // Display stats
+    document.getElementById('stat-total').textContent = summary.total;
+    document.getElementById('stat-mapped').textContent = summary.mapped;
+    document.getElementById('stat-unknown').textContent = summary.unknown;
+    document.getElementById('stat-profs').textContent = summary.uniqueProfs;
+    document.getElementById('stat-salas').textContent = summary.uniqueSalas;
+    document.getElementById('summary-section').classList.remove('hidden');
+
+    // Show unknown professors warning
+    if (summary.unknownProfs.length > 0) {
+      document.getElementById('unknown-list').textContent = summary.unknownProfs.join(' • ');
+      document.getElementById('unknown-section').classList.remove('hidden');
+    }
+
+    // Build schedule table
+    const tbody = document.getElementById('schedule-table-body');
+    tbody.innerHTML = '';
+
+    mapped.forEach((row, i) => {
+      const tr = document.createElement('tr');
+      tr.className = i % 2 ? 'bg-zinc-800/30' : '';
+
+      const salaCell = row.encontrado
+        ? `<span class="sala-pill">${row.sala_tematica}</span>`
+        : `<span class="badge-err px-2 py-1 rounded text-xs">Não cadastrado</span>`;
+
+      tr.innerHTML = `
+        <td class="py-2 px-2 font-mono text-xs">${row.turma}</td>
+        <td class="py-2 px-2">${row.dia}</td>
+        <td class="py-2 px-2 text-center">${row.aula}</td>
+        <td class="py-2 px-2 font-bold">${row.prof}</td>
+        <td class="py-2 px-2 text-zinc-400">${row.disc}</td>
+        <td class="py-2 px-2">${salaCell}</td>
+      `;
+      tbody.appendChild(tr);
+    });
+
+    document.getElementById('schedule-results').classList.remove('hidden');
+    document.getElementById('export-section').classList.remove('hidden');
+
+    const successColor = summary.successRate >= 90 ? 'text-green-400' :
+                        summary.successRate >= 70 ? 'text-yellow-400' : 'text-red-400';
+
+    document.getElementById('map-status').innerHTML =
+      `✅ Alocação completa: <strong class="${successColor}">${summary.successRate}%</strong> dos professores mapeados (${summary.mapped}/${summary.total})`;
+
+  } catch (error) {
+    document.getElementById('map-status').innerHTML =
+      `❌ <span class="text-red-400">${error.message}</span>`;
+    console.error(error);
+  }
+}
+
+// Export as JSON
+function exportJSON() {
+  if (!state.enrichedRows) return;
+
+  const exportData = {
+    meta: {
+      nome_escola: state.schoolData?.meta?.nome_escola || 'Escola',
+      versao_grade: 'adaptado-' + new Date().toISOString().split('T')[0],
+      data_geracao: new Date().toISOString().split('T')[0],
+      total_slots: state.enrichedRows.length,
+      origem: 'PDF importado',
+      arquivo_origem: state.uploadedFile?.name || ''
+    },
+    slots: state.enrichedRows.map(r => ({
+      dia: r.dia,
+      aula: r.aula,
+      turma: r.turma,
+      prof: r.prof,
+      disc: r.disc,
+      sala: r.sala_tematica || ''
+    }))
+  };
+
+  downloadFile(
+    JSON.stringify(exportData, null, 2),
+    'horario-adaptado-' + Date.now() + '.json',
+    'application/json'
+  );
+}
+
+// Export as CSV
+function exportCSV() {
+  if (!state.enrichedRows) return;
+
+  const headers = ['Turma', 'Dia', 'Aula', 'Professor', 'Disciplina', 'Sala Temática'];
+  const rows = state.enrichedRows.map(r => [
+    r.turma, r.dia, r.aula, r.prof, r.disc, r.sala_tematica || 'NÃO ENCONTRADO'
+  ]);
+
+  const csv = [headers, ...rows]
+    .map(row => row.map(cell => `"${(cell || '').toString().replace(/"/g, '""')}"`).join(','))
+    .join('\n');
+
+  downloadFile(csv, 'horario-adaptado-' + Date.now() + '.csv', 'text/csv');
+}
+
+// Save as new version (placeholder for MongoDB integration)
+async function saveAsVersion() {
+  if (!state.enrichedRows) return;
+
+  const versionName = prompt('Nome da versão (ex: "Horário 45min"):', 'Horário Adaptado');
+  if (!versionName) return;
+
+  alert('💡 Integração com MongoDB ainda não implementada.\n\nPor enquanto, use "Baixar JSON" para salvar localmente.');
+}
+
+// Helper: trigger file download
+function downloadFile(content, filename, mimeType) {
+  const blob = new Blob([content], { type: mimeType });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+</script>
+
+</body>
+</html>

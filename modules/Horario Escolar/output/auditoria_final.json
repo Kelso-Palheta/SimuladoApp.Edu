@@ -1,0 +1,31 @@
+{
+  "versao": "v2",
+  "data": "2026-05-11",
+  "status": "VALIDADA",
+  "metricas": {
+    "violacoes_planejamento": 0,
+    "conflitos_prof": 0,
+    "isoladas_total": 102,
+    "ch_preservada": true
+  },
+  "mudancas": {
+    "swap_eletivas": "1º-101 ↔ 1º-103 KELSO/JHONATAN",
+    "fix_2º202": "Qui A5 ↔ Qua A6",
+    "chain_a_1º103": [
+      "KELSO Mon A6 → Qui A3",
+      "VANESA Wed A1 → Mon A6",
+      "DIJANE Qui A3 → Wed A1"
+    ],
+    "chain_b_1º103": [
+      "KELSO Qui A5 → Qui A4",
+      "MILTON Wed A3 → Qui A5",
+      "DIJANE Qui A4 → Wed A3"
+    ]
+  },
+  "regras_aplicadas": {
+    "salas_por_area": "v3",
+    "planejamento_pedagogico": "completo",
+    "duplas_preferenciais": "mantidas onde possível",
+    "clubes_quarta_8_9": "fixos todas turmas"
+  }
+}

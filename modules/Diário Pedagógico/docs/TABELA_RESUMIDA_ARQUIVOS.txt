@@ -1,0 +1,122 @@
+═══════════════════════════════════════════════════════════════════════════════════════════════════════
+TABELA RESUMIDA - ARQUIVOS SOBRE PLANEJAMENTO E ORGANIZAÇÃO DE CONTEÚDOS
+═══════════════════════════════════════════════════════════════════════════════════════════════════════
+
+┌─────────┬────────────────────────────────────────────────────────────────┬──────────┬─────────────────┐
+│ RANK    │ ARQUIVO                                                        │ PRIORIDA │ TÓPICOS CHAVE   │
+│         │                                                                │ DE       │                 │
+├─────────┼────────────────────────────────────────────────────────────────┼──────────┼─────────────────┤
+│ 🥇 1ª   │ 🧠 Arquitetura do Sistema GPT Professor Anual.docx            │ CRÍTICA  │ • Planejamento  │
+│         │                                                                │          │   anual        │
+│         │ → Foco: Organização de conteúdos em escala anual             │          │ • Distribuição │
+│         │ → Define: Sistema de professor IA para todo o ano            │          │   de conteúdo  │
+│         │                                                                │          │ • Arquitetura  │
+│         │                                                                │          │   temporal     │
+├─────────┼────────────────────────────────────────────────────────────────┼──────────┼─────────────────┤
+│ 🥈 2ª   │ 1️⃣ Estrutura Geral do Site.docx                              │ CRÍTICA  │ • Plataforma   │
+│         │                                                                │          │   completa     │
+│         │ → Foco: Arquitetura geral da plataforma                      │          │ • Módulos      │
+│         │ → Define: Como tudo se interconecta                          │          │ • Fluxos       │
+│         │                                                                │          │ • Integração   │
+├─────────┼────────────────────────────────────────────────────────────────┼──────────┼─────────────────┤
+│ 🥉 3ª   │ 🧠 Estrutura pedagógica da sequência didática.docx            │ MUITO    │ • Sequência     │
+│         │                                                                │ ALTA     │   didática     │
+│         │ → Foco: Como conteúdos são organizados em sequência          │          │ • Distribuição │
+│         │ → Define: Pedagogia da distribuição de conhecimento          │          │   de blocos    │
+│         │                                                                │          │ • Progressão   │
+├─────────┼────────────────────────────────────────────────────────────────┼──────────┼─────────────────┤
+│    4ª   │ 🧠 Estrutura do Prompt de Aula Gamificada.docx               │ ALTA     │ • Estrutura de  │
+│         │                                                                │          │   aula        │
+│         │ → Foco: Como uma aula individual é estruturada              │          │ • Organização  │
+│         │ → Define: Distribuição de conteúdo dentro de uma aula       │          │   intra-aula   │
+│         │                                                                │          │ • Gamificação  │
+├─────────┼────────────────────────────────────────────────────────────────┼──────────┼─────────────────┤
+│    5ª   │ 🧠 Estrutura do Super-Prompt de Aula Completa.docx           │ ALTA     │ • Aula completa │
+│         │                                                                │          │ • Componentes  │
+│         │ → Foco: Detalhamento de como a IA estrutura aulas           │          │ • Sincronização│
+│         │ → Define: Blocos de conteúdo e reprogramação                │          │ • Reprograma   │
+│         │                                                                │          │ ção            │
+├─────────┼────────────────────────────────────────────────────────────────┼──────────┼─────────────────┤
+│    6ª   │ 🧠 Arquitetura Cognitiva de Professor IA (12 Agentes).docx   │ ALTA     │ • Agentes IA   │
+│         │                                                                │          │ • Módulos      │
+│         │ → Foco: Sistema de 12 agentes especializados                 │          │ • Especializ.  │
+│         │ → Define: Possível agente de planejamento                    │          │ • Organização  │
+├─────────┼────────────────────────────────────────────────────────────────┼──────────┼─────────────────┤
+│    7ª   │ 🧠 Estrutura do Sistema de 5 Agentes.docx                     │ MÉDIA-   │ • 5 Agentes    │
+│         │                                                                │ ALTA     │ • Divisão de   │
+│         │ → Foco: Visão simplificada com 5 agentes principais          │          │   tarefas     │
+│         │ → Define: Distribuição de responsabilidades                  │          │ • Integração   │
+├─────────┼────────────────────────────────────────────────────────────────┼──────────┼─────────────────┤
+│    8ª   │ 🧠 Estrutura do Sistema de 9 Agentes.docx                     │ MÉDIA-   │ • 9 Agentes    │
+│         │                                                                │ ALTA     │ • Especializ.  │
+│         │ → Foco: Expansão com 9 agentes especializados                │          │ • Arquitetura  │
+│         │ → Define: Possíveis agentes para gestão de conteúdo          │          │ • Orquestração │
+├─────────┼────────────────────────────────────────────────────────────────┼──────────┼─────────────────┤
+│    9ª   │ 🧠 Sistema de Ensino Contínuo Autônomo com IA.docx           │ ALTA     │ • Continuidade │
+│         │                                                                │          │ • Autônomo     │
+│         │ → Foco: Como ensino funciona continuamente                   │          │ • Organização  │
+│         │ → Define: Lógica de manutenção entre aulas                   │          │   contínua    │
+├─────────┼────────────────────────────────────────────────────────────────┼──────────┼─────────────────┤
+│   10ª   │ 🧠 Sistema de Simulação de Aula com IA.docx                  │ MÉDIA    │ • Simulação    │
+│         │                                                                │          │ • Padrões de   │
+│         │ → Foco: Como a IA simula uma aula                            │          │   organização │
+│         │ → Define: Padrão de organização aplicável                    │          │ • Lógica       │
+└─────────┴────────────────────────────────────────────────────────────────┴──────────┴─────────────────┘
+
+═══════════════════════════════════════════════════════════════════════════════════════════════════════
+AGRUPAMENTO POR CATEGORIA
+═══════════════════════════════════════════════════════════════════════════════════════════════════════
+
+🎯 PLANEJAMENTO (Visão Temporal e Anual)
+   ├─ 🧠 Arquitetura do Sistema GPT Professor Anual.docx ..................... CRÍTICA
+   ├─ 🧠 Estrutura pedagógica da sequência didática.docx ....................... MUITO ALTA
+   └─ 🧠 Sistema de Ensino Contínuo Autônomo com IA.docx ....................... ALTA
+
+📚 ORGANIZAÇÃO DE CONTEÚDO (Estruturação e Distribuição)
+   ├─ 🧠 Estrutura do Prompt de Aula Gamificada.docx ............................ ALTA
+   ├─ 🧠 Estrutura do Super-Prompt de Aula Completa.docx ........................ ALTA
+   ├─ 🧠 Estrutura do Sistema de 5 Agentes.docx ................................ MÉDIA-ALTA
+   └─ 🧠 Estrutura do Sistema de 9 Agentes.docx ................................ MÉDIA-ALTA
+
+🏗️ ARQUITETURA GERAL (Base e Integração)
+   ├─ 1️⃣ Estrutura Geral do Site.docx ............................................ CRÍTICA
+   ├─ 🧠 Arquitetura Cognitiva de Professor IA (12 Agentes).docx ............... ALTA
+   └─ 🧠 Sistema de Simulação de Aula com IA.docx ............................... MÉDIA
+
+═══════════════════════════════════════════════════════════════════════════════════════════════════════
+ORDEM RECOMENDADA DE LEITURA
+═══════════════════════════════════════════════════════════════════════════════════════════════════════
+
+FASE 1 - ENTENDIMENTO GERAL (1-2 horas)
+   1. 1️⃣ Estrutura Geral do Site.docx
+      └─ Objetivo: Entender como tudo se conecta na plataforma
+
+FASE 2 - PLANEJAMENTO (2-3 horas)
+   2. 🧠 Arquitetura do Sistema GPT Professor Anual.docx
+      └─ Objetivo: Entender planejamento em escala anual
+
+   3. 🧠 Estrutura pedagógica da sequência didática.docx
+      └─ Objetivo: Ver como conteúdos são organizados pedagogicamente
+
+FASE 3 - ORGANIZAÇÃO DE CONTEÚDO (2-3 horas)
+   4. 🧠 Estrutura do Prompt de Aula Gamificada.docx
+      └─ Objetivo: Ver organização dentro de uma aula
+
+   5. 🧠 Estrutura do Super-Prompt de Aula Completa.docx
+      └─ Objetivo: Detalhes de reprogramação e sincronização
+
+FASE 4 - AGENTES E SISTEMAS (1-2 horas)
+   6. 🧠 Arquitetura Cognitiva de Professor IA (12 Agentes).docx
+      └─ Objetivo: Identificar agentes de planejamento/organização
+
+   7. 🧠 Estrutura do Sistema de 5 Agentes.docx
+      └─ Objetivo: Visão simplificada de agentes
+
+═══════════════════════════════════════════════════════════════════════════════════════════════════════
+
+LOCALIZAÇÃO DOS ARQUIVOS:
+/Users/kelsopalheta/Developer/Aula Gamificada - Assistente/
+
+DATA DA ANÁLISE: 20 de maio de 2026
+ANÁLISE REALIZADA POR: Claude AI Assistant
+═══════════════════════════════════════════════════════════════════════════════════════════════════════

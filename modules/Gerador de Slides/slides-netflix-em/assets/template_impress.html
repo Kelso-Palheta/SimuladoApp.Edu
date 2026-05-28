@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=1024" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <title>{{TITULO}}</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;700&family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #E50914;
+            --accent: #00F0FF;
+            --bg: #000;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            min-height: 740px;
+            background: var(--bg);
+            color: #fff;
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Impress.js core */
+        .fallback-message { display: none; }
+        .impress-not-supported .step { display: inline-block; margin: 20px; }
+        .impress-not-supported .fallback-message { display: block; background: red; color: white; padding: 20px; }
+        
+        .step {
+            position: relative;
+            width: 1600px; /* Largura para 16:9 */
+            padding: 50px;
+            margin: 0 auto;
+            box-sizing: border-box;
+            transition: opacity 1s;
+        }
+
+        .impress-enabled .step { margin: 0; opacity: 0.1; }
+        .impress-enabled .step.active { opacity: 1; }
+
+        /* Typography */
+        h1, h2, h3 {
+            font-family: 'Bebas Neue', sans-serif;
+            text-transform: uppercase;
+            margin: 0;
+            line-height: 1.1;
+        }
+
+        h1 { font-size: 6em; letter-spacing: 5px; color: #fff; }
+        h2 { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 3.5em; color: var(--accent); margin-bottom: 25px; }
+        
+        p {
+            font-size: 1.5em; /* Ajustado para equilíbrio horizontal */
+            line-height: 1.5;
+            color: #FFFFFF;
+            margin-bottom: 20px;
+        }
+
+        /* Glassmorphism & Layout */
+        .glass-container {
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-left: 8px solid var(--accent);
+            padding: 60px;
+            border-radius: 15px;
+            box-shadow: 0 40px 80px rgba(0,0,0,0.9);
+        }
+
+        .capa-container {
+            width: 1200px;
+            margin: 0 auto;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(20px);
+            padding: 100px;
+            border-radius: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .callout-card {
+            background: rgba(20, 20, 20, 0.9);
+            border-top: 4px solid var(--accent);
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            font-size: 1.3em;
+        }
+
+        .grid-layout {
+            display: grid;
+            grid-template-columns: 1.5fr 0.5fr; /* Mais largo para o texto principal */
+            gap: 60px;
+            align-items: start;
+        }
+
+        /* Background Images/Videos in Impress */
+        .bg-layer {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            z-index: -1;
+            overflow: hidden;
+            border-radius: 12px;
+        }
+        
+        .bg-layer img, .bg-layer video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 1; /* Imagem nítida */
+        }
+        
+        .bg-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.1) 100%);
+            z-index: 0;
+        }
+
+        .content-layer {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Glitch Effect */
+        .glitch { position: relative; display: inline-block; }
+        .glitch::before, .glitch::after { content: attr(data-text); position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: transparent; }
+        .glitch::before { left: 2px; text-shadow: -1px 0 #ff00c1; clip: rect(24px, 550px, 90px, 0); animation: glitch-anim 3s infinite linear alternate-reverse; }
+        .glitch::after { left: -2px; text-shadow: -1px 0 #00fff9; animation: glitch-anim2 2s infinite linear alternate-reverse; }
+        @keyframes glitch-anim { 0% { clip: rect(10px, 9999px, 30px, 0); } 100% { clip: rect(50px, 9999px, 60px, 0); } }
+        @keyframes glitch-anim2 { 0% { clip: rect(40px, 9999px, 80px, 0); } 100% { clip: rect(5px, 9999px, 15px, 0); } }
+        
+        /* Fragmentos (Controlados pelo GSAP agora) */
+        .fragment { 
+            opacity: 0; 
+            visibility: hidden; 
+        }
+        
+        .fragment.visible { 
+            opacity: 1; 
+            visibility: visible;
+        }
+        
+        #overview { display: none; }
+    </style>
+</head>
+<body class="impress-not-supported">
+
+<div class="fallback-message">
+    <p>Seu navegador não suporta as funcionalidades exigidas pelo impress.js.</p>
+</div>
+
+<div id="impress" data-transition-duration="1500">
+    {{SLIDES}}
+    
+    <!-- Visão geral -->
+    <div id="overview" class="step" data-x="3000" data-y="1500" data-z="4000" data-scale="10"></div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/impress/impress.js@2.0.0/js/impress.js"></script>
+
+<script>
+    var api = impress();
+    
+    // Função para fatiar texto em palavras (Preservando espaços e fluxo)
+    function splitTextToWords(element) {
+        if (element.classList.contains('splitted')) return;
+        var text = element.textContent;
+        var words = text.split(' ');
+        element.innerHTML = '';
+        
+        words.forEach(function(word, index) {
+            if (word.length > 0) {
+                var span = document.createElement('span');
+                span.className = 'word';
+                span.textContent = word;
+                span.style.opacity = 0;
+                span.style.display = 'inline-block';
+                element.appendChild(span);
+            }
+            // Adiciona o espaço real do navegador entre os spans para manter o fluxo
+            if (index < words.length - 1) {
+                element.appendChild(document.createTextNode(' '));
+            }
+        });
+        element.classList.add('splitted');
+    }
+
+    // SISTEMA DE FRAGMENTOS CUSTOMIZADO
+    var currentFragments = [];
+    var fragmentIndex = -1;
+    var blockNextKeyup = false;
+
+    document.addEventListener("impress:stepenter", function (event) {
+        var step = event.target;
+        
+        currentFragments = Array.from(step.querySelectorAll('.fragment'));
+        fragmentIndex = -1;
+        blockNextKeyup = false;
+        
+        currentFragments.forEach(f => {
+            f.classList.remove('visible');
+            // Prepara as palavras do texto
+            if(f.tagName.toLowerCase() === 'p') {
+                splitTextToWords(f);
+            }
+        });
+
+        var title = step.querySelector('h2');
+        if(title) {
+            gsap.fromTo(title, 
+                { opacity: 0, x: -50 }, 
+                { opacity: 1, x: 0, duration: 1.2, ease: "power3.out" }
+            );
+        }
+    });
+
+    document.addEventListener("impress:stepleave", function (event) {
+        currentFragments = [];
+        fragmentIndex = -1;
+    });
+
+    document.addEventListener("keydown", function(event) {
+        if (event.keyCode === 32 || event.keyCode === 39 || event.keyCode === 40) {
+            if (fragmentIndex < currentFragments.length - 1) {
+                event.stopPropagation();
+                event.preventDefault();
+                blockNextKeyup = true;
+                fragmentIndex++;
+                
+                var el = currentFragments[fragmentIndex];
+                el.classList.add('visible');
+
+                // Animações Mistas GSAP
+                if(el.tagName.toLowerCase() === 'p') {
+                    var words = el.querySelectorAll('.word');
+                    var textAnims = [
+                        // 1. Máquina de escrever caindo (Original)
+                        function() { gsap.fromTo(words, { opacity: 0, y: 15 }, { opacity: 1, y: 0, duration: 0.4, stagger: 0.04, ease: "power1.out" }); },
+                        // 2. Blur / Fade in rápido
+                        function() { gsap.fromTo(words, { opacity: 0, filter: "blur(5px)", scale: 0.9 }, { opacity: 1, filter: "blur(0px)", scale: 1, duration: 0.5, stagger: 0.02, ease: "power2.out" }); },
+                        // 3. Deslizamento vindo da direita (Wind)
+                        function() { gsap.fromTo(words, { opacity: 0, x: 20 }, { opacity: 1, x: 0, duration: 0.4, stagger: 0.03, ease: "back.out(1.2)" }); },
+                        // 4. Salto elástico invertido
+                        function() { gsap.fromTo(words, { opacity: 0, y: -15, rotationX: 90 }, { opacity: 1, y: 0, rotationX: 0, duration: 0.5, stagger: 0.03, ease: "bounce.out" }); }
+                    ];
+                    var rText = Math.floor(Math.random() * textAnims.length);
+                    textAnims[rText]();
+
+                } else if(el.classList.contains('callout-card')) {
+                    // Escolhe uma animação diferente de forma aleatória para evitar monotonia
+                    var animations = [
+                        // 1. Spin & Pop (Gira e cresce com elasticidade)
+                        function() {
+                            gsap.fromTo(el,
+                                { opacity: 0, scale: 0.2, rotation: -180 },
+                                { opacity: 1, scale: 1, rotation: 0, duration: 0.9, ease: "back.out(1.5)" }
+                            );
+                        },
+                        // 2. Slide In (Vem rápido e fluido do lado direito)
+                        function() {
+                            gsap.fromTo(el,
+                                { opacity: 0, x: 300, skewX: -10 },
+                                { opacity: 1, x: 0, skewX: 0, duration: 0.8, ease: "power3.out" }
+                            );
+                        },
+                        // 3. Drop Bounce (Cai do teto e quica como borracha)
+                        function() {
+                            gsap.fromTo(el,
+                                { opacity: 0, y: -200 },
+                                { opacity: 1, y: 0, duration: 1.0, ease: "bounce.out" }
+                            );
+                        },
+                        // 4. 3D Flip (Gira no eixo X de cabeça para baixo)
+                        function() {
+                            gsap.fromTo(el,
+                                { opacity: 0, scale: 0.8, rotationX: -90 },
+                                { opacity: 1, scale: 1, rotationX: 0, duration: 0.8, ease: "back.out(1.7)" }
+                            );
+                        }
+                    ];
+                    var randomIndex = Math.floor(Math.random() * animations.length);
+                    animations[randomIndex]();
+                }
+
+            }
+        } else if (event.keyCode === 37 || event.keyCode === 38) {
+            if (fragmentIndex >= 0) {
+                event.stopPropagation();
+                event.preventDefault();
+                blockNextKeyup = true;
+                currentFragments[fragmentIndex].classList.remove('visible');
+                fragmentIndex--;
+            }
+        }
+    }, true);
+
+    // Intercepta keyup para não deixar o impress "escapar" quando o keydown foi consumido
+    document.addEventListener("keyup", function(event) {
+        if (blockNextKeyup && (event.keyCode === 32 || event.keyCode === 39 || event.keyCode === 40 || event.keyCode === 37 || event.keyCode === 38)) {
+            event.stopPropagation();
+            event.preventDefault();
+            blockNextKeyup = false;
+        }
+    }, true);
+
+    api.init();
+</script>
+
+</body>
+</html>

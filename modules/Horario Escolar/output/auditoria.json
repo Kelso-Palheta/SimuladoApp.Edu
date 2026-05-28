@@ -1,0 +1,293 @@
+{
+  "conflitos": {
+    "prof": [],
+    "turma": [],
+    "sala": []
+  },
+  "gargalos_dia_area": [
+    {
+      "dia": "Segunda",
+      "area": "Humanas",
+      "profs": [
+        "ELINELSON",
+        "LUCÍLIO"
+      ],
+      "count": 2
+    },
+    {
+      "dia": "Terça",
+      "area": "Natureza",
+      "profs": [
+        "DIJANE",
+        "EDMUNDO"
+      ],
+      "count": 2
+    },
+    {
+      "dia": "Terça",
+      "area": "Matemática",
+      "profs": [
+        "LUIZ"
+      ],
+      "count": 1
+    },
+    {
+      "dia": "Sexta",
+      "area": "Matemática",
+      "profs": [
+        "MILTON",
+        "ROGÉRIO"
+      ],
+      "count": 2
+    }
+  ],
+  "professores_por_dia": {
+    "Segunda": [
+      "DIJANE",
+      "ELIANA",
+      "ELINELSON",
+      "JHONATAN",
+      "JOANA",
+      "KELSO",
+      "LOUISE",
+      "LUCIDALVA",
+      "LUCÍLIO",
+      "LUIZ",
+      "MILTON",
+      "REGINA",
+      "RODRIGO",
+      "ROGÉRIO",
+      "VANESA"
+    ],
+    "Terça": [
+      "CASIANO",
+      "DIJANE",
+      "EDMUNDO",
+      "ELENFLÁVIA",
+      "ELIANA",
+      "ELINELSON",
+      "EUNICE",
+      "JHONATAN",
+      "JOANA",
+      "KELSO",
+      "LUIZ",
+      "REGINA",
+      "VANESA"
+    ],
+    "Quarta": [
+      "CASIANO",
+      "EDMUNDO",
+      "ELENFLÁVIA",
+      "ELIANA",
+      "ELINELSON",
+      "EUNICE",
+      "JHONATAN",
+      "KELSO",
+      "LOUISE",
+      "LUCIDALVA",
+      "LUCÍLIO",
+      "LUIZ",
+      "MARÍLIA",
+      "MILTON",
+      "REGINA",
+      "RODRIGO",
+      "ROGÉRIO",
+      "VANESA"
+    ],
+    "Quinta": [
+      "CASIANO",
+      "DIJANE",
+      "EDMUNDO",
+      "ELENFLÁVIA",
+      "ELIANA",
+      "EUNICE",
+      "KELSO",
+      "LOUISE",
+      "LUCIDALVA",
+      "LUCÍLIO",
+      "LUIZ",
+      "MARÍLIA",
+      "MILTON",
+      "REGINA",
+      "RODRIGO",
+      "ROGÉRIO"
+    ],
+    "Sexta": [
+      "CASIANO",
+      "DIJANE",
+      "ELENFLÁVIA",
+      "ELINELSON",
+      "EUNICE",
+      "JHONATAN",
+      "JOANA",
+      "LOUISE",
+      "LUCÍLIO",
+      "MARÍLIA",
+      "MILTON",
+      "RODRIGO",
+      "ROGÉRIO",
+      "VANESA"
+    ]
+  },
+  "disciplinas_por_dia": {},
+  "cobertura_area_dia": {
+    "Segunda": {
+      "Linguagens": [
+        "ELIANA",
+        "JHONATAN",
+        "JOANA",
+        "KELSO",
+        "REGINA",
+        "VANESA"
+      ],
+      "Matemática": [
+        "LUCIDALVA",
+        "LUIZ",
+        "MILTON",
+        "ROGÉRIO"
+      ],
+      "Natureza": [
+        "DIJANE",
+        "LOUISE",
+        "LUCÍLIO",
+        "RODRIGO"
+      ],
+      "Humanas": [
+        "ELINELSON",
+        "LUCÍLIO"
+      ],
+      "Itinerário": [
+        "JOANA",
+        "LUIZ",
+        "REGINA",
+        "VANESA"
+      ]
+    },
+    "Terça": {
+      "Linguagens": [
+        "ELIANA",
+        "EUNICE",
+        "JHONATAN",
+        "JOANA",
+        "KELSO",
+        "REGINA",
+        "VANESA"
+      ],
+      "Natureza": [
+        "DIJANE",
+        "EDMUNDO"
+      ],
+      "Humanas": [
+        "CASIANO",
+        "ELENFLÁVIA",
+        "ELINELSON"
+      ],
+      "Matemática": [
+        "LUIZ"
+      ],
+      "Itinerário": [
+        "ELENFLÁVIA",
+        "ELINELSON",
+        "EUNICE",
+        "JHONATAN",
+        "JOANA",
+        "KELSO",
+        "REGINA",
+        "VANESA"
+      ]
+    },
+    "Quarta": {
+      "Matemática": [
+        "LUCIDALVA",
+        "LUIZ",
+        "MILTON",
+        "ROGÉRIO"
+      ],
+      "Humanas": [
+        "CASIANO",
+        "ELENFLÁVIA",
+        "ELINELSON",
+        "LUCÍLIO"
+      ],
+      "Linguagens": [
+        "ELIANA",
+        "EUNICE",
+        "JHONATAN",
+        "KELSO",
+        "REGINA",
+        "VANESA"
+      ],
+      "Natureza": [
+        "EDMUNDO",
+        "LOUISE",
+        "RODRIGO"
+      ],
+      "Itinerário": [
+        "JHONATAN",
+        "MARÍLIA"
+      ]
+    },
+    "Quinta": {
+      "Matemática": [
+        "LUCIDALVA",
+        "LUIZ",
+        "MILTON",
+        "ROGÉRIO"
+      ],
+      "Humanas": [
+        "CASIANO",
+        "ELENFLÁVIA",
+        "LUCÍLIO"
+      ],
+      "Natureza": [
+        "DIJANE",
+        "EDMUNDO",
+        "LOUISE",
+        "LUCÍLIO",
+        "RODRIGO"
+      ],
+      "Linguagens": [
+        "ELIANA",
+        "EUNICE",
+        "KELSO",
+        "REGINA"
+      ],
+      "Itinerário": [
+        "MARÍLIA",
+        "REGINA",
+        "ROGÉRIO"
+      ]
+    },
+    "Sexta": {
+      "Linguagens": [
+        "EUNICE",
+        "JHONATAN",
+        "JOANA",
+        "VANESA"
+      ],
+      "Humanas": [
+        "CASIANO",
+        "ELENFLÁVIA",
+        "ELINELSON",
+        "LUCÍLIO"
+      ],
+      "Matemática": [
+        "MILTON",
+        "ROGÉRIO"
+      ],
+      "Natureza": [
+        "DIJANE",
+        "LOUISE",
+        "LUCÍLIO",
+        "RODRIGO"
+      ],
+      "Itinerário": [
+        "ELENFLÁVIA",
+        "JHONATAN",
+        "JOANA",
+        "MARÍLIA",
+        "VANESA"
+      ]
+    }
+  }
+}

@@ -1,0 +1,9 @@
+# COMPETÊNCIA 4: Coesão e Mecanismos Linguísticos
+
+## GRADE DE PONTUAÇÃO:
+- **200 PONTOS:** Articular as partes do texto sem repetições viciosas, com uso rico e diversificado de conectivos e mecanismos coesivos. (Uso adequado de pronomes, conjunções, advérbios).
+- **160 PONTOS:** Articular de forma eficiente, mas com pequenas repetições.
+- **120 PONTOS:** Articular de forma mediana, mas com repertório coesivo insuficiente (repetição frequente de conectivos).
+- **80 PONTOS:** Articular partes do texto com graves lacunas na coesão (muitas repetições ou ausência de conectivos).
+- **40 PONTOS:** Articular de forma insuficiente, com pouquíssima coesão.
+- **0 PONTOS:** Falta total de articulação textual.

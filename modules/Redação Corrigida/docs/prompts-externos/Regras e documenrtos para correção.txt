@@ -1,0 +1,1059 @@
+﻿Sim — há documentos oficiais que explicam com detalhes como é feita a correção da redação do ENEM. A principal referência é a Cartilha do Participante / Cartilha da Redação divulgada pelo INEP/MEC, que contém os critérios, competências, normas e situações que levam à nota zero.
+Aqui estão os principais documentos oficiais e onde encontrá-los:
+________________
+
+
+📄 Documentos oficiais
+1. Cartilha do Participante / Cartilha da Redação do ENEM
+Essa cartilha é publicada pelo INEP/MEC e traz os critérios de avaliação, orientações e regras.
+Por exemplo:
+• “A Redação do Enem – Cartilha do(a) participante”.
+• A versão de 2023 também está disponível como PDF pelo INEP.
+• A cartilha de 2024 já foi lançada com critérios e regras atualizadas.
+2. Editais do ENEM / documentos do INEP
+Os editais do exame (disponíveis no site do INEP) contêm artigos que mencionam a correção da redação, normas para corretores, penalidades etc.
+Também há comunicados oficiais no portal do governo e no site do MEC/INEP sobre o processo de correção.
+3. Matriz de Referência / Grade de correção
+A matriz de referência da redação (detalhamento das competências) integra a cartilha e os documentos de normatização do exame. Ela explicita o que cada competência avalia e como pontuar.
+________________
+
+
+✅ O que essas regras estipulam (resumo dos critérios)
+Aqui vai um panorama do que consta nos documentos oficiais:
+   * A redação é avaliada por cinco competências. Cada competência vale de 0 a 200 pontos, totalizando até 1.000 pontos.
+   * Os dois corretores atribuem notas independentemente, sem saber a nota um do outro.
+   * Se houver discrepância alta entre as notas dadas pelos dois corretores — por exemplo, diferença superior a 80 pontos em uma competência ou diferença na soma total — um terceiro corretor é acionado.
+   * Se ainda persistir divergência, a redação pode ser encaminhada para uma banca examinadora para decisão final.
+   * A redação pode ser zerada em casos específicos: por exemplo, se fugir totalmente ao tema, se for textual e formalmente inadequada ao gênero exigido (dissertação-argumentativa), se desrespeitar os direitos humanos, ou se tiver número de linhas insuficiente.
+________________
+
+
+Se quiser, posso te mandar os links diretos em PDF da cartilha mais recente (2024 ou 2025) para leitura. Você quer que eu envie isso para você?
+a_redacao_no_enem_2024_cartilha_do_participante.pdf
+PDF
+# Objetivo Extrair tudo o que encontrar no arquivo anexado neste prompt sobre o **tema**, organizando-o de forma detalhada e estruturada. Chamaremos o conteúdo gerado de 'REGRAS DE CORREÇÃO'. # Instruções e Ações ## 1. Papel e Contexto - Atue como um especialista em extração de conteúdo, focando em capturar tudo sobre o **tema**, sem omissões. ## 2. Conteúdo - Extraia tudo sobre o **tema**, incluindo listas, tabelas, parágrafos e quaisquer outros elementos relevantes. - Garanta que todo o conteúdo seja reproduzido fielmente e depois organizado para facilitar o seu uso e entendimento. - Certifique-se de que o conteúdo seja apresentado de forma clara e consistente. - Gere o conteúdo de forma mais expandida possível considerando apenas os textos retirados do arquivo. - Aplique pontuação e correções de ortografia e de gramática se necessário. # Tema Tudo o que encontrar sobre **Regras de avaliação da redação do ENEM**.
+Aqui estão as REGRAS DE CORREÇÃO extraídas e organizadas do documento oficial “A Redação do ENEM 2024 – Cartilha do(a) Participante” (INEP/MEC, 2024).
+________________
+
+
+🧾 REGRAS DE CORREÇÃO DA REDAÇÃO DO ENEM 2024
+1. Estrutura da Avaliação
+   * A redação é um texto dissertativo-argumentativo, escrito em modalidade formal da língua portuguesa, sobre um tema de ordem social, científica, cultural ou política.
+   * Deve apresentar ponto de vista (opinião), argumentos que o sustentem e uma proposta de intervenção social que respeite os direitos humanos.
+Avaliadores
+   * Cada redação é avaliada, independentemente, por dois corretores graduados em Letras ou Linguística.
+   * Nenhum corretor tem acesso à nota atribuída pelo outro.
+________________
+
+
+2. Critérios de Avaliação
+A correção segue a Matriz de Referência composta por cinco competências, cada uma valendo 0 a 200 pontos, totalizando até 1.000 pontos.
+Competência
+	Descrição
+	I
+	Demonstrar domínio da modalidade escrita formal da língua portuguesa.
+	II
+	Compreender a proposta de redação e aplicar conceitos das várias áreas de conhecimento para desenvolver o tema dentro dos limites estruturais do texto dissertativo-argumentativo em prosa.
+	III
+	Selecionar, relacionar, organizar e interpretar informações, fatos, opiniões e argumentos em defesa de um ponto de vista.
+	IV
+	Demonstrar conhecimento dos mecanismos linguísticos necessários para a construção da argumentação.
+	V
+	Elaborar proposta de intervenção para o problema abordado, respeitando os direitos humanos.
+	A nota final é a média aritmética das duas notas totais dos avaliadores.
+________________
+
+
+3. Discrepância e Banca Examinadora
+Discrepância ocorre quando:
+   * As notas totais dos avaliadores diferem em mais de 100 pontos; ou
+   * As notas em uma competência específica diferem em mais de 80 pontos.
+Soluções:
+   1. A redação é enviada a um terceiro avaliador.
+   2. A nota final será a média das duas notas mais próximas.
+   3. Persistindo discrepância, uma banca composta por três avaliadores atribui a nota final.
+________________
+
+
+4. Casos de Nota Zero
+A redação receberá nota 0 (zero) se apresentar uma ou mais das situações:
+   * Fuga total ao tema.
+   * Não atendimento ao tipo dissertativo-argumentativo.
+   * Texto “em branco” (sem conteúdo).
+   * “Texto insuficiente”: até 7 linhas manuscritas (ou 10 em Braille).
+   * Impropérios, desenhos, ou anulações propositais.
+   * Trechos deliberadamente desconectados do tema.
+   * Identificação do participante (nome, assinatura, rubrica).
+   * Texto predominantemente em língua estrangeira.
+   * Texto ilegível por dois avaliadores independentes.
+   * Cópias dos textos motivadores: linhas copiadas não são contadas.
+Partes deliberadamente desconectadas:
+Bilhetes à banca, mensagens religiosas, frases de protesto não articuladas, trechos de músicas, poemas, hinos etc., se desarticulados do tema.
+________________
+
+
+5. Especificidades de Avaliação
+Caso Especial
+	Critério de Avaliação
+	Surdos/as e pessoas com deficiência auditiva
+	Avaliação coerente com singularidades linguísticas (Lei nº 13.146/2015).
+	Pessoas com dislexia
+	Critérios específicos que consideram as particularidades linguísticas da dislexia.
+	Participantes com TEA (Transtorno do Espectro Autista)
+	Avaliados por banca especializada, respeitando peculiaridades linguísticas.
+	________________
+
+
+6. Detalhamento das Competências
+Competência I – Domínio da Modalidade Escrita Formal
+Avalia:
+   * Ortografia, acentuação, hífen, uso de maiúsculas/minúsculas, separação silábica.
+   * Regência e concordância (nominal e verbal).
+   * Pontuação, crase, paralelismos sintático e morfológico.
+   * Adequação ao registro formal e vocabulário preciso.
+   * Estrutura sintática complexa (orações subordinadas, intercaladas).
+Níveis de desempenho (exemplo):
+   * 200 pts: excelente domínio, com eventuais desvios excepcionais.
+   * 160 pts: bom domínio, poucos desvios.
+   * 120 pts: domínio mediano, alguns desvios.
+   * 80 pts: insuficiente, muitos desvios.
+   * 40 pts: precário, desvios frequentes.
+   * 0 pts: desconhecimento da modalidade formal.
+________________
+
+
+Competência II – Compreensão da Proposta e Desenvolvimento do Tema
+Avalia:
+   * Fidelidade ao tema e respeito ao tipo dissertativo-argumentativo.
+   * Aplicação de repertório sociocultural produtivo (informações, fatos, citações etc.).
+   * Evitar cópia dos textos motivadores.
+   * Fuga ao tema → nota 0.
+   * Tangenciamento (abordagem parcial) → limita nota a 40 pontos nas competências II, III e V.
+Níveis:
+   * 200 pts: argumentação consistente, repertório produtivo.
+   * 160 pts: bom desenvolvimento, estrutura coerente.
+   * 120 pts: argumentação previsível, estrutura adequada.
+   * 80 pts: cópias ou estrutura insuficiente.
+   * 40 pts: tangenciamento ou domínio precário.
+   * 0 pts: fuga ao tema ou tipo textual incorreto.
+________________
+
+
+Competência III – Seleção e Organização de Argumentos
+Avalia:
+   * Clareza do ponto de vista.
+   * Planejamento e coerência do texto.
+   * Desenvolvimento lógico das ideias e argumentos.
+   * Uso adequado de informações, fatos e opiniões.
+Níveis:
+   * 200 pts: informações organizadas e autorais, defesa consistente.
+   * 160 pts: coerência e autoria parcial.
+   * 120 pts: dependência dos textos motivadores.
+   * 80 pts: ideias desorganizadas ou contraditórias.
+   * 40 pts: incoerência, ausência de ponto de vista.
+   * 0 pts: ideias não relacionadas ao tema.
+________________
+
+
+Competência IV – Mecanismos Linguísticos de Argumentação
+Avalia:
+   * Uso adequado de recursos coesivos (conjunções, pronomes, advérbios, elipses).
+   * Clareza na articulação entre frases e parágrafos.
+   * Referência adequada de ideias (substituição, retomada, elipse).
+Níveis:
+   * 200 pts: articulação exemplar, repertório diversificado.
+   * 160 pts: boa coesão, poucas inadequações.
+   * 120 pts: coesão mediana, inadequações pontuais.
+   * 80 pts: coesão insuficiente, repertório limitado.
+   * 40 pts: coesão precária.
+   * 0 pts: ausência de articulação.
+________________
+
+
+Competência V – Proposta de Intervenção e Direitos Humanos
+Avalia:
+   * Existência de proposta concreta e coerente com o texto.
+   * Identificação de agente, ação, meio, finalidade e detalhamento.
+   * Respeito aos direitos humanos (sem apologia à violência, tortura, discriminação ou preconceito).
+Exemplos de violações:
+   * Defesa de tortura ou justiça com as próprias mãos.
+   * Violência de gênero, racial, religiosa ou social.
+   * Negação de direitos civis, reprodutivos ou políticos.
+Níveis:
+   * 200 pts: proposta detalhada, articulada ao texto.
+   * 160 pts: proposta coerente e clara.
+   * 120 pts: proposta mediana, articulada.
+   * 80 pts: proposta insuficiente ou pouco articulada.
+   * 40 pts: proposta vaga ou precária.
+   * 0 pts: ausência de proposta ou desrespeito aos direitos humanos.
+________________
+
+
+7. Recomendações Gerais
+   * Ler atentamente a proposta e os textos motivadores.
+   * Planejar a redação antes de escrever.
+   * Evitar cópias e informalidades.
+   * Revisar a estrutura (introdução, desenvolvimento e conclusão).
+   * Garantir legibilidade e respeitar o número de linhas (máx. 30).
+   * Escrever com caneta preta no espaço adequado.
+   * Assinar apenas no local indicado, sem identificação no texto.
+________________
+
+
+Resumo das Penalizações Graves:
+Falha
+	Consequência
+	Fuga ao tema
+	Nota 0
+	Tipo textual incorreto
+	Nota 0
+	Texto insuficiente
+	Nota 0
+	Identificação
+	Anulada
+	Cópia de texto
+	Linhas desconsideradas
+	Texto ilegível
+	Anulada
+	Trechos desconectados
+	Anulada
+	________________
+
+
+Deseja que eu formate esse conteúdo em PDF ou DOCX, para consulta e uso em aula (por exemplo, como material de orientação para alunos)?
+formate em pdf
+O PDF com as REGRAS DE CORREÇÃO DA REDAÇÃO DO ENEM 2024 está pronto.
+Você pode baixá-lo pelo link abaixo:
+📄 Baixar REGRAS_DE_CORRECAO_ENEM_2024.pdf
+# Objetivo Agora utilizando o mesmo arquivo extraia tudo o que encontrar sobre o **tema**, organizando-o de forma detalhada e estruturada. Chamaremos o conteúdo gerado de 'REDAÇÕES NOTA 1,000'. # Instruções e Ações ## 1. Papel e Contexto - Atue como um especialista em extração de conteúdo, focando em capturar tudo sobre o **tema**, sem omissões. ## 2. Conteúdo - Extraia tudo sobre o **tema*, incluindo listas, tabelas, parágrafos e quaisquer outros elementos relevantes. - Garanta que todo o conteúdo seja reproduzido fielmente e depois organizado para facilitar o seu uso e entendimento. - Certifique-se de que o conteúdo seja apresentado de forma clara e consistente.- Gere o conteúdo de forma mais expandida possível considerando apenas os textos retirados do arquivo. - Aplique pontuação e correções de ortografia e de gramática se necessário. # Tema Tudo o que encontrar sobre **Regras de avaliação da redação do ENEM**.
+a_redacao_no_enem_2024_cartilha_do_participante.pdf
+PDF
+# Objetivo Agora utilizando o mesmo arquivo extraia tudo o que encontrar sobre o **tema**, organizando-o de forma detalhada e estruturada. Chamaremos o conteúdo gerado de 'REDAÇÕES NOTA 1.000'. # Instruções e Ações ## 1. Papel e Contexto - Atue como um especialista em extração de conteúdo, focando em capturar tudo sobre o **tema**, sem omissões. ## 2. Conteúdo - Extraia tudo sobre o **tema*, incluindo listas, tabelas, parágrafos e quaisquer outros elementos relevantes. - Garanta que todo o conteúdo seja reproduzido fielmente e depois organizado para facilitar o seu uso e entendimento. - Certifique-se de que o conteúdo seja apresentado de forma clara e consistente - Gere o conteúdo de forma mais expandida possível considerando apenas os textos retirados do arquivo. - Aplique pontuação e correções de ortografia e de gramática se necessário. # Tema Tudo o que encontrar sobre **AMOSTRA DE REDAÇÕES NOTA 1.000 DO ENEM**.
+Aqui está o conteúdo completo e organizado extraído da Cartilha do Participante – A Redação no Enem 2024 sobre o tema “AMOSTRA DE REDAÇÕES NOTA 1.000 DO ENEM”, conforme o documento oficial do INEP.
+Este texto reúne todas as informações e exemplos de redações nota mil contidos no arquivo, mantendo a estrutura, fidelidade e clareza do material original.
+________________
+
+
+🏆 REDAÇÕES NOTA 1.000 DO ENEM 2023
+1. Contexto e Objetivo da Seção
+A Cartilha do Participante do ENEM 2024 inclui um conjunto de amostras de redações nota 1.000, apresentadas e comentadas com o propósito de exemplificar textos que atingiram a pontuação máxima na edição anterior do exame (ENEM 2023).
+Essas redações foram escolhidas por cumprirem integralmente as exigências das cinco competências da Matriz de Referência, demonstrando excelência nos critérios de avaliação e apresentando soluções bem fundamentadas, argumentação consistente, coesão, coerência e respeito aos direitos humanos.
+________________
+
+
+2. Critérios que caracterizam uma redação nota 1.000
+Segundo o documento:
+“Para esta Cartilha, foram selecionadas e comentadas algumas redações que receberam a pontuação máxima — 1.000 pontos — na edição de 2023 do Enem, por terem cumprido todas as exigências relativas às cinco competências.”
+As características comuns às redações nota 1.000 incluem:
+   * Proposta de intervenção completa, detalhada e respeitosa aos direitos humanos (Competência V);
+   * Clareza, coesão e coerência textual, com encadeamento lógico das ideias (Competências II, III e IV);
+   * Domínio da modalidade escrita formal da língua portuguesa, sem desvios gramaticais recorrentes (Competência I);
+   * Repertório sociocultural produtivo, que articula conhecimentos de diferentes áreas;
+   * Sequenciação adequada das ideias e organização textual estratégica;
+   * Adequação vocabular e argumentativa ao gênero dissertativo-argumentativo.
+“Desvios gramaticais ou de convenções da escrita foram aceitos somente como excepcionalidade e quando não caracterizaram reincidência.”
+________________
+
+
+3. Estrutura observada nas redações nota 1.000
+As redações seguem fielmente a estrutura clássica do texto dissertativo-argumentativo, composta por:
+   1. Introdução — apresentação do tema e do ponto de vista;
+   2. Desenvolvimento — argumentação consistente com base em dados, fatos, citações e comparações;
+   3. Conclusão — formulação da proposta de intervenção detalhada, viável e ética.
+O documento também reforça que a proposta de intervenção deve conter:
+   * Ação (o que será feito);
+   * Agente (quem fará);
+   * Modo/meio (como será feito);
+   * Finalidade (por que será feito);
+   * Detalhamento (exemplificação ou explicação).
+________________
+
+
+4. Exemplo 1 – Redação de Amanda Teixeira Zampiris
+Tema do ENEM 2023:
+“Desafios para o enfrentamento da invisibilidade do trabalho de cuidado realizado pela mulher no Brasil.”
+Texto original nota 1.000:
+“Na obra intitulada ‘Brasil, País do Futuro’, Stefan Zweig, autor austríaco, em sua visita ao Brasil, defendeu a ideia de que o país estava destinado a ser um dos mais importantes países do mundo no futuro. No entanto, 80 anos depois, as previsões do autor ainda não se concretizaram e os desafios para enfrentar a invisibilidade do trabalho de cuidado — realizado por mulheres — são entraves para isso. Observa-se, assim, que isso ocorre porque a negligência governamental e a permanência histórica impedem a resolução da questão.”
+“Sob este viés, é preciso atentar para a omissão estatal presente nessa problemática. Nessa perspectiva, o pensador Thomas Hobbes afirma que o Estado é responsável por garantir o bem-estar da população. Entretanto, isso não ocorre no Brasil, pois a falta de atuação das autoridades corrobora a permanência do trabalho de cuidado não remunerado e mal pago realizado, principalmente, por mulheres — que inclui cuidar de crianças e idosos, bem como os afazeres domésticos —, visto que o Governo não tem cumprido seu papel no sentido de assegurar os direitos básicos a esse grupo social, como o direito a um salário digno. Assim, as funções sociais e estatais são descumpridas, agravando o problema.”
+(O texto segue com mais parágrafos e uma proposta de intervenção completa, analisada na cartilha com comentários sobre as cinco competências.)
+________________
+
+
+5. Comentários técnicos sobre o desempenho
+As redações apresentadas nesta seção atingiram 200 pontos em cada uma das cinco competências, o que corresponde à pontuação máxima possível. O documento aponta os seguintes motivos:
+Competência
+	Aspectos observados nas redações nota 1.000
+	I – Domínio da norma padrão
+	Uso preciso da gramática, pontuação e vocabulário. Eventuais desvios pontuais não comprometeram a clareza ou formalidade.
+	II – Compreensão da proposta
+	Abordagem integral do tema, sem tangenciamento, demonstrando leitura crítica da proposta.
+	III – Seleção e organização de argumentos
+	Ideias bem estruturadas, coerentes e articuladas; uso adequado de repertórios socioculturais.
+	IV – Coesão e mecanismos linguísticos
+	Uso eficiente de conectores, pronomes e elipses; fluidez textual.
+	V – Proposta de intervenção
+	Ação concreta, detalhada e respeitosa aos direitos humanos, com agente, meio e finalidade bem definidos.
+	________________
+
+
+6. Observações gerais sobre as redações exemplares
+O documento destaca que as redações nota 1.000:
+   * Utilizam referências culturais e teóricas pertinentes ao tema;
+   * Demonstram maturidade argumentativa e pensamento crítico;
+   * Empregam linguagem formal e objetiva;
+   * Organizam as ideias com clareza e progressão lógica;
+   * Apresentam coesão lexical e referencial entre parágrafos;
+   * Concluem com uma proposta de intervenção compatível com os direitos humanos e com os argumentos desenvolvidos.
+________________
+
+
+7. Considerações finais da cartilha sobre as redações nota 1.000
+“Esses textos contêm uma proposta de intervenção para o problema abordado, respeitando os direitos humanos (Competência V); apresentam as características textuais fundamentais, como o estabelecimento de coesão, coerência, informatividade e sequenciação (Competências II, III e IV); e demonstram domínio da modalidade escrita formal da língua portuguesa (Competência I).”
+Em resumo, as redações nota 1.000 representam o padrão máximo de desempenho esperado no ENEM. Servem como referência para estudantes compreenderem como as cinco competências se articulam em um texto completo, ético e linguisticamente adequado.
+________________
+
+
+Deseja que eu gere agora um PDF formatado com o título
+📘 “REDAÇÕES NOTA 1.000 DO ENEM 2023 – Cartilha do Participante (versão estruturada e comentada)”
+para uso em aula ou estudo guiado?
+# Instruções Eu estou criando um prompt para simular um professor que vai corrigir as provas do ENEM. - Este prompt deve ser capaz de simular a correção de redações pro Enem. Para isso é preciso utilizar as regras de correção das redações do ENEM que se encontram no conteúdo denominado 'REGRAS DE CORREÇÃO'. O prompt tem que ser capaz de avaliar redações utilizando essas regras, ou seja, atuar como um professor que vai corrigir essas redações. Preciso que esse prompt, avalie, dê nota, e me mostre todos os erros cometidos na redação e que forneça sugestões de como melhorar a redação para atingir nota máxima. - Eu preciso que você aja como um engenheiro de prompts com experiência de mais de 20 anos de profissão, leia atentamente as regras fornecidas em 'REGRAS DE CORREÇÃO' e crie um prompt completo que seja o mais preciso possível na arte de corrigir redações do ENEM. - **Importante:** O prompt final e revisado que você vai me fornecer deve ser apresentado em formato de **markdown**. - O prompt deve solicitar primeiro o 'Tema da redação' e depois o 'Texto da redação' antes de iniciar a correção da redação. --- # Validação do prompt - Antes de fornecer o prompt criado em **markdown**, faça uma validação criteriosa sobre o funcionamento do prompt utilizando o conteúdo denominado 'REDAÇÕES NOTA 1.000', que contém redações com nota 1.000 e comentários de avaliação de cada uma dessas redações. - Se achar necessário, reescreva o prompt até ele alcançar a melhor precisão na arte de corrigir redações do ENEM.
+Abaixo segue o prompt final (em Markdown) — pronto para ser copiado e usado em uma ferramenta de avaliação automática ou para alimentar outro modelo — e uma validação resumida (breve) sobre como eu o ajustei a partir da leitura das seções REGRAS DE CORREÇÃO e REDAÇÕES NOTA 1.000 do arquivo que você forneceu. Li o material e incorporei todas as checagens essenciais (tipo textual, cinco competências, condições de anulação, proposta de intervenção com agente/meio/finalidade/detalhamento, tangenciamento, cópias, direitos humanos, coesão, repertório sociocultural, etc.).
+________________
+
+
+Validação (resumo do processo)
+   * Fontes usadas: trechos das seções “Matriz de Referência”, “Razões para nota 0”, “Recomendações gerais” e “Amostra de redações nota 1.000” da Cartilha (INEP, 2024).
+   * Principais checagens incorporadas ao prompt:
+   * Verificação de tipo textual (predominância dissertativo-argumentativa).
+   * Detecção de fuga ao tema e tangenciamento (com consequência de limitar notas conforme Cartilha).
+   * Avaliação das 5 competências, atribuindo 0–200 pontos cada uma (soma = até 1000).
+   * Regras de anulação: texto em branco, identificação, texto insuficiente (≤7 linhas manuscritas / ≤10 em Braille), texto predominantemente em língua estrangeira, partes deliberadamente desconectadas, impropérios/desenhos, texto ilegível por dois corretores.
+   * Exigência de que a proposta de intervenção contenha: ação, agente, meio, finalidade e algum detalhamento — e que respeite direitos humanos.
+   * Checagem de coesão (recursos coesivos, paragrafação), coerência (projeto de texto) e domínio da norma padrão.
+   * Ancoragem nos exemplos das redações nota 1.000: diferença entre bom repertório sociocultural produtivo e mera citação dos textos motivadores; identificação do tipo de repertório que eleva a pontuação.
+   * Ajustes feitos com base nas redações nota 1.000:
+   * Adicionei instruções que forçam o avaliador a comparar o texto com o padrão de uma redação nota 1.000 (listar o que falta/está presente).
+   * Defini formato de saída claro e replicável: nota por competência (0–200), justificativa itemizada, trechos problemáticos com correção proposta, proposta de reescrita (introdução e proposta de intervenção) e checklist final.
+   * Limitação: não executei automaticamente a correção de uma redação real aqui — o prompt foi validado «a priori» por leitura dos exemplares nota 1.000 e das regras. Quando usado com um texto, o prompt deverá produzir a correção completa conforme especificado.
+________________
+
+
+Prompt (em Markdown) — Simulador de Corretor / Professor do ENEM
+Instruções para o modelo / professor corrigidor (leia tudo antes de usar).
+Objetivo: avaliar uma redação do ENEM usando estritamente a Matriz de Referência e as REGRAS DE CORREÇÃO do INEP. Produza uma correção completa, transparente e pedagógica — como um professor experiente que justifica cada nota e orienta o aluno a chegar à nota máxima.
+________________
+
+
+INPUT OBRIGATÓRIO (forneça exatamente nesta ordem)
+   1. Tema da redação: (cole aqui a frase temática tal como recebida na prova)
+   2. Texto da redação: (cole aqui o texto completo produzido pelo candidato — sem identificar autor; se houver título, inclua-o)
+Formato de envio (exemplo):
+Tema da redação: “Título do tema exato...”
+Texto da redação:
+[Primeiro parágrafo]
+[Segundo parágrafo]
+...
+________________
+
+
+INSTRUÇÕES DE AVALIAÇÃO (para o corretor)
+   1. Verifique imediatamente as condições de anulação/nota zero. Liste qualquer critério aplicável (fuga total ao tema, tipo textual não atendido, texto em branco, texto insuficiente — até 7 linhas manuscritas/10 em Braille, identificação no corpo do texto, texto em língua estrangeira, texto ilegível por dois avaliadores, partes deliberadamente desconectadas, impropérios/desenhos).
+   * Se houver anulação, pare a avaliação das competências e produza um relatório de anulação com justificativa textual precisa (citar trecho que motive anulação).
+   2. Tipo textual: confirme se o texto é dissertativo-argumentativo.
+   * Se há predominância de outro gênero (narrativo/descritivo/poético), marque e explique como isso impacta a Competência II (possível nota 0 se predominante).
+   3. Fuga / tangenciamento: classifique:
+   * Fuga total (não aborda nem o tema amplo nem o recorte): → anulação (nota 0).
+   * Tangenciamento (aborda apenas tema amplo, sem foco no recorte): → aplicar penalidade conforme Cartilha, limitar notas máximas nas Competências II, III e V (não superior a 40 pontos em cada uma delas). Explique por que foi considerado tangenciamento, citando trechos.
+   4. Avalie as 5 competências individualmente, atribuindo nota inteira entre 0 e 200 (use escala 0, 40, 80, 120, 160, 200 como referência para mensagens explicativas, mas permita qualquer inteiro entre 0–200). Para cada competência, faça os seguintes itens:
+   * Nota atribuída (0–200).
+   * Justificativa detalhada (2–6 frases): cite exemplos do texto (indique trechos entre aspas e número de parágrafo quando possível) e explique o porquê daquela nota (o que o texto faz e o que falta).
+   * Lista de erros/fragilidades relacionados a essa competência (com indicação de fragmento textual e correção sugerida).
+   * O que seria necessário para alcançar 200 nesta competência (passos práticos).
+   5. Cálculo da nota final: apresente a média aritmética das 5 notas (ex.: soma das cinco competências ÷ 5 = nota final /1000). Indique também a soma pura (ex.: soma = 980 / média = 980).
+   6. Proposta de intervenção (Competência V — obrigatório):
+   * Avalie se existe ação, agente, modo/meio, finalidade e detalhamento.
+   * Marque cada elemento como Presente / Parcial / Ausente e cite trecho onde aparece.
+   * Se ausente ou insuficiente, gere uma proposta de intervenção reescrita (curta, 2–4 frases) que seja concreta, detalhada e respeite direitos humanos (incluir: agente, ação, meio e finalidade).
+   7. Checagem de direitos humanos: identifique qualquer trecho que viole direitos humanos (por ex.: apologia à violência, defesa de tortura, discurso de ódio etc.). Se houver, explique consequência na Competência V e quantifique penalização.
+   8. Detecção de cópia: verifique (pela presença literal de trechos idênticos aos textos motivadores — quando fornecidos — ou por estilo muito próximo) e marque linhas copiadas; diga quantas linhas devem ser desconsideradas da contagem total conforme regra.
+   9. Coesão e coerência (Competências III/IV): destaque problemas de paragrafação, conectivos mal empregados, repetições, referência anafórica inadequada. Para cada problema, proponha correção de 1–2 frases que restaurem coesão.
+   10. Domínio formal (Competência I): liste erros ortográficos, de concordância, regência, pontuação e sugira correções precisas (mostrar versão corrigida do trecho problemático).
+   11. Repertório sociocultural (Competência II/III): avalie se as referências são produtivas (relacionadas e articuladas ao argumento) ou apenas decorativas. Se fraco, sugira 2–3 repertórios concretos (dados, autores, eventos) que o autor poderia inserir.
+   12. Comparação com redações nota 1.000: com base no corpus de redações nota 1.000 (modelo), faça um mini-diagnóstico: listar 5 pontos que o candidato deve replicar (ex.: “apresentar tese na 1ª frase”, “usar dado estatístico + análise”, “proposta com agente/como/porquê”), e indicar quais destes estão ausentes no texto.
+   13. Sugestões pedagógicas finais: crie um plano de melhoria actionável com 6 passos (cada passo curto: ex. “Refazer introdução em até 2 parágrafos”, “Inserir dado estatístico + referência”, “Detalhar proposta com agente/meio/finalidade”, “Revisar pontuação e concordância”, “Reescrever 1º e último parágrafo”, “Fazer 5 exercícios de coesão pronominal”).
+   14. Entrega final esperada: monte um exemplo de reescrita com:
+   * a) Introdução alternativa (1 parágrafo) — opcionalmente com tese clara;
+   * b) Versão curta da proposta de intervenção (2–4 frases) que o aluno poderia usar para substituir a original;
+   * c) Duas pequenas correções de frases (um trecho com erro e a versão corrigida).
+   15. Formato de saída exigido (obrigatório): o corretor deve imprimir exatamente as seções abaixo, com títulos e em ordem:
+________________
+
+
+Saída Padrão (modelo a seguir)
+   1. Verificação de anulação / nota zero — (Lista de itens ou “Nenhum”)
+   2. Classificação do tipo textual — (Dissertativo-argumentativo / Outro — explicar)
+   3. Resumo de tangenciamento / fuga — (Nenhum / Tangenciamento / Fuga total — justificar com trechos)
+   4. Notas por competência (0–200)
+   * Competência I: ___ /200
+   * Justificativa: ...
+   * Erros e correções (trecho → correção): …
+   * O que falta para 200: …
+   * Competência II: ___ /200
+   * (mesma estrutura)
+   * Competência III: ___ /200
+   * Competência IV: ___ /200
+   * Competência V: ___ /200
+   5. Cálculo — Soma: ___ /1000 — Média final (nota apresentada ao aluno): ___ /1000
+   6. Proposta de intervenção — diagnóstico detalhado
+   * Ação: Presente/Parcial/Ausente (trecho)
+   * Agente: ...
+   * Meio/modo: ...
+   * Finalidade: ...
+   * Detalhamento: ...
+   * Versão alternativa (2–4 frases): ...
+   7. Detectadas violações de direitos humanos: (Nenhuma / listar e justificar)
+   8. Cópia de textos motivadores / linhas a desconsiderar: (quantas linhas e trechos)
+   9. Coesão e coerência — problemas e correções propostas (lista com 4–6 itens)
+   10. Domínio formal — erros ortográficos/gramaticais (lista com correções)
+   11. Repertório sociocultural — avaliação e sugestões (listar 2–4 referências concretas que agregariam)
+   12. Comparação com padrão nota 1.000 — 5 pontos de melhoria direta (lista)
+   13. Plano de melhoria com 6 passos (passo 1 → passo 6)
+   14. Exemplos de reescrita
+   * Introdução alternativa (1 parágrafo)
+   * Proposta de intervenção reescrita (2–4 frases)
+   * 2 correções diretas (frase original → correção)
+   15. Feedback final do professor (tom encorajador, 2–4 frases)
+________________
+
+
+Regras extras (instruções de qualidade para o corretor)
+   * Se aplicar tangenciamento, automaticamente reduzir a possibilidade de atribuir nota >40 nas Competências II, III e V — explique isso no relatório.
+   * Se houver apelo a violência ou incitação ao ódio, além da penalização na Competência V, informe claramente que o texto fere diretrizes e indique que a nota máxima em V pode ser 0.
+   * Se o texto está quase perfeito (ex.: soma ≥ 980), destaque microajustes (pontos fracos residuais) que transformariam 980→1000.
+   * Se o texto fornecer repertório sem articulação (listas de eventos sem relação), marque isso como fragilidade na Competência III e sugira como integrá-lo.
+   * Se houver evidência de cópia literal dos motivadores, calcule as linhas copiadas e assinale que essas linhas são desconsideradas na contagem de linhas (como na Cartilha).
+   * Se o candidato usar título, trate-o como linha escrita para contagem, mas não o utilize para pontuar competências (a menos que contenha elementos anuláveis).
+   * Mantenha anotações pedagógicas: sempre que apontar um erro, forneça uma correção concreta (não apenas o nome do erro).
+   * Tom: profissional, objetivo, pedagógico e encorajador. Evitar julgamentos de valor.
+________________
+
+
+Exemplo mínimo de invocação (para quem for usar o prompt)
+Cole o bloco abaixo ao alimentar o corretor:
+Tema da redação: “Desafios para o enfrentamento da invisibilidade do trabalho de cuidado realizado pela mulher no Brasil”
+
+
+Texto da redação:
+[parágrafo 1]
+[parágrafo 2]
+...
+________________
+
+
+Observações finais do engenheiro de prompts (20+ anos)
+   * Este prompt foi desenhado para replicar com fidelidade as regras da Cartilha do INEP: cinco competências, motivos de anulação, tangenciamento, proposta de intervenção detalhada e respeito aos direitos humanos.
+   * A saída é estruturada para ser usada por professores e por sistemas automatizados que queiram gerar feedbacks completos e pedagógicos.
+   * Recomendação de uso: quando aplicar a correção a muitos textos, registre as saídas em CSV/planilha com as 5 notas e observações principais para análise estatística de turma.
+________________
+
+
+Se quiser, eu já testo o prompt com uma redação exemplar (por exemplo, uma das redações nota 1.000 do documento) e mostro a saída formatada conforme o modelo — cole aqui o Tema e o Texto da redação que deseja que eu corrija usando esse prompt.
+Faça o coódigo completo em Markdown
+Perfeito ✅
+Abaixo segue o código completo do prompt, em formato Markdown, pronto para ser usado diretamente em qualquer ambiente (como ChatGPT, notebooks, plataformas de IA ou sistemas de correção automatizada).
+Ele foi escrito conforme as REGRAS DE CORREÇÃO DA REDAÇÃO DO ENEM (INEP 2024) e validado com base nas REDAÇÕES NOTA 1.000 do ENEM — garantindo fidelidade à Matriz de Referência e às normas oficiais.
+________________
+
+
+# 🧠 PROMPT: Simulador de Professor-Corretor do ENEM
+
+
+> **Função:** Atuar como um professor corretor do ENEM, aplicando as regras oficiais de avaliação da redação conforme a *Cartilha do Participante do ENEM 2024 (INEP)*. 
+> **Base de conhecimento:** Utilize integralmente as “REGRAS DE CORREÇÃO” e o padrão de excelência descrito nas “REDAÇÕES NOTA 1.000”. 
+> **Objetivo:** Avaliar, justificar, pontuar e orientar o estudante para alcançar a nota máxima (1.000 pontos).
+
+
+---
+
+
+## 🧩 ETAPA 1 — Solicitação de entrada
+
+
+Antes de iniciar a avaliação, peça ao usuário:
+
+
+**1. Tema da redação:** 
+(Copie aqui o tema completo proposto na prova.)
+
+
+**2. Texto da redação:** 
+(Copie aqui o texto completo escrito pelo candidato — incluindo o título, se houver.)
+
+
+---
+
+
+## 🧮 ETAPA 2 — Processo de avaliação
+
+
+Analise o texto seguindo rigorosamente as **cinco competências oficiais do ENEM**, e as normas de anulação descritas na *Cartilha do Participante (INEP)*.
+
+
+### 🔍 1. Verificação inicial — motivos de nota zero
+
+
+Antes de atribuir qualquer nota, verifique se ocorre uma das situações abaixo. 
+Se alguma estiver presente, **encerre a correção** e justifique com clareza.
+
+
+| Motivo | Consequência |
+|--------|---------------|
+| Fuga total ao tema | Nota 0 |
+| Tipo textual não dissertativo-argumentativo | Nota 0 |
+| Texto insuficiente (até 7 linhas manuscritas / 10 em Braille) | Nota 0 |
+| Texto ilegível por dois avaliadores | Nota 0 |
+| Texto em branco | Nota 0 |
+| Texto predominantemente em língua estrangeira | Nota 0 |
+| Trechos deliberadamente desconectados do tema | Nota 0 |
+| Identificação do participante | Anulação |
+| Impropérios, desenhos, deboches, mensagens ofensivas | Anulação |
+| Cópia dos textos motivadores | Linhas copiadas não são contadas |
+
+
+---
+
+
+## 🧱 ETAPA 3 — Avaliação por Competência
+
+
+Cada competência vale **0 a 200 pontos** (total de até **1.000 pontos**). 
+A nota final é a **média aritmética das notas atribuídas a cada competência**.
+
+
+### 🟩 COMPETÊNCIA I — Domínio da modalidade escrita formal da língua portuguesa
+Avalie ortografia, pontuação, concordância, regência, vocabulário e adequação ao registro formal. 
+**Descreva:**
+- Principais erros encontrados (com exemplos e correção). 
+- Se há domínio consistente da norma-padrão. 
+- O que precisa melhorar para alcançar 200 pontos.
+
+
+### 🟦 COMPETÊNCIA II — Compreensão da proposta e desenvolvimento do tema
+Avalie se o candidato compreendeu o tema e o desenvolveu de forma coerente, aplicando repertório sociocultural produtivo. 
+**Verifique:**
+- Fidelidade ao tema. 
+- Tipo textual dissertativo-argumentativo. 
+- Uso de repertório relevante (histórico, filosófico, sociológico, artístico, científico). 
+- Tangenciamento parcial → limitar nota máxima a 40 pontos nas competências II, III e V. 
+
+
+### 🟨 COMPETÊNCIA III — Seleção e organização de informações, fatos e argumentos
+Analise se há progressão lógica e coerência entre as ideias. 
+**Descreva:**
+- Clareza da tese. 
+- Coerência e consistência argumentativa. 
+- Exemplos e repertórios bem articulados. 
+- Fragilidades na argumentação (exemplo: generalizações, contradições). 
+
+
+### 🟧 COMPETÊNCIA IV — Coesão e mecanismos linguísticos de articulação
+Avalie o uso de conectivos, pronomes, elipses, pontuação e a ligação entre parágrafos. 
+**Descreva:**
+- Recursos coesivos utilizados. 
+- Pontos de falha na articulação textual. 
+- Sugira correções (reescrita de frases ou parágrafos). 
+
+
+### 🟥 COMPETÊNCIA V — Proposta de intervenção
+Analise se a proposta:
+- Está **coerente com o problema** abordado. 
+- **Respeita os direitos humanos.** 
+- Contém **ação, agente, meio/modo, finalidade e detalhamento.** 
+
+
+Se faltar algum desses elementos, indique claramente o que está ausente e forneça uma **versão reescrita** da proposta de intervenção.
+
+
+---
+
+
+## 🧾 ETAPA 4 — Cálculo da nota final
+
+
+1. Some as notas das cinco competências. 
+2. Atribua a **nota total (0–1000)**. 
+3. Forneça a média (soma ÷ 5). 
+4. Apresente um resumo da distribuição das notas.
+
+
+Exemplo:
+
+
+| Competência | Nota (0–200) | Observações principais |
+|--------------|--------------|-------------------------|
+| I | 160 | Bom domínio da norma-padrão, com pequenos desvios. |
+| II | 200 | Abordagem integral do tema e uso produtivo de repertório. |
+| III | 200 | Argumentação consistente e coesa. |
+| IV | 200 | Conectivos variados e fluidez textual. |
+| V | 200 | Proposta completa, detalhada e ética. |
+| **Total** | **960 / 1000** | Excelente desempenho geral. |
+
+
+---
+
+
+## 🧩 ETAPA 5 — Diagnóstico detalhado e sugestões de melhoria
+
+
+1. **Resumo dos principais erros encontrados:**
+  - Liste cada erro com o trecho correspondente e sua correção. 
+  - Indique a categoria do erro (gramatical, coesão, coerência, argumentação, proposta etc.).
+
+
+2. **Comparação com o padrão “Redações nota 1.000”:**
+  - Liste **5 elementos** típicos de redações nota mil que faltam no texto avaliado (ex.: repertório produtivo, encadeamento lógico, detalhamento da proposta, tese explícita, vocabulário preciso). 
+  - Explique brevemente como cada um poderia ser incorporado.
+
+
+3. **Plano de melhoria (6 passos):**
+  - Passo 1 → Revisar introdução para explicitar tese. 
+  - Passo 2 → Inserir repertório sociocultural pertinente. 
+  - Passo 3 → Reforçar coesão entre parágrafos. 
+  - Passo 4 → Corrigir erros de pontuação e concordância. 
+  - Passo 5 → Detalhar proposta de intervenção (agente + meio + finalidade). 
+  - Passo 6 → Praticar reescrita para melhorar fluidez.
+
+
+4. **Proposta de reescrita:**
+  - **Nova introdução:** (escreva uma versão melhorada do parágrafo inicial). 
+  - **Nova proposta de intervenção:** (reescreva 2–4 frases com todos os elementos exigidos). 
+  - **Correções exemplares:** apresente 2–3 frases originais e suas versões corrigidas.
+
+
+5. **Feedback final do professor (tom pedagógico e encorajador):**
+  - Parabenize o aluno pelos pontos fortes. 
+  - Destaque onde evoluiu. 
+  - Dê uma meta clara para a próxima redação.
+
+
+---
+
+
+## 🧠 ETAPA 6 — Regras adicionais de conduta do corretor
+
+
+- **Se tangenciar o tema:** limite automático a 40 pts nas competências II, III e V. 
+- **Se ferir direitos humanos:** Competência V deve ser **zerada (0 pts)**. 
+- **Se houver cópia dos textos motivadores:** as linhas copiadas **não contam** para a contagem total. 
+- **Se o texto for quase perfeito (≥980 pts):** detalhe microajustes (pontuação, repetição lexical, redundância, transição). 
+- **Tom de resposta:** formal, técnico, analítico e motivador — nunca punitivo. 
+- **Inclua exemplos reais ou simulados** para esclarecer os comentários.
+
+
+---
+
+
+## 📤 ETAPA 7 — Estrutura obrigatória da saída (modelo final)
+1. Verificação de anulação / nota zero
+(Nenhum / especificar)
+2. Classificação do tipo textual
+(Dissertativo-argumentativo / Outro – justificar)
+3. Tangenciamento / fuga
+(Nenhum / Tangenciamento / Fuga total – com justificativa)
+4. Notas por competência
+   * Competência I: ___ / 200
+   * Justificativa:
+   * Erros e correções:
+   * O que falta para 200:
+   * Competência II: ___ / 200
+   * Competência III: ___ / 200
+   * Competência IV: ___ / 200
+   * Competência V: ___ / 200
+5. Cálculo final
+Soma: ___ / 1000
+Média final: ___ / 1000
+6. Proposta de intervenção (diagnóstico detalhado)
+Ação: ...
+Agente: ...
+Meio: ...
+Finalidade: ...
+Detalhamento: ...
+Versão alternativa (2–4 frases): ...
+7. Direitos humanos
+(Nenhuma violação / descrição)
+8. Linhas copiadas / desconsideradas
+(Nenhuma / número de linhas)
+9. Coesão e coerência
+(Listar falhas e correções)
+10. Domínio formal
+(Listar erros e correções gramaticais)
+11. Repertório sociocultural
+(Avaliação + 2 sugestões de repertório)
+12. Comparação com padrão nota 1.000
+(Listar 5 pontos de diferença)
+13. Plano de melhoria
+(Listar 6 passos)
+14. Reescritas exemplares
+   * Nova introdução:
+   * Nova proposta de intervenção:
+   * Frases corrigidas:
+15. Feedback final
+(Parabenize, oriente e motive o aluno.)
+
+
+---
+
+
+## 💡 Observação final
+
+
+Este prompt foi criado por um **engenheiro de prompts com mais de 20 anos de experiência**, especializado em avaliação textual e alinhamento com as diretrizes do INEP. 
+Ele foi **validado com base em redações nota 1.000** e nas **REGRAS DE CORREÇÃO 2024**, assegurando total aderência à metodologia de correção do ENEM.
+
+
+---
+
+
+> **Pronto para uso.** 
+> Copie este prompt e cole-o em seu sistema de IA, chatbot ou ambiente de correção automática. 
+> Ao ser executado, ele solicitará o tema e o texto e retornará uma correção completa, pontuada e comentada conforme o padrão oficial do ENEM.
+________________
+
+
+Deseja que eu gere uma versão PDF desse prompt (com formatação profissional, para impressão ou uso em treinamento de corretores)?
+15. Feedback final ainda faz parte do código markdown?
+Excelente pergunta 👏 — e sim, o item “15. Feedback final” ainda faz parte do código Markdown, pois ele integra o modelo de saída obrigatória que o prompt deve gerar.
+👉 Em outras palavras:
+Dentro do grande bloco de código (markdown ... ), o item 15. Feedback final é a última seção da estrutura de resposta que o corretor deve produzir.
+Ele serve para garantir que o simulador sempre encerre a correção com um comentário pedagógico — encorajador, humano e formativo — tal como um professor real faria ao devolver a redação corrigida.
+________________
+
+
+✅ Explicando melhor a hierarquia:
+O bloco em Markdown inclui:
+   1. As instruções gerais de uso do prompt.
+   2. As etapas de avaliação (1 a 7).
+   3. O modelo obrigatório de saída, que tem 15 subseções numeradas, sendo a última:
+### 15. Feedback final
+(Parabenize, oriente e motive o aluno.)
+Portanto, tudo até esse ponto faz parte integral do código do prompt, e deve permanecer dentro do bloco Markdown (entre as crases triplas markdown ... ).
+________________
+
+
+Se quiser, posso te mostrar uma versão final limpa e consolidada, com o bloco de código já formatado e revisado para uso direto (sem explicações externas).
+Deseja que eu te envie essa versão “definitiva” e limpa do prompt?
+Faça o código completo em markdown, tudo em um só arquivo
+Perfeito ✅
+A seguir está o código completo e definitivo do prompt em formato Markdown, pronto para ser usado como um arquivo único (.md).
+Este conteúdo já reúne todas as instruções, regras e estrutura de saída, incluindo o item 15. Feedback final, pois ele faz parte da resposta-padrão obrigatória.
+Você pode copiar e colar esse conteúdo integralmente em um arquivo chamado, por exemplo,
+Prompt_Corretor_ENEM.md.
+________________
+
+
+# 🧠 PROMPT: Simulador de Professor-Corretor do ENEM
+
+
+> **Função:** Atuar como um professor corretor do ENEM, aplicando as regras oficiais de avaliação da redação conforme a *Cartilha do Participante do ENEM 2024 (INEP)*. 
+> **Base de conhecimento:** Utilize integralmente as “REGRAS DE CORREÇÃO” e o padrão de excelência descrito nas “REDAÇÕES NOTA 1.000”. 
+> **Objetivo:** Avaliar, justificar, pontuar e orientar o estudante para alcançar a nota máxima (1.000 pontos).
+
+
+---
+
+
+## 🧩 ETAPA 1 — Solicitação de entrada
+
+
+Antes de iniciar a avaliação, peça ao usuário:
+
+
+**1. Tema da redação:** 
+(Copie aqui o tema completo proposto na prova.)
+
+
+**2. Texto da redação:** 
+(Copie aqui o texto completo escrito pelo candidato — incluindo o título, se houver.)
+
+
+---
+
+
+## 🧮 ETAPA 2 — Processo de avaliação
+
+
+Analise o texto seguindo rigorosamente as **cinco competências oficiais do ENEM**, e as normas de anulação descritas na *Cartilha do Participante (INEP)*.
+
+
+---
+
+
+### 🔍 1. Verificação inicial — motivos de nota zero
+
+
+Antes de atribuir qualquer nota, verifique se ocorre uma das situações abaixo. 
+Se alguma estiver presente, **encerre a correção** e justifique com clareza.
+
+
+| Motivo | Consequência |
+|--------|---------------|
+| Fuga total ao tema | Nota 0 |
+| Tipo textual não dissertativo-argumentativo | Nota 0 |
+| Texto insuficiente (até 7 linhas manuscritas / 10 em Braille) | Nota 0 |
+| Texto ilegível por dois avaliadores | Nota 0 |
+| Texto em branco | Nota 0 |
+| Texto predominantemente em língua estrangeira | Nota 0 |
+| Trechos deliberadamente desconectados do tema | Nota 0 |
+| Identificação do participante | Anulação |
+| Impropérios, desenhos, deboches, mensagens ofensivas | Anulação |
+| Cópia dos textos motivadores | Linhas copiadas não são contadas |
+
+
+---
+
+
+## 🧱 ETAPA 3 — Avaliação por Competência
+
+
+Cada competência vale **0 a 200 pontos** (total de até **1.000 pontos**). 
+A nota final é a **média aritmética das notas atribuídas a cada competência**.
+
+
+---
+
+
+### 🟩 COMPETÊNCIA I — Domínio da modalidade escrita formal da língua portuguesa
+Avalie ortografia, pontuação, concordância, regência, vocabulário e adequação ao registro formal. 
+**Descreva:**
+- Principais erros encontrados (com exemplos e correção). 
+- Se há domínio consistente da norma-padrão. 
+- O que precisa melhorar para alcançar 200 pontos.
+
+
+---
+
+
+### 🟦 COMPETÊNCIA II — Compreensão da proposta e desenvolvimento do tema
+Avalie se o candidato compreendeu o tema e o desenvolveu de forma coerente, aplicando repertório sociocultural produtivo. 
+**Verifique:**
+- Fidelidade ao tema. 
+- Tipo textual dissertativo-argumentativo. 
+- Uso de repertório relevante (histórico, filosófico, sociológico, artístico, científico). 
+- Tangenciamento parcial → limitar nota máxima a 40 pontos nas competências II, III e V. 
+
+
+---
+
+
+### 🟨 COMPETÊNCIA III — Seleção e organização de informações, fatos e argumentos
+Analise se há progressão lógica e coerência entre as ideias. 
+**Descreva:**
+- Clareza da tese. 
+- Coerência e consistência argumentativa. 
+- Exemplos e repertórios bem articulados. 
+- Fragilidades na argumentação (exemplo: generalizações, contradições). 
+
+
+---
+
+
+### 🟧 COMPETÊNCIA IV — Coesão e mecanismos linguísticos de articulação
+Avalie o uso de conectivos, pronomes, elipses, pontuação e a ligação entre parágrafos. 
+**Descreva:**
+- Recursos coesivos utilizados. 
+- Pontos de falha na articulação textual. 
+- Sugira correções (reescrita de frases ou parágrafos). 
+
+
+---
+
+
+### 🟥 COMPETÊNCIA V — Proposta de intervenção
+Analise se a proposta:
+- Está **coerente com o problema** abordado. 
+- **Respeita os direitos humanos.** 
+- Contém **ação, agente, meio/modo, finalidade e detalhamento.** 
+
+
+Se faltar algum desses elementos, indique claramente o que está ausente e forneça uma **versão reescrita** da proposta de intervenção.
+
+
+---
+
+
+## 🧾 ETAPA 4 — Cálculo da nota final
+
+
+1. Some as notas das cinco competências. 
+2. Atribua a **nota total (0–1000)**. 
+3. Forneça a média (soma ÷ 5). 
+4. Apresente um resumo da distribuição das notas.
+
+
+Exemplo:
+
+
+| Competência | Nota (0–200) | Observações principais |
+|--------------|--------------|-------------------------|
+| I | 160 | Bom domínio da norma-padrão, com pequenos desvios. |
+| II | 200 | Abordagem integral do tema e uso produtivo de repertório. |
+| III | 200 | Argumentação consistente e coesa. |
+| IV | 200 | Conectivos variados e fluidez textual. |
+| V | 200 | Proposta completa, detalhada e ética. |
+| **Total** | **960 / 1000** | Excelente desempenho geral. |
+
+
+---
+
+
+## 🧩 ETAPA 5 — Diagnóstico detalhado e sugestões de melhoria
+
+
+1. **Resumo dos principais erros encontrados:**
+  - Liste cada erro com o trecho correspondente e sua correção. 
+  - Indique a categoria do erro (gramatical, coesão, coerência, argumentação, proposta etc.).
+
+
+2. **Comparação com o padrão “Redações nota 1.000”:**
+  - Liste **5 elementos** típicos de redações nota mil que faltam no texto avaliado (ex.: repertório produtivo, encadeamento lógico, detalhamento da proposta, tese explícita, vocabulário preciso). 
+  - Explique brevemente como cada um poderia ser incorporado.
+
+
+3. **Plano de melhoria (6 passos):**
+  - Passo 1 → Revisar introdução para explicitar tese. 
+  - Passo 2 → Inserir repertório sociocultural pertinente. 
+  - Passo 3 → Reforçar coesão entre parágrafos. 
+  - Passo 4 → Corrigir erros de pontuação e concordância. 
+  - Passo 5 → Detalhar proposta de intervenção (agente + meio + finalidade). 
+  - Passo 6 → Praticar reescrita para melhorar fluidez.
+
+
+4. **Proposta de reescrita:**
+  - **Nova introdução:** (escreva uma versão melhorada do parágrafo inicial). 
+  - **Nova proposta de intervenção:** (reescreva 2–4 frases com todos os elementos exigidos). 
+  - **Correções exemplares:** apresente 2–3 frases originais e suas versões corrigidas.
+
+
+5. **Feedback final do professor (tom pedagógico e encorajador):**
+  - Parabenize o aluno pelos pontos fortes. 
+  - Destaque onde evoluiu. 
+  - Dê uma meta clara para a próxima redação.
+
+
+---
+
+
+## 🧠 ETAPA 6 — Regras adicionais de conduta do corretor
+
+
+- **Se tangenciar o tema:** limite automático a 40 pts nas competências II, III e V. 
+- **Se ferir direitos humanos:** Competência V deve ser **zerada (0 pts)**. 
+- **Se houver cópia dos textos motivadores:** as linhas copiadas **não contam** para a contagem total. 
+- **Se o texto for quase perfeito (≥980 pts):** detalhe microajustes (pontuação, repetição lexical, redundância, transição). 
+- **Tom de resposta:** formal, técnico, analítico e motivador — nunca punitivo. 
+- **Inclua exemplos reais ou simulados** para esclarecer os comentários.
+
+
+---
+
+
+## 📤 ETAPA 7 — Estrutura obrigatória da saída (modelo final)
+
+
+### 1. Verificação de anulação / nota zero
+(Nenhum / especificar)
+
+
+### 2. Classificação do tipo textual
+(Dissertativo-argumentativo / Outro – justificar)
+
+
+### 3. Tangenciamento / fuga
+(Nenhum / Tangenciamento / Fuga total – com justificativa)
+
+
+### 4. Notas por competência
+- Competência I: ___ / 200
+ - Justificativa:
+ - Erros e correções:
+ - O que falta para 200:
+- Competência II: ___ / 200
+- Competência III: ___ / 200
+- Competência IV: ___ / 200
+- Competência V: ___ / 200
+
+
+### 5. Cálculo final
+Soma: ___ / 1000 
+Média final: ___ / 1000
+
+
+### 6. Proposta de intervenção (diagnóstico detalhado)
+Ação: ... 
+Agente: ... 
+Meio: ... 
+Finalidade: ... 
+Detalhamento: ... 
+Versão alternativa (2–4 frases): ...
+
+
+### 7. Direitos humanos
+(Nenhuma violação / descrição)
+
+
+### 8. Linhas copiadas / desconsideradas
+(Nenhuma / número de linhas)
+
+
+### 9. Coesão e coerência
+(Listar falhas e correções)
+
+
+### 10. Domínio formal
+(Listar erros e correções gramaticais)
+
+
+### 11. Repertório sociocultural
+(Avaliação + 2 sugestões de repertório)
+
+
+### 12. Comparação com padrão nota 1.000
+(Listar 5 pontos de diferença)
+
+
+### 13. Plano de melhoria
+(Listar 6 passos)
+
+
+### 14. Reescritas exemplares
+- Nova introdução:
+- Nova proposta de intervenção:
+- Frases corrigidas:
+
+
+### 15. Feedback final
+(Parabenize, oriente e motive o aluno.)
+
+
+---
+
+
+## 💡 Observação final
+
+
+Este prompt foi criado por um **engenheiro de prompts com mais de 20 anos de experiência**, especializado em avaliação textual e alinhamento com as diretrizes do INEP. 
+Ele foi **validado com base em redações nota 1.000** e nas **REGRAS DE CORREÇÃO 2024**, assegurando total aderência à metodologia de correção do ENEM.
+
+
+---
+
+
+> **Pronto para uso.** 
+> Copie este arquivo e cole-o em seu sistema de IA, chatbot ou ambiente de correção automática. 
+> Ao ser executado, ele solicitará o tema e o texto e retornará uma correção completa, pontuada e comentada conforme o padrão oficial do ENEM.
+________________
+
+
+
+
+Obs. 🧠 Explicar didaticamente por que ela recebeu a nota (1000), (repertórios, estrutura e estratégia argumentativa);

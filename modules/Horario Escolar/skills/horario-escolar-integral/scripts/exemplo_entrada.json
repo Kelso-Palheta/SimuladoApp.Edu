@@ -1,0 +1,95 @@
+{
+  "escola": {
+    "nome": "Escola Exemplo de Tempo Integral",
+    "ano_letivo": 2026
+  },
+  "configuracao": {
+    "dias": ["seg", "ter", "qua", "qui", "sex"],
+    "tempos_por_dia": 9,
+    "tempos": [
+      {"id": "1", "inicio": "07:00", "fim": "07:50"},
+      {"id": "2", "inicio": "07:50", "fim": "08:40"},
+      {"id": "3", "inicio": "08:40", "fim": "09:30"},
+      {"id": "4", "inicio": "09:45", "fim": "10:35"},
+      {"id": "5", "inicio": "11:35", "fim": "12:25"},
+      {"id": "6", "inicio": "12:25", "fim": "13:15"},
+      {"id": "7", "inicio": "13:15", "fim": "14:05"},
+      {"id": "8", "inicio": "14:20", "fim": "15:10"},
+      {"id": "9", "inicio": "15:10", "fim": "16:00"}
+    ]
+  },
+  "turmas": [
+    {"id": "1A", "serie": 1, "alunos": 35},
+    {"id": "1B", "serie": 1, "alunos": 34},
+    {"id": "2A", "serie": 2, "alunos": 32},
+    {"id": "3A", "serie": 3, "alunos": 30}
+  ],
+  "areas": {
+    "Linguagens": {
+      "cor": "#3B82F6",
+      "salas": [
+        {"nome": "Sala Ling 1", "tipo": "teorica", "capacidade": 40},
+        {"nome": "Sala Ling 2", "tipo": "teorica", "capacidade": 40},
+        {"nome": "Lab Línguas", "tipo": "laboratorio", "capacidade": 30},
+        {"nome": "Ateliê Arte", "tipo": "laboratorio", "capacidade": 30},
+        {"nome": "Quadra", "tipo": "laboratorio", "capacidade": 50}
+      ]
+    },
+    "Matemática": {
+      "cor": "#EF4444",
+      "salas": [
+        {"nome": "Sala Mat 1", "tipo": "teorica", "capacidade": 40},
+        {"nome": "Sala Mat 2", "tipo": "teorica", "capacidade": 40},
+        {"nome": "Lab Informática", "tipo": "laboratorio", "capacidade": 30}
+      ]
+    },
+    "Ciências da Natureza": {
+      "cor": "#10B981",
+      "salas": [
+        {"nome": "Sala CN 1", "tipo": "teorica", "capacidade": 40},
+        {"nome": "Lab Biologia", "tipo": "laboratorio", "capacidade": 30},
+        {"nome": "Lab Química", "tipo": "laboratorio", "capacidade": 30},
+        {"nome": "Lab Física", "tipo": "laboratorio", "capacidade": 30}
+      ]
+    },
+    "Ciências Humanas": {
+      "cor": "#F59E0B",
+      "salas": [
+        {"nome": "Sala CH 1", "tipo": "teorica", "capacidade": 40},
+        {"nome": "Sala CH 2", "tipo": "teorica", "capacidade": 40}
+      ]
+    }
+  },
+  "professores": [
+    {"nome": "Ana Silva", "area": "Linguagens", "disciplinas": ["Português"], "planejamento": {"modalidade": "dia_inteiro", "dias": ["qua"]}, "indisponivel": [], "max_aulas_dia": 6},
+    {"nome": "Bruno Costa", "area": "Linguagens", "disciplinas": ["Inglês"], "planejamento": {"modalidade": "dia_inteiro", "dias": ["qui"]}, "indisponivel": [], "max_aulas_dia": 6},
+    {"nome": "Clara Dias", "area": "Linguagens", "disciplinas": ["Arte"], "planejamento": {"modalidade": "dois_turnos", "turnos": [{"dia": "ter", "turno": "manha"}, {"dia": "qui", "turno": "tarde"}]}, "indisponivel": [], "max_aulas_dia": 6},
+    {"nome": "Diego Reis", "area": "Linguagens", "disciplinas": ["Educação Física"], "planejamento": {"modalidade": "dia_inteiro", "dias": ["sex"]}, "indisponivel": [], "max_aulas_dia": 6},
+    {"nome": "Carlos Souza", "area": "Matemática", "disciplinas": ["Matemática"], "planejamento": {"modalidade": "dia_inteiro", "dias": ["qui"]}, "indisponivel": [], "max_aulas_dia": 6},
+    {"nome": "Elena Pinto", "area": "Matemática", "disciplinas": ["Matemática", "Aprofundamento Matemática"], "planejamento": {"modalidade": "dia_inteiro", "dias": ["ter"]}, "indisponivel": [], "max_aulas_dia": 6},
+    {"nome": "Mariana Lima", "area": "Ciências da Natureza", "disciplinas": ["Biologia"], "planejamento": {"modalidade": "dia_inteiro", "dias": ["qua"]}, "indisponivel": [], "max_aulas_dia": 6},
+    {"nome": "Felipe Rocha", "area": "Ciências da Natureza", "disciplinas": ["Física"], "planejamento": {"modalidade": "dia_inteiro", "dias": ["ter"]}, "indisponivel": [], "max_aulas_dia": 6},
+    {"nome": "Gabriela Tavares", "area": "Ciências da Natureza", "disciplinas": ["Química"], "planejamento": {"modalidade": "dois_turnos", "turnos": [{"dia": "seg", "turno": "tarde"}, {"dia": "qui", "turno": "manha"}]}, "indisponivel": [], "max_aulas_dia": 6},
+    {"nome": "Henrique Brito", "area": "Ciências Humanas", "disciplinas": ["História"], "planejamento": {"modalidade": "dia_inteiro", "dias": ["qua"]}, "indisponivel": [], "max_aulas_dia": 6},
+    {"nome": "Isabel Marques", "area": "Ciências Humanas", "disciplinas": ["Geografia"], "planejamento": {"modalidade": "dia_inteiro", "dias": ["ter"]}, "indisponivel": [], "max_aulas_dia": 6},
+    {"nome": "João Almeida", "area": "Ciências Humanas", "disciplinas": ["Filosofia", "Sociologia"], "planejamento": {"modalidade": "dia_inteiro", "dias": ["qui"]}, "indisponivel": [], "max_aulas_dia": 6}
+  ],
+  "atribuicoes": [
+    {"turma": "1A", "disciplina": "Português", "professor": "Ana Silva", "area": "Linguagens", "carga_semanal": 5, "tipo_sala_preferida": "teorica", "aulas_em_laboratorio": 0, "max_geminadas": 1},
+    {"turma": "1A", "disciplina": "Inglês", "professor": "Bruno Costa", "area": "Linguagens", "carga_semanal": 2, "tipo_sala_preferida": "teorica", "aulas_em_laboratorio": 1, "max_geminadas": 1},
+    {"turma": "1A", "disciplina": "Arte", "professor": "Clara Dias", "area": "Linguagens", "carga_semanal": 2, "tipo_sala_preferida": "laboratorio", "aulas_em_laboratorio": 2, "max_geminadas": 1},
+    {"turma": "1A", "disciplina": "Educação Física", "professor": "Diego Reis", "area": "Linguagens", "carga_semanal": 2, "tipo_sala_preferida": "laboratorio", "aulas_em_laboratorio": 2, "max_geminadas": 1},
+    {"turma": "1A", "disciplina": "Matemática", "professor": "Carlos Souza", "area": "Matemática", "carga_semanal": 5, "tipo_sala_preferida": "teorica", "aulas_em_laboratorio": 0, "max_geminadas": 1},
+    {"turma": "1A", "disciplina": "Biologia", "professor": "Mariana Lima", "area": "Ciências da Natureza", "carga_semanal": 2, "tipo_sala_preferida": "teorica", "aulas_em_laboratorio": 1, "max_geminadas": 1},
+    {"turma": "1A", "disciplina": "Física", "professor": "Felipe Rocha", "area": "Ciências da Natureza", "carga_semanal": 2, "tipo_sala_preferida": "teorica", "aulas_em_laboratorio": 1, "max_geminadas": 1},
+    {"turma": "1A", "disciplina": "Química", "professor": "Gabriela Tavares", "area": "Ciências da Natureza", "carga_semanal": 2, "tipo_sala_preferida": "teorica", "aulas_em_laboratorio": 1, "max_geminadas": 1},
+    {"turma": "1A", "disciplina": "História", "professor": "Henrique Brito", "area": "Ciências Humanas", "carga_semanal": 2, "tipo_sala_preferida": "teorica", "aulas_em_laboratorio": 0, "max_geminadas": 1},
+    {"turma": "1A", "disciplina": "Geografia", "professor": "Isabel Marques", "area": "Ciências Humanas", "carga_semanal": 2, "tipo_sala_preferida": "teorica", "aulas_em_laboratorio": 0, "max_geminadas": 1},
+    {"turma": "1A", "disciplina": "Filosofia", "professor": "João Almeida", "area": "Ciências Humanas", "carga_semanal": 1, "tipo_sala_preferida": "teorica", "aulas_em_laboratorio": 0, "max_geminadas": 0},
+    {"turma": "1A", "disciplina": "Sociologia", "professor": "João Almeida", "area": "Ciências Humanas", "carga_semanal": 1, "tipo_sala_preferida": "teorica", "aulas_em_laboratorio": 0, "max_geminadas": 0},
+    {"turma": "1A", "disciplina": "Aprofundamento Matemática", "professor": "Elena Pinto", "area": "Matemática", "carga_semanal": 4, "tipo_sala_preferida": "teorica", "aulas_em_laboratorio": 1, "max_geminadas": 2, "tipo": "itinerario"},
+    {"turma": "1A", "disciplina": "Projeto de Vida", "professor": "Ana Silva", "area": "qualquer", "carga_semanal": 2, "tipo_sala_preferida": "teorica", "aulas_em_laboratorio": 0, "max_geminadas": 1},
+    {"turma": "1A", "disciplina": "Estudo Orientado", "professor": "Bruno Costa", "area": "qualquer", "carga_semanal": 4, "tipo_sala_preferida": "teorica", "aulas_em_laboratorio": 0, "max_geminadas": 1},
+    {"turma": "1A", "disciplina": "Eletiva: Práticas Linguísticas", "professor": "Clara Dias", "area": "Linguagens", "carga_semanal": 2, "tipo_sala_preferida": "teorica", "aulas_em_laboratorio": 0, "max_geminadas": 1, "tipo": "itinerario"}
+  ]
+}

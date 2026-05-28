@@ -1,0 +1,25 @@
+/**
+ * Sprint 1 - Import PDF Styles
+ * Modal, form, buttons, loading states
+ */
+
+/* Modal */
+#import-modal {
+  z-index: 1000;
+}
+
+/* Form states */
+.import-loading {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.import-error {
+  border-color: #ef4444;
+  background-color: #fee2e2;
+}
+
+.import-success {
+  border-color: #22c55e;
+  background-color: #dcfce7;
+}

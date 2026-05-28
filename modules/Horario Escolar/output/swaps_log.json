@@ -1,0 +1,31 @@
+{
+  "isoladas_antes": 98,
+  "isoladas_depois": 86,
+  "reducao": 12,
+  "swaps_total": 6,
+  "swaps_por_prof": {
+    "LUCÍLIO": 0,
+    "EDMUNDO": 0,
+    "VANESA": 0,
+    "LUCIDALVA": 2,
+    "REGINA": 0,
+    "LOUISE": 0,
+    "JOANA": 0,
+    "JHONATAN": 0,
+    "DIJANE": 1,
+    "KELSO": 0,
+    "MILTON": 0,
+    "LUIZ": 1,
+    "RODRIGO": 1,
+    "CASIANO": 0,
+    "ELINELSON": 0,
+    "ROGÉRIO": 0,
+    "EUNICE": 0,
+    "ELENFLÁVIA": 0,
+    "ELIANA": 1
+  },
+  "violacoes_planejamento": 2,
+  "dijane_moves": [
+    "2º-202: Bio (Qui A5) ⇄ ROGÉRIO/E.O. Matemática (Quarta A6)"
+  ]
+}

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Debug PDF — Extração Bruta</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <style>
+    body { font-family: monospace; }
+    .raw-text { background: #1e1e1e; color: #00ff00; padding: 16px; border-radius: 8px; max-height: 600px; overflow-y: auto; white-space: pre-wrap; word-break: break-word; }
+  </style>
+</head>
+<body class="bg-gray-900 text-white p-8">
+
+<div class="max-w-4xl mx-auto">
+  <h1 class="text-2xl font-bold mb-4">🔍 Debug: Extração Bruta do PDF</h1>
+
+  <input type="file" id="pdf-input" accept=".pdf" class="block w-full p-2 mb-4 bg-gray-700 rounded" />
+
+  <button onclick="extractRaw()" class="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded mb-4">
+    Extrair Texto Bruto
+  </button>
+
+  <div id="output" class="raw-text hidden"></div>
+</div>
+
+<script>
+pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+async function extractRaw() {
+  const file = document.getElementById('pdf-input').files[0];
+  if (!file) {
+    alert('Selecione um PDF');
+    return;
+  }
+
+  const arrayBuffer = await file.arrayBuffer();
+  const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+
+  let fullText = '';
+
+  for (let i = 1; i <= pdf.numPages; i++) {
+    fullText += `\n${'='.repeat(80)}\nPÁGINA ${i}\n${'='.repeat(80)}\n\n`;
+
+    const page = await pdf.getPage(i);
+    const textContent = await page.getTextContent();
+
+    // Show raw items
+    for (const item of textContent.items) {
+      if (item.str) {
+        fullText += `[Y:${Math.round(item.transform[5]).toString().padEnd(4)} X:${Math.round(item.transform[4]).toString().padEnd(4)}] ${item.str}\n`;
+      }
+    }
+  }
+
+  document.getElementById('output').textContent = fullText;
+  document.getElementById('output').classList.remove('hidden');
+}
+</script>
+
+</body>
+</html>

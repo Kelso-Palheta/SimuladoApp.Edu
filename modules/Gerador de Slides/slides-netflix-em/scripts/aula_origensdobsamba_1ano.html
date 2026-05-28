@@ -1,0 +1,524 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="description" content="De Chiquinha Gonzaga ao Funk: como a música afro-brasileira transformou a cultura urbana.">
+  <meta name="author" content="Aula gerada">
+  <title>ORIGENS DO SAMBA</title>
+
+  <!-- Reveal.js core + tema escuro -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.0.4/reveal.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.0.4/theme/black.min.css" id="theme">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/monokai.min.css">
+
+  <!-- Fontes -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;700;900&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+
+  <!-- MathJax para fórmulas (STEM) -->
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$','$$'], ['\\[','\\]']] },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+
+  <!-- Chart.js para gráficos interativos -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+  <!-- QRCode generator -->
+  <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+
+  <style>
+    :root {
+      --bg-primary: #000000;
+      --bg-secondary: #0B0C10;
+      --bg-card: #111418;
+      --netflix-red: #E50914;
+      --neon-cyan: #00F0FF;
+      --text-primary: #FFFFFF;
+      --text-muted: #B0B0B0;
+      --border-subtle: rgba(255,255,255,0.08);
+    }
+
+    .reveal { font-family: 'Montserrat', sans-serif; background: var(--bg-primary); }
+    .reveal .slides { text-align: left; }
+    .reveal .slides section { padding: 0 2%; }
+
+    /* Tipografia */
+    .reveal h1, .reveal h2, .reveal h3 {
+      font-family: 'Bebas Neue', 'Impact', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--text-primary);
+      font-weight: 900;
+    }
+    .reveal h1 { font-size: 3.2em; line-height: 1.05; }
+    .reveal h2 { font-size: 2.2em; }
+    .reveal h3 { font-size: 1.6em; }
+    .reveal p, .reveal li { font-size: 0.65em; line-height: 1.55; color: var(--text-primary); }
+
+    /* Classes utilitárias */
+    .netflix-red { color: var(--netflix-red); font-weight: 900; }
+    .neon { color: var(--neon-cyan); }
+    .tech-font { font-family: 'Fira Code', 'Courier New', monospace; color: var(--neon-cyan); font-size: 0.55em; letter-spacing: 1px; }
+    .glow-red { text-shadow: 0 0 18px rgba(229,9,20,0.65), 0 0 4px rgba(229,9,20,0.4); }
+    .glow-cyan { text-shadow: 0 0 18px rgba(0,240,255,0.55), 0 0 4px rgba(0,240,255,0.35); }
+
+    /* Cards / callouts */
+    .callout {
+      background: var(--bg-card);
+      border-left: 4px solid var(--neon-cyan);
+      padding: 18px 22px;
+      margin: 18px 0;
+      border-radius: 2px;
+    }
+    .callout.danger { border-left-color: var(--netflix-red); }
+    .callout .label {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.4em;
+      color: var(--neon-cyan);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 8px;
+      display: block;
+    }
+    .callout.danger .label { color: var(--netflix-red); }
+
+    /* Layout multi-coluna */
+    .cols { display: grid; gap: 24px; }
+    .cols-2 { grid-template-columns: 1fr 1fr; }
+    .cols-3 { grid-template-columns: 1fr 1fr 1fr; }
+
+    /* Big stat */
+    .stat-big {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 4.5em;
+      line-height: 1;
+      color: var(--netflix-red);
+      text-shadow: 0 0 20px rgba(229,9,20,0.5);
+    }
+    .stat-label { font-family: 'Fira Code', monospace; font-size: 0.5em; color: var(--text-muted); text-transform: uppercase; letter-spacing: 2px; }
+
+    /* Mídia cards */
+    .midia-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      padding: 14px 18px;
+      border-radius: 4px;
+      margin-bottom: 12px;
+    }
+    .midia-card .tipo {
+      display: inline-block;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.42em;
+      padding: 3px 8px;
+      background: var(--netflix-red);
+      color: white;
+      border-radius: 2px;
+      letter-spacing: 1px;
+      margin-bottom: 6px;
+    }
+    .midia-card .titulo { font-weight: 700; font-size: 0.7em; margin: 4px 0; }
+    .midia-card .meta { font-size: 0.55em; color: var(--text-muted); }
+
+    /* Quiz */
+    .quiz-q { background: var(--bg-card); padding: 24px; border-radius: 6px; margin-bottom: 16px; }
+    .quiz-q .pergunta { font-weight: 700; margin-bottom: 14px; font-size: 0.75em; }
+    .quiz-opt {
+      display: block;
+      width: 100%;
+      text-align: left;
+      padding: 12px 16px;
+      margin: 6px 0;
+      background: transparent;
+      border: 1px solid var(--border-subtle);
+      color: var(--text-primary);
+      font-family: inherit;
+      font-size: 0.6em;
+      cursor: pointer;
+      border-radius: 3px;
+      transition: all 0.2s;
+    }
+    .quiz-opt:hover { border-color: var(--neon-cyan); background: rgba(0,240,255,0.05); }
+    .quiz-opt.correct { border-color: #00ff88; background: rgba(0,255,136,0.12); color: #00ff88; }
+    .quiz-opt.wrong { border-color: var(--netflix-red); background: rgba(229,9,20,0.12); color: var(--netflix-red); }
+    .quiz-feedback {
+      margin-top: 12px;
+      padding: 12px;
+      font-size: 0.6em;
+      border-radius: 3px;
+      display: none;
+    }
+    .quiz-feedback.show { display: block; }
+    .quiz-feedback.ok { background: rgba(0,255,136,0.1); color: #00ff88; border-left: 3px solid #00ff88; }
+    .quiz-feedback.no { background: rgba(229,9,20,0.1); color: var(--netflix-red); border-left: 3px solid var(--netflix-red); }
+
+    /* Glossário */
+    .termo { background: var(--bg-card); padding: 12px 16px; margin-bottom: 8px; border-radius: 3px; border-left: 3px solid var(--neon-cyan); }
+    .termo .palavra { color: var(--neon-cyan); font-weight: 700; font-family: 'Fira Code', monospace; font-size: 0.65em; }
+    .termo .def { font-size: 0.6em; color: var(--text-primary); line-height: 1.5; }
+
+    /* QR code wrapper */
+    .qr-wrap { display: inline-block; padding: 8px; background: white; border-radius: 4px; }
+    .qr-wrap canvas, .qr-wrap img { display: block; }
+
+    /* Progress bar custom */
+    .reveal .progress { color: var(--netflix-red); height: 4px; }
+
+    /* Background video overlay */
+    .reveal section[data-background-video]::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.75) 100%);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .reveal section[data-background-video] > * { position: relative; z-index: 1; }
+
+    /* Acessibilidade — foco visível */
+    .reveal button:focus-visible, .reveal a:focus-visible {
+      outline: 3px solid var(--neon-cyan);
+      outline-offset: 3px;
+    }
+
+    /* Mobile responsivo */
+    @media (max-width: 768px) {
+      .reveal h1 { font-size: 2.2em; }
+      .reveal h2 { font-size: 1.6em; }
+      .reveal p, .reveal li { font-size: 0.75em; }
+      .cols-2, .cols-3 { grid-template-columns: 1fr; }
+      .stat-big { font-size: 3em; }
+    }
+
+    /* Print / handout */
+    @media print {
+      .reveal .slides section {
+        page-break-after: always;
+        background: white !important;
+        color: black !important;
+      }
+      .reveal .slides section * { color: black !important; text-shadow: none !important; }
+      .callout { border-left-color: #555 !important; background: #f0f0f0 !important; }
+      .reveal section[data-background-video]::after { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+      
+    <section data-background-video="https://assets.mixkit.co/videos/preview/mixkit-rio-de-janeiro-aerial-view-4649-large.mp4" data-background-video-loop="true" data-background-video-muted="true" data-background-color="#000000">
+      <p class="tech-font">[ TRANSMISSÃO ATIVA / ARTES/HISTÓRIA · 1º ANO EM ]</p>
+      <h1 class="glow-cyan">ORIGENS DO SAMBA</h1>
+      <p style="font-size: 0.8em; color: #B0B0B0; margin-top: 18px;">De Chiquinha Gonzaga ao Funk: como a música afro-brasileira transformou a cultura urbana.</p>
+      <p class="tech-font" style="margin-top: 30px;">→ Pressione [ESPAÇO] para iniciar</p>
+      <aside class="notes">
+        Slide de abertura. Use 30-60 segundos para criar atmosfera. Pergunte à turma uma provocação inicial relacionada ao subtítulo antes de avançar.
+      </aside>
+    </section>
+    
+
+    <section data-transition="fade">
+      <p class="tech-font">CAPÍTULO 00 · BRIEFING</p>
+      <h2 class="netflix-red glow-red">Missão da Aula</h2>
+      <hr style="border-color: #E50914; max-width: 80px; margin-left: 0;">
+      <div class="cols cols-2" style="margin-top: 24px;">
+        <div>
+          <p class="tech-font">OBJETIVOS</p>
+          <ul style="line-height: 1.7;"><li>Compreender a formação histórica do samba a partir de síncrese de gêneros musicais (lundu, polca, maxixe)</li><li>Analisar o contexto sociocultural do Rio de Janeiro (séc. XIX-XX) e o papel das casas das tias baianas</li><li>Identificar padrões de preconceito e discriminação contra gêneros de origem afro-brasileira</li><li>Conectar raízes do samba (Donga, Tia Ciata) com desdobramentos modernos (Bossa Nova, Funk)</li></ul>
+        </div>
+        <div>
+          <p class="tech-font">HABILIDADES BNCC</p>
+          <div><span class="tech-font" style="display:inline-block; padding:4px 10px; border:1px solid #00F0FF; border-radius:3px; margin:2px;">EM13LGG103</span> · <span class="tech-font" style="display:inline-block; padding:4px 10px; border:1px solid #00F0FF; border-radius:3px; margin:2px;">EM13CHS101</span> · <span class="tech-font" style="display:inline-block; padding:4px 10px; border:1px solid #00F0FF; border-radius:3px; margin:2px;">EM13CHS103</span> · <span class="tech-font" style="display:inline-block; padding:4px 10px; border:1px solid #00F0FF; border-radius:3px; margin:2px;">EM13CHS504</span></div>
+          <p class="tech-font" style="margin-top: 20px;">DURAÇÃO ESTIMADA</p>
+          <div class="stat-big" style="font-size: 3em;">90<span style="font-size: 0.4em; color: #B0B0B0;"> min</span></div>
+        </div>
+      </div>
+      <aside class="notes">
+        Apresente os objetivos em voz alta. Explique cada habilidade BNCC em linguagem do aluno (sem ler o código). Pergunte qual deles parece mais difícil — isso gera engajamento inicial.
+      </aside>
+    </section>
+    
+
+    <section data-background-color="#0B0C10" >
+      <p class="tech-font">CAPÍTULO 01</p>
+      <h2 class="glow-cyan">MAXIXE E O PRECONCEITO CONTRA GÊNEROS AFRO</h2>
+      <div class="cols cols-2" style="margin-top: 18px;">
+        <div><p>Quando Chiquinha Gonzaga criou &#x27;Corta-jaca&#x27; em 1897, a música foi anunciada nas partituras como &#x27;tango brasileiro&#x27; ou &#x27;tanguinho&#x27;. Esse disfarce não era inocente. O verdadeiro gênero da composição era o maxixe — um ritmo vivo, dançante, que nascia das ruas do Rio de Janeiro. Mas o maxixe carregava uma marca que a sociedade elite considerava vulgar e imoral: sua origem nas comunidades afro-brasileiras e marginalizadas.</p><p>No meado do século XIX, a polca — uma dança europeia — era considerada &#x27;civilizada&#x27; nos salões da classe média. Em contrapartida, as ruas fervilhavam de manifestações culturais chamadas genericamente de batuque, incluindo o lundu. O lundu era uma dança ligada diretamente à música de povos afro-brasileiros escravizados e, quando passou a receber influência do fandango (dança espanhola), ganhou mais aceitação. À medida que a polca se popularizava no Brasil, absorvia elementos do lundu — movimentos mais requebrados — e dava origem a composições que misturavam gêneros, como a polca-lundu e, depois, o maxixe.</p><p>Esse processo reflete um paradoxo central na história cultural brasileira: a supervalorização de criações musicais de origem europeia e a inferiorização sistemática da arte de povos de origem africana ou indígena. O pensamento eurocêntrico e preconceituoso predominava com violência, criando uma hierarquia musical em que o &#x27;erudito europeu&#x27; estava no topo e o &#x27;popular afro-brasileiro&#x27; estava embaixo.</p></div>
+        <div><div class="callout"><span class="label">CHIQUINHA GONZAGA</span><p>Compositora fluminense (1847-1935) que compôs mais de 2 mil obras. À frente de seu tempo, alcançou liberdade profissional raramente concedida a mulheres de sua época.</p></div><div class="callout danger"><span class="label">PRECONCEITO ESTRUTURAL</span><p>A mesma discriminação contra maxixe e lundu será repetida séculos depois com funk brasileiro — sempre gêneros originários de comunidades periféricas e afro-descendentes.</p></div></div>
+      </div>
+      <aside class="notes">Conexão histórica: mostre que não é coincidência que os mesmos argumentos de &#x27;vulgaridade&#x27; usados contra maxixe usem replicados contra funk. Peça aos alunos para notarem padrões de racismo estrutural ao longo da história cultural brasileira. Cite Eric Hobsbawm sobre como culturas dominantes sempre tentam controlar/domesticar expressões populares.</aside>
+    </section>
+    
+
+    <section data-background-color="#0B0C10" >
+      <p class="tech-font">CAPÍTULO 02</p>
+      <h2 class="glow-cyan">LUNDU, CHORÕES E A MISTURA DE GÊNEROS</h2>
+      <div class="cols cols-2" style="margin-top: 18px;">
+        <div><p>Entre os finais do século XVIII e XIX, não havia fronteiras rígidas entre gêneros musicais — havia trânsitos constantes. Músicos que tocavam em festas e encontros de famílias de menor renda, principalmente amadores, tornaram-se conhecidos como &#x27;chorões&#x27;. Esses grupos — geralmente formados por violões, cavaquinhos, flautas e outros instrumentos de sopro — foram responsáveis por adaptações contínuas nos modos de tocar. O nome &#x27;chorão&#x27; vinha do estilo &#x27;chorado&#x27; de tocar ou cantar, um jeito de brincar com a música que permitia reinterpretações constantes.</p><p>Por volta de 1870, o &#x27;choro&#x27; não era ainda um gênero musical como entendemos hoje, mas um jeito de tocar diversos gêneros da época — lundu, maxixe, polca, valsa. Os chorões criavam fusões orgânicas. Quando tocavam polca em ambientes populares, deixavam entrar o balanço do lundu. O ritmo se requebrava. Os movimentos de dança se adaptavam. Assim nasciam novas formas musicais.</p><p>Os casais da época dançavam polca nos salões, mas quem passava pela rua ouvia a mesma polca soar diferente — mais requebrada, mais viva, mais próxima dos ritmos africanos que vibravam nas comunidades livres e escravizadas. Essa síncrese não era acidental. Era resistência cultural disfarçada de música de dança.</p></div>
+        <div><div class="callout"><span class="label">CHORÕES</span><p>Grupos musicais amadores que tocavam em festas populares. Não eram músicos &#x27;eruditos&#x27;, mas criadores-intérpretes que inventavam gêneros na prática.</p></div><div class="callout"><span class="label">SÍNCRESE MUSICAL</span><p>Processo de fusão entre ritmos diferentes. O lundu &#x27;entra&#x27; na polca, transformando-a. Isso não era erro — era criatividade cultural pura.</p></div></div>
+      </div>
+      <aside class="notes">Tema importante: a síncrese como forma de apropriação e transformação cultural. Explique que músicos negros e pobres estavam literalmente reimventando gêneros europeus a partir de suas próprias raízes. Compare com hip-hop/sampling contemporâneo.</aside>
+    </section>
+    
+
+    <section data-background-color="#0B0C10" >
+      <p class="tech-font">CAPÍTULO 03</p>
+      <h2 class="glow-cyan">TIA CIATA E O &#x27;NASCIMENTO OFICIAL&#x27; DO SAMBA</h2>
+      <div class="cols cols-2" style="margin-top: 18px;">
+        <div><p>Em meados do século XX, o Rio de Janeiro era uma cidade em fermentação cultural. A abolição da escravidão (1888) trouxe milhares de ex-escravizados para as cidades; populações Roma (ciganos) traziam seus ritmos; migrantes baianos carregavam consigo tradições centenárias do samba de roda. Tudo convergia para região da antiga Praça Onze — conhecida como &#x27;Pequena África&#x27; —, em bairros populares como Cidade Nova, Gamboa e Santo Cristo.</p><p>Nesse contexto, surgiram as casas das &#x27;tias baianas&#x27;. As donas — especialmente Hilária Batista de Almeida, a lendária Tia Ciata (1858-1924) — promoviam encontros que transbordavam religiosidade afro-brasileira, culinária baiana, contextos festivos. Essas casas não eram apenas festas. Eram centros culturais onde múltiplas expressões se tocavam e originavam novas formas. Foi em uma dessas casas, provavelmente na de Tia Ciata, que surgiu a composição considerada o primeiro samba urbano — uma criação coletiva com ritmo ainda próximo do maxixe.</p><p>O samba foi &#x27;oficializado&#x27; quando o músico Ernesto dos Santos (Donga, 1890-1974) registrou na Biblioteca Nacional uma canção chamada &#x27;Pelo telefone&#x27; em 1917. A música foi gravada e se tornou sucesso no Carnaval daquele ano. Mais que uma canção, &#x27;Pelo telefone&#x27; representava o batismo legal do samba urbano carioca — um gênero que nascia das ruas, das casas das tias, da síncrese, da criatividade popular.</p></div>
+        <div><div class="callout"><span class="label">TIA CIATA</span><p>Centro vivo de cultura afro-brasileira no Rio. Suas casas eram locais onde religiosidade, culinária e música se encontravam sem hierarquias.</p></div><div class="callout"><span class="label">&#x27;PELO TELEFONE&#x27; (1917)</span><p>Primeira gravação de samba. Registrada por Donga na Biblioteca Nacional — o primeiro samba oficializado na história.</p></div></div>
+      </div>
+      <aside class="notes">Conecte com conceitos de &#x27;espaços de resistência cultural&#x27;. As casas das tias não eram formais, mas radicais — lugares onde a cultura afro-brasileira se preservava e renovava simultaneamente. Cite trabalhos de historiadores como Sérgio Cabral sobre o papel de Tia Ciata.</aside>
+    </section>
+    
+
+    <section data-background-color="#0B0C10" >
+      <p class="tech-font">CAPÍTULO 04</p>
+      <h2 class="glow-cyan">SAMBA COMO RITMO, GÊNERO E DANÇA</h2>
+      <div class="cols cols-2" style="margin-top: 18px;">
+        <div><p>O samba é simultaneamente três coisas: um ritmo — uma marcação particular em que as composições se estruturam —, um gênero musical — com características estruturais além do ritmo, desdobrando-se em subgêneros —, e uma dança — com movimentos corporais característicos. Essa multiplicidade é fundamental para entender por que o samba é tão vivo e tão capaz de se reinventar.</p><p>Do nascimento do samba urbano carioca (1917) até meados do século XX, o gênero se desdobrou em múltiplas vertentes. Há o samba-canção — mais melódico, emotivo, frequentemente sobre amor e tristeza. Há o samba de partido-alto — baseado no diálogo cantado entre participantes, muito vivo e improvisado. Há o samba-exaltação — que canta a beleza e a grandeza do Brasil, frequentemente na época de Carnaval. Há o samba-enredo — criado especificamente para os desfiles das escolas de samba, com narrativas épicas e orquestração complexa. E há vertentes mais recentes, como o samba-rock paulista, que mescla samba com rock.</p><p>Mas o que une todas essas formas é a origem nas ruas cariocas, nas comunidades afro-brasileiras, nos ritmos do lundu e do maxixe. Mesmo quando o samba penetra salões de concerto ou escolas de samba (que viram instituições), ele mantém esse DNA de síncrese, de improviso, de resistência cultural.</p></div>
+        <div><div class="callout"><span class="label">SAMBA = RITMO + GÊNERO + DANÇA</span><p>Não é apenas música — é corporeidade, movimento, festa. Por isso é tão difícil separar o samba de sua origem nas ruas.</p></div><div class="callout"><span class="label">SUBGÊNEROS</span><p>Samba-canção, samba-enredo, samba-rock, samba de partido-alto — cada um é uma reinvenção do ritmo para diferentes contextos sociais.</p></div></div>
+      </div>
+      <aside class="notes">Atividade sugerida: toque exemplos de diferentes subgêneros e peça aos alunos para identificarem as mudanças de instrumentação, andamento e temática. Mostre que o samba não é monolítico — é flexível, político, vivo.</aside>
+    </section>
+    
+
+    <section data-background-color="#0B0C10" >
+      <p class="tech-font">CAPÍTULO 05</p>
+      <h2 class="glow-cyan">BOSSA NOVA: JAZZ + SAMBA + CLASSE MÉDIA CARIOCA</h2>
+      <div class="cols cols-2" style="margin-top: 18px;">
+        <div><p>Nos anos 1950, o samba já era patrimônio cultural brasileiro consolidado. Mas alguns músicos da classe média carioca queriam algo diferente: levar o samba aos palcos internacionais, fusioná-lo com as tendências modernistas que vinham dos Estados Unidos — especialmente o jazz. Nascia a Bossa Nova (1958), não como gênero, mas como movimento cultural.</p><p>A Bossa Nova absorveu duas vertentes do jazz: o bebop (com seus ritmos complexos e virtuosismo) e o cool jazz (com sua suavidade, o canto próximo da fala, menos contrastes). Tom Jobim (1927-1994), Vinicius de Moraes (1913-1980), Carlos Lyra e João Gilberto (1931-2019) foram figuras centrais. Jobim trouxe a sofisticação harmônica do piano. Vinícius trouxe poesia. João Gilberto trouxe uma voz quase sussurrada, intimista, que transformava o modo de cantar samba.</p><p>A Bossa Nova manteve o ritmo do samba como coluna vertebral — você ouve o samba no violão, na percussão, na batida — mas o envolveu em harmonias sofisticadas do jazz e em andamentos mais suaves. Músicas como &#x27;Garota de Ipanema&#x27; (Jobim e Vinícius) percorreram o mundo, vendendo uma imagem do Brasil: moderno, urbano, sofisticado, carioca, de classe média. Mas é importante notar: a Bossa Nova, ao internacionalizar o samba, também o &#x27;branqueou&#x27; — removeu explicitidade de suas raízes afro-brasileiras.</p></div>
+        <div><div class="callout"><span class="label">BOSSA NOVA (1958)</span><p>Movimento cultural, não gênero. Mistura samba + jazz + sofisticação harmônica de concerto.</p></div><div class="callout"><span class="label">JOÃO GILBERTO</span><p>Revolucionou o modo de cantar samba — voz íntima, quase confessional. Influenciou toda a música popular brasileira moderna.</p></div></div>
+      </div>
+      <aside class="notes">Questão crítica: A Bossa Nova democratizou o samba ou o gentrificou? Trouxe reconhecimento internacional, mas seu público era classe média urbana. Conecte com debate contemporâneo sobre apropriação cultural.</aside>
+    </section>
+    
+
+    <section data-background-color="#0B0C10" >
+      <p class="tech-font">CAPÍTULO 06</p>
+      <h2 class="glow-cyan">FUNK BRASILEIRO: A DISCRIMINAÇÃO SE REPETE</h2>
+      <div class="cols cols-2" style="margin-top: 18px;">
+        <div><p>Desde a década de 1990, quando o funk brasileiro começou a despontar, surgiram propostas de lei para criminalizá-lo. O funk foi sistematicamente associado à criminalidade e à violência por uma parcela significativa da mídia e de políticos. Mas essa associação é preconceituosa — e segue um padrão histórico que já vimos com maxixe, lundu e samba.</p><p>O funk nasceu dos bailes cariocas dos anos 1970, onde pistas de dança tocavam funk estadunidense (James Brown). Com o tempo, músicos brasileiros — especialmente de comunidades periféricas — criaram um gênero nacional. O funk brasileiro é caracterizado por ritmos eletrônicos marcantes, textura sonora única, vocalização percussiva. Mas, como seus antecessores, nasce nas periferias. Como diz MC Tha em sua canção &#x27;Valente&#x27; (2018): &#x27;Quem eles pensam que são / Pra te apontar? / Não sabem da tua luta / Não entendem seu linguajar&#x27;.</p><p>As letras de funk frequentemente abordam violência, sexualidade de modo explícito. Isso é debatido intensamente. Mas é possível ler essas letras como testemunhos da realidade vivida em comunidades marginalizadas — não como apologia, mas como testemunho. Muitas funks carregam mensagens de protesto social, afirmação cultural, resistência. MC Tha incorpora influências de Caetano Veloso e Clara Nunes, trazendo elementos de religiões afro-brasileiras. O funk, como o samba, mistura elementos diversos da música popular brasileira.</p></div>
+        <div><div class="callout"><span class="label">PADRÃO HISTÓRICO</span><p>Maxixe (discriminado)→ Lundu (discriminado) → Samba (discriminado até 1930s) → Funk (discriminado agora). Sempre gêneros periféricos, sempre afro-brasileiros, sempre criminalizados.</p></div><div class="callout"><span class="label">MC THA</span><p>Artista que expande funk brasileiro além dos padrões comerciais, dialogando com musicalidades eruditas e rituais afro-brasileiros.</p></div></div>
+      </div>
+      <aside class="notes">Tema crítico: racismo estrutural na cultura brasileira. Questione os alunos: por que gêneros de origem afro-brasileira são sempre perseguidos? Que interesses econômicos e políticos estão por trás disso? Cite o documentário &#x27;Favela on Blast&#x27; sobre funk.</aside>
+    </section>
+    
+
+    <section data-background-color="#0B0C10" data-transition="fade">
+      <p class="tech-font">[ INTERAÇÃO REQUERIDA ]</p>
+      <h2 class="netflix-red glow-red">Atividade Prática</h2>
+      <hr style="border-color: #E50914; max-width: 80px; margin-left: 0;">
+      
+        <div class="callout">
+          <span class="label">ATIVIDADE 01 · DEBATE · 15 MIN</span>
+          <p>A música &#x27;Pelo telefone&#x27; (1917, Donga) é considerada o primeiro samba &#x27;oficial&#x27;. Mas há quem diga que o samba &#x27;verdadeiro&#x27; é o samba de roda baiano, muito anterior. O que significa &#x27;oficializar&#x27; um gênero musical? Quem tem o poder de dizer o que é &#x27;samba&#x27;? Como isso relaciona com poder e exclusão?</p>
+        </div>
+        
+        <div class="callout">
+          <span class="label">ATIVIDADE 02 · PESQUISA · 0 MIN</span>
+          <p>Escute gravações de (a) Chiquinha Gonzaga &#x27;Corta-jaca&#x27;, (b) Donga &#x27;Pelo telefone&#x27; (1917), (c) Tom Jobim &#x27;Garota de Ipanema&#x27;, (d) MC Tha &#x27;Valente&#x27;. Mapeie: quais características musicais cada uma herda da anterior? Onde você vê continuidades? Onde vê rupturas?</p>
+        </div>
+        
+        <div class="callout">
+          <span class="label">ATIVIDADE 03 · CRIACAO · 20 MIN</span>
+          <p>Em grupos de 4-5, criem um &#x27;manifesto&#x27; para defender um gênero musical periférico contemporâneo (funk, trap, forró eletrônico, etc.) contra preconceito. Use argumentos históricos desta aula: mostre que gêneros afro-brasileiros SEMPRE foram discriminados, e que essa discriminação reflete racismo estrutural. Apresente para a turma (3 min por grupo).</p>
+        </div>
+        
+      <aside class="notes">Respostas modelo / orientações:
+
+Atividade 1: Estimular reflexão sobre como instituições (Biblioteca Nacional, mídia, indústria) legitimam certas manifestações e apagam outras. O registro de &#x27;Pelo telefone&#x27; foi importante historicamente, mas não invalida outras formas de samba.
+
+Atividade 2: Conexão histórica: da síncrese maxixe-lundu (Chiquinha) → primeiro samba oficial (Donga) → samba sofisticado + jazz (Jobim) → funk periférico (MC Tha). Cada geração reinventa em seu contexto social.
+
+Atividade 3: Grupos devem conectar histórico (maxixe → lundu → samba → funk) com análise de preconceito contemporâneo. Estimular radicalidade nas afirmações — essa é a função de manifestos.</aside>
+    </section>
+    
+
+    <section data-background-color="#0B0C10">
+      <p class="tech-font">[ EXTRAS RECOMENDADOS ]</p>
+      <h2 class="glow-cyan">Continue a Imersão</h2>
+      <div class="cols cols-2">
+        <div class="midia-card">
+          <div class="qr-wrap" data-url="https://www.youtube.com/results?search_query=Chiquinha+Gonzaga+Corta-jaca" style="float:right; margin-left:12px;"></div>
+          <span class="tipo">🎵 MUSICA</span>
+          <div class="titulo">&#x27;Corta-jaca&#x27; (Chiquinha Gonzaga, 1897)</div>
+          <div class="meta">📍 YouTube — instrumental — 3 min</div>
+          <p style="font-size:0.55em; margin-top:6px; color:#B0B0B0;">Ouça a base rítmica que será transformada em samba. Nenhuma voz, só orquestra — isso esconde sua origem afro (era &#x27;disfarçado&#x27; como tango para ser aceito).</p>
+        </div>
+        
+        <div class="midia-card">
+          <div class="qr-wrap" data-url="https://www.youtube.com/results?search_query=Donga+Pelo+telefone+1917" style="float:right; margin-left:12px;"></div>
+          <span class="tipo">🎵 MUSICA</span>
+          <div class="titulo">&#x27;Pelo telefone&#x27; (Donga, 1917) — gravação original</div>
+          <div class="meta">📍 Spotify/YouTube — 2:20 min</div>
+          <p style="font-size:0.55em; margin-top:6px; color:#B0B0B0;">Primeira gravação de samba. Andamento, instrumentação, voz — compare com Chiquinha. Já é samba, mas ainda com reminiscências maxixe.</p>
+        </div>
+        
+        <div class="midia-card">
+          <div class="qr-wrap" data-url="https://www.youtube.com/watch?v=FrDhT97pTwk" style="float:right; margin-left:12px;"></div>
+          <span class="tipo">🎵 MUSICA</span>
+          <div class="titulo">&#x27;Garota de Ipanema&#x27; (Tom Jobim &amp; Vinicius de Moraes, 1964)</div>
+          <div class="meta">📍 YouTube — João Gilberto — 3:23 min</div>
+          <p style="font-size:0.55em; margin-top:6px; color:#B0B0B0;">Bossa Nova refinada, internacionalizada. Voz de João Gilberto — quase sussurrada. Compare harmonia + sofisticação com samba anterior.</p>
+        </div>
+        
+        <div class="midia-card">
+          <div class="qr-wrap" data-url="https://www.youtube.com/results?search_query=MC+Tha+Valente" style="float:right; margin-left:12px;"></div>
+          <span class="tipo">🎵 MUSICA</span>
+          <div class="titulo">&#x27;Valente&#x27; (MC Tha, 2018)</div>
+          <div class="meta">📍 Spotify/YouTube — 3:20 min</div>
+          <p style="font-size:0.55em; margin-top:6px; color:#B0B0B0;">Funk contemporâneo que dialoga com tradições eruditas. Letras de afirmação cultural periférica. Mostre a continuidade histórica.</p>
+        </div>
+        
+        <div class="midia-card">
+          <div class="qr-wrap" data-url="https://www.youtube.com/results?search_query=historia+samba+documentario" style="float:right; margin-left:12px;"></div>
+          <span class="tipo">📽️ DOCUMENTARIO</span>
+          <div class="titulo">A História do Samba (vários episódios)</div>
+          <div class="meta">📍 GloboPlay/YouTube — documentários curtos (15-20 min cada)</div>
+          <p style="font-size:0.55em; margin-top:6px; color:#B0B0B0;">Contexto visual das casas das tias, Tia Ciata, ruas do Rio antigo. Imagens ajudam a concretizar o que foi abstrato na aula.</p>
+        </div>
+        
+        <div class="midia-card">
+          
+          <span class="tipo">📖 LIVRO</span>
+          <div class="titulo">História Social da Música Popular Brasileira</div>
+          <div class="meta">📍 Hobsbawm, E. + Companhia das Letras — capítulos sobre samba e ritmos marginalizados</div>
+          <p style="font-size:0.55em; margin-top:6px; color:#B0B0B0;">Para professor aprofundar. Analisa como estruturas de poder controlam/legitimam gêneros musicais.</p>
+        </div>
+        
+        <div class="midia-card">
+          <div class="qr-wrap" data-url="https://www.ims.com.br" style="float:right; margin-left:12px;"></div>
+          <span class="tipo">🌐 SITE</span>
+          <div class="titulo">Instituto Moreira Salles — coleções Samba e Bossa Nova</div>
+          <div class="meta">📍 ims.com.br</div>
+          <p style="font-size:0.55em; margin-top:6px; color:#B0B0B0;">Acervo visual, fotográfico, áudio. Fotos de Tia Ciata, Chiquinha Gonzaga, Donga. Primárias importantes.</p>
+        </div>
+        </div>
+      <aside class="notes">Mídia recomendada para aprofundamento fora da sala. QR codes permitem acesso direto via celular do aluno.</aside>
+    </section>
+    
+
+    <section data-background-color="#0B0C10">
+      <p class="tech-font">[ DICIONÁRIO TÉCNICO ]</p>
+      <h2 class="glow-cyan">Glossário</h2>
+      <div class="cols cols-2"><div class="termo"><span class="palavra">maxixe</span><p class="def">Gênero de dança e música do Rio de Janeiro (séc. XIX), nascido da fusão entre polca europeia e lundu afro-brasileiro. Considerado vulgar pelos setores privilegiados.</p></div><div class="termo"><span class="palavra">lundu</span><p class="def">Dança e canção de origem afro-brasileira, constituída a partir da música de povos escravizados. Influenciou a polca e ajudou a criar o maxixe.</p></div><div class="termo"><span class="palavra">chorões</span><p class="def">Grupos musicais de amadores (séc. XIX-XX) que tocavam em festas populares. Responsáveis por síncrese entre gêneros, tocando &#x27;chorado&#x27; (interpretação livre, criativa).</p></div><div class="termo"><span class="palavra">síncrese musical</span><p class="def">Processo de fusão e reinvenção entre ritmos diferentes — quando um gênero &#x27;entra&#x27; em outro, transformando-o. Mecanismo central na formação de novo gêneros.</p></div><div class="termo"><span class="palavra">samba de roda</span><p class="def">Forma de samba originária da Bahia, ligada à tradição oral e a contextos festivos comunitários. Anterior ao samba urbano carioca.</p></div><div class="termo"><span class="palavra">Tia Ciata</span><p class="def">Hilária Batista de Almeida (1858-1924), dona de casa no Rio de Janeiro que criou espaço para encontros de músicos e manifestações culturais afro-brasileiras. Centro vivo da formação do samba urbano.</p></div><div class="termo"><span class="palavra">Bossa Nova</span><p class="def">Movimento cultural brasileiro (1958+) que mistura samba + jazz sofisticado. Liderado por Tom Jobim, Vinicius de Moraes e João Gilberto. Internacionalizou o samba, mas também o &#x27;refinificou&#x27; para elite.</p></div><div class="termo"><span class="palavra">preconceito estrutural</span><p class="def">Discriminação sistemática contra grupos sociais, refletida em leis, políticas, instituições. No Brasil, sempre atingiu gêneros musicais de origem afro-brasileira.</p></div><div class="termo"><span class="palavra">funk brasileiro</span><p class="def">Gênero musical urbano contemporâneo de origem em comunidades periféricas do Rio de Janeiro (anos 1970+). Caracterizado por ritmos eletrônicos marcantes e letras que refletem realidades marginalizadas.</p></div><div class="termo"><span class="palavra">euocentrismo</span><p class="def">Visão de mundo que coloca a Europa como centro e superioriza sua cultura como parâmetro universal de &#x27;civilização&#x27;, inferiorizando culturas não-europeias.</p></div></div>
+      <aside class="notes">Revise cada termo antes da prova. Peça que os alunos criem frases usando cada um deles.</aside>
+    </section>
+    
+
+    <section data-background-color="#000000">
+      <p class="tech-font">[ TESTE DE COMPREENSÃO ]</p>
+      <h2 class="netflix-red glow-red">Quiz Final</h2>
+      <div style="max-height: 65vh; overflow-y: auto;">
+        <div class="quiz-q">
+          <div class="pergunta">1. Qual era o &#x27;disfarce&#x27; que compositores como Chiquinha Gonzaga usavam para que o maxixe fosse aceito pela elite?</div>
+          <button class="quiz-opt" data-idx="0" onclick="responder(this, '0')">A) Chamavam de &#x27;tango brasileiro&#x27; ou &#x27;tanguinho&#x27; nas partituras</button><button class="quiz-opt" data-idx="1" onclick="responder(this, '0')">B) Contratavam orquestras europeias para tocar</button><button class="quiz-opt" data-idx="2" onclick="responder(this, '0')">C) Transformavam todas as letras em português formal</button><button class="quiz-opt" data-idx="3" onclick="responder(this, '0')">D) Nenhum disfarce — o maxixe sempre foi aceito</button>
+          <div class="quiz-feedback ok">✓ Correto. As partituras de &#x27;Corta-jaca&#x27; foram anunciadas como &#x27;tango&#x27; para esconder que era maxixe — um gênero considerado vulgar por ser afro-brasileiro.</div>
+          <div class="quiz-feedback no">✗ Reveja o conceito. As partituras de &#x27;Corta-jaca&#x27; foram anunciadas como &#x27;tango&#x27; para esconder que era maxixe — um gênero considerado vulgar por ser afro-brasileiro.</div>
+        </div>
+        
+        <div class="quiz-q">
+          <div class="pergunta">2. Quem foi Tia Ciata e qual foi seu papel na história do samba?</div>
+          <button class="quiz-opt" data-idx="0" onclick="responder(this, '1')">A) Uma cantora de ópera que ensinou samba para a classe média</button><button class="quiz-opt" data-idx="1" onclick="responder(this, '1')">B) Dona de casa que criou espaço para encontros de músicos e manifestações afro-brasileiras; provavelmente primeira a alojar samba urbano</button><button class="quiz-opt" data-idx="2" onclick="responder(this, '1')">C) Esposa de Donga que ajudou a gravar &#x27;Pelo telefone&#x27;</button><button class="quiz-opt" data-idx="3" onclick="responder(this, '1')">D) Professora de música que formalizou o samba na Biblioteca Nacional</button>
+          <div class="quiz-feedback ok">✓ Correto. Tia Ciata foi centro vivo da formação do samba urbano. Suas casas eram espaços de resistência e criatividade cultural afro-brasileira.</div>
+          <div class="quiz-feedback no">✗ Reveja o conceito. Tia Ciata foi centro vivo da formação do samba urbano. Suas casas eram espaços de resistência e criatividade cultural afro-brasileira.</div>
+        </div>
+        
+        <div class="quiz-q">
+          <div class="pergunta">3. O que caracteriza a Bossa Nova?</div>
+          <button class="quiz-opt" data-idx="0" onclick="responder(this, '1')">A) É um gênero musical puro, sem influências externas</button><button class="quiz-opt" data-idx="1" onclick="responder(this, '1')">B) É um movimento cultural que mistura samba + jazz sofisticado, nascido na classe média carioca</button><button class="quiz-opt" data-idx="2" onclick="responder(this, '1')">C) É o mesmo que samba — só outro nome</button><button class="quiz-opt" data-idx="3" onclick="responder(this, '1')">D) Surgiu nos anos 1970 em comunidades periféricas</button>
+          <div class="quiz-feedback ok">✓ Correto. Bossa Nova não é gênero, mas movimento. Incorpora samba + jazz (bebop e cool jazz) + sofisticação harmônica. Liderada por Tom Jobim, Vinícius, João Gilberto.</div>
+          <div class="quiz-feedback no">✗ Reveja o conceito. Bossa Nova não é gênero, mas movimento. Incorpora samba + jazz (bebop e cool jazz) + sofisticação harmônica. Liderada por Tom Jobim, Vinícius, João Gilberto.</div>
+        </div>
+        
+        <div class="quiz-q">
+          <div class="pergunta">4. Por que o funk brasileiro é frequentemente discriminado e criminalizado?</div>
+          <button class="quiz-opt" data-idx="0" onclick="responder(this, '2')">A) Porque suas letras são todas sobre crime</button><button class="quiz-opt" data-idx="1" onclick="responder(this, '2')">B) Porque é um gênero tecnicamente inferior</button><button class="quiz-opt" data-idx="2" onclick="responder(this, '2')">C) Segue padrão histórico: gêneros de origem afro-brasileira/periférica sempre foram perseguidos (maxixe, lundu, samba também foram)</button><button class="quiz-opt" data-idx="3" onclick="responder(this, '2')">D) Funk não é discriminado — essa premissa é falsa</button>
+          <div class="quiz-feedback ok">✓ Correto. Maxixe foi discriminado (séc. XIX), samba foi discriminado (até 1930s), funk é discriminado agora. O padrão é claro: origem afro + origem periférica = preconceito.</div>
+          <div class="quiz-feedback no">✗ Reveja o conceito. Maxixe foi discriminado (séc. XIX), samba foi discriminado (até 1930s), funk é discriminado agora. O padrão é claro: origem afro + origem periférica = preconceito.</div>
+        </div>
+        
+        <div class="quiz-q">
+          <div class="pergunta">5. Qual é a diferença entre samba de roda (baiano) e samba urbano (carioca)?</div>
+          <button class="quiz-opt" data-idx="0" onclick="responder(this, '1')">A) Não há diferença — são o mesmo gênero</button><button class="quiz-opt" data-idx="1" onclick="responder(this, '1')">B) Samba de roda é mais antigo, ligado à tradição oral baiana; samba urbano é carioca, nasceu com Donga e se desenvolveu no séc. XX</button><button class="quiz-opt" data-idx="2" onclick="responder(this, '1')">C) Samba de roda é mais refinado; samba urbano é primitivo</button><button class="quiz-opt" data-idx="3" onclick="responder(this, '1')">D) Samba urbano foi inventado por Tom Jobim</button>
+          <div class="quiz-feedback ok">✓ Correto. Samba de roda vem da Bahia, tradição ancestral. Samba urbano nasce no Rio, casas das tias, Donga — é produto da síncrese e da modernidade urbana.</div>
+          <div class="quiz-feedback no">✗ Reveja o conceito. Samba de roda vem da Bahia, tradição ancestral. Samba urbano nasce no Rio, casas das tias, Donga — é produto da síncrese e da modernidade urbana.</div>
+        </div>
+        </div>
+      <aside class="notes">Quiz auto-corretivo. Use como avaliação formativa. Pode ser refeito quantas vezes o aluno quiser.</aside>
+    </section>
+    
+
+    <section data-background-color="#0B0C10">
+      <p class="tech-font">[ FONTES / ABNT ]</p>
+      <h2 class="glow-cyan">Referências</h2>
+      <ol><li style='font-size:0.55em; line-height:1.5; margin-bottom:8px;'>CABRAL, S. Mangueira: a história do morro e da escola. Rio de Janeiro: Editora Leia, 2011.</li><li style='font-size:0.55em; line-height:1.5; margin-bottom:8px;'>GONÇALVES, A. L. Chiquinha Gonzaga: uma mulher à frente de seu tempo. Rio de Janeiro: Editora Jorge Zahar, 2009.</li><li style='font-size:0.55em; line-height:1.5; margin-bottom:8px;'>HOBSBAWM, E. A História Social da Música Popular Brasileira. In: Companhia das Letras, 1998.</li><li style='font-size:0.55em; line-height:1.5; margin-bottom:8px;'>MOURA, R. (org.). Carnaval: da Antiguidade ao Modernismo. São Paulo: Editora Unesp, 1999.</li><li style='font-size:0.55em; line-height:1.5; margin-bottom:8px;'>PESSOA, B. Funk Carioca: de sarau da periferia à cena global. Rio de Janeiro: Editora Rocco, 2020.</li><li style='font-size:0.55em; line-height:1.5; margin-bottom:8px;'>SANDRONI, C. Feitiço Decente: Transformações do samba no Rio de Janeiro (1917-1933). Rio de Janeiro: Zahar, 2001.</li><li style='font-size:0.55em; line-height:1.5; margin-bottom:8px;'>VINHAES, M. Tom Jobim: o mapa do Brasil. Rio de Janeiro: Nova Fronteira, 2020.</li><li style='font-size:0.55em; line-height:1.5; margin-bottom:8px;'>Material pedagógico: &#x27;Origens do Samba — 1º Ano, 2º Bimestre&#x27; (Apostila didática, fonte base para esta aula).</li></ol>
+      <aside class="notes">Bibliografia obrigatória para aprofundamento. Encoraje os alunos a consultar pelo menos 1 fonte primária.</aside>
+    </section>
+    
+
+    <section data-background-color="#000000" data-transition="fade">
+      <p class="tech-font">[ FIM DA TRANSMISSÃO ]</p>
+      <h1 class="glow-red netflix-red">ORIGENS DO SAMBA</h1>
+      <p style="font-size: 1.1em; font-style: italic; margin-top: 24px; color:#FFFFFF;">"A música não é saudade — é resistência. A cada nota perseguida, brota uma nova revolução. (Adaptado de Caetano Veloso)"</p>
+      <p class="tech-font" style="margin-top: 60px;">Aula gerada · Artes/História · 1º ano EM</p>
+      <aside class="notes">Slide de encerramento. Deixe a frase de impacto ressoar — silêncio de 5 segundos antes de encerrar a aula.</aside>
+    </section>
+    
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.0.4/reveal.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.0.4/plugin/notes/notes.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.0.4/plugin/highlight/highlight.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.0.4/plugin/zoom/zoom.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.0.4/plugin/search/search.min.js"></script>
+
+  <script>
+    Reveal.initialize({
+      hash: true,
+      controls: true,
+      progress: true,
+      slideNumber: 'c/t',
+      history: true,
+      center: true,
+      transition: 'fade',
+      transitionSpeed: 'fast',
+      backgroundTransition: 'fade',
+      autoAnimateDuration: 0.8,
+      autoAnimateEasing: 'ease-in-out',
+      pdfSeparateFragments: false,
+      plugins: [ RevealNotes, RevealHighlight, RevealZoom, RevealSearch ]
+    });
+
+    // Renderiza QR codes após carregar
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('.qr-wrap[data-url]').forEach(el => {
+        new QRCode(el, { text: el.dataset.url, width: 110, height: 110, colorDark: '#000', colorLight: '#fff' });
+      });
+    });
+
+    // Quiz handler
+    window.responder = function(btn, correta) {
+      const card = btn.closest('.quiz-q');
+      const opts = card.querySelectorAll('.quiz-opt');
+      opts.forEach(o => o.disabled = true);
+      if (btn.dataset.idx === correta) {
+        btn.classList.add('correct');
+        card.querySelector('.quiz-feedback.ok')?.classList.add('show');
+      } else {
+        btn.classList.add('wrong');
+        opts.forEach(o => { if (o.dataset.idx === correta) o.classList.add('correct'); });
+        card.querySelector('.quiz-feedback.no')?.classList.add('show');
+      }
+    };
+  </script>
+</body>
+</html>

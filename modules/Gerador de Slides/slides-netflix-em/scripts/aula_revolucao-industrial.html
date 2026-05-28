@@ -1,0 +1,489 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="description" content="Como 80 anos na Inglaterra reescreveram o destino de 8 bilhões de pessoas.">
+  <meta name="author" content="Prof. Exemplo">
+  <title>A Máquina que Mudou Tudo</title>
+
+  <!-- Reveal.js core + tema escuro -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.0.4/reveal.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.0.4/theme/black.min.css" id="theme">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/monokai.min.css">
+
+  <!-- Fontes -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;700;900&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+
+  <!-- MathJax para fórmulas (STEM) -->
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$','$$'], ['\\[','\\]']] },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+
+  <!-- Chart.js para gráficos interativos -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+  <!-- QRCode generator -->
+  <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+
+  <style>
+    :root {
+      --bg-primary: #000000;
+      --bg-secondary: #0B0C10;
+      --bg-card: #111418;
+      --netflix-red: #E50914;
+      --neon-cyan: #00F0FF;
+      --text-primary: #FFFFFF;
+      --text-muted: #B0B0B0;
+      --border-subtle: rgba(255,255,255,0.08);
+    }
+
+    .reveal { font-family: 'Montserrat', sans-serif; background: var(--bg-primary); }
+    .reveal .slides { text-align: left; }
+    .reveal .slides section { padding: 0 2%; }
+
+    /* Tipografia */
+    .reveal h1, .reveal h2, .reveal h3 {
+      font-family: 'Bebas Neue', 'Impact', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--text-primary);
+      font-weight: 900;
+    }
+    .reveal h1 { font-size: 3.2em; line-height: 1.05; }
+    .reveal h2 { font-size: 2.2em; }
+    .reveal h3 { font-size: 1.6em; }
+    .reveal p, .reveal li { font-size: 0.65em; line-height: 1.55; color: var(--text-primary); }
+
+    /* Classes utilitárias */
+    .netflix-red { color: var(--netflix-red); font-weight: 900; }
+    .neon { color: var(--neon-cyan); }
+    .tech-font { font-family: 'Fira Code', 'Courier New', monospace; color: var(--neon-cyan); font-size: 0.55em; letter-spacing: 1px; }
+    .glow-red { text-shadow: 0 0 18px rgba(229,9,20,0.65), 0 0 4px rgba(229,9,20,0.4); }
+    .glow-cyan { text-shadow: 0 0 18px rgba(0,240,255,0.55), 0 0 4px rgba(0,240,255,0.35); }
+
+    /* Cards / callouts */
+    .callout {
+      background: var(--bg-card);
+      border-left: 4px solid var(--neon-cyan);
+      padding: 18px 22px;
+      margin: 18px 0;
+      border-radius: 2px;
+    }
+    .callout.danger { border-left-color: var(--netflix-red); }
+    .callout .label {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.4em;
+      color: var(--neon-cyan);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 8px;
+      display: block;
+    }
+    .callout.danger .label { color: var(--netflix-red); }
+
+    /* Layout multi-coluna */
+    .cols { display: grid; gap: 24px; }
+    .cols-2 { grid-template-columns: 1fr 1fr; }
+    .cols-3 { grid-template-columns: 1fr 1fr 1fr; }
+
+    /* Big stat */
+    .stat-big {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 4.5em;
+      line-height: 1;
+      color: var(--netflix-red);
+      text-shadow: 0 0 20px rgba(229,9,20,0.5);
+    }
+    .stat-label { font-family: 'Fira Code', monospace; font-size: 0.5em; color: var(--text-muted); text-transform: uppercase; letter-spacing: 2px; }
+
+    /* Mídia cards */
+    .midia-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      padding: 14px 18px;
+      border-radius: 4px;
+      margin-bottom: 12px;
+    }
+    .midia-card .tipo {
+      display: inline-block;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.42em;
+      padding: 3px 8px;
+      background: var(--netflix-red);
+      color: white;
+      border-radius: 2px;
+      letter-spacing: 1px;
+      margin-bottom: 6px;
+    }
+    .midia-card .titulo { font-weight: 700; font-size: 0.7em; margin: 4px 0; }
+    .midia-card .meta { font-size: 0.55em; color: var(--text-muted); }
+
+    /* Quiz */
+    .quiz-q { background: var(--bg-card); padding: 24px; border-radius: 6px; margin-bottom: 16px; }
+    .quiz-q .pergunta { font-weight: 700; margin-bottom: 14px; font-size: 0.75em; }
+    .quiz-opt {
+      display: block;
+      width: 100%;
+      text-align: left;
+      padding: 12px 16px;
+      margin: 6px 0;
+      background: transparent;
+      border: 1px solid var(--border-subtle);
+      color: var(--text-primary);
+      font-family: inherit;
+      font-size: 0.6em;
+      cursor: pointer;
+      border-radius: 3px;
+      transition: all 0.2s;
+    }
+    .quiz-opt:hover { border-color: var(--neon-cyan); background: rgba(0,240,255,0.05); }
+    .quiz-opt.correct { border-color: #00ff88; background: rgba(0,255,136,0.12); color: #00ff88; }
+    .quiz-opt.wrong { border-color: var(--netflix-red); background: rgba(229,9,20,0.12); color: var(--netflix-red); }
+    .quiz-feedback {
+      margin-top: 12px;
+      padding: 12px;
+      font-size: 0.6em;
+      border-radius: 3px;
+      display: none;
+    }
+    .quiz-feedback.show { display: block; }
+    .quiz-feedback.ok { background: rgba(0,255,136,0.1); color: #00ff88; border-left: 3px solid #00ff88; }
+    .quiz-feedback.no { background: rgba(229,9,20,0.1); color: var(--netflix-red); border-left: 3px solid var(--netflix-red); }
+
+    /* Glossário */
+    .termo { background: var(--bg-card); padding: 12px 16px; margin-bottom: 8px; border-radius: 3px; border-left: 3px solid var(--neon-cyan); }
+    .termo .palavra { color: var(--neon-cyan); font-weight: 700; font-family: 'Fira Code', monospace; font-size: 0.65em; }
+    .termo .def { font-size: 0.6em; color: var(--text-primary); line-height: 1.5; }
+
+    /* QR code wrapper */
+    .qr-wrap { display: inline-block; padding: 8px; background: white; border-radius: 4px; }
+    .qr-wrap canvas, .qr-wrap img { display: block; }
+
+    /* Progress bar custom */
+    .reveal .progress { color: var(--netflix-red); height: 4px; }
+
+    /* Background video overlay */
+    .reveal section[data-background-video]::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.75) 100%);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .reveal section[data-background-video] > * { position: relative; z-index: 1; }
+
+    /* Acessibilidade — foco visível */
+    .reveal button:focus-visible, .reveal a:focus-visible {
+      outline: 3px solid var(--neon-cyan);
+      outline-offset: 3px;
+    }
+
+    /* Mobile responsivo */
+    @media (max-width: 768px) {
+      .reveal h1 { font-size: 2.2em; }
+      .reveal h2 { font-size: 1.6em; }
+      .reveal p, .reveal li { font-size: 0.75em; }
+      .cols-2, .cols-3 { grid-template-columns: 1fr; }
+      .stat-big { font-size: 3em; }
+    }
+
+    /* Print / handout */
+    @media print {
+      .reveal .slides section {
+        page-break-after: always;
+        background: white !important;
+        color: black !important;
+      }
+      .reveal .slides section * { color: black !important; text-shadow: none !important; }
+      .callout { border-left-color: #555 !important; background: #f0f0f0 !important; }
+      .reveal section[data-background-video]::after { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+      
+    <section data-background-video="https://assets.mixkit.co/videos/preview/mixkit-old-film-projector-1209-large.mp4" data-background-video-loop="true" data-background-video-muted="true" data-background-color="#000000">
+      <p class="tech-font">[ TRANSMISSÃO ATIVA / HISTÓRIA · 2º ANO EM ]</p>
+      <h1 class="glow-cyan">A Máquina que Mudou Tudo</h1>
+      <p style="font-size: 0.8em; color: #B0B0B0; margin-top: 18px;">Como 80 anos na Inglaterra reescreveram o destino de 8 bilhões de pessoas.</p>
+      <p class="tech-font" style="margin-top: 30px;">→ Pressione [ESPAÇO] para iniciar</p>
+      <aside class="notes">
+        Slide de abertura. Use 30-60 segundos para criar atmosfera. Pergunte à turma uma provocação inicial relacionada ao subtítulo antes de avançar.
+      </aside>
+    </section>
+    
+
+    <section data-transition="fade">
+      <p class="tech-font">CAPÍTULO 00 · BRIEFING</p>
+      <h2 class="netflix-red glow-red">Missão da Aula</h2>
+      <hr style="border-color: #E50914; max-width: 80px; margin-left: 0;">
+      <div class="cols cols-2" style="margin-top: 24px;">
+        <div>
+          <p class="tech-font">OBJETIVOS</p>
+          <ul style="line-height: 1.7;"><li>Identificar causas e condições que fizeram a Inglaterra ser o ponto de partida</li><li>Explicar como a máquina a vapor reorganizou trabalho, cidades e tempo</li><li>Conectar a 1ª Revolução Industrial à crise climática atual</li><li>Analisar continuidades entre operário do séc. XIX e trabalhador de aplicativo hoje</li></ul>
+        </div>
+        <div>
+          <p class="tech-font">HABILIDADES BNCC</p>
+          <div><span class="tech-font" style="display:inline-block; padding:4px 10px; border:1px solid #00F0FF; border-radius:3px; margin:2px;">EM13CHS101</span> · <span class="tech-font" style="display:inline-block; padding:4px 10px; border:1px solid #00F0FF; border-radius:3px; margin:2px;">EM13CHS103</span> · <span class="tech-font" style="display:inline-block; padding:4px 10px; border:1px solid #00F0FF; border-radius:3px; margin:2px;">EM13CHS503</span></div>
+          <p class="tech-font" style="margin-top: 20px;">DURAÇÃO ESTIMADA</p>
+          <div class="stat-big" style="font-size: 3em;">50<span style="font-size: 0.4em; color: #B0B0B0;"> min</span></div>
+        </div>
+      </div>
+      <aside class="notes">
+        Apresente os objetivos em voz alta. Explique cada habilidade BNCC em linguagem do aluno (sem ler o código). Pergunte qual deles parece mais difícil — isso gera engajamento inicial.
+      </aside>
+    </section>
+    
+
+    <section data-background-color="#0B0C10" >
+      <p class="tech-font">CAPÍTULO 01</p>
+      <h2 class="glow-cyan">Por que a Inglaterra?</h2>
+      <div class="cols cols-2" style="margin-top: 18px;">
+        <div><p>Quando a Revolução Industrial começou, por volta de 1760, a Inglaterra não era a maior nem a mais rica das nações europeias. França tinha mais terras, Holanda mais comércio, Espanha ainda controlava ouro colonial. Mesmo assim, foi naquele país que máquinas a vapor saíram do papel e entraram nas fábricas. Por quê?</p><p>Três condições se cruzaram ao mesmo tempo. Primeiro, o capital acumulado pela burguesia mercantil — fortunas feitas no tráfico transatlântico de pessoas escravizadas e na pirataria autorizada contra navios espanhóis — precisava de novos lugares para render. Segundo, os cercamentos (enclosures) expulsaram camponeses das terras comunais e jogaram milhões nas cidades, criando um exército de mão de obra disponível e desesperada. Terceiro, o carvão mineral abundante das minas inglesas, somado a invenções acumuladas (tear de Kay 1733, fiandeira de Hargreaves 1764, motor de Watt 1769), permitiu substituir músculo humano por força mecânica em escala.</p><p>Sem qualquer dessas três condições, a revolução teria atrasado décadas. Não foi gênio britânico — foi colisão histórica de capital + trabalhadores expropriados + energia barata.</p></div>
+        <div><div class="callout"><span class="label">DADO CRÍTICO</span><p>Em 1750, Inglaterra produzia 5 mil toneladas de carvão/ano. Em 1850, 50 milhões. Multiplicação por 10.000 em um século.</p></div><div class="callout danger"><span class="label">PONTO CEGO</span><p>A riqueza inglesa foi construída sobre 3,1 milhões de africanos escravizados transportados em navios britânicos entre 1640-1807.</p></div></div>
+      </div>
+      <aside class="notes">Aprofunde: relação entre escravidão atlântica e industrialização é consenso (Eric Williams 1944, Beckert, Baptist). Conecte com debate atual de reparação histórica.</aside>
+    </section>
+    
+
+    <section data-background-color="#0B0C10" >
+      <p class="tech-font">CAPÍTULO 02</p>
+      <h2 class="glow-cyan">A Máquina Devora o Tempo</h2>
+      <div class="cols cols-2" style="margin-top: 18px;">
+        <div><p>Antes da fábrica, o tempo era circular e natural. O camponês trabalhava do nascer ao pôr do sol, mais intenso na colheita, mais lento no inverno. A vida tinha pausas — festas religiosas, feiras, descansos sazonais. O sino da igreja marcava as horas, e ninguém contava minutos.</p><p>A máquina a vapor inverteu tudo. Ela não cansa, não dorme, não respeita estação do ano. Para ser lucrativa, precisa rodar 24 horas. E quem opera a máquina precisa se sincronizar com ela. Surge o turno fixo de 14, 16 horas. O relógio mecânico vira ditador. Atrasar 5 minutos vira motivo para multa equivalente a meio dia de salário. O tempo deixa de ser experimentado e passa a ser medido, vendido, descontado.</p><p>O historiador E. P. Thompson chamou isso de &#x27;disciplina do relógio&#x27;. É o nascimento de algo que parece óbvio hoje, mas que era inédito: a ideia de que o tempo do trabalhador pertence ao patrão durante o expediente. Você ainda vive sob essa lógica quando seu chefe ou aplicativo conta seus minutos.</p></div>
+        <div><div class="callout"><span class="label">CITAÇÃO</span><p>O tempo agora é moeda — não passa, gasta-se. — E. P. Thompson, 1967</p></div><div class="callout"><span class="label">CONEXÃO HOJE</span><p>Apps de entrega rastreiam motoboys em tempo real. O tempo livre entre corridas é tempo improdutivo. Mesma lógica fabril, 250 anos depois.</p></div></div>
+      </div>
+      <aside class="notes">Texto-chave: &#x27;Tempo, disciplina e capitalismo industrial&#x27; (Thompson, 1967). Mostre cena de Tempos Modernos de Chaplin se houver projeção.</aside>
+    </section>
+    
+
+    <section data-background-color="#0B0C10">
+      <h2 class="glow-cyan">Quando o Carvão Comeu o Planeta</h2>
+      <div class="cols cols-2">
+        <div><p>O CO₂ atmosférico ficou estável em ~280 ppm por 10.000 anos. A partir de 1850, dispara. A linha à direita não é natural — é o gráfico da máquina a vapor virando crise climática.</p></div>
+        <div style="background:#111418; padding:16px; border-radius:6px;">
+          <canvas id="grafCO2" width="400" height="300"></canvas>
+        </div>
+      </div>
+      <script>
+        (function() {
+          const init = () => {
+            const el = document.getElementById('grafCO2');
+            if (!el || el.dataset.rendered) return;
+            el.dataset.rendered = '1';
+            new Chart(el.getContext('2d'), {
+            type: 'line',
+            data: { labels: ['1750','1800','1850','1900','1950','2000','2024'],
+              datasets: [{ label: 'CO₂ atmosférico (ppm)', data: [277,283,285,296,311,369,425],
+                borderColor: '#E50914', backgroundColor: 'rgba(229,9,20,0.2)', tension: 0.3 }] },
+            options: { responsive: true, plugins: { legend: { labels: { color: '#fff' } } },
+              scales: { x: { ticks: { color: '#B0B0B0' } }, y: { ticks: { color: '#B0B0B0' } } } }
+          });
+          };
+          if (window.Reveal) Reveal.on('slidechanged', init);
+          document.addEventListener('DOMContentLoaded', init);
+        })();
+      </script>
+      <aside class="notes">Fonte: NOAA Mauna Loa + Ice Core. Conecte: se o problema começou em 1850, por que só agora discutimos?</aside>
+    </section>
+    
+
+    <section data-background-color="#0B0C10" data-transition="fade">
+      <p class="tech-font">[ INTERAÇÃO REQUERIDA ]</p>
+      <h2 class="netflix-red glow-red">Atividade Prática</h2>
+      <hr style="border-color: #E50914; max-width: 80px; margin-left: 0;">
+      
+        <div class="callout">
+          <span class="label">ATIVIDADE 01 · REFLEXAO · 8 MIN</span>
+          <p>Liste 3 objetos que você usou nas últimas 24h. Para cada: matéria-prima, origem, energia usada, condições de trabalho. Compartilhe com a dupla.</p>
+        </div>
+        
+        <div class="callout">
+          <span class="label">ATIVIDADE 02 · DEBATE · 12 MIN</span>
+          <p>&#x27;Trabalhador de aplicativo é o operário de fábrica do séc XXI.&#x27; Defenda ou refute em 1 parágrafo com argumento histórico desta aula.</p>
+        </div>
+        
+        <div class="callout">
+          <span class="label">ATIVIDADE 03 · PESQUISA · 0 MIN</span>
+          <p>Pesquise uma marca de roupa que você usa: onde é fabricada, condições, salário médio. Traga para próxima aula.</p>
+        </div>
+        
+      <aside class="notes">Respostas modelo / orientações:
+
+Atividade 1: Estimular reflexão sobre cadeia produtiva global.
+
+Atividade 2: PRÓ: jornadas longas, controle algorítmico, sem regulação. CONTRA: mobilidade, sem concentração espacial. Estimular nuance.
+
+Atividade 3: Conecta com filme The True Cost.</aside>
+    </section>
+    
+
+    <section data-background-color="#0B0C10">
+      <p class="tech-font">[ EXTRAS RECOMENDADOS ]</p>
+      <h2 class="glow-cyan">Continue a Imersão</h2>
+      <div class="cols cols-2">
+        <div class="midia-card">
+          <div class="qr-wrap" data-url="https://www.youtube.com/watch?v=qVnQqkZ8Z9I" style="float:right; margin-left:12px;"></div>
+          <span class="tipo">🎬 FILME</span>
+          <div class="titulo">Tempos Modernos (1936)</div>
+          <div class="meta">📍 YouTube — 87 min — Chaplin</div>
+          <p style="font-size:0.55em; margin-top:6px; color:#B0B0B0;">Crítica visual da fábrica fordista. Primeiros 20 min essenciais.</p>
+        </div>
+        
+        <div class="midia-card">
+          <div class="qr-wrap" data-url="https://truecostmovie.com" style="float:right; margin-left:12px;"></div>
+          <span class="tipo">📽️ DOCUMENTARIO</span>
+          <div class="titulo">The True Cost (2015)</div>
+          <div class="meta">📍 Netflix — 92 min</div>
+          <p style="font-size:0.55em; margin-top:6px; color:#B0B0B0;">Indústria têxtil hoje — herança direta da Revolução Industrial.</p>
+        </div>
+        
+        <div class="midia-card">
+          
+          <span class="tipo">📖 LIVRO</span>
+          <div class="titulo">A Formação da Classe Operária Inglesa</div>
+          <div class="meta">📍 E. P. Thompson · 1963 · Paz e Terra</div>
+          <p style="font-size:0.55em; margin-top:6px; color:#B0B0B0;">Clássico fundador. Cap. 6 sobre tempo e disciplina é mais acessível.</p>
+        </div>
+        
+        <div class="midia-card">
+          <div class="qr-wrap" data-url="https://open.spotify.com/show/2elPyN3VeWmrAhMOQpkUkn" style="float:right; margin-left:12px;"></div>
+          <span class="tipo">🎙️ PODCAST</span>
+          <div class="titulo">História FM · ep. 42 — Revolução Industrial</div>
+          <div class="meta">📍 Spotify · 58 min</div>
+          <p style="font-size:0.55em; margin-top:6px; color:#B0B0B0;">Linguagem acessível, hosts brasileiros.</p>
+        </div>
+        
+        <div class="midia-card">
+          <div class="qr-wrap" data-url="https://ourworldindata.org/co2" style="float:right; margin-left:12px;"></div>
+          <span class="tipo">🌐 SITE</span>
+          <div class="titulo">Our World in Data — CO₂</div>
+          <div class="meta">📍 ourworldindata.org/co2</div>
+          <p style="font-size:0.55em; margin-top:6px; color:#B0B0B0;">Gráficos interativos da emissão histórica.</p>
+        </div>
+        
+        <div class="midia-card">
+          <div class="qr-wrap" data-url="https://www.youtube.com/watch?v=zjmZ8jZHnzc" style="float:right; margin-left:12px;"></div>
+          <span class="tipo">🎵 MUSICA</span>
+          <div class="titulo">Construção — Chico Buarque (1971)</div>
+          <div class="meta">📍 Spotify/YouTube · 6 min</div>
+          <p style="font-size:0.55em; margin-top:6px; color:#B0B0B0;">Operário brasileiro como herdeiro da revolução. Leia a letra inteira.</p>
+        </div>
+        </div>
+      <aside class="notes">Mídia recomendada para aprofundamento fora da sala. QR codes permitem acesso direto via celular do aluno.</aside>
+    </section>
+    
+
+    <section data-background-color="#0B0C10">
+      <p class="tech-font">[ DICIONÁRIO TÉCNICO ]</p>
+      <h2 class="glow-cyan">Glossário</h2>
+      <div class="cols cols-2"><div class="termo"><span class="palavra">enclosures</span><p class="def">Cercamentos das terras comunais inglesas (séc. XV-XVIII) que privatizaram pastos coletivos e expulsaram camponeses.</p></div><div class="termo"><span class="palavra">mais-valia</span><p class="def">Diferença entre valor produzido pelo trabalhador e salário recebido — apropriada pelo dono dos meios de produção.</p></div><div class="termo"><span class="palavra">ludismo</span><p class="def">Movimento operário (1811-1816) que quebrava máquinas como protesto contra desemprego e baixos salários.</p></div><div class="termo"><span class="palavra">cartismo</span><p class="def">Primeiro movimento operário organizado (1838-1857), exigia voto universal masculino e direitos trabalhistas.</p></div><div class="termo"><span class="palavra">proletariado</span><p class="def">Classe que vive da venda da força de trabalho por não possuir meios de produção.</p></div><div class="termo"><span class="palavra">burguesia industrial</span><p class="def">Classe proprietária das fábricas e máquinas, surgida da burguesia mercantil enriquecida no séc. XVIII.</p></div><div class="termo"><span class="palavra">fordismo</span><p class="def">Modelo de produção em linha de montagem (Henry Ford, 1913), aprofundamento da lógica industrial original.</p></div><div class="termo"><span class="palavra">uberização</span><p class="def">Modelo contemporâneo de trabalho sob demanda mediado por aplicativo, sem vínculo formal.</p></div></div>
+      <aside class="notes">Revise cada termo antes da prova. Peça que os alunos criem frases usando cada um deles.</aside>
+    </section>
+    
+
+    <section data-background-color="#000000">
+      <p class="tech-font">[ TESTE DE COMPREENSÃO ]</p>
+      <h2 class="netflix-red glow-red">Quiz Final</h2>
+      <div style="max-height: 65vh; overflow-y: auto;">
+        <div class="quiz-q">
+          <div class="pergunta">1. O fator que NÃO foi determinante para a Inglaterra liderar a Revolução Industrial:</div>
+          <button class="quiz-opt" data-idx="0" onclick="responder(this, '2')">A) Capital acumulado no comércio atlântico e tráfico</button><button class="quiz-opt" data-idx="1" onclick="responder(this, '2')">B) Mão de obra criada pelos cercamentos</button><button class="quiz-opt" data-idx="2" onclick="responder(this, '2')">C) Apoio militar do Império Otomano</button><button class="quiz-opt" data-idx="3" onclick="responder(this, '2')">D) Carvão mineral abundante nas minas</button>
+          <div class="quiz-feedback ok">✓ Correto. Otomanos não tiveram envolvimento. As 3 condições reais foram capital, mão de obra expropriada e energia barata.</div>
+          <div class="quiz-feedback no">✗ Reveja o conceito. Otomanos não tiveram envolvimento. As 3 condições reais foram capital, mão de obra expropriada e energia barata.</div>
+        </div>
+        
+        <div class="quiz-q">
+          <div class="pergunta">2. E. P. Thompson chamou de &#x27;disciplina do relógio&#x27; o fenômeno em que:</div>
+          <button class="quiz-opt" data-idx="0" onclick="responder(this, '1')">A) Trabalhadores ficaram pontuais por escolha</button><button class="quiz-opt" data-idx="1" onclick="responder(this, '1')">B) Tempo do trabalhador passou a pertencer ao patrão durante a jornada</button><button class="quiz-opt" data-idx="2" onclick="responder(this, '1')">C) Inventou-se o relógio mecânico moderno</button><button class="quiz-opt" data-idx="3" onclick="responder(this, '1')">D) A jornada diminuiu naturalmente</button>
+          <div class="quiz-feedback ok">✓ Correto. A novidade histórica foi o tempo ser vendido — não a invenção do relógio.</div>
+          <div class="quiz-feedback no">✗ Reveja o conceito. A novidade histórica foi o tempo ser vendido — não a invenção do relógio.</div>
+        </div>
+        
+        <div class="quiz-q">
+          <div class="pergunta">3. A conexão entre Revolução Industrial e crise climática atual é:</div>
+          <button class="quiz-opt" data-idx="0" onclick="responder(this, '1')">A) Não há conexão direta</button><button class="quiz-opt" data-idx="1" onclick="responder(this, '1')">B) A queima sistemática de carvão a partir de 1850 iniciou o acúmulo de CO₂ atmosférico</button><button class="quiz-opt" data-idx="2" onclick="responder(this, '1')">C) A crise climática começou apenas em 1990</button><button class="quiz-opt" data-idx="3" onclick="responder(this, '1')">D) Carvão não emite gases de efeito estufa</button>
+          <div class="quiz-feedback ok">✓ Correto. Ice core records mostram CO₂ estável em ~280 ppm por 10.000 anos, dispara em 1850.</div>
+          <div class="quiz-feedback no">✗ Reveja o conceito. Ice core records mostram CO₂ estável em ~280 ppm por 10.000 anos, dispara em 1850.</div>
+        </div>
+        </div>
+      <aside class="notes">Quiz auto-corretivo. Use como avaliação formativa. Pode ser refeito quantas vezes o aluno quiser.</aside>
+    </section>
+    
+
+    <section data-background-color="#0B0C10">
+      <p class="tech-font">[ FONTES / ABNT ]</p>
+      <h2 class="glow-cyan">Referências</h2>
+      <ol><li style='font-size:0.55em; line-height:1.5; margin-bottom:8px;'>HOBSBAWM, E. A Era das Revoluções: 1789-1848. Rio de Janeiro: Paz e Terra, 1977.</li><li style='font-size:0.55em; line-height:1.5; margin-bottom:8px;'>THOMPSON, E. P. A Formação da Classe Operária Inglesa. 3 vols. Rio de Janeiro: Paz e Terra, 1987.</li><li style='font-size:0.55em; line-height:1.5; margin-bottom:8px;'>THOMPSON, E. P. &#x27;Tempo, disciplina de trabalho e capitalismo industrial&#x27;. In: Costumes em Comum. SP: Companhia das Letras, 1998.</li><li style='font-size:0.55em; line-height:1.5; margin-bottom:8px;'>BECKERT, S. O Império do Algodão: uma história global do capitalismo. SP: Companhia das Letras, 2017.</li><li style='font-size:0.55em; line-height:1.5; margin-bottom:8px;'>WILLIAMS, E. Capitalismo e Escravidão. SP: Companhia das Letras, 2012 [1944].</li><li style='font-size:0.55em; line-height:1.5; margin-bottom:8px;'>NOAA. Global Monitoring Laboratory — Mauna Loa CO₂ data. 2024.</li></ol>
+      <aside class="notes">Bibliografia obrigatória para aprofundamento. Encoraje os alunos a consultar pelo menos 1 fonte primária.</aside>
+    </section>
+    
+
+    <section data-background-color="#000000" data-transition="fade">
+      <p class="tech-font">[ FIM DA TRANSMISSÃO ]</p>
+      <h1 class="glow-red netflix-red">A Máquina que Mudou Tudo</h1>
+      <p style="font-size: 1.1em; font-style: italic; margin-top: 24px; color:#FFFFFF;">"O passado não morreu — nem é passado. (William Faulkner)"</p>
+      <p class="tech-font" style="margin-top: 60px;">Prof. Exemplo · História · 2º ano EM</p>
+      <aside class="notes">Slide de encerramento. Deixe a frase de impacto ressoar — silêncio de 5 segundos antes de encerrar a aula.</aside>
+    </section>
+    
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.0.4/reveal.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.0.4/plugin/notes/notes.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.0.4/plugin/highlight/highlight.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.0.4/plugin/zoom/zoom.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.0.4/plugin/search/search.min.js"></script>
+
+  <script>
+    Reveal.initialize({
+      hash: true,
+      controls: true,
+      progress: true,
+      slideNumber: 'c/t',
+      history: true,
+      center: true,
+      transition: 'fade',
+      transitionSpeed: 'fast',
+      backgroundTransition: 'fade',
+      autoAnimateDuration: 0.8,
+      autoAnimateEasing: 'ease-in-out',
+      pdfSeparateFragments: false,
+      plugins: [ RevealNotes, RevealHighlight, RevealZoom, RevealSearch ]
+    });
+
+    // Renderiza QR codes após carregar
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('.qr-wrap[data-url]').forEach(el => {
+        new QRCode(el, { text: el.dataset.url, width: 110, height: 110, colorDark: '#000', colorLight: '#fff' });
+      });
+    });
+
+    // Quiz handler
+    window.responder = function(btn, correta) {
+      const card = btn.closest('.quiz-q');
+      const opts = card.querySelectorAll('.quiz-opt');
+      opts.forEach(o => o.disabled = true);
+      if (btn.dataset.idx === correta) {
+        btn.classList.add('correct');
+        card.querySelector('.quiz-feedback.ok')?.classList.add('show');
+      } else {
+        btn.classList.add('wrong');
+        opts.forEach(o => { if (o.dataset.idx === correta) o.classList.add('correct'); });
+        card.querySelector('.quiz-feedback.no')?.classList.add('show');
+      }
+    };
+  </script>
+</body>
+</html>

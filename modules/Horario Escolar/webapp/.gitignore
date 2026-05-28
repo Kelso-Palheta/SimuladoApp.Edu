@@ -1,0 +1,31 @@
+# Sistema
+.DS_Store
+Thumbs.db
+*.log
+
+# Editores
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Python (caso scripts auxiliares)
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Backups gerados
+*.bak
+*.tmp
+horario_*.pdf
+horario_*.xlsx
+schedula_backup_*.json
+
+# Dados sensíveis locais
+data_local.json
+.env
+.env.*
+js/maritaca-config.local.js
+js/*.local.js
+.vercel

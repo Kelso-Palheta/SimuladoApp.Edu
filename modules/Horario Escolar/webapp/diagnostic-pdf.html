@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Diagnóstico PDF — Estrutura Tabular</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <style>
+    body { font-family: 'Monaco', monospace; }
+    .highlight-class { background-color: rgba(34, 197, 94, 0.3); }
+    .highlight-day { background-color: rgba(59, 130, 246, 0.3); }
+    .highlight-time { background-color: rgba(251, 146, 60, 0.3); }
+    .grid-item { border: 1px solid #333; padding: 4px 8px; margin: 2px; background: #1a1a1a; }
+    .y-group { border-left: 3px solid #666; padding: 8px; margin: 4px 0; background: #222; }
+    .statistics { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+    .stat-card { background: #2a2a2a; padding: 12px; border-radius: 6px; border-left: 4px solid #3b82f6; }
+  </style>
+</head>
+<body class="bg-gray-950 text-gray-100">
+
+<div class="max-w-7xl mx-auto p-8">
+  <h1 class="text-3xl font-bold mb-2">🔬 Diagnóstico PDF — Estrutura Tabular</h1>
+  <p class="text-gray-400 mb-6">Ferramenta para entender como o PDF é estruturado e por que o parser pode estar falhando</p>
+
+  <div class="mb-6">
+    <input type="file" id="pdf-input" accept=".pdf" class="block w-full p-3 border border-gray-700 rounded bg-gray-900 cursor-pointer mb-4" />
+    <button onclick="analyzePDF()" class="bg-blue-600 hover:bg-blue-700 px-6 py-2 rounded font-bold">
+      Analisar PDF
+    </button>
+  </div>
+
+  <div id="results" class="hidden space-y-8">
+    <!-- Statistics -->
+    <section class="bg-gray-900 p-6 rounded-lg">
+      <h2 class="text-xl font-bold mb-4">📊 Estatísticas Gerais</h2>
+      <div class="statistics">
+        <div class="stat-card">
+          <div class="text-2xl font-bold text-blue-400" id="stat-items">0</div>
+          <div class="text-xs text-gray-400">Total de items extraídos</div>
+        </div>
+        <div class="stat-card">
+          <div class="text-2xl font-bold text-green-400" id="stat-ygroups">0</div>
+          <div class="text-xs text-gray-400">Grupos Y (linhas)</div>
+        </div>
+        <div class="stat-card">
+          <div class="text-2xl font-bold text-orange-400" id="stat-pages">0</div>
+          <div class="text-xs text-gray-400">Páginas processadas</div>
+        </div>
+        <div class="stat-card">
+          <div class="text-2xl font-bold text-purple-400" id="stat-classes">0</div>
+          <div class="text-xs text-gray-400">Possíveis classes encontradas</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Y-Groups Analysis -->
+    <section class="bg-gray-900 p-6 rounded-lg">
+      <h2 class="text-xl font-bold mb-4">📐 Análise de Agrupamento Y</h2>
+      <div class="text-xs text-gray-400 mb-4">Mostra como os items foram agrupados por posição vertical (Y)</div>
+      <div id="ygroups-list" class="space-y-3 max-h-96 overflow-y-auto"></div>
+    </section>
+
+    <!-- Potential Class Headers -->
+    <section class="bg-gray-900 p-6 rounded-lg">
+      <h2 class="text-xl font-bold mb-4">🎓 Possíveis Linhas de Cabeçalho (Classes)</h2>
+      <div class="text-xs text-gray-400 mb-4">Linhas que parecem conter códigos de classe</div>
+      <div id="class-headers" class="space-y-2"></div>
+      <p id="no-classes" class="text-gray-500 italic">Nenhuma linha com múltiplas classes foi encontrada</p>
+    </section>
+
+    <!-- Pattern Analysis -->
+    <section class="bg-gray-900 p-6 rounded-lg">
+      <h2 class="text-xl font-bold mb-4">🔍 Análise de Padrões</h2>
+      <div class="text-xs text-gray-400 mb-4">Detecta padrões que o parser procura</div>
+      <div class="space-y-3">
+        <div>
+          <div class="font-bold text-sm">Padrão de Classe (Strict)</div>
+          <div class="text-xs text-gray-400 bg-gray-800 p-2 rounded font-mono">/(\d[º°]\s*(?:ANO|ano)\s*[-–]\s*\d{3})/i</div>
+          <div id="classes-strict" class="mt-2 text-xs"></div>
+        </div>
+        <div>
+          <div class="font-bold text-sm">Padrão de Dia</div>
+          <div class="text-xs text-gray-400">segunda, terça, quarta, quinta, sexta, sábado, domingo</div>
+          <div id="days-found" class="mt-2 text-xs"></div>
+        </div>
+        <div>
+          <div class="font-bold text-sm">Padrão de Horário</div>
+          <div class="text-xs text-gray-400">AULA 1-10, INTERVALO, ALMOÇO</div>
+          <div id="times-found" class="mt-2 text-xs"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Full Items Table -->
+    <section class="bg-gray-900 p-6 rounded-lg">
+      <h2 class="text-xl font-bold mb-4">📋 Todos os Items Extraídos (Primeiros 100)</h2>
+      <div class="text-xs text-gray-400 mb-4">Mostra os coordenadas e texto de cada item</div>
+      <div class="overflow-x-auto">
+        <table class="w-full text-xs font-mono">
+          <thead class="border-b border-gray-700">
+            <tr>
+              <th class="text-left py-2 px-2">Y</th>
+              <th class="text-left py-2 px-2">X</th>
+              <th class="text-left py-2 px-2">Pág</th>
+              <th class="text-left py-2 px-2">Texto</th>
+              <th class="text-left py-2 px-2">Tipo</th>
+            </tr>
+          </thead>
+          <tbody id="items-table"></tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+
+  <div id="error" class="hidden bg-red-900/20 border border-red-700 p-4 rounded text-red-400"></div>
+</div>
+
+<script>
+pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+async function analyzePDF() {
+  const file = document.getElementById('pdf-input').files[0];
+  if (!file) {
+    showError('Selecione um PDF');
+    return;
+  }
+
+  try {
+    document.getElementById('error').classList.add('hidden');
+    const arrayBuffer = await file.arrayBuffer();
+    const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+
+    // Extract all items
+    const allItems = [];
+    for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+      const page = await pdf.getPage(pageNum);
+      const textContent = await page.getTextContent();
+
+      for (const item of textContent.items) {
+        if (item.str && item.str.trim()) {
+          allItems.push({
+            text: item.str.trim(),
+            x: Math.round(item.transform[4]),
+            y: Math.round(item.transform[5]),
+            page: pageNum
+          });
+        }
+      }
+    }
+
+    // Analyze
+    analyzeStructure(allItems, pdf.numPages);
+  } catch (error) {
+    showError(error.message);
+  }
+}
+
+function analyzeStructure(items, numPages) {
+  // Show results
+  document.getElementById('results').classList.remove('hidden');
+
+  // Basic stats
+  document.getElementById('stat-items').textContent = items.length;
+  document.getElementById('stat-pages').textContent = numPages;
+
+  // Group by Y
+  const yGroups = new Map();
+  const tolerance = 3;
+
+  for (const item of items) {
+    let found = false;
+    for (const [y] of yGroups) {
+      if (Math.abs(y - item.y) < tolerance) {
+        yGroups.get(y).push(item);
+        found = true;
+        break;
+      }
+    }
+    if (!found) {
+      yGroups.set(item.y, [item]);
+    }
+  }
+
+  const sortedYs = Array.from(yGroups.entries()).sort((a, b) => b[0] - a[0]);
+  document.getElementById('stat-ygroups').textContent = sortedYs.length;
+
+  // Display Y-groups
+  const ygroupsList = document.getElementById('ygroups-list');
+  ygroupsList.innerHTML = '';
+  sortedYs.slice(0, 20).forEach(([y, grp]) => {
+    const preview = grp.map(i => i.text).join(' | ').substring(0, 100);
+    const div = document.createElement('div');
+    div.className = 'y-group';
+    div.innerHTML = `
+      <div class="font-bold text-sm">Y=${y} <span class="text-gray-500">(${grp.length} items)</span></div>
+      <div class="text-gray-300">${preview}${preview.length > 100 ? '...' : ''}</div>
+    `;
+    ygroupsList.appendChild(div);
+  });
+
+  // Find patterns
+  const classPattern = /(\d[º°]\s*(?:ANO|ano)\s*[-–]\s*\d{3})/i;
+  const allClasses = new Map();
+  let classCount = 0;
+
+  sortedYs.forEach(([y, grp]) => {
+    const itemsInLine = grp.map(i => i.text);
+    const matches = itemsInLine.filter(t => classPattern.test(t));
+    if (matches.length >= 2) {
+      allClasses.set(y, { items: itemsInLine, matches });
+      classCount += matches.length;
+    }
+  });
+
+  document.getElementById('stat-classes').textContent = classCount;
+
+  // Display class headers
+  const classHeadersDiv = document.getElementById('class-headers');
+  const noClassesDiv = document.getElementById('no-classes');
+
+  if (allClasses.size > 0) {
+    noClassesDiv.classList.add('hidden');
+    classHeadersDiv.innerHTML = '';
+
+    Array.from(allClasses.entries()).forEach(([y, data]) => {
+      const div = document.createElement('div');
+      div.className = 'bg-gray-800 p-3 rounded';
+      div.innerHTML = `
+        <div class="font-bold text-green-400">Y=${y}</div>
+        <div class="text-xs mt-2">Todas as classes encontradas (strict):</div>
+        <div class="text-sm text-gray-300 mt-1">${data.matches.join(', ')}</div>
+        <div class="text-xs text-gray-500 mt-2">Linha completa:</div>
+        <div class="text-xs text-gray-400 font-mono">${data.items.join(' | ')}</div>
+      `;
+      classHeadersDiv.appendChild(div);
+    });
+  } else {
+    noClassesDiv.classList.remove('hidden');
+    classHeadersDiv.innerHTML = '';
+  }
+
+  // Detect patterns
+  const daysOfWeek = ['segunda', 'terça', 'quarta', 'quinta', 'sexta', 'sábado', 'domingo'];
+  const timeSlots = ['AULA 1', 'AULA 2', 'AULA 3', 'INTERVALO', 'AULA 4', 'AULA 5', 'AULA 6', 'ALMOÇO', 'AULA 7', 'AULA 8', 'AULA 9', 'AULA 10'];
+
+  const daysFound = new Set();
+  const timesFound = new Set();
+
+  items.forEach(item => {
+    const lower = item.text.toLowerCase();
+    daysOfWeek.forEach(day => {
+      if (lower.includes(day)) daysFound.add(day);
+    });
+    timeSlots.forEach(time => {
+      if (item.text.toUpperCase().includes(time)) timesFound.add(time);
+    });
+  });
+
+  const classesStrict = items.filter(i => classPattern.test(i.text));
+
+  document.getElementById('classes-strict').innerHTML = classesStrict.length > 0
+    ? `<span class="text-green-400">✅ Encontradas ${classesStrict.length}: ${classesStrict.map(i => i.text).join(', ')}</span>`
+    : '<span class="text-red-400">❌ Nenhuma classe encontrada com o padrão strict</span>';
+
+  document.getElementById('days-found').innerHTML = daysFound.size > 0
+    ? `<span class="text-green-400">✅ Encontrados: ${Array.from(daysFound).join(', ')}</span>`
+    : '<span class="text-gray-500">Nenhum dia encontrado</span>';
+
+  document.getElementById('times-found').innerHTML = timesFound.size > 0
+    ? `<span class="text-green-400">✅ Encontrados: ${Array.from(timesFound).join(', ')}</span>`
+    : '<span class="text-gray-500">Nenhum horário encontrado</span>';
+
+  // Display all items (first 100)
+  const itemsTable = document.getElementById('items-table');
+  itemsTable.innerHTML = '';
+
+  items.slice(0, 100).forEach(item => {
+    const tr = document.createElement('tr');
+    tr.className = 'border-b border-gray-800 hover:bg-gray-800/50';
+
+    let type = '-';
+    if (classPattern.test(item.text)) type = '🎓 Class';
+    else if (daysOfWeek.some(d => item.text.toLowerCase().includes(d))) type = '📅 Day';
+    else if (timeSlots.some(t => item.text.toUpperCase().includes(t))) type = '⏰ Time';
+
+    tr.innerHTML = `
+      <td class="py-1 px-2 text-right">${item.y}</td>
+      <td class="py-1 px-2 text-right">${item.x}</td>
+      <td class="py-1 px-2 text-right">${item.page}</td>
+      <td class="py-1 px-2 text-gray-300">${item.text}</td>
+      <td class="py-1 px-2">${type}</td>
+    `;
+    itemsTable.appendChild(tr);
+  });
+}
+
+function showError(msg) {
+  const errorDiv = document.getElementById('error');
+  errorDiv.textContent = `❌ ${msg}`;
+  errorDiv.classList.remove('hidden');
+}
+</script>
+
+</body>
+</html>
