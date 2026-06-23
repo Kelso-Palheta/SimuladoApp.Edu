@@ -37,25 +37,39 @@ export default function DiarioPage() {
   const { user, perfil, loading } = useAuth();
   const router = useRouter();
 
-  // Carrega direto do localStorage (sem esperar Firestore)
-  const [initialTurmas] = useState(() => {
+  // Carrega do localStorage imediatamente, sync do Firestore em background
+  const [initialTurmas, setInitialTurmas] = useState(() => {
     const local = typeof window !== 'undefined' ? carregarLocal() : null;
     return local?.length > 0 ? local : turmasIniciais;
   });
 
-  // Sincroniza do Firestore em background (não bloqueia a UI)
+  // Sincroniza do Firestore: se tiver dados lá e localStorage estiver vazio/antigo, atualiza
   useEffect(() => {
     if (!user) return;
     (async () => {
       try {
         const ref = doc(db, 'professores', user.uid, 'turmas', 'data');
         const snap = await getDoc(ref);
-        if (!snap.exists() || !snap.data().turmas?.length) {
-          // Tenta migrar do caminho antigo
+        if (snap.exists() && snap.data().turmas?.length > 0) {
+          const cloud = snap.data().turmas;
+          const local = carregarLocal();
+          // Só atualiza se localStorage estiver vazio ou diferente
+          if (!local || local.length === 0 || JSON.stringify(local) !== JSON.stringify(cloud)) {
+            setInitialTurmas(cloud);
+            salvarLocal(cloud);
+          }
+        } else {
+          // Tenta migrar do caminho antigo (users/{uid}/turmas/data)
           const oldRef = doc(db, 'users', user.uid, 'turmas', 'data');
           const oldSnap = await getDoc(oldRef);
           if (oldSnap.exists() && oldSnap.data().turmas?.length > 0) {
-            await setDoc(ref, { turmas: oldSnap.data().turmas, updatedAt: serverTimestamp() }, { merge: true });
+            const oldData = oldSnap.data().turmas;
+            await setDoc(ref, { turmas: oldData, updatedAt: serverTimestamp() }, { merge: true });
+            const local = carregarLocal();
+            if (!local || local.length === 0) {
+              setInitialTurmas(oldData);
+              salvarLocal(oldData);
+            }
           }
         }
       } catch (e) { /* silencioso */ }

@@ -74,7 +74,6 @@ export function AuthProvider({ children }) {
 
   const logout = () => {
     if (typeof window !== "undefined") {
-      localStorage.removeItem("diario_turmas");
       localStorage.removeItem("diario_bimestre");
       localStorage.removeItem("atividades_bimestre");
     }
