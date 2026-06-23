@@ -46,7 +46,16 @@ export default function AlunoLoginPage() {
             professorUid: v.professorUid
           }));
         }
-        router.push('/aluno/notas');
+        if (v.modulo === 'redacao') {
+          if (typeof window !== 'undefined') {
+            sessionStorage.setItem('redacao_aluno', JSON.stringify({
+              professorUid: v.professorUid
+            }));
+          }
+          router.push(`/redacao/aluno/${v.alunoId || dados.loginKey}`);
+        } else {
+          router.push('/aluno/notas');
+        }
       } else {
         // Se tiver múltiplos vínculos, exibe a lista para seleção
         setAlunoBase({ login: valor, nome: dados.nome, loginKey: dados.loginKey });
@@ -71,7 +80,16 @@ export default function AlunoLoginPage() {
         professorUid: v.professorUid
       }));
     }
-    router.push('/aluno/notas');
+    if (v.modulo === 'redacao') {
+      if (typeof window !== 'undefined') {
+        sessionStorage.setItem('redacao_aluno', JSON.stringify({
+          professorUid: v.professorUid
+        }));
+      }
+      router.push(`/redacao/aluno/${v.alunoId || alunoBase.loginKey}`);
+    } else {
+      router.push('/aluno/notas');
+    }
   };
 
   return (
@@ -108,7 +126,7 @@ export default function AlunoLoginPage() {
                   <div className="min-w-0 pr-2">
                     <p className="font-bold text-slate-800 text-sm truncate">{v.nomeProfessor}</p>
                     <p className="text-xs text-slate-400 mt-0.5 font-medium">
-                      Turma: {v.turmaId} • {v.modulo === 'redacao' ? 'Redação' : 'Diário Pedagógico'}
+                      Turma: {v.turmaNome || v.turmaId} • {v.modulo === 'redacao' ? 'Redação' : 'Diário Pedagógico'}
                     </p>
                   </div>
                   <span className="text-violet-500 font-bold text-sm transform transition-transform group-hover:translate-x-1">→</span>

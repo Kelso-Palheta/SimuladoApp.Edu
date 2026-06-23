@@ -157,7 +157,8 @@ export default function DesempenhoPage() {
               // Cria ou atualiza o vínculo de login do aluno
               await setDoc(doc(db, 'alunoLogin', targetKey, 'vinculos', user.uid), {
                 professorUid: user.uid,
-                turmaId: turmaDoAluno.nome || 'N/A',
+                turmaId: turmaDoAluno.id || 'N/A',
+                turmaNome: turmaDoAluno.nome || 'N/A',
                 modulo: 'redacao',
                 nomeProfessor: perfil?.nome || user?.displayName || 'Professor'
               }, { merge: true });

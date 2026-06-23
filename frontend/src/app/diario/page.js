@@ -140,7 +140,8 @@ export default function DiarioPage() {
               const vinculoRef = doc(db, 'alunoLogin', loginKey, 'vinculos', user.uid);
               await setDoc(vinculoRef, {
                 professorUid: user.uid,
-                turmaId: turma.nome,
+                turmaId: turma.id,
+                turmaNome: turma.nome,
                 alunoId: aluno.id,
                 modulo: 'diario',
                 nomeProfessor,
@@ -215,7 +216,8 @@ export default function DiarioPage() {
             const vinculoRef = doc(db, 'alunoLogin', loginKey, 'vinculos', user.uid);
             await setDoc(vinculoRef, {
               professorUid: user.uid,
-              turmaId: turma.nome,
+              turmaId: turma.id,
+              turmaNome: turma.nome,
               alunoId: aluno.id,
               modulo: 'diario',
               nomeProfessor,
