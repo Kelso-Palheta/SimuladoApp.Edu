@@ -1,0 +1,179 @@
+
+UNIVERSIDADE FEDERAL DO PARÁ
+PROGRAMA DE PÓS-GRADUAÇÃO EM ENSINO DE COMPUTAÇÃO
+DISCIPLINA: INTRODUÇÃO AO COMPUTADOR
+DOCENTE: REGIANE KAWASAKI
+DISCENTES: KELLY EMANUELLE DO NASCIMENTO AINETTE, KELSO PALHETA MONTEIRO, LUIZ GABRIEL BEZERRA DA CONCEIÇÃO, MARCOS ANTONIO GOMES DE ANDRADE E NATALIA DE JESUS DA CUNHA MARTINS
+
+
+
+
+
+
+
+REPRESENTAÇÃO DA INFORMAÇÃO NO COMPUTADOR: SOM
+
+
+
+
+
+
+
+
+
+
+
+Belém
+2026
+1. INTRODUÇÃO
+A presença da tecnologia digital na vida de crianças e jovens da Educação Básica é incontestável, eles consomem música por streaming, enviam mensagens de voz e assistem a vídeos diariamente. No entanto, a transição entre o som que emitem ou ouvem no mundo físico e os arquivos binários manipulados pelos dispositivos computacionais permanece, em grande parte, como uma "caixa preta". No contexto da Base Nacional Comum Curricular (BNCC) para a Computação, compreender a representação digital de dados é um pilar fundamental para o desenvolvimento do Pensamento Computacional e da Cultura Digital.
+Este trabalho aborda como o som, um fenômeno essencialmente analógico e contínuo, é transformado em dados discretos como bits e bytes para ser armazenado, processado e transmitido por sistemas computacionais. O objetivo geral é compreender esse processo por meio de uma fundamentação teórica, seguida de duas propostas didáticas direcionadas à Educação Básica: uma abordagem desplugada (focada no movimento, na lógica e na percepção física) e uma abordagem plugada (utilizando ferramentas digitais acessíveis), garantindo uma aprendizagem significativa, lúdica e contextualizada.
+
+2. DESENVOLVIMENTO 
+Compreender a digitalização sonora exige correlacionar os fundamentos físicos do som aos processos computacionais que traduzem esse fenômeno contínuo da natureza em código binário.
+
+2.1. Da Onda Sonora ao Sinal Analógico e Digital
+
+O som é uma onda mecânica tridimensional e longitudinal que se propaga através de um meio material com massa, ou seja, um meio sólido, líquido ou gasoso. Em outros termos, para que haja propagação do som é preciso que ele seja produzido num ambiente como o ar, por meio de variações de pressão, compressão e rarefação. Trata-se de um fenômeno analógico, ou seja, contínuo no tempo e na amplitude, quando essa onda atinge o diafragma de um microfone, ela é convertida em um sinal analógico, uma corrente ou tensão elétrica que varia de forma perfeitamente análoga à pressão do ar.
+O computador opera de forma binária, processa o som através da digitalização, um processo em que ondas sonoras analógicas contínuas são convertidas em dados binários (0s e 1s), e não consegue processar a infinitude de pontos de uma curva contínua, surge então a necessidade do sinal digital, uma representação numérica, discreta, descontínua e finita daquela onda original. Essa conversão contínua ocorre em duas etapas fundamentais: Amostragem (Rate) e Quantização (Bit Depth). 
+A Figura 1 sintetiza esse fluxo de transformação, evidenciando o percurso realizado desde a propagação da onda sonora no ambiente até sua representação em dados binários (0 e 1), forma pela qual a informação sonora pode ser armazenada e manipulada pelos sistemas computacionais. 
+
+2.2. O Processo de Conversão: Amostragem e Quantização
+O entendimento de como os sistemas computacionais processam e armazenam o som exige a compreensão dos componentes de hardware responsáveis por fazer a ponte entre o ambiente físico analógico e o ambiente digital. O bloco fundamental desse processo de conversão é descrito diretamente na literatura de redes e sistemas multimídia:
+
+O áudio digital é uma representação digital de uma onda de áudio que pode ser usada para recriá-lo. As ondas de áudio podem ser convertidas para a forma digital por um conversor analógico-digital, ou ADC (Analog-to-Digital Converter). Um ADC recebe uma tensão elétrica como entrada e gera um número binário como saída (TANENBAUM; FEAMSTER; WETHERALL, 2021, p. 437).
+
+A partir dessa saída binária gerada pelo dispositivo ADC, o computador passa a realizar as operações lógicas e matemáticas cruciais para a fidelidade do som. Esse fluxo de transformação da informação contínua em dados discretos segue a seguinte cadeia de eventos:
+[Onda Sonora] ➔ (Microfone) ➔ [Sinal Analógico] ➔ (Amostragem) ➔ (Quantização) ➔ [Sinal Digital (Bits)]
+O processo de conversão analógico-digital divide-se em duas etapas interdependentes e sucessivas: a amostragem (focada na dimensão do tempo) e a quantização (focada na dimensão da amplitude):
+
+	•	Amostragem (Sampling): A amostragem consiste no processo de capturar "instantâneos" ou fatias isoladas do sinal analógico a intervalos de tempo rigorosamente regulares e predefinidos. Uma analogia mecânica eficiente para a compreensão desse fenômeno consiste em imaginar o funcionamento de uma câmera fotográfica capturando múltiplos quadros estáticos consecutivos para registrar o movimento fluido de um objeto.
+A Figura 2 ilustra a diferença entre um sinal analógico contínuo e sua representação após	 o	 processo	 de	 amostragem. 
+
+	•	Taxa de Amostragem (Sampling Rate): Corresponde ao número de amostras coletadas por unidade de tempo, cuja métrica é expressa em Hertz (Hz). A determinação dessa taxa baseia-se no Teorema de Nyquist-Shannon, o qual postula que, para reconstruir um sinal perfeitamente sem perdas, a taxa de amostragem deve ser equivalente a, pelo menos, o dobro da maior frequência presente no sinal original. Sabendo que o limite superior da audição humana jovem abrange cerca de 20 kHz, o padrão da indústria para o Compact Disc (CD) adotou a taxa de 44,1 kHz (44.100 amostras por segundo), garantindo a integridade do espectro audível e mitigando o efeito de distorção conhecido como aliasing.
+
+	•	Quantização (Quantization): Enquanto a amostragem discretiza o eixo temporal da onda sonora, a quantização atua sobre o eixo da amplitude, mapeando os valores de volume ou intensidade do som. Cada valor contínuo capturado no processo de amostragem precisa ser arredondado e associado ao valor inteiro mais próximo dentro de uma escala digital previamente estabelecida pelo sistema.
+A Figura 3 apresenta como os valores contínuos de amplitude são aproximados para níveis discretos, possibilitando sua representação em código binário.:
+
+	•	Bits por Amostra (Bit Depth ou Resolução): Esta variável define a precisão da escala de quantização, indicando a quantidade de bits alocada para representar numericamente a amplitude de cada amostra isolada. Se um sistema utiliza uma resolução de 8 bits, ele dispõe de 28 =256 níveis discretos de volume possíveis para aproximação. No padrão de áudio de alta fidelidade dos CDs, utilizam-se 16 bits por amostra, gerando uma escala com 216 = 65.536 níveis de amplitude. Essa alta resolução reduz drasticamente o chamado ruído de quantização (o erro gerado pelo arredondamento matemático), conferindo máxima fidelidade ao áudio digital reconstruído em relação ao som original da natureza.
+
+2.3. Canais de Áudio
+A percepção de espaço, direção e profundidade de um som digitalizado depende diretamente da quantidade e da organização dos canais de áudio empregados em sua codificação. Na computação, um canal de áudio representa uma trilha independente de dados sonoros que possui seu próprio fluxo de amostragem e quantização.
+De acordo com o referencial teórico de arquitetura de dados e de sistemas multimídia apresentado por Tanenbaum, Feamster e Wetherall (2021, p. 438), o número de canais impacta diretamente o tamanho do arquivo final e a taxa de transmissão de dados (largura de banda) necessária para a sua reprodução. Os dois sistemas primordiais utilizados no cotidiano tecnológico são:
+
+A) Mono (Monofônico)
+O sistema monofônico utiliza apenas um único canal para registrar e reproduzir a informação sonora, mesmo que o dispositivo de saída possua múltiplos alto-falantes ou que se esteja utilizando fones de ouvido em ambos os lados, o sinal elétrico enviado a todos eles são rigorosamente idênticos.
+Por possuir apenas um fluxo de dados, uma única sequência de bits por amostra, o formato mono é altamente eficiente para o armazenamento e transmissão, exigindo metade do espaço que um arquivo estéreo demandaria. É o padrão ideal para situações onde a localização espacial do som não é prioritária, como em ligações telefônicas, mensagens de voz de aplicativos de comunicação e audiolivros.
+
+B) Estéreo (Estereofônico)
+O sistema estereofônico baseia-se na utilização de dois canais de áudio totalmente independentes, mapeados como Canal Esquerdo (Left) e Canal Direito (Right). Essa configuração foi projetada para emular a audição binaural humana, o fato de termos dois ouvidos captando frentes de onda sonoras em tempos e intensidades ligeiramente diferentes, o que permite ao cérebro calcular a localização exata de uma fonte sonora no espaço.
+A Figura 4 compara essas duas abordagens de canais de áudio e evidencia seus impactos na representação dos dados de áudio.:
+
+Do ponto de vista da representação da informação, um arquivo estéreo armazena o dobro de dados em comparação ao mono. A cada intervalo de tempo determinado pela taxa de amostragem, o processador precisa capturar e codificar dois valores distintos de amplitude, um para cada canal. Consequentemente, mantendo-se a mesma taxa de amostragem e a mesma profundidade de bits, um arquivo de áudio estéreo ocupará o dobro de espaço em disco e exigirá o dobro da taxa de bits (bitrate) para ser transmitido via rede sem interrupções.
+
+2.4. Compressão de Áudio e Formatos
+Após a conversão analógico-digital, os dados binários gerados são estruturados para serem armazenados em arquivos ou transmitidos em fluxo contínuo (streaming) em tempo real. Como o áudio digitalizado em sua forma pura gera um volume massivo de dados, o arquivo final pode se tornar excessivamente grande. Para otimizar o espaço em disco e viabilizar o tráfego rápido pela internet, a ciência da computação desenvolveu diferentes algoritmos e formatos de arquivos, divididos fundamentalmente em duas categorias:
+	•	Formatos não comprimidos: Armazenam a amostra exata e integral do som. Oferecem fidelidade acústica total e máxima qualidade, porém geram arquivos muito pesados.
+	•	Formatos comprimidos: Utilizam algoritmos matemáticos para reduzir o tamanho dos arquivos, dividindo-se entre aqueles que descartam dados imperceptíveis (com perdas) e os que apenas compactam o código (sem perdas).
+Para entender como esses formatos gerenciam o equilíbrio entre espaço e qualidade sonora na prática computacional, analisam-se as características dos três principais padrões utilizados:
+
+A) WAV (Waveform Audio File Format)
+Desenvolvido em parceria pela Microsoft e IBM, é o formato padrão para áudio de alta fidelidade em sistemas operacionais. Por armazenar o áudio digital puro (utilizando a codificação PCM), ele não possui compressão, isso significa que nenhuma informação é descartada, mantendo a qualidade máxima do som original, o que resulta em arquivos de grande magnitude física, pesados.
+
+B) MP3 (MPEG-1 Audio Layer III)
+É o formato mais popular da internet que revolucionou a distribuição musical, trata-se de um formato com compressão com perdas (lossy). Ele utiliza modelos psicoacústicos baseados no funcionamento do ouvido humano para eliminar frequências que nós naturalmente não conseguimos perceber, por exemplo, um som muito baixo que ocorre logo após um som muito agudo ou barulhento. Esse algoritmo consegue reduzir o tamanho do arquivo original em até 90%, sacrificando uma parcela de informação que é imperceptível para o ouvinte comum.
+
+C) FLAC (Free Lossless Audio Codec)
+É um formato de código aberto com compressão sem perdas (lossless), consegue reduzir o tamanho do arquivo original entre 50% e 60% utilizando uma lógica matemática de compactação inteligente, de forma muito semelhante ao funcionamento de um arquivo compactado em .ZIP ou .RAR. Nenhuma informação sonora é descartada, ao ser reproduzido o arquivo é totalmente descompactado e retorna à qualidade idêntica à do WAV original, sendo o formato preferido por audiófilos e profissionais da área.
+Independentemente do formato escolhido (WAV, MP3 ou FLAC), o ciclo da computação só se completa quando a informação digital retorna ao mundo físico como fenômeno acústico. Nesta etapa final, o microprocessador do computador ou smartphone gerencia esses fluxos de dados binários armazenados, e os envia para a placa de som ou interface de áudio. O dispositivo de hardware realiza, então, o processo inverso: a Conversão Digital-Analógica (DAC), os números binários (0 e 1) são convertidos novamente em pulsos elétricos contínuos de tensão que, ao fazerem vibrar o diafragma das caixas de som ou dos fones de ouvido, recriam a onda sonora mecânica no mundo real para ser captada pelo ouvido humano.
+2.5. Uma Visão Simplificada do Processo de Digitalização do Som
+Como se percebe, a compreensão da conversão do som a uma linguagem entendida pelo computador não é um tema de fácil assimilação, especialmente quando trabalhado com alunos da Educação Básica. Dessa maneira, para sintetizar os conceitos apresentados até aqui, utiliza-se uma adaptação da explicação proposta por Luciano loureço no artigo As máquinas podem escutar, falar e cantar, no qual o autor descreve, de forma bem didática, o processo pelo qual o computador “ouve” os sons do ambiente.
+Esse processo pode ser dividido em quatro estágios distintos.
+	•	Primeiro estágio – Captação e transdução: o som propagado pelo ar, constituído por ondas mecânicas, é captado por um microfone. Nesse momento ocorre a transdução, processo que converte a energia sonora em um sinal elétrico analógico.
+	•	Segundo estágio – Condicionamento do sinal: o sinal analógico passa por etapas de tratamento, como filtragem de ruídos, amplificação e ajustes de nível, tornando-se mais adequado para a etapa seguinte.
+	•	Terceiro estágio – Conversão analógico-digital: ocorre a transformação do sinal analógico em dados binários (0 e 1) por meio de um conversor analógico-digital (ADC). É nessa etapa que o som passa a ser representado numericamente, permitindo seu processamento e armazenamento pelos sistemas computacionais.
+	•	Quarto estágio – Armazenamento digital: os dados binários resultantes da conversão são armazenados na memória do computador ou em dispositivos de armazenamento. Posteriormente, podem ser organizados em diferentes formatos de arquivo, como WAV (sem compressão) ou MP3 (com compressão).
+A Figura abaixo apresenta uma representação simplificada dessas quatro etapas, evidenciando o caminho percorrido pelo som desde sua origem no ambiente físico até sua transformação em informação digital manipulável pelo computador.
+
+3. PROPOSTAS DIDÁTICAS PARA A EDUCAÇÃO BÁSICA
+A transposição didática a seguir foi desenhada pensando no Ensino Fundamental, anos finais, alinhando conceitos complexos a dinâmicas lúdicas, corporais e tecnológicas.
+
+PROPOSTA 1: EXPERIÊNCIA DESPLUGADA
+Título da atividade: O Papagaio de Brinquedo e os Blocos Coloridos
+Público Alvo: Turmas do 1º ao 3º ano dos ciclos iniciais.
+Recursos: Blocos de montar de três cores: verde, amarelo, vermelho e a voz do professor.
+A História para contar na sala:
+- "Crianças, vocês sabiam que o computador não tem ouvido de verdade? Ele não consegue escutar a nossa voz do jeito que a gente escuta, para o computador guardar uma música ou um áudio do WhatsApp, ele precisa transformar o som em pecinhas coloridas de brinquedo. Hoje, nós vamos ser o computador e vamos construir uma música usando blocos."
+Metodologia Passo a Passo
+1. A Regra das Cores
+O professor mostra os três blocos para as crianças e combina o significado de cada cor:
+🟢 Bloco Verde: É o som do Urso (Grosso/Grave) ➔ "Buum!"
+🟡 Bloco Amarelo: É o som do Passarinho (Normal/Médio) ➔ "Lalá!"
+🔴 Bloco Vermelho: É o som do Apito (Fininho/Agudo) ➔ "Piií!"
+2. O Professor canta e o Computador "Guarda"
+O professor faz um som com a voz e bate uma palma, a palma significa que o computador tirou uma "foto" daquele som.
+Exemplo: 
+O professor faz um som bem grosso e bate palma olhando par um aluno, o aluno corre lá na frente, pega o Bloco Verde do Urso e coloca no chão.
+O professor faz um som bem fininho e bate palma, o outro aluno pega o Bloco Vermelho do Apito e encaixa do lado do bloco verde.
+Vão fazendo isso até formar uma fita comprida cheia de blocos coloridos encaixados no chão da sala.
+3. O Brinquedo toca a Música.
+Agora, o professor diz que a fita de blocos é a "memória do computador", ele vai passando o dedo em cima de cada bloco da fita, bem devagar, e a turma inteira tem que cantar o som daquela cor:
+Apontou pro verde? A sala toda grita: "Buum!"
+Apontou pro amarelo? A sala toda canta: "Lalá!"
+Apontou pro vermelho? A sala toda grita: "Piií!"
+A música vai sair engraçada e robótica, pedaço por pedaço: "Buum... Piií... Lalá... Buum..."
+O que as crianças aprenderam com isso? 
+O professor senta com todos em uma roda de conversa e explica o segredo da atividade:
+— "Viram que divertido? Nós transformamos o som em blocos coloridos, na vida real o computador faz igualzinho, mas em vez de blocos de plástico, ele usa números na memória. E se a gente quisesse que o som ficasse perfeito e não parecendo um robô, a gente ia precisar de milhares de blocos bem pequenininhos e colados para a música não ter pausas. É assim que o celular guarda a nossa voz!"
+PROPOSTA 2: EXPERIÊNCIA PLUGADA
+Título da Atividade: Investigadores de Áudio- detetives das frequências e formatos
+	•	Público-alvo: 9º ano do Ensino Fundamental.
+	•	Objetivo: Manipular taxas de amostragem na prática, identificar a diferença de tamanho e qualidade entre formatos (WAV, MP3 e FLAC), compreender visualmente os canais de áudio.
+	•	Recursos tecnológicos: Datashow, computadores ou notebooks, software livre Audacity, fones de ouvido e microfone.
+Metodologia e dinâmica passo a passo:
+	•	A Captura do som real: o professor ou um aluno voluntário grava uma frase curta no Audacity (ex: "A computação transforma o mundo"), ou o som de uma palma batida próxima ao microfone.
+	•	Análise visual e canais: os alunos analisam a forma de onda gerada na tela, o professor demonstra visualmente a diferença entre mono (uma única trilha na tela) e estéreo (duas trilhas paralelas), gravando dois alunos falando em lados diferentes do microfone.
+	•	Alterando e reconstruindo a qualidade (Amostragem e Bits):
+	•	O professor instrui os alunos a irem no menu do Audacity e alterarem a taxa do projeto, localizada no canto inferior esquerdo, do padrão 44.100 Hz para apenas 8.000 Hz ou 4.000 Hz.
+	•	Eles aplicam o efeito e dão Play, a turma perceberá imediatamente o áudio abafado, metálico e com chiado, simulando uma ligação telefônica antiga e ruim.
+	•	Em seguida exportam o áudio original reduzindo a resolução de 16 bits para 8 bits, eles debaterão o surgimento do ruído de fundo (ruído de quantização).
+	•	O Desafio dos formatos e tamanhos:
+	•	Os alunos exportam o áudio gravado originalmente em três arquivos diferentes: audio.wav, audio.mp3 (com qualidade padrão de 128 kbps) e audio.flac.
+	•	O professor pede para que os alunos cliquem com o botão direito sobre cada arquivo e vejam as "Propriedades" para anotar o tamanho ocupado em disco (Bytes).
+	•	Sistematização e debate: A turma preenche uma tabela comparativa no quadro:
+
+Formato
+Tamanho (KB/MB)
+Qualidade Percebida (Ótima/Média/Ruim)
+Tipo de Compressão
+WAV
+Grande (Ex: 5 MB)
+Ótima (Identifica todos os detalhes)
+Sem Compressão
+FLAC
+Médio (Ex: 2.5 MB)
+Ótima (Identifica todos os detalhes)
+Compressão Sem Perdas
+MP3
+Pequeno (Ex: 500 KB)
+Boa/Média (Muito parecida com o WAV)
+Compressão Com Perdas
+
+
+Pergunta norteadora para o encerramento: "Se vocês fossem criar um aplicativo de mensagens igual ao WhatsApp, qual formato escolheriam para enviar áudio rápido sem gastar toda a internet do celular?". Os alunos consolidam a justificativa do uso do MP3 ou formatos compactados semelhantes.
+
+4. CONCLUSÃO
+A digitalização do som exemplifica perfeitamente como a ciência da computação traduz propriedades da natureza física em estruturas lógicas manipuláveis por circuitos eletrônicos. Compreender os processos de amostragem, quantização, profundidade de bits e compressão vai além da mera alfabetização técnica, permite que o estudante da Educação Básica desenvolva uma consciência crítica sobre a eficiência de armazenamento, tráfego de dados na rede e consumo de mídia digital.
+As propostas pedagógicas apresentadas provam que conceitos densos de engenharia e computação podem ser ensinados de forma inclusiva e estimulante. A atividade desplugada ativa a imaginação, a percepção cinestésica e a interpretação geométrica do conceito de discretização de sinais, por sua vez, a prática plugada com o software Audacity valida o conhecimento teórico, permitindo que os estudantes manipulem variáveis reais e ouçam os resultados gerados por suas escolhas computacionais. Dessa forma, a transposição didática cumpre as diretrizes da BNCC Computação, transformando usuários passivos de tecnologia em pensadores conscientes e criativos.
+
+5- REFERÊNCIAS
+	•	BASE NACIONAL COMUM CURRICULAR (BNCC). Complementação à BNCC: Computação na Educação Básica. Brasília: Ministério da Educação, 2022.
+	•	SBC. Diretrizes de Ensino de Computação na Educação Básica. Porto Alegre: Sociedade Brasileira de Computação, 2019.
+	•	TANENBAUM, Andrew S.; FEAMSTER, Nick; WETHERALL, David J. Redes de Computadores. 6. ed. São Paulo: Pearson Education do Brasil, 2021.
+	•	KON, Fabio. Introdução ao Áudio Digital. In: MAC5900 - Introdução à Engenharia de Software para Ambientes Web. São Paulo: IME-USP, [200-]. Disponível em: https://www.ime.usp.br/~kon/MAC5900/aulas/Aula5.html. Acesso em: 6 jun. 2026.
+	•	https://www.hardware.com.br/artigos/ouvidos-eletronicos-como-computadores-lidam-com-sons/amp/. Acesso em: 8 jun. 2026.
+	•	https://www.hardware.com.br/artigos/maquinas-podem-escutar-falar-cantar/. Acesso em: 8 jun. 2026.
+
+
+
+

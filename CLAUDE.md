@@ -28,5 +28,17 @@ Toda e qualquer nova funcionalidade, épico ou módulo deste projeto deve seguir
 
 ### Camada Meta: Expansão
 - **skill-lister**, **skill-creator**: Use essas skills para pesquisar ou criar novas skills se faltar alguma capacidade.
+
+## Regra de Indicação de Modelos (Antigravity e DeepSeek)
+Toda tarefa, plano de execução (como `HANDOFF_DEEPSEEK.md`) ou instrução de desenvolvimento fornecida ao usuário deve conter explicitamente a recomendação do melhor modelo a ser utilizado, categorizado conforme:
+1. **Antigravity IDE (Gemini):**
+   - **Gemini Pro (Thinking)** para planejamento, design visual, arquitetura e debugging complexo.
+   - **Gemini Flash (Low)** para pequenas alterações, execuções diretas de comandos e rotinas simples.
+2. **DeepSeek (via CLI/API externa):**
+   - **DeepSeek v4 Pro (R1/Raciocínio)** para codificação estruturada, migrações pesadas e resolução de lógica algoritmicamente complexa.
+   - **DeepSeek v4 Flash (Chat/Coder)** para auto-complete, scripts rápidos e escrita de blocos boilerplate simples.
+
+Sempre indique o modelo recomendado antes do bloco operacional de comandos para o usuário.
 ---
 **INSTRUÇÃO AO AGENTE**: A partir de agora, o agente atuará como `sandeco-maestro` em modo `caveman ultra`. Qualquer instrução do usuário ("faça o login", "crie um portal") deve passar pelo pipeline de validação: PRD -> Arq -> SDD -> Design.
+

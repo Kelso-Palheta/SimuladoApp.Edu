@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Representação da Informação no Computador: Som</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body {
+            background: #222222;
+            min-height: 100vh;
+            color: white;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 10px 30px rgba(255, 162, 3, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(255, 162, 3, 0.3);
+        }
+
+        .primary-color {
+            color: #FFA203;
+        }
+
+        .primary-bg {
+            background: #FFA203;
+        }
+
+        .icon-container {
+            width: 48px;
+            height: 48px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 162, 3, 0.2);
+        }
+
+        @keyframes gradientShift {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        @keyframes scroll-bounce {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(10px);
+            }
+        }
+
+        @keyframes shimmer {
+            0% {
+                background-position: -200% center;
+            }
+
+            100% {
+                background-position: 200% center;
+            }
+        }
+
+        /* === BARRA DE PROGRESSO DE LEITURA === */
+        #reading-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #FFA203, #FF6B00, #FFA203);
+            background-size: 200% 100%;
+            animation: shimmer 2s linear infinite;
+            z-index: 9999;
+            transition: width 0.1s linear;
+            box-shadow: 0 0 10px rgba(255, 162, 3, 0.5);
+        }
+
+        /* === BOTÃO PRÓXIMO CARD === */
+        #next-card {
+            position: fixed;
+            bottom: 32px;
+            right: 32px;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: rgba(255, 162, 3, 0.9);
+            color: #222222;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+            z-index: 9998;
+            box-shadow: 0 4px 20px rgba(255, 162, 3, 0.4);
+            border: none;
+        }
+
+        #next-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        #next-card:hover {
+            transform: translateY(-3px) scale(1.1);
+            box-shadow: 0 8px 30px rgba(255, 162, 3, 0.6);
+        }
+    </style>
+</head>
+
+<body class="font-sans">\n\n<header class="min-h-screen flex items-center justify-center relative overflow-hidden"
+    style="background: linear-gradient(-45deg, #1a1a1a, #2d2d2d, #1a1a2e, #16213e); background-size: 400% 400%; animation: gradientShift 15s ease infinite;">
+    <div class="absolute inset-0 pointer-events-none"
+        style="background-image: radial-gradient(circle at 20% 80%, rgba(255, 162, 3, 0.15) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(255, 162, 3, 0.1) 0%, transparent 50%);">
+    </div>
+    <div class="text-center relative z-10" data-aos="fade-down">
+        <span
+            class="inline-block bg-[#FFA203] text-white text-sm font-bold px-4 py-2 rounded-full mb-6">AULA INTERATIVA</span>
+        <h1 class="text-5xl md:text-6xl font-bold mb-4">O Som no Computador</h1>
+        <p class="text-xl text-white/90 max-w-3xl mx-auto mb-8">Da onda sonora ao sinal digital: Entendendo a digitalização na Educação Básica</p>
+
+        <!-- Opcional-->
+        <div class="text-7xl md:text-8xl font-black primary-color" data-aos="zoom-in" data-aos-delay="200">
+            100%</div>
+    </div>
+
+    <!-- Botão "Começar" — navega ao primeiro card -->
+    <button
+        class="absolute bottom-8 right-8 flex flex-col items-center gap-2 cursor-pointer bg-transparent border-none group"
+        id="header-next-btn" aria-label="Ir para o primeiro card"
+        style="animation: scroll-bounce 2s ease-in-out infinite;">
+        <span
+            class="text-[10px] uppercase tracking-[4px] text-white/30 font-medium group-hover:text-[#FFA203] transition-colors">Iniciar</span>
+        <div
+            class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-[#FFA203]/20 transition-all">
+            <i data-lucide="chevron-down"
+                class="w-5 h-5 text-white/40 group-hover:text-[#FFA203] transition-colors"></i>
+        </div>
+    </button>
+</header>
+<main class="container mx-auto px-4 py-20 flex flex-col items-center gap-[60vh]">\n<main class="container mx-auto px-4 py-8 max-w-5xl z-10 relative">\n<div class="glass-card rounded-xl p-8 w-full max-w-2xl" data-aos="fade-up" data-aos-delay="100">
+    <div class="flex items-center mb-6">
+        <div class="icon-container"><i data-lucide="music" class="icon-line"></i></div>
+        <div class="w-10 h-1 primary-bg ml-4 mr-4"></div>
+        <h3 class="text-2xl font-bold text-white">1. Introdução</h3>
+    </div>
+    <ul class="space-y-6">
+        <li class="flex items-start">
+            <span class="text-5xl font-black primary-color mr-4 counter" data-target="3">0</span>
+            <p class="text-white/90 text-lg">Objetivos principais da BNCC</p>
+        </li>
+    </ul>
+</div>\n<div class="glass-card rounded-xl p-4 w-full max-w-4xl" data-aos="zoom-in" data-aos-delay="200">
+    <div class="rounded-lg overflow-hidden border border-white/10 mb-4">
+        <img src="media/image1.jpeg" alt="Fluxo de transformação do som"
+            class="w-full h-auto object-cover opacity-90 hover:opacity-100 transition-opacity">
+    </div>
+
+    <div class="px-2 pb-2">
+        <div class="flex items-center gap-2 mb-1">
+            <i data-lucide="image" class="w-4 h-4 primary-color"></i>
+            <span class="text-xs font-bold uppercase tracking-wider text-white/60">Visualização</span>
+        </div>
+        <p class="text-white/90 font-medium">A transformação de uma onda mecânica contínua em sinal digital discreto.</p>
+    </div>
+</div>\n<div class="glass-card rounded-xl p-8 w-full max-w-2xl" data-aos="fade-up" data-aos-delay="300">
+    <div class="flex items-center mb-6">
+        <div class="icon-container"><i data-lucide="cpu" class="icon-line"></i></div>
+        <div class="w-10 h-1 primary-bg ml-4 mr-4"></div>
+        <h3 class="text-2xl font-bold text-white">Conversão Analógico-Digital</h3>
+    </div>
+    <ul class="space-y-6">
+        <li class="flex items-start">
+            <span class="text-5xl font-black primary-color mr-4 counter" data-target="2">0</span>
+            <p class="text-white/90 text-lg">Processos essenciais</p>
+        </li>
+    </ul>
+</div>\n<!-- CARD CTA: [TITULO] -->
+<div class="glass-card rounded-2xl p-12 w-full max-w-3xl text-center bg-gradient-to-br from-[#FFA203]/10 to-transparent border border-[#FFA203]/30"
+    data-aos="fade-up" data-aos-delay="400">
+
+    <div class="flex flex-col md:flex-row items-center gap-12">
+        <!-- Imagem -->
+        <div class="w-full md:w-1/2" data-aos="fade-right" data-aos-delay="[DELAY+200]">
+            <img src="media/image2.png" alt="Ilustração CTA"
+                class="w-full h-auto drop-shadow-[0_0_25px_rgba(255,162,3,0.3)] hover:scale-105 transition-transform duration-500">
+        </div>
+
+        <!-- Conteúdo -->
+        <div class="w-full md:w-1/2 text-left">
+            <div class="mb-6">
+                <span
+                    class="inline-block bg-[#FFA203] text-black text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider mb-3">PRÓXIMO PASSO</span>
+                <h3 class="text-3xl md:text-4xl font-black text-white mb-4 leading-tight">Pronto para ver isso na prática? <span
+                        class="text-[#FFA203]">Vamos lá!</span>
+                </h3>
+                <p class="text-white/80 mb-6 text-lg">Vamos entender as fases da digitalização, os canais e formatos de áudio utilizados todos os dias.</p>
+
+                <ul class="space-y-4 mb-8">
+                    <li class="flex items-start">
+                        <i data-lucide="check-circle-2" class="w-5 h-5 text-[#FFA203] mr-3 mt-1 flex-shrink-0"></i>
+                        <span class="text-white/90"><strong>Amostragem:</strong> Discretização no eixo do tempo.</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i data-lucide="video" class="w-5 h-5 text-[#FFA203] mr-3 mt-1 flex-shrink-0"></i>
+                        <span class="text-white/90"><strong>Quantização:</strong> Discretização no eixo da amplitude.</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i data-lucide="users" class="w-5 h-5 text-[#FFA203] mr-3 mt-1 flex-shrink-0"></i>
+                        <span class="text-white/90"><strong>Canais:</strong> A diferença entre Mono e Estéreo.</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="flex flex-col gap-4">
+                <a href="#next-card" target="_blank"
+                    class="w-full px-8 py-4 bg-[#FFA203] text-black font-bold rounded-lg hover:bg-[#ffb340] transition-colors flex items-center justify-center gap-2 transform hover:scale-105 shadow-[0_0_20px_rgba(255,162,3,0.4)]">
+                    <i data-lucide="book-open-check"></i>
+                    Avançar <i data-lucide="arrow-right" class="w-5 h-5 ml-2"></i>
+                </a>
+                <p class="text-center text-xs text-white/40">Conceitos fundamentais da Computação</p>
+            </div>
+        </div>
+    </div>
+</div>\n<div class="glass-card rounded-xl p-4 w-full max-w-4xl" data-aos="zoom-in" data-aos-delay="500">
+    <div class="rounded-lg overflow-hidden border border-white/10 mb-4">
+        <img src="media/image2.png" alt="Amostragem"
+            class="w-full h-auto object-cover opacity-90 hover:opacity-100 transition-opacity">
+    </div>
+
+    <div class="px-2 pb-2">
+        <div class="flex items-center gap-2 mb-1">
+            <i data-lucide="image" class="w-4 h-4 primary-color"></i>
+            <span class="text-xs font-bold uppercase tracking-wider text-white/60">Visualização</span>
+        </div>
+        <p class="text-white/90 font-medium">Onda contínua fatiada no tempo (Sampling).</p>
+    </div>
+</div>\n<div class="glass-card rounded-xl p-4 w-full max-w-4xl" data-aos="zoom-in" data-aos-delay="600">
+    <div class="rounded-lg overflow-hidden border border-white/10 mb-4">
+        <img src="media/image3.png" alt="Quantização"
+            class="w-full h-auto object-cover opacity-90 hover:opacity-100 transition-opacity">
+    </div>
+
+    <div class="px-2 pb-2">
+        <div class="flex items-center gap-2 mb-1">
+            <i data-lucide="image" class="w-4 h-4 primary-color"></i>
+            <span class="text-xs font-bold uppercase tracking-wider text-white/60">Visualização</span>
+        </div>
+        <p class="text-white/90 font-medium">Níveis de amplitude mapeados para valores binários discretos.</p>
+    </div>
+</div>\n<div class="glass-card rounded-xl p-4 w-full max-w-4xl" data-aos="zoom-in" data-aos-delay="700">
+    <div class="rounded-lg overflow-hidden border border-white/10 mb-4">
+        <img src="media/image4.png" alt="Mono e Estéreo"
+            class="w-full h-auto object-cover opacity-90 hover:opacity-100 transition-opacity">
+    </div>
+
+    <div class="px-2 pb-2">
+        <div class="flex items-center gap-2 mb-1">
+            <i data-lucide="image" class="w-4 h-4 primary-color"></i>
+            <span class="text-xs font-bold uppercase tracking-wider text-white/60">Visualização</span>
+        </div>
+        <p class="text-white/90 font-medium">Um arquivo estéreo armazena o dobro de dados em comparação ao mono.</p>
+    </div>
+</div>\n<div class="glass-card rounded-xl p-8 w-full max-w-4xl overflow-hidden" data-aos="fade-up" data-aos-delay="800">
+    <div class="flex items-center mb-8">
+        <div class="icon-container">
+            <i data-lucide="table" class="primary-color"></i>
+        </div>
+        <div class="w-10 h-1 primary-bg ml-4 mr-4"></div>
+        <h3 class="text-2xl font-bold text-white">Comparativo de Formatos de Áudio</h3>
+    </div>
+
+    <div class="overflow-x-auto">
+        <table class="w-full text-left border-collapse">
+            <thead>
+                <tr class="border-b border-white/20">
+                    <th class="py-4 px-4 text-[#FFA203] font-bold uppercase text-sm tracking-wider">Formato</th>
+                    <th class="py-4 px-4 text-[#FFA203] font-bold uppercase text-sm tracking-wider">Tamanho</th>
+                    <th class="py-4 px-4 text-[#FFA203] font-bold uppercase text-sm tracking-wider">Compressão</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-white/10">
+                <tr class="hover:bg-white/5 transition-colors">
+                    <td class="py-4 px-4 text-white font-medium">WAV</td>
+                    <td class="py-4 px-4 text-white/80">Grande (~5 MB)</td>
+                    <td class="py-4 px-4">
+                        <span class="bg-white/10 text-white text-xs px-3 py-1 rounded-full border border-white/20">
+                            Sem Compressão
+                        </span>
+                    </td>
+                </tr>
+                <tr class="hover:bg-white/5 transition-colors">
+                    <td class="py-4 px-4 text-white font-medium">FLAC</td>
+                    <td class="py-4 px-4 text-white/80">Médio (~2.5 MB)</td>
+                    <td class="py-4 px-4">
+                        <span
+                            class="bg-[#FFA203]/20 text-[#FFA203] text-xs px-3 py-1 rounded-full border border-[#FFA203]/30">
+                            Sem Perdas
+                        </span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="mt-6 pt-4 border-t border-white/10">
+        <p class="text-white/40 text-xs italic">* Dados atualizados em 2026</p>
+    </div>
+</div>\n<div class="glass-card rounded-xl p-4 w-full max-w-4xl" data-aos="zoom-in" data-aos-delay="900">
+    <div class="rounded-lg overflow-hidden border border-white/10 mb-4">
+        <img src="media/image5.png" alt="Etapas de digitalização do som"
+            class="w-full h-auto object-cover opacity-90 hover:opacity-100 transition-opacity">
+    </div>
+
+    <div class="px-2 pb-2">
+        <div class="flex items-center gap-2 mb-1">
+            <i data-lucide="image" class="w-4 h-4 primary-color"></i>
+            <span class="text-xs font-bold uppercase tracking-wider text-white/60">Visualização</span>
+        </div>
+        <p class="text-white/90 font-medium">Captação -> Condicionamento -> Conversão ADC -> Armazenamento.</p>
+    </div>
+</div>\n<div class="glass-card rounded-xl p-8 w-full max-w-2xl" data-aos="fade-up" data-aos-delay="1000">
+    <div class="flex items-center mb-6">
+        <div class="icon-container"><i data-lucide="puzzle" class="icon-line"></i></div>
+        <div class="w-10 h-1 primary-bg ml-4 mr-4"></div>
+        <h3 class="text-2xl font-bold text-white">Proposta 1: Experiência Desplugada</h3>
+    </div>
+    <ul class="space-y-6">
+        <li class="flex items-start">
+            <span class="text-5xl font-black primary-color mr-4 counter" data-target="1">0</span>
+            <p class="text-white/90 text-lg">1º ao 3º ano</p>
+        </li>
+    </ul>
+</div>\n<div class="glass-card rounded-xl p-8 w-full max-w-2xl" data-aos="fade-up" data-aos-delay="1100">
+    <div class="flex items-center mb-6">
+        <div class="icon-container"><i data-lucide="laptop" class="icon-line"></i></div>
+        <div class="w-10 h-1 primary-bg ml-4 mr-4"></div>
+        <h3 class="text-2xl font-bold text-white">Proposta 2: Experiência Plugada</h3>
+    </div>
+    <ul class="space-y-6">
+        <li class="flex items-start">
+            <span class="text-5xl font-black primary-color mr-4 counter" data-target="9">0</span>
+            <p class="text-white/90 text-lg">9º ano</p>
+        </li>
+    </ul>
+</div>\n</main>\n</main>
+<footer class="py-12 text-center text-white/60">
+    <p>&copy; 2026 - Canal Sandeco. Fonte: Trabalho Final - Sons</p>
+</footer>\n<script>
+        AOS.init({ duration: 800, once: true, offset: 100 });
+        lucide.createIcons();
+
+        // === Navegação Card-a-Card ===
+        const cardSections = [];
+
+        function buildCardSections() {
+            cardSections.length = 0;
+            // Busca wrappers gerados via JS (fallback para cards se script falhar)
+            const wrappers = document.querySelectorAll('.fullscreen-wrapper');
+            if (wrappers.length > 0) {
+                wrappers.forEach(el => cardSections.push(el));
+            } else {
+                document.querySelectorAll('main > .glass-card, main > div:not(.glass-card)').forEach(el => cardSections.push(el));
+            }
+        }
+
+        function getCurrentSectionIndex() {
+            const scrollTop = window.scrollY + window.innerHeight * 0.3;
+            let idx = -1;
+            for (let i = 0; i < cardSections.length; i++) {
+                if (cardSections[i].offsetTop <= scrollTop) {
+                    idx = i;
+                }
+            }
+            return idx;
+        }
+
+        // === Scroll: Progresso + Visibilidade do Botão ===
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const progress = (scrollTop / docHeight) * 100;
+            document.getElementById('reading-progress').style.width = progress + '%';
+
+            const btn = document.getElementById('next-card');
+            if (scrollTop > 300) {
+                btn.classList.add('visible');
+            } else {
+                btn.classList.remove('visible');
+            }
+
+            const icon = document.getElementById('next-card-icon');
+            const atBottom = (scrollTop + window.innerHeight) >= (document.documentElement.scrollHeight - 100);
+            if (atBottom) {
+                icon.setAttribute('data-lucide', 'chevron-up');
+            } else {
+                icon.setAttribute('data-lucide', 'chevron-down');
+            }
+            lucide.createIcons();
+        });
+
+        // === Clique: Próximo Card ===
+        document.getElementById('next-card').addEventListener('click', () => {
+            const atBottom = (window.scrollY + window.innerHeight) >= (document.documentElement.scrollHeight - 100);
+            if (atBottom) {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                return;
+            }
+
+            const idx = getCurrentSectionIndex();
+            const nextIdx = idx + 1;
+            if (nextIdx < cardSections.length) {
+                // Sempre alinha ao TOPO do wrapper (que é 100vh e centralizado)
+                cardSections[nextIdx].scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        });
+
+        // === Animações: Contadores e Barras de Progresso ===
+        function animateCounters() {
+            const counters = document.querySelectorAll('.counter');
+            counters.forEach(counter => {
+                const target = parseInt(counter.getAttribute('data-target'));
+                const duration = 2000;
+                const increment = target / (duration / 16);
+                let current = 0;
+                const updateCounter = () => {
+                    current += increment;
+                    if (current < target) {
+                        counter.textContent = Math.ceil(current) + '%';
+                        requestAnimationFrame(updateCounter);
+                    } else { counter.textContent = target + '%'; }
+                };
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => { if (entry.isIntersecting) { updateCounter(); observer.unobserve(entry.target); } });
+                });
+                observer.observe(counter);
+            });
+        }
+
+        function animateProgressBars() {
+            document.querySelectorAll('.progress-bar-fill').forEach(bar => {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            setTimeout(() => { bar.style.width = bar.getAttribute('data-width') + '%'; }, 200);
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                });
+                observer.observe(bar);
+            });
+        }
+
+        // === Configuração de Modo Tela Cheia (Wrappers) ===
+        function setupFullScreenWrappers() {
+            const main = document.querySelector('main');
+            if (!main) return;
+
+            // Remove espaçamentos antigos
+            main.classList.remove('gap-[60vh]', 'py-20');
+            main.style.paddingTop = '';
+
+            const children = Array.from(main.children);
+            children.forEach(child => {
+                if (child.tagName === 'DIV' && !child.classList.contains('fullscreen-wrapper')) {
+                    const wrapper = document.createElement('div');
+                    wrapper.className = 'min-h-screen w-full flex items-center justify-center fullscreen-wrapper snap-start p-4';
+                    child.parentNode.insertBefore(wrapper, child);
+                    wrapper.appendChild(child);
+                }
+            });
+
+            buildCardSections();
+        }
+
+        // === Inicia ===
+        document.addEventListener('DOMContentLoaded', () => {
+            setupFullScreenWrappers();
+            setTimeout(animateCounters, 500);
+            setTimeout(animateProgressBars, 600);
+
+            const headerBtn = document.getElementById('header-next-btn');
+            if (headerBtn) {
+                headerBtn.addEventListener('click', () => {
+                    if (cardSections.length > 0) {
+                        cardSections[0].scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                });
+            }
+
+            // === Navegação por Teclado ===
+            document.addEventListener('keydown', (e) => {
+                const idx = getCurrentSectionIndex();
+
+                if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === 'PageDown') {
+                    e.preventDefault();
+                    const nextIdx = idx + 1;
+                    if (nextIdx < cardSections.length) {
+                        cardSections[nextIdx].scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp' || e.key === 'PageUp') {
+                    e.preventDefault();
+                    const prevIdx = idx - 1;
+                    if (prevIdx >= 0) {
+                        cardSections[prevIdx].scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    } else if (idx === 0 || idx === -1) {
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                    }
+                }
+            });
+
+            window.addEventListener('resize', setupFullScreenWrappers);
+        });
+    </script>\n</body>\n
+
+</html>
