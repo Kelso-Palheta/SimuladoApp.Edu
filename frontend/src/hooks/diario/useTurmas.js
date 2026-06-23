@@ -2,26 +2,24 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 import { normalizeNome, cleanNome, genId } from '@/utils/diario/calculos';
 
 export const useTurmas = (initialTurmas, persistTurmas) => {
-  const [turmas, setTurmas] = useState(() => {
+  const [turmas, setTurmasState] = useState(() => {
     if (initialTurmas && initialTurmas.length > 0) return initialTurmas;
     return [];
   });
 
-  const isFirstRender = useRef(true);
-
-  useEffect(() => {
-    if (isFirstRender.current) {
-      isFirstRender.current = false;
-      return;
-    }
-    if (persistTurmas) {
-      persistTurmas(turmas);
-    }
-  }, [turmas, persistTurmas]);
+  const setTurmas = useCallback((newTurmasOrFn) => {
+    setTurmasState((prev) => {
+      const next = typeof newTurmasOrFn === 'function' ? newTurmasOrFn(prev) : newTurmasOrFn;
+      if (persistTurmas) {
+        persistTurmas(next);
+      }
+      return next;
+    });
+  }, [persistTurmas]);
 
   useEffect(() => {
     if (initialTurmas && initialTurmas.length > 0) {
-      setTurmas((prev) => {
+      setTurmasState((prev) => {
         // Aceita initialTurmas se a lista atual está vazia OU se initialTurmas
         // é visivelmente diferente (ex: veio do Firestore e é mais atual)
         if (prev.length === 0) return initialTurmas;

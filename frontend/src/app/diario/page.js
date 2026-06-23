@@ -105,22 +105,29 @@ export default function DiarioPage() {
   }, [user, loading]);
 
   const persistTimeout = useRef(null);
+  const latestTurmasRef = useRef([]);
+
+  // Sincroniza o valor mais atual das turmas em um ref para salvamento no unmount
+  useEffect(() => {
+    latestTurmasRef.current = initialTurmas || [];
+  }, [initialTurmas]);
 
   // Persiste no Firestore (subcoleção isolada) + localStorage (com debounce)
-  const persistir = useCallback((turmas) => {
+  const persistir = useCallback((novasTurmas) => {
     if (loadingTurmas) return; // CRÍTICO: Não persiste enquanto estiver carregando os dados iniciais do Firestore!
-    salvarLocal(turmas);
+    latestTurmasRef.current = novasTurmas;
+    salvarLocal(novasTurmas);
     if (typeof window !== 'undefined' && user) localStorage.setItem(USER_KEY, user.uid);
     if (!user) return;
     if (persistTimeout.current) clearTimeout(persistTimeout.current);
     persistTimeout.current = setTimeout(async () => {
       const ref = doc(db, 'professores', user.uid, 'turmas', 'data');
       try {
-        await setDoc(ref, { turmas, updatedAt: serverTimestamp() }, { merge: true });
+        await setDoc(ref, { turmas: novasTurmas, updatedAt: serverTimestamp() }, { merge: true });
         
         // Sincroniza logins e notas dos alunos no portal do aluno automaticamente
         const nomeProfessor = perfil?.nome || user.displayName || 'Professor';
-        for (const turma of turmas) {
+        for (const turma of novasTurmas) {
           for (const aluno of (turma.alunos || [])) {
             if (aluno.dataNascimento) {
               const loginStr = gerarLoginAluno(aluno.nome, aluno.dataNascimento);
@@ -155,7 +162,24 @@ export default function DiarioPage() {
         console.error('Erro ao persistir e sincronizar turmas:', e);
       }
     }, 500);
-  }, [user, perfil]);
+  }, [user, perfil, loadingTurmas]);
+
+  // Salva imediatamente no Firestore/localStorage ao desmontar o componente (ex: mudar de módulo)
+  useEffect(() => {
+    return () => {
+      if (persistTimeout.current) {
+        clearTimeout(persistTimeout.current);
+        const finalTurmas = latestTurmasRef.current;
+        if (finalTurmas && finalTurmas.length > 0 && user?.uid) {
+          salvarLocal(finalTurmas);
+          const ref = doc(db, 'professores', user.uid, 'turmas', 'data');
+          setDoc(ref, { turmas: finalTurmas, updatedAt: serverTimestamp() }, { merge: true }).catch((e) => {
+            console.error('Erro ao persistir no unmount:', e);
+          });
+        }
+      }
+    };
+  }, [user]);
 
   const { turmas, setTurmas, addTurma, removeTurma, addAlunos, addAlunoManual,
     removeAluno, removeAlunos, setRecuperacao, updateAluno } = useTurmas(initialTurmas || [], persistir);
