@@ -11,6 +11,7 @@ import { useNotas } from '@/hooks/diario/useNotas';
 import { ArrowLeft, GraduationCap, ExternalLink, Copy, Check } from 'lucide-react';
 import { db } from '@/lib/firebase';
 import { doc, getDoc, setDoc, serverTimestamp } from 'firebase/firestore';
+import { gerarLoginAluno, gerarLoginKey } from '@/utils/diario/loginAluno';
 
 const STORAGE_KEY = 'diario_turmas';
 const USER_KEY = 'diario_userId';
@@ -95,13 +96,49 @@ export default function DiarioPage() {
     if (typeof window !== 'undefined' && user) localStorage.setItem(USER_KEY, user.uid);
     if (!user) return;
     if (persistTimeout.current) clearTimeout(persistTimeout.current);
-    persistTimeout.current = setTimeout(() => {
+    persistTimeout.current = setTimeout(async () => {
       const ref = doc(db, 'professores', user.uid, 'turmas', 'data');
-      setDoc(ref, { turmas, updatedAt: serverTimestamp() }, { merge: true }).catch((e) => {
-        console.error('Erro ao salvar turmas:', e);
-      });
-    }, 300);
-  }, [user]);
+      try {
+        await setDoc(ref, { turmas, updatedAt: serverTimestamp() }, { merge: true });
+        
+        // Sincroniza logins e notas dos alunos no portal do aluno automaticamente
+        const nomeProfessor = perfil?.nome || user.displayName || 'Professor';
+        for (const turma of turmas) {
+          for (const aluno of (turma.alunos || [])) {
+            if (aluno.dataNascimento) {
+              const loginStr = gerarLoginAluno(aluno.nome, aluno.dataNascimento);
+              const loginKey = await gerarLoginKey(loginStr);
+              
+              // 1. Vincula aluno ao professor
+              const baseRef = doc(db, 'alunoLogin', loginKey);
+              await setDoc(baseRef, { nome: aluno.nome, login: loginStr }, { merge: true });
+              
+              const vinculoRef = doc(db, 'alunoLogin', loginKey, 'vinculos', user.uid);
+              await setDoc(vinculoRef, {
+                professorUid: user.uid,
+                turmaId: turma.nome,
+                alunoId: aluno.id,
+                modulo: 'diario',
+                nomeProfessor,
+                atualizadoEm: serverTimestamp()
+              }, { merge: true });
+              
+              // 2. Sincroniza as notas deste aluno
+              const recordId = `${user.uid}_${turma.id}_${aluno.id}`;
+              const notaRef = doc(db, 'notasAluno', recordId);
+              await setDoc(notaRef, {
+                nome: aluno.nome,
+                bimestres: turma.bimestres || {},
+                atualizadoEm: serverTimestamp()
+              }, { merge: true });
+            }
+          }
+        }
+      } catch (e) {
+        console.error('Erro ao persistir e sincronizar turmas:', e);
+      }
+    }, 500);
+  }, [user, perfil]);
 
   const { turmas, setTurmas, addTurma, removeTurma, addAlunos, addAlunoManual,
     removeAluno, removeAlunos, setRecuperacao, updateAluno } = useTurmas(initialTurmas || [], persistir);
