@@ -5,7 +5,10 @@ import { useRouter } from 'next/navigation';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useAuth } from '@/lib/auth-context';
 import { generatePDF } from '@/lib/redacao/pdf-generator';
-import { gerarLoginAluno } from '@/utils/diario/loginAluno';
+import { gerarLoginAluno, gerarLoginKey } from '@/utils/diario/loginAluno';
+import { db } from '@/lib/firebase';
+import { doc, setDoc, serverTimestamp } from 'firebase/firestore';
+import { vincularAlunoProfessor } from '@/lib/firebase-aluno';
 import { useTurmas } from '@/hooks/diario/useTurmas';
 import { turmasIniciais } from '@/data/diario/turmasIniciais';
 import {
@@ -172,9 +175,49 @@ export default function RedacaoPage() {
       const res = await fetch('/api/corrigir', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ text: trimmed, studentName: studentName.trim(), studentClass: studentClass.trim() || 'N/A', essayTheme: essayTheme.trim() || 'Geral', depth, competencies: selectedCompetencies.join(', '), userId: user.uid, loginAluno, nomeProfessor: perfil?.nome || user?.displayName || '', motivatorText: motivatorText.trim() }) });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error);
+
+      // Determinar o ID da correção client-side para usar o token autenticado do Firebase
+      let corrId;
+      if (loginAluno) {
+        corrId = await gerarLoginKey(loginAluno);
+
+        await vincularAlunoProfessor({
+          login: loginAluno,
+          nome: studentName.trim(),
+          professorUid: user.uid,
+          turmaId: studentClass.trim() || 'N/A',
+          modulo: 'redacao',
+          nomeProfessor: perfil?.nome || user?.displayName || ''
+        });
+      } else {
+        const a = Math.random().toString(36).substring(2, 5).toUpperCase();
+        const b = Math.random().toString(36).substring(2, 5).toUpperCase();
+        corrId = `${a}-${b}`;
+      }
+
+      const corrData = {
+        id: corrId,
+        studentName: studentName.trim(),
+        studentClass: studentClass.trim() || 'N/A',
+        essayTheme: essayTheme.trim() || 'Geral',
+        motivatorText: motivatorText.trim(),
+        result: data.result || '',
+        scoreData: data.scores?.items || [],
+        totalScore: data.scores?.total || 0,
+        userId: user.uid,
+        createdAt: serverTimestamp()
+      };
+      if (loginAluno) {
+        corrData.loginAluno = loginAluno;
+      }
+
+      // Salva a correção no Firestore usando o usuário logado
+      const corrRef = doc(db, 'professores', user.uid, 'correcoes', corrId);
+      await setDoc(corrRef, corrData);
+
       setResult(data.result);
       setScores(data.scores);
-      setCorrectionId(data.login || null);
+      setCorrectionId(loginAluno || corrId);
       setStep('result');
     } catch (err) { setError('Erro na correção: ' + err.message); setStep('review'); }
   };

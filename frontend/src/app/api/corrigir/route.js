@@ -55,49 +55,6 @@ export async function POST(request) {
 
     const scores = result ? extractScore(result) : null;
 
-    if (userId && db) {
-      const corrData = {
-        studentName: studentName || 'Estudante',
-        studentClass: studentClass || 'N/A',
-        essayTheme: essayTheme || 'Geral',
-        motivatorText: motivatorText || '',
-        result: result || '',
-        scoreData: scores?.items || [],
-        totalScore: scores?.total || 0,
-        userId,
-        createdAt: serverTimestamp()
-      };
-
-      // Determina o ID: loginKey (hash) ou aleatório
-      let corrId;
-      let storedLoginKey = null;
-
-      if (loginAluno) {
-        storedLoginKey = await gerarLoginKey(loginAluno);
-        corrId = storedLoginKey;
-
-        // Cria/atualiza vínculo do aluno com este professor (multi-professor)
-        await vincularAlunoProfessor({
-          login: loginAluno,
-          nome: studentName || 'Estudante',
-          professorUid: userId,
-          turmaId: studentClass || 'N/A',
-          modulo: 'redacao',
-          nomeProfessor: nomeProfessor || ''
-        });
-
-        corrData.loginAluno = loginAluno;
-      } else {
-        const a = Math.random().toString(36).substring(2, 5).toUpperCase();
-        const b = Math.random().toString(36).substring(2, 5).toUpperCase();
-        corrId = `${a}-${b}`;
-      }
-      corrData.id = corrId;
-
-      const ref = doc(db, 'professores', userId, 'correcoes', corrId);
-      await setDoc(ref, corrData);
-    }
-
     return NextResponse.json({ result, scores, login: loginAluno });
   } catch (error) {
     console.error('ERRO NA API DE CORREÇÃO:', error);
