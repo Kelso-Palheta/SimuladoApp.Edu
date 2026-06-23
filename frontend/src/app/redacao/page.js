@@ -99,30 +99,32 @@ export default function RedacaoPage() {
   const fileRef = useRef(null);
   const motivatorFileRef = useRef(null);
 
-  // Verifica se o localStorage pertence ao usuário atual
-  const storedUserId = typeof window !== 'undefined' ? localStorage.getItem(USER_KEY) : null;
-  const localData = storedUserId === user?.uid ? carregarLocal() : null;
-  const hasLocalData = localData?.length > 0;
-  const [initialTurmas, setInitialTurmas] = useState(hasLocalData ? localData : []);
-  const [loadingTurmas, setLoadingTurmas] = useState(!hasLocalData);
+  const [initialTurmas, setInitialTurmas] = useState([]);
+  const [loadingTurmas, setLoadingTurmas] = useState(true);
 
   // Carrega do Firestore se localStorage estiver vazio, ou sync em background
   useEffect(() => {
-    if (!user) return;
+    if (authLoading) return; // Aguarda o carregamento do estado de autenticação
+    if (!user) {
+      setLoadingTurmas(false);
+      return;
+    }
+
     (async () => {
       try {
+        const storedUserId = typeof window !== 'undefined' ? localStorage.getItem(USER_KEY) : null;
+        const isSameUser = storedUserId === user.uid;
+        const local = isSameUser ? carregarLocal() : null;
+
         const ref = doc(db, 'professores', user.uid, 'turmas', 'data');
         const snap = await getDoc(ref);
+
         if (snap.exists() && snap.data().turmas?.length > 0) {
           const cloud = snap.data().turmas;
-          if (!hasLocalData) {
-            setInitialTurmas(cloud);
-            salvarLocal(cloud);
-            if (typeof window !== 'undefined') localStorage.setItem(USER_KEY, user.uid);
-          } else if (JSON.stringify(localData) !== JSON.stringify(cloud)) {
-            salvarLocal(cloud);
-          }
-        } else if (!hasLocalData) {
+          setInitialTurmas(cloud);
+          salvarLocal(cloud);
+          if (typeof window !== 'undefined') localStorage.setItem(USER_KEY, user.uid);
+        } else {
           // Sem dados no Firestore nem localStorage: migra do caminho antigo ou usa padrão
           const oldRef = doc(db, 'users', user.uid, 'turmas', 'data');
           const oldSnap = await getDoc(oldRef);
@@ -132,21 +134,36 @@ export default function RedacaoPage() {
             setInitialTurmas(oldData);
             salvarLocal(oldData);
           } else {
-            setInitialTurmas([]);
-            salvarLocal([]);
+            // Tenta do outro caminho antigo (campo turmas no próprio perfil do professor)
+            const profRef = doc(db, 'professores', user.uid);
+            const profSnap = await getDoc(profRef);
+            if (profSnap.exists() && profSnap.data().turmas?.length > 0) {
+              const oldData = profSnap.data().turmas;
+              await setDoc(ref, { turmas: oldData, updatedAt: serverTimestamp() }, { merge: true });
+              setInitialTurmas(oldData);
+              salvarLocal(oldData);
+            } else if (local && local.length > 0) {
+              setInitialTurmas(local);
+            } else {
+              setInitialTurmas([]);
+              salvarLocal([]);
+            }
           }
+          if (typeof window !== 'undefined') localStorage.setItem(USER_KEY, user.uid);
         }
       } catch (e) {
         console.error('Erro ao carregar turmas:', e);
-        if (!hasLocalData) {
-          setInitialTurmas([]);
-          salvarLocal([]);
+        // Fallback local caso haja falha de rede/conexão para o mesmo usuário
+        const storedUserId = typeof window !== 'undefined' ? localStorage.getItem(USER_KEY) : null;
+        if (storedUserId === user.uid) {
+          const local = carregarLocal();
+          if (local) setInitialTurmas(local);
         }
       } finally {
         setLoadingTurmas(false);
       }
     })();
-  }, [user]);
+  }, [user, authLoading]);
 
   const { turmas } = useTurmas(initialTurmas || [], () => {});
 
