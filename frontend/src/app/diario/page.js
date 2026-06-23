@@ -10,6 +10,8 @@ import { useTurmas } from '@/hooks/diario/useTurmas';
 import { useNotas } from '@/hooks/diario/useNotas';
 import { turmasIniciais } from '@/data/diario/turmasIniciais';
 import { ArrowLeft, GraduationCap, ExternalLink, Copy, Check } from 'lucide-react';
+import { db } from '@/lib/firebase';
+import { doc, getDoc, setDoc, serverTimestamp } from 'firebase/firestore';
 
 const STORAGE_KEY = 'diario_turmas';
 const NOVOS_DEFAULTS = {
@@ -35,14 +37,60 @@ export default function DiarioPage() {
   const { user, perfil, loading } = useAuth();
   const router = useRouter();
 
-  // Carrega do localStorage ou usa dados iniciais (calculado apenas uma vez)
-  const [initialTurmas] = useState(() => {
-    const dadosIniciais = typeof window !== 'undefined' ? carregarLocal() : null;
-    return dadosIniciais?.length > 0 ? dadosIniciais : turmasIniciais;
-  });
+  const [initialTurmas, setInitialTurmas] = useState(null);
+  const [firestoreLoaded, setFirestoreLoaded] = useState(false);
+
+  // Carrega turmas: Firestore > localStorage > padrão
+  useEffect(() => {
+    if (!user) return;
+    const load = async () => {
+      try {
+        // Tenta carregar do Firestore (caminho antigo do projeto legado)
+        const oldRef = doc(db, 'users', user.uid, 'turmas', 'data');
+        const oldSnap = await getDoc(oldRef);
+        if (oldSnap.exists() && oldSnap.data().turmas?.length > 0) {
+          const firestoreData = oldSnap.data().turmas;
+          setInitialTurmas(firestoreData);
+          // Salva no localStorage como cache
+          salvarLocal(firestoreData);
+          // Migra para o novo caminho
+          const newRef = doc(db, 'professores', user.uid);
+          await setDoc(newRef, { turmas: firestoreData, updatedAt: serverTimestamp() }, { merge: true });
+        } else {
+          // Tenta o novo caminho
+          const newRef = doc(db, 'professores', user.uid);
+          const newSnap = await getDoc(newRef);
+          if (newSnap.exists() && newSnap.data().turmas?.length > 0) {
+            setInitialTurmas(newSnap.data().turmas);
+            salvarLocal(newSnap.data().turmas);
+          } else {
+            // Fallback: localStorage ou dados iniciais
+            const local = carregarLocal();
+            setInitialTurmas(local?.length > 0 ? local : turmasIniciais);
+          }
+        }
+      } catch (err) {
+        console.error('Erro ao carregar turmas:', err);
+        const local = carregarLocal();
+        setInitialTurmas(local?.length > 0 ? local : turmasIniciais);
+      } finally {
+        setFirestoreLoaded(true);
+      }
+    };
+    load();
+  }, [user]);
+
+  // Persiste no Firestore + localStorage quando turmas mudam
+  const persistir = useCallback((turmas) => {
+    salvarLocal(turmas);
+    if (user) {
+      const ref = doc(db, 'professores', user.uid);
+      setDoc(ref, { turmas, updatedAt: serverTimestamp() }, { merge: true }).catch(() => {});
+    }
+  }, [user]);
 
   const { turmas, setTurmas, addTurma, removeTurma, addAlunos, addAlunoManual,
-    removeAluno, removeAlunos, setRecuperacao, updateAluno } = useTurmas(initialTurmas, salvarLocal);
+    removeAluno, removeAlunos, setRecuperacao, updateAluno } = useTurmas(initialTurmas || [], persistir);
 
   const { setNota, addAtividade, removeAtividade, updateAtividadeMax, updateConfig,
     clearAtividadesNota, clearAtividadesTurma } = useNotas(setTurmas);
@@ -103,8 +151,8 @@ export default function DiarioPage() {
     return () => document.removeEventListener('click', handleClick);
   }, [showAlunoDropdown]);
 
-  // Auth guard
-  if (loading || (!perfil && user)) {
+  // Auth guard + firestore loading
+  if (loading || !firestoreLoaded || (!perfil && user)) {
     return (
       <div className="flex h-screen items-center justify-center bg-white">
         <div className="text-center">
