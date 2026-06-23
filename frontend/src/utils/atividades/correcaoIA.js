@@ -1,4 +1,4 @@
-const BASE_URL = '/api-maritaca';
+const BASE_URL = '/api/maritaca';
 const MODEL = 'sabiazinho-4';
 
 const MAX_TOKENS = { superficial: 256, normal: 1024, profunda: 2048 };

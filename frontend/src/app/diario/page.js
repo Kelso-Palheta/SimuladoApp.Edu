@@ -8,7 +8,7 @@ import { TurmaView } from '@/components/diario/TurmaView';
 import { ProfileModal } from '@/components/diario/ProfileModal';
 import { useTurmas } from '@/hooks/diario/useTurmas';
 import { useNotas } from '@/hooks/diario/useNotas';
-import { ArrowLeft, GraduationCap, ExternalLink, Copy, Check } from 'lucide-react';
+import { ArrowLeft, GraduationCap, ExternalLink, Copy, Check, Award } from 'lucide-react';
 import { db } from '@/lib/firebase';
 import { doc, getDoc, setDoc, serverTimestamp } from 'firebase/firestore';
 import { gerarLoginAluno, gerarLoginKey } from '@/utils/diario/loginAluno';
@@ -163,6 +163,61 @@ export default function DiarioPage() {
   const { setNota, addAtividade, removeAtividade, updateAtividadeMax, updateConfig,
     clearAtividadesNota, clearAtividadesTurma, clearSimuladoNota, clearSimuladoTurma } = useNotas(setTurmas);
 
+  const [publishing, setPublishing] = useState(false);
+  const [toast, setToast] = useState('');
+
+  useEffect(() => {
+    if (toast) {
+      const t = setTimeout(() => setToast(''), 3000);
+      return () => clearTimeout(t);
+    }
+  }, [toast]);
+
+  const handlePublishGrades = async () => {
+    if (publishing || !user || turmas.length === 0) return;
+    setPublishing(true);
+    try {
+      const nomeProfessor = perfil?.nome || user.displayName || 'Professor';
+      for (const turma of turmas) {
+        for (const aluno of (turma.alunos || [])) {
+          if (aluno.dataNascimento) {
+            const loginStr = gerarLoginAluno(aluno.nome, aluno.dataNascimento);
+            const loginKey = await gerarLoginKey(loginStr);
+            
+            // 1. Vincula aluno ao professor
+            const baseRef = doc(db, 'alunoLogin', loginKey);
+            await setDoc(baseRef, { nome: aluno.nome, login: loginStr }, { merge: true });
+            
+            const vinculoRef = doc(db, 'alunoLogin', loginKey, 'vinculos', user.uid);
+            await setDoc(vinculoRef, {
+              professorUid: user.uid,
+              turmaId: turma.nome,
+              alunoId: aluno.id,
+              modulo: 'diario',
+              nomeProfessor,
+              atualizadoEm: serverTimestamp()
+            }, { merge: true });
+            
+            // 2. Sincroniza as notas deste aluno
+            const recordId = `${user.uid}_${turma.id}_${aluno.id}`;
+            const notaRef = doc(db, 'notasAluno', recordId);
+            await setDoc(notaRef, {
+              nome: aluno.nome,
+              bimestres: turma.bimestres || {},
+              atualizadoEm: serverTimestamp()
+            }, { merge: true });
+          }
+        }
+      }
+      setToast('Notas publicadas com sucesso no Portal do Aluno!');
+    } catch (e) {
+      console.error('Erro ao publicar notas:', e);
+      setToast('Erro ao publicar notas. Tente novamente.');
+    } finally {
+      setPublishing(false);
+    }
+  };
+
   const [turmaSelecionada, setTurmaSelecionada] = useState(null);
   const [showAlunoDropdown, setShowAlunoDropdown] = useState(false);
   const [alunoLinkCopied, setAlunoLinkCopied] = useState(false);
@@ -272,15 +327,25 @@ export default function DiarioPage() {
             Hub
           </button>
 
-          <div className="relative" ref={alunoDropdownRef}>
+          <div className="flex items-center gap-2">
             <button
-              onClick={() => setShowAlunoDropdown(!showAlunoDropdown)}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold bg-violet-50 hover:bg-violet-100 text-violet-600 border border-violet-200 hover:border-violet-300 transition-all shadow-sm"
+              onClick={handlePublishGrades}
+              disabled={publishing}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold bg-emerald-50 hover:bg-emerald-100 text-emerald-600 border border-emerald-200 hover:border-emerald-300 transition-all shadow-sm disabled:opacity-50"
             >
-              <GraduationCap size={16} />
-              Portal do Aluno
-              <ExternalLink size={12} className="opacity-40" />
+              <Award size={16} />
+              {publishing ? 'Publicando...' : 'Publicar Notas'}
             </button>
+
+            <div className="relative" ref={alunoDropdownRef}>
+              <button
+                onClick={() => setShowAlunoDropdown(!showAlunoDropdown)}
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold bg-violet-50 hover:bg-violet-100 text-violet-600 border border-violet-200 hover:border-violet-300 transition-all shadow-sm"
+              >
+                <GraduationCap size={16} />
+                Portal do Aluno
+                <ExternalLink size={12} className="opacity-40" />
+              </button>
 
             {showAlunoDropdown && (
               <div className="absolute right-0 top-full mt-1 w-44 bg-white border border-slate-200 rounded-xl shadow-lg z-40 overflow-hidden animate-card-in">
@@ -345,6 +410,14 @@ export default function DiarioPage() {
           </div>
         )}
       </main>
+
+      {/* Toast Notification */}
+      {toast && (
+        <div className="fixed bottom-6 right-6 z-50 bg-slate-900/90 backdrop-blur-md border border-slate-700 text-white text-xs font-semibold px-4 py-3 rounded-2xl shadow-2xl flex items-center gap-2 animate-in fade-in slide-in-from-bottom-3 duration-200">
+          <Check size={14} className="text-green-400" />
+          {toast}
+        </div>
+      )}
     </div>
   );
 }
