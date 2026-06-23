@@ -108,13 +108,30 @@ export async function syncAlunoLogin(professorUid, aluno, turmaId) {
   const login = gerarLoginAluno(aluno.nome, aluno.dataNascimento);
   const loginKey = await gerarLoginKey(login);
 
-  const ref = doc(db, 'alunoLogin', loginKey);
-  await setDoc(ref, {
-    alunoId: aluno.id,
+  // 1. Salva/atualiza o doc base do aluno
+  const baseRef = doc(db, 'alunoLogin', loginKey);
+  await setDoc(baseRef, { nome: aluno.nome, login }, { merge: true });
+
+  // 2. Busca o nome do professor
+  let nomeProfessor = 'Professor';
+  try {
+    const profSnap = await getDoc(doc(db, 'professores', professorUid));
+    if (profSnap.exists()) {
+      nomeProfessor = profSnap.data().nome || 'Professor';
+    }
+  } catch (e) {
+    console.error('Erro ao buscar nome do professor para vinculo:', e);
+  }
+
+  // 3. Salva o vínculo específico do professor
+  const vinculoRef = doc(db, 'alunoLogin', loginKey, 'vinculos', professorUid);
+  await setDoc(vinculoRef, {
     professorUid,
     turmaId,
-    nome: aluno.nome,
-    login
+    alunoId: aluno.id,
+    modulo: 'diario',
+    nomeProfessor,
+    atualizadoEm: serverTimestamp()
   }, { merge: true });
 
   return login;
