@@ -53,12 +53,12 @@ export default function DiarioPage() {
           setInitialTurmas(firestoreData);
           // Salva no localStorage como cache
           salvarLocal(firestoreData);
-          // Migra para o novo caminho
-          const newRef = doc(db, 'professores', user.uid);
+          // Migra para o novo caminho (subcoleção isolada)
+          const newRef = doc(db, 'professores', user.uid, 'turmas', 'data');
           await setDoc(newRef, { turmas: firestoreData, updatedAt: serverTimestamp() }, { merge: true });
         } else {
-          // Tenta o novo caminho
-          const newRef = doc(db, 'professores', user.uid);
+          // Tenta o novo caminho (subcoleção isolada)
+          const newRef = doc(db, 'professores', user.uid, 'turmas', 'data');
           const newSnap = await getDoc(newRef);
           if (newSnap.exists() && newSnap.data().turmas?.length > 0) {
             setInitialTurmas(newSnap.data().turmas);
@@ -80,11 +80,11 @@ export default function DiarioPage() {
     load();
   }, [user]);
 
-  // Persiste no Firestore + localStorage quando turmas mudam
+  // Persiste no Firestore (subcoleção isolada) + localStorage
   const persistir = useCallback((turmas) => {
     salvarLocal(turmas);
     if (user) {
-      const ref = doc(db, 'professores', user.uid);
+      const ref = doc(db, 'professores', user.uid, 'turmas', 'data');
       setDoc(ref, { turmas, updatedAt: serverTimestamp() }, { merge: true }).catch(() => {});
     }
   }, [user]);
