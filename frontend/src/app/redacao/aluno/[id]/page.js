@@ -5,11 +5,81 @@ import { useParams } from 'next/navigation';
 import { db } from '@/lib/firebase';
 import { doc, getDoc } from 'firebase/firestore';
 import { generatePDF } from '@/lib/redacao/pdf-generator';
-import { ArrowLeft, Download, Search, FileText, User, BookOpen, Calendar } from 'lucide-react';
+import { ArrowLeft, Download, Search, FileText, User, BookOpen, Calendar, Award, Sparkles, AlertCircle } from 'lucide-react';
 
 function cleanFeedbackText(text) {
   if (!text) return '';
   return text.replace(/```json[\s\S]*?```/g, '').trim();
+}
+
+function parseBoldText(text) {
+  const parts = text.split(/(\*\*.*?\*\*)/g);
+  return parts.map((part, idx) => {
+    if (part.startsWith('**') && part.endsWith('**')) {
+      return (
+        <strong key={idx} className="font-bold text-slate-900 bg-amber-100/40 px-1 rounded">
+          {part.slice(2, -2)}
+        </strong>
+      );
+    }
+    return part;
+  });
+}
+
+function renderFeedbackText(text) {
+  if (!text) return null;
+  const cleaned = cleanFeedbackText(text);
+  const lines = cleaned.split('\n');
+
+  return (
+    <div className="space-y-4 text-slate-600 leading-relaxed text-sm">
+      {lines.map((line, idx) => {
+        const trimmed = line.trim();
+        if (!trimmed) return <div key={idx} className="h-2" />;
+
+        // Headers (Lines starting with #)
+        if (trimmed.startsWith('#')) {
+          const depth = (trimmed.match(/^#+/) || ['#'])[0].length;
+          const cleanText = trimmed.replace(/^#+\s*/, '');
+          const isAnulacao = cleanText.toLowerCase().includes('anulação') || cleanText.toLowerCase().includes('anulado');
+
+          return (
+            <h3
+              key={idx}
+              className={`font-bold tracking-tight mt-6 mb-3 pb-2 border-b flex items-center gap-2 ${
+                depth === 1
+                  ? isAnulacao
+                    ? 'text-base text-rose-600 border-rose-100'
+                    : 'text-base text-violet-700 border-violet-100'
+                  : 'text-sm text-slate-800 border-slate-100'
+              }`}
+            >
+              {isAnulacao ? <AlertCircle size={16} className="text-rose-500 animate-bounce" /> : <Sparkles size={15} className="text-violet-500" />}
+              {cleanText}
+            </h3>
+          );
+        }
+
+        // Lists (Lines starting with * or -)
+        if (trimmed.startsWith('* ') || trimmed.startsWith('- ')) {
+          const cleanText = trimmed.replace(/^[\*\-]\s*/, '');
+          return (
+            <div key={idx} className="flex items-start gap-2.5 pl-2 my-1">
+              <span className="text-violet-500 mt-1.5 flex-shrink-0 w-1.5 h-1.5 rounded-full bg-violet-500" />
+              <span className="text-slate-600">{parseBoldText(cleanText)}</span>
+            </div>
+          );
+        }
+
+        // Regular paragraphs
+        return (
+          <p key={idx} className="text-slate-600 leading-relaxed">
+            {parseBoldText(trimmed)}
+          </p>
+        );
+      })}
+    </div>
+  );
 }
 
 export default function AlunoRedacaoViewPage() {
@@ -18,6 +88,14 @@ export default function AlunoRedacaoViewPage() {
   const [loading, setLoading] = useState(true);
   const [erro, setErro] = useState('');
   const [backUrl, setBackUrl] = useState('/redacao/aluno');
+
+  const compLabels = [
+    'Gramática e Escrita',
+    'Compreensão do Tema',
+    'Estrutura e Argumento',
+    'Coesão e Coerência',
+    'Proposta de Intervenção'
+  ];
 
   useEffect(() => {
     if (typeof window !== 'undefined' && sessionStorage.getItem('aluno_login')) {
@@ -28,7 +106,6 @@ export default function AlunoRedacaoViewPage() {
   useEffect(() => {
     const load = async () => {
       try {
-        // Obtém sessionStorage para pegar professorUid
         let professorUid = null;
         if (typeof window !== 'undefined') {
           const raw = sessionStorage.getItem('redacao_aluno');
@@ -37,7 +114,6 @@ export default function AlunoRedacaoViewPage() {
           }
         }
 
-        // Tenta buscar com professorUid (mais rápido)
         if (professorUid) {
           const ref = doc(db, 'professores', professorUid, 'correcoes', id);
           const snap = await getDoc(ref);
@@ -48,7 +124,6 @@ export default function AlunoRedacaoViewPage() {
           }
         }
 
-        // Fallback: busca no alunoLogin para achar o professorUid
         const loginSnap = await getDoc(doc(db, 'alunoLogin', id));
         if (loginSnap.exists()) {
           const loginData = loginSnap.data();
@@ -89,22 +164,24 @@ export default function AlunoRedacaoViewPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-white flex items-center justify-center">
-        <div className="w-12 h-12 rounded-xl bg-gradient-to-tr from-violet-700 to-violet-400 animate-pulse" />
+      <div className="min-h-screen bg-slate-50 flex items-center justify-center">
+        <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-violet-600 to-indigo-500 animate-pulse shadow-2xl shadow-violet-500/20" />
       </div>
     );
   }
 
   if (erro) {
     return (
-      <div className="min-h-screen bg-white flex items-center justify-center p-4">
-        <div className="text-center max-w-sm animate-card-in">
+      <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4">
+        <div className="text-center max-w-sm bg-white border border-slate-200 rounded-3xl p-8 shadow-xl animate-card-in">
           <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-red-50 border border-red-100 flex items-center justify-center">
             <Search size={28} className="text-red-400" />
           </div>
           <h1 className="text-lg font-bold text-slate-900 mb-2">Não encontrado</h1>
           <p className="text-sm text-slate-400 mb-6">{erro}</p>
-          <a href="/redacao/aluno" className="text-sm text-violet-500 hover:text-violet-400 font-medium">← Tentar outro login</a>
+          <a href="/redacao/aluno" className="inline-flex items-center justify-center px-4 py-2 bg-violet-600 hover:bg-violet-500 text-white rounded-xl text-xs font-semibold transition-all">
+            ← Tentar outro login
+          </a>
         </div>
       </div>
     );
@@ -116,54 +193,134 @@ export default function AlunoRedacaoViewPage() {
   });
 
   return (
-    <div className="min-h-screen bg-slate-50">
-      <div className="max-w-3xl mx-auto px-4 py-6">
-        <div className="flex items-center justify-between mb-6">
-          <a href={backUrl} className="inline-flex items-center gap-1.5 text-sm text-violet-500 hover:text-violet-400 font-medium transition-colors">
-            <ArrowLeft size={16} /> {backUrl === '/aluno' ? 'Voltar ao Portal' : 'Buscar outro login'}
+    <div 
+      className="min-h-screen bg-[#f8fafc] py-8 px-4 font-sans"
+      style={{
+        backgroundImage: 'radial-gradient(ellipse 80% 80% at 50% -20%, rgba(99,102,241,0.05), transparent)',
+      }}
+    >
+      <div className="max-w-3xl mx-auto space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-300">
+        
+        {/* Navigation Bar */}
+        <div className="flex items-center justify-between">
+          <a 
+            href={backUrl} 
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold bg-white border border-slate-200/80 text-slate-600 hover:bg-slate-50 hover:text-slate-800 transition-all shadow-sm hover:scale-[1.02] active:scale-[0.98]"
+          >
+            <ArrowLeft size={14} /> {backUrl === '/aluno' ? 'Voltar ao Portal' : 'Buscar outro login'}
           </a>
-          <button onClick={handleExportPDF}
-            className="inline-flex items-center gap-1.5 px-3 py-2 bg-violet-50 hover:bg-violet-100 border border-violet-200 rounded-xl text-xs font-semibold text-violet-600 transition-all">
+          <button 
+            onClick={handleExportPDF}
+            className="inline-flex items-center gap-2 px-4 py-2 bg-violet-600 hover:bg-violet-500 text-white rounded-xl text-xs font-bold transition-all shadow-md shadow-violet-500/10 hover:scale-[1.02] active:scale-[0.98]"
+          >
             <Download size={14} /> Baixar PDF
           </button>
         </div>
 
-        <div className="flex flex-wrap items-center gap-4 text-sm text-slate-500 mb-4">
-          <span className="flex items-center gap-1.5"><User size={14} /> {correction.studentName}</span>
-          {correction.studentClass !== 'N/A' && <span className="flex items-center gap-1.5"><BookOpen size={14} /> Turma {correction.studentClass}</span>}
-          <span className="flex items-center gap-1.5"><FileText size={14} /> Tema: {correction.essayTheme}</span>
-          {correction.createdAt && (
-            <span className="flex items-center gap-1.5"><Calendar size={14} /> {correction.createdAt.toDate?.().toLocaleDateString('pt-BR') || ''}</span>
-          )}
-        </div>
-
-        {correction.totalScore != null && (
-          <div className="glass-panel p-6 text-center mb-6">
-            <p className="text-xs text-slate-400 uppercase tracking-wider font-semibold mb-1">Nota Final</p>
-            <span className={`text-6xl font-black tracking-tighter tabular-nums ${correction.totalScore >= 600 ? 'text-green-500' : correction.totalScore >= 400 ? 'text-amber-500' : 'text-red-500'}`}>
-              {correction.totalScore}
-            </span>
-            <span className="text-xl text-slate-400 font-bold ml-1">/ 1000</span>
-          </div>
-        )}
-
-        {scores?.length > 0 && (
-          <div className="grid grid-cols-5 gap-2 mb-6">
-            {scores.map((item, i) => (
-              <div key={i} className="glass-panel p-3 text-center">
-                <p className="text-[10px] text-slate-400 font-semibold mb-1">{item.subject}</p>
-                <span className="text-xl font-black tabular-nums" style={{ color: item.color }}>{item.A}</span>
-                <span className="text-[10px] text-slate-400">/200</span>
+        {/* Student Profile Info Card */}
+        <div className="bg-white border border-slate-200/60 rounded-3xl p-6 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-6 relative overflow-hidden">
+          <div className="absolute top-0 left-0 w-full h-[3px] bg-gradient-to-r from-violet-500 to-indigo-500" />
+          <div className="flex items-center gap-4">
+            <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-violet-500 to-indigo-500 flex items-center justify-center text-white text-xl font-black shadow-lg shadow-indigo-500/15">
+              {correction.studentName?.charAt(0).toUpperCase()}
+            </div>
+            <div>
+              <h2 className="text-base font-bold text-slate-800 tracking-tight">{correction.studentName}</h2>
+              <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-slate-400 mt-1">
+                {correction.studentClass !== 'N/A' && (
+                  <span className="flex items-center gap-1"><BookOpen size={12} /> Turma {correction.studentClass}</span>
+                )}
+                {correction.createdAt && (
+                  <span className="flex items-center gap-1">
+                    <Calendar size={12} /> 
+                    {correction.createdAt.toDate?.().toLocaleDateString('pt-BR') || new Date(correction.createdAt).toLocaleDateString('pt-BR')}
+                  </span>
+                )}
               </div>
-            ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Theme Card */}
+        <div className="bg-white border border-slate-200/60 rounded-3xl p-5 shadow-sm space-y-2">
+          <div className="flex items-center gap-2">
+            <div className="p-1 bg-violet-50 rounded-lg text-violet-500"><FileText size={14} /></div>
+            <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Tema Proposto</span>
+          </div>
+          <p className="text-sm font-semibold text-slate-700 leading-relaxed">
+            {correction.essayTheme}
+          </p>
+        </div>
+
+        {/* Total Score Panel */}
+        {correction.totalScore != null && (
+          <div className="bg-gradient-to-br from-violet-600 to-indigo-700 text-white rounded-3xl p-8 shadow-xl shadow-indigo-500/15 text-center relative overflow-hidden flex flex-col items-center justify-center">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full blur-2xl -translate-y-6 translate-x-6" />
+            <div className="absolute bottom-0 left-0 w-32 h-32 bg-indigo-500/10 rounded-full blur-2xl translate-y-12 -translate-x-12" />
+            
+            <p className="text-xs text-indigo-100 uppercase tracking-widest font-semibold mb-2 flex items-center gap-1.5">
+              <Award size={14} className="text-indigo-200" /> Nota Final ENEM
+            </p>
+            <div className="flex items-baseline justify-center">
+              <span className="text-6xl sm:text-7xl font-black tracking-tighter tabular-nums drop-shadow-md">
+                {correction.totalScore}
+              </span>
+              <span className="text-xl text-indigo-200 font-bold ml-1.5">/ 1000</span>
+            </div>
           </div>
         )}
 
-        <div className="glass-panel p-6">
-          <div className="prose prose-sm max-w-none text-slate-700 whitespace-pre-wrap leading-relaxed">
-            {cleanFeedbackText(correction.result)}
+        {/* Competencies Section */}
+        {scores?.length > 0 && (
+          <div className="space-y-3">
+            <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider pl-1">Notas por Competência</h3>
+            <div className="grid grid-cols-1 sm:grid-cols-5 gap-3">
+              {scores.map((item, i) => {
+                const percentage = Math.min(100, Math.max(0, ((item.A || 0) / 200) * 100));
+                return (
+                  <div 
+                    key={i} 
+                    className="bg-white border border-slate-200/50 rounded-2xl p-4 shadow-sm relative overflow-hidden flex flex-col justify-between transition-all duration-300 hover:-translate-y-0.5 hover:border-violet-300 group"
+                  >
+                    <div className="absolute top-0 left-0 w-full h-[3px] bg-slate-100" />
+                    <div className="absolute top-0 left-0 h-[3px] transition-all duration-500" style={{ width: `${percentage}%`, backgroundColor: item.color }} />
+                    
+                    <div className="flex justify-between items-center mb-1">
+                      <span className="font-mono text-xs font-bold text-slate-400 uppercase">C{i+1}</span>
+                      <span className="text-[10px] px-1.5 py-0.5 rounded bg-slate-50 border border-slate-100 text-slate-400 font-bold font-mono">/200</span>
+                    </div>
+
+                    <div className="my-2">
+                      <span className="text-2xl font-black tabular-nums transition-colors" style={{ color: item.color }}>
+                        {item.A || 0}
+                      </span>
+                    </div>
+
+                    <div>
+                      <p className="text-[9px] text-slate-400 font-semibold leading-tight line-clamp-2" title={compLabels[i]}>
+                        {compLabels[i]}
+                      </p>
+                      {/* Visual progress bar */}
+                      <div className="w-full h-1 bg-slate-50 border border-slate-100 rounded-full mt-2 overflow-hidden">
+                        <div className="h-full rounded-full transition-all duration-500" style={{ width: `${percentage}%`, backgroundColor: item.color }} />
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
           </div>
+        )}
+
+        {/* Pedagogical Report */}
+        <div className="bg-white border border-slate-200/60 rounded-3xl p-6 sm:p-8 shadow-sm space-y-5">
+          <div className="flex items-center gap-2 pb-3 border-b border-slate-100">
+            <div className="p-1.5 bg-violet-50 rounded-lg text-violet-500"><Sparkles size={16} /></div>
+            <h3 className="text-sm font-bold text-slate-800">Relatório Pedagógico Detalhado</h3>
+          </div>
+          {renderFeedbackText(correction.result)}
         </div>
+
       </div>
     </div>
   );
