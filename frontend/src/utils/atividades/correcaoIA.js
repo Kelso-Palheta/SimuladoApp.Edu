@@ -91,8 +91,7 @@ function corrigirObjetiva(questao, resposta) {
 }
 
 async function corrigirMultiQuestao({ questoes, respostas, materialTexto = '', nivelCorrecao = 'normal' }) {
-  const apiKey = process.env.NEXT_PUBLIC_MARITACA_API_KEY;
-  if (!apiKey) throw new Error('NEXT_PUBLIC_MARITACA_API_KEY não configurada no .env');
+  const apiKey = 'client-side';
 
   const resultados = {};
   let notaFinal = 0;
@@ -111,8 +110,7 @@ async function corrigirMultiQuestao({ questoes, respostas, materialTexto = '', n
 }
 
 async function corrigirLegacy({ enunciado, gabarito, respostaTexto, notaMaxima, imagens = [], nivelCorrecao = 'normal' }) {
-  const apiKey = process.env.NEXT_PUBLIC_MARITACA_API_KEY;
-  if (!apiKey) throw new Error('NEXT_PUBLIC_MARITACA_API_KEY não configurada no .env');
+  const apiKey = 'client-side';
   if (!enunciado?.trim()) throw new Error('Enunciado obrigatório');
   if (!gabarito?.trim()) throw new Error('Gabarito obrigatório');
 
@@ -134,8 +132,7 @@ export const corrigirAtividade = async (params) => {
 };
 
 export async function sugerirRubrica(questao, materialTexto = '') {
-  const apiKey = process.env.NEXT_PUBLIC_MARITACA_API_KEY;
-  if (!apiKey) throw new Error('NEXT_PUBLIC_MARITACA_API_KEY não configurada no .env');
+  const apiKey = 'client-side';
 
   let prompt = `Você é um professor experiente do Ensino Médio criando a rubrica de correção para uma questão discursiva.
 
@@ -167,8 +164,7 @@ Exemplo:
  * Retorna array de objetos: { tipo, enunciado, rubrica, notaMaxima }
  */
 export async function gerarQuestoesComIA({ materialTexto, qtdQuestoes = 3, incluirObjetivas = true, dificuldade = 'medio', incluirTextoApoio = false, tema = '' }) {
-  const apiKey = process.env.NEXT_PUBLIC_MARITACA_API_KEY;
-  if (!apiKey) throw new Error('NEXT_PUBLIC_MARITACA_API_KEY não configurada no .env');
+  const apiKey = 'client-side';
 
   const labelsDificuldade = { facil: 'fácil', medio: 'média', dificil: 'difícil' };
   const instrucoesDificuldade = {
