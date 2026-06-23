@@ -9,6 +9,7 @@ import { gerarLoginAluno, gerarLoginKey } from '@/utils/diario/loginAluno';
 import { db } from '@/lib/firebase';
 import { doc, setDoc, serverTimestamp } from 'firebase/firestore';
 import { vincularAlunoProfessor } from '@/lib/firebase-aluno';
+import { extractTextFromPDF } from '@/utils/atividades/pdfExtractor';
 import { useTurmas } from '@/hooks/diario/useTurmas';
 import { turmasIniciais } from '@/data/diario/turmasIniciais';
 import {
@@ -130,7 +131,40 @@ export default function RedacaoPage() {
     const file = e.target.files?.[0];
     if (!file) return;
     setError('');
-    if (file.name.toLowerCase().endsWith('.heic')) {
+    const name = file.name.toLowerCase();
+
+    // 1. Arquivos PDF
+    if (name.endsWith('.pdf')) {
+      setExtracting(true);
+      try {
+        const extractedText = await extractTextFromPDF(file);
+        if (!extractedText.trim()) {
+          throw new Error('Nenhum texto pôde ser extraído deste PDF. Certifique-se de que não é um PDF composto exclusivamente por imagens escaneadas.');
+        }
+        setText(extractedText);
+        setStep('review');
+      } catch (err) {
+        setError('Erro ao extrair texto do PDF: ' + err.message);
+      } finally {
+        setExtracting(false);
+      }
+      return;
+    }
+
+    // 2. Arquivos de Texto (.txt)
+    if (name.endsWith('.txt')) {
+      try {
+        const textContent = await file.text();
+        setText(textContent);
+        setStep('review');
+      } catch (err) {
+        setError('Erro ao ler arquivo de texto: ' + err.message);
+      }
+      return;
+    }
+
+    // 3. Imagens HEIC (converter para JPG)
+    if (name.endsWith('.heic')) {
       try {
         const heic2any = (await import('heic2any')).default;
         const converted = await heic2any({ blob: file, toType: 'image/jpeg', quality: 0.9 });
@@ -141,6 +175,8 @@ export default function RedacaoPage() {
       } catch (err) { setError('Erro ao converter HEIC: ' + err.message); }
       return;
     }
+
+    // 4. Imagens padrão (JPG, PNG, etc.)
     const reader = new FileReader();
     reader.onload = () => { setImageBase64(reader.result.split(',')[1]); setImagePreview(reader.result); };
     reader.readAsDataURL(file);
@@ -528,9 +564,9 @@ export default function RedacaoPage() {
                     <div className="w-14 h-14 mx-auto mb-3 rounded-2xl bg-slate-100 flex items-center justify-center">
                       <Camera size={24} className="text-slate-400" />
                     </div>
-                    <p className="text-sm text-slate-600 font-medium">Clique para fotografar a redação</p>
-                    <p className="text-xs text-slate-400 mt-1">JPG, PNG ou HEIC</p>
-                    <input ref={fileRef} type="file" accept="image/*,.heic,.HEIC" className="hidden" onChange={handleFilePick} />
+                    <p className="text-sm text-slate-600 font-medium">Clique para selecionar ou fotografar a redação</p>
+                    <p className="text-xs text-slate-400 mt-1">Imagem (JPG, PNG, HEIC), PDF ou Documento de Texto (TXT)</p>
+                    <input ref={fileRef} type="file" accept="image/*,.heic,.HEIC,.pdf,.txt" className="hidden" onChange={handleFilePick} />
                   </motion.button>
                 ) : (
                   <div className="relative group">
