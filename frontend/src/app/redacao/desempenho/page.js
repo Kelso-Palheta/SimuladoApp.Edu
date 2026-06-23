@@ -288,7 +288,7 @@ export default function DesempenhoPage() {
       </header>
 
       {/* Main Content */}
-      <main className="flex-1 max-w-5xl mx-auto w-full px-6 py-8 space-y-6">
+      <main className="flex-1 max-w-[1440px] mx-auto w-full px-6 py-8 space-y-6">
         
         {/* Stats Panel */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
