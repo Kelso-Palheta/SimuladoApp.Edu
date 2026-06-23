@@ -37,47 +37,29 @@ export default function DiarioPage() {
   const { user, perfil, loading } = useAuth();
   const router = useRouter();
 
-  const [initialTurmas, setInitialTurmas] = useState(null);
-  const [firestoreLoaded, setFirestoreLoaded] = useState(false);
+  // Carrega direto do localStorage (sem esperar Firestore)
+  const [initialTurmas] = useState(() => {
+    const local = typeof window !== 'undefined' ? carregarLocal() : null;
+    return local?.length > 0 ? local : turmasIniciais;
+  });
 
-  // Carrega turmas: Firestore > localStorage > padrão
+  // Sincroniza do Firestore em background (não bloqueia a UI)
   useEffect(() => {
     if (!user) return;
-    const load = async () => {
+    (async () => {
       try {
-        // Tenta carregar do Firestore (caminho antigo do projeto legado)
-        const oldRef = doc(db, 'users', user.uid, 'turmas', 'data');
-        const oldSnap = await getDoc(oldRef);
-        if (oldSnap.exists() && oldSnap.data().turmas?.length > 0) {
-          const firestoreData = oldSnap.data().turmas;
-          setInitialTurmas(firestoreData);
-          // Salva no localStorage como cache
-          salvarLocal(firestoreData);
-          // Migra para o novo caminho (subcoleção isolada)
-          const newRef = doc(db, 'professores', user.uid, 'turmas', 'data');
-          await setDoc(newRef, { turmas: firestoreData, updatedAt: serverTimestamp() }, { merge: true });
-        } else {
-          // Tenta o novo caminho (subcoleção isolada)
-          const newRef = doc(db, 'professores', user.uid, 'turmas', 'data');
-          const newSnap = await getDoc(newRef);
-          if (newSnap.exists() && newSnap.data().turmas?.length > 0) {
-            setInitialTurmas(newSnap.data().turmas);
-            salvarLocal(newSnap.data().turmas);
-          } else {
-            // Fallback: localStorage ou dados iniciais
-            const local = carregarLocal();
-            setInitialTurmas(local?.length > 0 ? local : []);
+        const ref = doc(db, 'professores', user.uid, 'turmas', 'data');
+        const snap = await getDoc(ref);
+        if (!snap.exists() || !snap.data().turmas?.length) {
+          // Tenta migrar do caminho antigo
+          const oldRef = doc(db, 'users', user.uid, 'turmas', 'data');
+          const oldSnap = await getDoc(oldRef);
+          if (oldSnap.exists() && oldSnap.data().turmas?.length > 0) {
+            await setDoc(ref, { turmas: oldSnap.data().turmas, updatedAt: serverTimestamp() }, { merge: true });
           }
         }
-      } catch (err) {
-        console.error('Erro ao carregar turmas:', err);
-        const local = carregarLocal();
-        setInitialTurmas(local?.length > 0 ? local : []);
-      } finally {
-        setFirestoreLoaded(true);
-      }
-    };
-    load();
+      } catch (e) { /* silencioso */ }
+    })();
   }, [user]);
 
   const persistTimeout = useRef(null);
@@ -157,8 +139,8 @@ export default function DiarioPage() {
     return () => document.removeEventListener('click', handleClick);
   }, [showAlunoDropdown]);
 
-  // Auth guard + firestore loading
-  if (loading || !firestoreLoaded || (!perfil && user)) {
+  // Auth guard
+  if (loading || (!perfil && user)) {
     return (
       <div className="flex h-screen items-center justify-center bg-white">
         <div className="text-center">
