@@ -7,6 +7,11 @@ import { doc, getDoc } from 'firebase/firestore';
 import { generatePDF } from '@/lib/redacao/pdf-generator';
 import { ArrowLeft, Download, Search, FileText, User, BookOpen, Calendar } from 'lucide-react';
 
+function cleanFeedbackText(text) {
+  if (!text) return '';
+  return text.replace(/```json[\s\S]*?```/g, '').trim();
+}
+
 export default function AlunoRedacaoViewPage() {
   const { id } = useParams();
   const [correction, setCorrection] = useState(null);
@@ -149,7 +154,7 @@ export default function AlunoRedacaoViewPage() {
 
         <div className="glass-panel p-6">
           <div className="prose prose-sm max-w-none text-slate-700 whitespace-pre-wrap leading-relaxed">
-            {correction.result}
+            {cleanFeedbackText(correction.result)}
           </div>
         </div>
       </div>

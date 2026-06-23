@@ -27,6 +27,11 @@ const EASE_EXPO = [0.19, 1, 0.22, 1];
 const EASE_OUT = [0.16, 1, 0.3, 1];
 const EASE_SPRING = { type: "spring", stiffness: 300, damping: 24 };
 
+function cleanFeedbackText(text) {
+  if (!text) return '';
+  return text.replace(/```json[\s\S]*?```/g, '').trim();
+}
+
 const COMPETENCIAS = [
   { id: 'c1', label: 'C1 — Domínio da escrita formal', color: '#ef4444', bg: '#fef2f2', bar: '#fca5a5' },
   { id: 'c2', label: 'C2 — Compreensão da proposta', color: '#f97316', bg: '#fff7ed', bar: '#fdba74' },
@@ -907,7 +912,7 @@ export default function RedacaoPage() {
                 transition={{ delay: 0.6, duration: 0.5, ease: EASE_OUT }}
                 className="bg-white/70 backdrop-blur-xl rounded-2xl border border-slate-200/60 p-6 sm:p-8 shadow-sm">
                 <div className="prose prose-sm max-w-none text-slate-700 whitespace-pre-wrap leading-relaxed text-[15px]">
-                  {result}
+                  {cleanFeedbackText(result)}
                 </div>
               </motion.div>
             </motion.div>
