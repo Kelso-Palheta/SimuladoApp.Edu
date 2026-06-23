@@ -10,6 +10,7 @@ import { db } from '@/lib/firebase';
 import { doc, setDoc, serverTimestamp } from 'firebase/firestore';
 import { vincularAlunoProfessor } from '@/lib/firebase-aluno';
 import { extractTextFromPDF } from '@/utils/atividades/pdfExtractor';
+import { extractTextFromDocx } from '@/utils/atividades/docxExtractor';
 import { useTurmas } from '@/hooks/diario/useTurmas';
 import { turmasIniciais } from '@/data/diario/turmasIniciais';
 import {
@@ -134,6 +135,24 @@ export default function RedacaoPage() {
     if (!file) return;
     setError('');
     const name = file.name.toLowerCase();
+    
+    // 0. Arquivos Word (.docx)
+    if (name.endsWith('.docx')) {
+      setExtracting(true);
+      try {
+        const extractedText = await extractTextFromDocx(file);
+        if (!extractedText.trim()) {
+          throw new Error('Nenhum texto pôde ser extraído deste documento Word.');
+        }
+        setText(extractedText);
+        setStep('review');
+      } catch (err) {
+        setError('Erro ao extrair texto do documento Word: ' + err.message);
+      } finally {
+        setExtracting(false);
+      }
+      return;
+    }
 
     // 1. Arquivos PDF
     if (name.endsWith('.pdf')) {
@@ -189,6 +208,23 @@ export default function RedacaoPage() {
     if (!file) return;
     setError('');
     const name = file.name.toLowerCase();
+
+    // 0. Arquivos Word (.docx)
+    if (name.endsWith('.docx')) {
+      setMotivatorExtracting(true);
+      try {
+        const extractedText = await extractTextFromDocx(file);
+        if (!extractedText.trim()) {
+          throw new Error('Nenhum texto pôde ser extraído deste documento Word.');
+        }
+        setMotivatorText(extractedText);
+      } catch (err) {
+        setError('Erro ao extrair texto do Word motivador: ' + err.message);
+      } finally {
+        setMotivatorExtracting(false);
+      }
+      return;
+    }
 
     // 1. Arquivos PDF
     if (name.endsWith('.pdf')) {
@@ -590,7 +626,7 @@ export default function RedacaoPage() {
                         </>
                       )}
                     </button>
-                    <input ref={motivatorFileRef} type="file" accept="image/*,.heic,.HEIC,.pdf,.txt" className="hidden" onChange={handleMotivatorFilePick} />
+                    <input ref={motivatorFileRef} type="file" accept="image/*,.heic,.HEIC,.pdf,.txt,.docx" className="hidden" onChange={handleMotivatorFilePick} />
                   </div>
                   <textarea value={motivatorText} onChange={e => setMotivatorText(e.target.value)}
                     placeholder={motivatorExtracting ? "Extraindo texto do arquivo enviado..." : "Cole aqui ou importe um arquivo com o texto motivador da redação..."}
@@ -651,8 +687,8 @@ export default function RedacaoPage() {
                       <Camera size={24} className="text-slate-400" />
                     </div>
                     <p className="text-sm text-slate-600 font-medium">Clique para selecionar ou fotografar a redação</p>
-                    <p className="text-xs text-slate-400 mt-1">Imagem (JPG, PNG, HEIC), PDF ou Documento de Texto (TXT)</p>
-                    <input ref={fileRef} type="file" accept="image/*,.heic,.HEIC,.pdf,.txt" className="hidden" onChange={handleFilePick} />
+                    <p className="text-xs text-slate-400 mt-1">Imagem (JPG, PNG, HEIC), PDF, Word (.docx) ou Texto (.txt)</p>
+                    <input ref={fileRef} type="file" accept="image/*,.heic,.HEIC,.pdf,.txt,.docx" className="hidden" onChange={handleFilePick} />
                   </motion.button>
                 ) : (
                   <div className="relative group">
