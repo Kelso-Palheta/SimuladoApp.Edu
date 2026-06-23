@@ -37,13 +37,12 @@ export default function DiarioPage() {
   const { user, perfil, loading } = useAuth();
   const router = useRouter();
 
-  // Carrega do localStorage imediatamente, sync do Firestore em background
-  const [initialTurmas, setInitialTurmas] = useState(() => {
-    const local = typeof window !== 'undefined' ? carregarLocal() : null;
-    return local?.length > 0 ? local : turmasIniciais;
-  });
+  const localData = typeof window !== 'undefined' ? carregarLocal() : null;
+  const hasLocalData = localData?.length > 0;
+  const [initialTurmas, setInitialTurmas] = useState(hasLocalData ? localData : []);
+  const [loadingTurmas, setLoadingTurmas] = useState(!hasLocalData);
 
-  // Sincroniza do Firestore: se tiver dados lá e localStorage estiver vazio/antigo, atualiza
+  // Carrega do Firestore se localStorage estiver vazio, ou sync em background
   useEffect(() => {
     if (!user) return;
     (async () => {
@@ -52,27 +51,36 @@ export default function DiarioPage() {
         const snap = await getDoc(ref);
         if (snap.exists() && snap.data().turmas?.length > 0) {
           const cloud = snap.data().turmas;
-          const local = carregarLocal();
-          // Só atualiza se localStorage estiver vazio ou diferente
-          if (!local || local.length === 0 || JSON.stringify(local) !== JSON.stringify(cloud)) {
+          if (!hasLocalData) {
+            // Dispositivo novo: carrega do Firestore
             setInitialTurmas(cloud);
             salvarLocal(cloud);
+          } else if (JSON.stringify(localData) !== JSON.stringify(cloud)) {
+            // Background sync: atualiza localStorage silenciosamente
+            salvarLocal(cloud);
           }
-        } else {
-          // Tenta migrar do caminho antigo (users/{uid}/turmas/data)
+        } else if (!hasLocalData) {
+          // Sem dados no Firestore nem localStorage: migra do caminho antigo ou usa padrão
           const oldRef = doc(db, 'users', user.uid, 'turmas', 'data');
           const oldSnap = await getDoc(oldRef);
           if (oldSnap.exists() && oldSnap.data().turmas?.length > 0) {
             const oldData = oldSnap.data().turmas;
             await setDoc(ref, { turmas: oldData, updatedAt: serverTimestamp() }, { merge: true });
-            const local = carregarLocal();
-            if (!local || local.length === 0) {
-              setInitialTurmas(oldData);
-              salvarLocal(oldData);
-            }
+            setInitialTurmas(oldData);
+            salvarLocal(oldData);
+          } else {
+            setInitialTurmas(turmasIniciais);
+            salvarLocal(turmasIniciais);
           }
         }
-      } catch (e) { /* silencioso */ }
+      } catch (e) {
+        if (!hasLocalData) {
+          setInitialTurmas(turmasIniciais);
+          salvarLocal(turmasIniciais);
+        }
+      } finally {
+        setLoadingTurmas(false);
+      }
     })();
   }, [user]);
 
@@ -153,8 +161,8 @@ export default function DiarioPage() {
     return () => document.removeEventListener('click', handleClick);
   }, [showAlunoDropdown]);
 
-  // Auth guard
-  if (loading || (!perfil && user)) {
+  // Auth guard + carregamento inicial de turmas
+  if (loading || loadingTurmas || (!perfil && user)) {
     return (
       <div className="flex h-screen items-center justify-center bg-white">
         <div className="text-center">
