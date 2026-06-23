@@ -8,7 +8,6 @@ import { TurmaView } from '@/components/diario/TurmaView';
 import { ProfileModal } from '@/components/diario/ProfileModal';
 import { useTurmas } from '@/hooks/diario/useTurmas';
 import { useNotas } from '@/hooks/diario/useNotas';
-import { turmasIniciais } from '@/data/diario/turmasIniciais';
 import { ArrowLeft, GraduationCap, ExternalLink, Copy, Check } from 'lucide-react';
 import { db } from '@/lib/firebase';
 import { doc, getDoc, setDoc, serverTimestamp } from 'firebase/firestore';
@@ -73,14 +72,14 @@ export default function DiarioPage() {
             setInitialTurmas(oldData);
             salvarLocal(oldData);
           } else {
-            setInitialTurmas(turmasIniciais);
-            salvarLocal(turmasIniciais);
+            setInitialTurmas([]);
+            salvarLocal([]);
           }
         }
       } catch (e) {
         if (!hasLocalData) {
-          setInitialTurmas(turmasIniciais);
-          salvarLocal(turmasIniciais);
+          setInitialTurmas([]);
+          salvarLocal([]);
         }
       } finally {
         setLoadingTurmas(false);
