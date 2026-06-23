@@ -19,6 +19,7 @@ import { db } from '@/lib/firebase';
 import { doc, getDoc, setDoc, serverTimestamp } from 'firebase/firestore';
 
 const STORAGE_KEY = 'diario_turmas';
+const USER_KEY = 'diario_userId';
 
 const carregarLocal = () => {
   try {
@@ -38,53 +39,64 @@ export default function AtividadesPage() {
   const { user, perfil, loading, logout } = useAuth();
   const router = useRouter();
 
-  const [initialTurmas, setInitialTurmas] = useState(null);
-  const [firestoreLoaded, setFirestoreLoaded] = useState(false);
+  // Verifica se o localStorage pertence ao usuário atual
+  const storedUserId = typeof window !== 'undefined' ? localStorage.getItem(USER_KEY) : null;
+  const localData = storedUserId === user?.uid ? carregarLocal() : null;
+  const hasLocalData = localData?.length > 0;
+  const [initialTurmas, setInitialTurmas] = useState(hasLocalData ? localData : []);
+  const [loadingTurmas, setLoadingTurmas] = useState(!hasLocalData);
 
-  // Carrega turmas: Firestore > localStorage > padrão
+  // Carrega do Firestore se localStorage estiver vazio, ou sync em background
   useEffect(() => {
     if (!user) return;
-    const load = async () => {
+    (async () => {
       try {
-        // Tenta carregar do Firestore (caminho antigo)
-        const oldRef = doc(db, 'users', user.uid, 'turmas', 'data');
-        const oldSnap = await getDoc(oldRef);
-        if (oldSnap.exists() && oldSnap.data().turmas?.length > 0) {
-          const firestoreData = oldSnap.data().turmas;
-          setInitialTurmas(firestoreData);
-          salvarLocal(firestoreData);
-          const newRef = doc(db, 'professores', user.uid);
-          await setDoc(newRef, { turmas: firestoreData, updatedAt: serverTimestamp() }, { merge: true });
-        } else {
-          // Tenta o novo caminho
-          const newRef = doc(db, 'professores', user.uid);
-          const newSnap = await getDoc(newRef);
-          if (newSnap.exists() && newSnap.data().turmas?.length > 0) {
-            setInitialTurmas(newSnap.data().turmas);
-            salvarLocal(newSnap.data().turmas);
+        const ref = doc(db, 'professores', user.uid, 'turmas', 'data');
+        const snap = await getDoc(ref);
+        if (snap.exists() && snap.data().turmas?.length > 0) {
+          const cloud = snap.data().turmas;
+          if (!hasLocalData) {
+            setInitialTurmas(cloud);
+            salvarLocal(cloud);
+            if (typeof window !== 'undefined') localStorage.setItem(USER_KEY, user.uid);
+          } else if (JSON.stringify(localData) !== JSON.stringify(cloud)) {
+            salvarLocal(cloud);
+          }
+        } else if (!hasLocalData) {
+          // Sem dados no Firestore nem localStorage: migra do caminho antigo ou usa padrão
+          const oldRef = doc(db, 'users', user.uid, 'turmas', 'data');
+          const oldSnap = await getDoc(oldRef);
+          if (oldSnap.exists() && oldSnap.data().turmas?.length > 0) {
+            const oldData = oldSnap.data().turmas;
+            await setDoc(ref, { turmas: oldData, updatedAt: serverTimestamp() }, { merge: true });
+            setInitialTurmas(oldData);
+            salvarLocal(oldData);
           } else {
-            const local = carregarLocal();
-            setInitialTurmas(local?.length > 0 ? local : []);
+            setInitialTurmas([]);
+            salvarLocal([]);
           }
         }
-      } catch (err) {
-        console.error('Erro ao carregar turmas:', err);
-        const local = carregarLocal();
-        setInitialTurmas(local?.length > 0 ? local : []);
+      } catch (e) {
+        console.error('Erro ao carregar turmas:', e);
+        if (!hasLocalData) {
+          setInitialTurmas([]);
+          salvarLocal([]);
+        }
       } finally {
-        setFirestoreLoaded(true);
+        setLoadingTurmas(false);
       }
-    };
-    load();
+    })();
   }, [user]);
 
-  // Persiste no Firestore + localStorage quando turmas mudam
+  // Persiste no Firestore (subcoleção isolada) + localStorage
   const persistir = (novasTurmas) => {
     salvarLocal(novasTurmas);
-    if (user) {
-      const ref = doc(db, 'professores', user.uid);
-      setDoc(ref, { turmas: novasTurmas, updatedAt: serverTimestamp() }, { merge: true }).catch(() => {});
-    }
+    if (typeof window !== 'undefined' && user) localStorage.setItem(USER_KEY, user.uid);
+    if (!user) return;
+    const ref = doc(db, 'professores', user.uid, 'turmas', 'data');
+    setDoc(ref, { turmas: novasTurmas, updatedAt: serverTimestamp() }, { merge: true }).catch((e) => {
+      console.error('Erro ao salvar turmas:', e);
+    });
   };
 
   const { turmas, setTurmas, addTurma, removeTurma, addAlunos } = useTurmas(initialTurmas || [], persistir);
@@ -129,7 +141,7 @@ export default function AtividadesPage() {
   }, [showAlunoDropdown]);
 
   // Auth guard
-  if (loading || !firestoreLoaded || (!perfil && user)) {
+  if (loading || loadingTurmas || (!perfil && user)) {
     return (
       <div className="flex h-screen items-center justify-center bg-white">
         <div className="text-center">
