@@ -109,6 +109,7 @@ export default function AtividadesPage() {
   const persistir = (novasTurmas) => {
     if (loadingTurmas) return; // CRÍTICO: Não persiste enquanto estiver carregando os dados iniciais do Firestore!
     salvarLocal(novasTurmas);
+    setInitialTurmas(novasTurmas);
     if (typeof window !== 'undefined' && user) localStorage.setItem(USER_KEY, user.uid);
     if (!user) return;
     const ref = doc(db, 'professores', user.uid, 'turmas', 'data');

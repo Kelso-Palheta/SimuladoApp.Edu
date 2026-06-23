@@ -25,6 +25,7 @@ export default function DesempenhoPage() {
   const [activeMenu, setActiveMenu] = useState(null);
   const [toast, setToast] = useState('');
   const [selectedTurma, setSelectedTurma] = useState('all');
+  const [selectedBimestre, setSelectedBimestre] = useState(1);
 
   useEffect(() => {
     if (toast) {
@@ -269,15 +270,17 @@ export default function DesempenhoPage() {
   }
 
   const filtered = corrections.filter(c =>
-    !search || c.studentName?.toLowerCase().includes(search.toLowerCase()) ||
+    (!search || c.studentName?.toLowerCase().includes(search.toLowerCase()) ||
     c.studentClass?.toLowerCase().includes(search.toLowerCase()) ||
     c.essayTheme?.toLowerCase().includes(search.toLowerCase()) ||
-    c.id?.toLowerCase().includes(search.toLowerCase())
+    c.id?.toLowerCase().includes(search.toLowerCase())) &&
+    (Number(c.bimestre) || 1) === selectedBimestre
   );
 
-  const total = corrections.length;
-  const avgScore = total > 0 ? Math.round(corrections.reduce((s, c) => s + (c.totalScore || 0), 0) / total) : 0;
-  const maxScore = total > 0 ? Math.max(...corrections.map(c => c.totalScore || 0)) : 0;
+  const bimestreCorrections = corrections.filter(c => (Number(c.bimestre) || 1) === selectedBimestre);
+  const total = bimestreCorrections.length;
+  const avgScore = total > 0 ? Math.round(bimestreCorrections.reduce((s, c) => s + (c.totalScore || 0), 0) / total) : 0;
+  const maxScore = total > 0 ? Math.max(...bimestreCorrections.map(c => c.totalScore || 0)) : 0;
 
   const formatarData = (timestamp) => {
     if (!timestamp) return '—';
@@ -322,7 +325,8 @@ export default function DesempenhoPage() {
       
       // Busca correções deste aluno
       const studentCorrections = corrections.filter(c => 
-        c.studentName?.trim().toLowerCase() === al.nome.trim().toLowerCase()
+        c.studentName?.trim().toLowerCase() === al.nome.trim().toLowerCase() &&
+        (Number(c.bimestre) || 1) === selectedBimestre
       );
 
       // Filtro de busca simples
@@ -485,6 +489,23 @@ export default function DesempenhoPage() {
                 ))}
               </div>
             )}
+
+            {/* Seletor de Bimestres */}
+            <div className="flex flex-wrap gap-2 pt-1 pb-1 border-b border-slate-100/80">
+              {[1, 2, 3, 4].map(b => (
+                <button
+                  key={b}
+                  onClick={() => setSelectedBimestre(b)}
+                  className={`px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all ${
+                    selectedBimestre === b
+                      ? 'bg-indigo-600 border-indigo-600 text-white shadow-sm'
+                      : 'bg-white border-slate-200 text-slate-600 hover:bg-slate-50'
+                  }`}
+                >
+                  {b}º Bimestre
+                </button>
+              ))}
+            </div>
 
             <div className="relative">
               <Search size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />

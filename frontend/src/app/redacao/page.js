@@ -177,6 +177,7 @@ export default function RedacaoPage() {
   const [motivatorText, setMotivatorText] = useState('');
   const [dataNascimento, setDataNascimento] = useState('');
   const [depth, setDepth] = useState('analyzed');
+  const [selectedBimestre, setSelectedBimestre] = useState(1);
   const [selectedCompetencies, setSelectedCompetencies] = useState(['c1', 'c2', 'c3', 'c4', 'c5']);
   const [step, setStep] = useState('input');
   const [text, setText] = useState('');
@@ -416,6 +417,7 @@ export default function RedacaoPage() {
         studentName: studentName.trim(),
         studentClass: studentClass.trim() || 'N/A',
         essayTheme: essayTheme.trim() || 'Geral',
+        bimestre: Number(selectedBimestre),
         motivatorText: motivatorText.trim(),
         result: data.result || '',
         scoreData: data.scores?.items || [],
@@ -443,6 +445,7 @@ export default function RedacaoPage() {
     setResult(null); setScores(null); setCorrectionId(null); setError('');
     setStudentName(''); setStudentClass(''); setEssayTheme(''); setMotivatorText(''); setDataNascimento('');
     setTurmaSelecionada(null); setAlunoSelecionado(null); setModoAluno('lista');
+    setSelectedBimestre(1);
   };
 
   const handleExportPDF = () => {
@@ -619,7 +622,7 @@ export default function RedacaoPage() {
               <motion.div {...staggerItem(0)}
                 className="bg-white/70 backdrop-blur-xl rounded-2xl border border-slate-200/60 p-5 shadow-sm space-y-4">
                 {/* Turma selector */}
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-4 gap-3">
                   <div>
                     <label className="block text-[11px] font-semibold text-slate-500 uppercase tracking-wider mb-1.5">Turma</label>
                     <select value={turmaSelecionada || ''} onChange={e => {
@@ -638,6 +641,16 @@ export default function RedacaoPage() {
                       <option value="">Selecionar turma...</option>
                       {turmas.map(t => (
                         <option key={t.id} value={t.id}>{t.nome} ({t.alunos.length} alunos)</option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className="block text-[11px] font-semibold text-slate-500 uppercase tracking-wider mb-1.5">Bimestre</label>
+                    <select value={selectedBimestre} onChange={e => setSelectedBimestre(Number(e.target.value))}
+                      className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm text-slate-900 outline-none focus:border-violet-400 focus:ring-4 focus:ring-violet-50 transition-all duration-300">
+                      {[1, 2, 3, 4].map(b => (
+                        <option key={b} value={b}>{b}º Bimestre</option>
                       ))}
                     </select>
                   </div>
