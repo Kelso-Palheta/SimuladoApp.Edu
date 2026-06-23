@@ -95,6 +95,7 @@ export default function RedacaoPage() {
   const [studentName, setStudentName] = useState('');
   const [studentClass, setStudentClass] = useState('');
   const [essayTheme, setEssayTheme] = useState('');
+  const [motivatorText, setMotivatorText] = useState('');
   const [dataNascimento, setDataNascimento] = useState('');
   const [depth, setDepth] = useState('analyzed');
   const [selectedCompetencies, setSelectedCompetencies] = useState(['c1', 'c2', 'c3', 'c4', 'c5']);
@@ -168,7 +169,7 @@ export default function RedacaoPage() {
     }
 
     try {
-      const res = await fetch('/api/corrigir', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ text: trimmed, studentName: studentName.trim(), studentClass: studentClass.trim() || 'N/A', essayTheme: essayTheme.trim() || 'Geral', depth, competencies: selectedCompetencies.join(', '), userId: user.uid, loginAluno, nomeProfessor: perfil?.nome || user?.displayName || '' }) });
+      const res = await fetch('/api/corrigir', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ text: trimmed, studentName: studentName.trim(), studentClass: studentClass.trim() || 'N/A', essayTheme: essayTheme.trim() || 'Geral', depth, competencies: selectedCompetencies.join(', '), userId: user.uid, loginAluno, nomeProfessor: perfil?.nome || user?.displayName || '', motivatorText: motivatorText.trim() }) });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error);
       setResult(data.result);
@@ -181,7 +182,7 @@ export default function RedacaoPage() {
   const handleReset = () => {
     setStep('input'); setText(''); setImageBase64(null); setImagePreview(null);
     setResult(null); setScores(null); setCorrectionId(null); setError('');
-    setStudentName(''); setStudentClass(''); setEssayTheme(''); setDataNascimento('');
+    setStudentName(''); setStudentClass(''); setEssayTheme(''); setMotivatorText(''); setDataNascimento('');
     setTurmaSelecionada(null); setAlunoSelecionado(null); setModoAluno('lista');
   };
 
@@ -422,6 +423,15 @@ export default function RedacaoPage() {
                       placeholder="Ex: Desafios da IA..."
                       className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm text-slate-900 placeholder-slate-300 outline-none focus:border-violet-400 focus:ring-4 focus:ring-violet-50 transition-all duration-300" />
                   </div>
+                </div>
+
+                {/* Texto Motivador */}
+                <div className="pt-2">
+                  <label className="block text-[11px] font-semibold text-slate-500 uppercase tracking-wider mb-1.5">Texto Motivador (Opcional - Usado para cruzar e verificar plágio)</label>
+                  <textarea value={motivatorText} onChange={e => setMotivatorText(e.target.value)}
+                    placeholder="Cole aqui o texto motivador da redação..."
+                    rows={3}
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm text-slate-900 placeholder-slate-300 outline-none focus:border-violet-400 focus:ring-4 focus:ring-violet-50 transition-all duration-300 resize-y" />
                 </div>
 
                 {/* Nome + Nascimento (manual mode ou auto-preenchido) */}

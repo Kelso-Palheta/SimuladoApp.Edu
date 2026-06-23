@@ -38,7 +38,7 @@ export async function POST(request) {
     const {
       text, imageBase64, studentName, studentClass,
       essayTheme, depth, competencies, userId,
-      loginAluno, loginKey
+      loginAluno, loginKey, motivatorText
     } = await request.json();
 
     if (!text && !imageBase64) {
@@ -50,7 +50,7 @@ export async function POST(request) {
 
     const result = await generateCorrection({
       text, imageBase64, studentName, studentClass,
-      essayTheme, depth, competencies
+      essayTheme, depth, competencies, motivatorText
     });
 
     const scores = result ? extractScore(result) : null;
@@ -60,6 +60,7 @@ export async function POST(request) {
         studentName: studentName || 'Estudante',
         studentClass: studentClass || 'N/A',
         essayTheme: essayTheme || 'Geral',
+        motivatorText: motivatorText || '',
         result: result || '',
         scoreData: scores?.items || [],
         totalScore: scores?.total || 0,

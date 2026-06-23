@@ -1,0 +1,123 @@
+import { db } from './firebase';
+import { doc, getDoc, setDoc, collection, getDocs, serverTimestamp, query, where } from 'firebase/firestore';
+import { gerarLoginKey } from '@/utils/diario/loginAluno';
+
+export async function getAtividadePublica(activityId) {
+  const snap = await getDoc(doc(db, 'atividades', activityId));
+  if (!snap.exists()) return null;
+  const data = { ...snap.data(), id: snap.id };
+  delete data.gabarito;
+  if (Array.isArray(data.questoes)) {
+    data.questoes = data.questoes.map(({ gabarito: _g, rubrica: _r, ...rest }) => rest);
+  }
+  return data;
+}
+
+export async function submitEntrega({ activityId, alunoId, turmaId, bimestre, respostas, respostaTexto }) {
+  const entregaId = `${activityId}_${alunoId}`;
+  const ref = doc(db, 'entregas', entregaId);
+  const atvSnap = await getDoc(doc(db, 'atividades', activityId));
+  const professorId = atvSnap.exists() ? atvSnap.data().professorId : null;
+  await setDoc(ref, {
+    activityId, alunoId, turmaId, bimestre,
+    ...(professorId ? { professorId } : {}),
+    ...(respostas != null ? { respostas } : {}),
+    ...(respostaTexto != null ? { respostaTexto } : {}),
+    status: 'entregue', submittedAt: serverTimestamp()
+  });
+  return entregaId;
+}
+
+export async function getEntrega(activityId, alunoId) {
+  const entregaId = `${activityId}_${alunoId}`;
+  const snap = await getDoc(doc(db, 'entregas', entregaId));
+  return snap.exists() ? { ...snap.data(), id: snap.id } : null;
+}
+
+/**
+ * Valida login do aluno e retorna dados + todos os vínculos com professores.
+ * Estrutura:
+ *   alunoLogin/{hash} → { nome, login }
+ *   alunoLogin/{hash}/vinculos/{professorUid} → { professorUid, turmaId, nomeProfessor, modulo }
+ */
+export async function validarLoginAluno(login) {
+  const loginKey = await gerarLoginKey(login);
+  const snap = await getDoc(doc(db, 'alunoLogin', loginKey));
+  if (!snap.exists()) return null;
+
+  const base = snap.data();
+
+  // Busca todos os vínculos (professores que cadastraram este aluno)
+  const vinculosSnap = await getDocs(collection(db, 'alunoLogin', loginKey, 'vinculos'));
+  const vinculos = vinculosSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+
+  // Compatibilidade: se o doc antigo tem campos professorUid/turmaId direto, usa como vínculo
+  if (vinculos.length === 0 && base.professorUid) {
+    vinculos.push({
+      professorUid: base.professorUid,
+      turmaId: base.turmaId || 'N/A',
+      modulo: base.modulo || 'diario',
+      nomeProfessor: base.nomeProfessor || 'Professor'
+    });
+  }
+
+  return { nome: base.nome, login: base.login, loginKey, vinculos };
+}
+
+/**
+ * Cria/atualiza o vínculo de um professor com um aluno.
+ * Chamado ao criar correção de redação ou ao publicar notas do diário.
+ */
+export async function vincularAlunoProfessor({ login, nome, professorUid, turmaId, modulo, nomeProfessor }) {
+  const loginKey = await gerarLoginKey(login);
+
+  // Salva/atualiza o doc base do aluno
+  const baseRef = doc(db, 'alunoLogin', loginKey);
+  await setDoc(baseRef, { nome, login }, { merge: true });
+
+  // Salva o vínculo específico do professor
+  const vinculoRef = doc(db, 'alunoLogin', loginKey, 'vinculos', professorUid);
+  await setDoc(vinculoRef, {
+    professorUid,
+    turmaId,
+    modulo,
+    nomeProfessor: nomeProfessor || 'Professor',
+    atualizadoEm: serverTimestamp()
+  }, { merge: true });
+
+  return loginKey;
+}
+
+export async function getNotasAluno(recordId) {
+  const snap = await getDoc(doc(db, 'notasAluno', recordId));
+  if (!snap.exists()) return null;
+  return snap.data();
+}
+
+export async function getAtividadesDoAluno(professorUid, turmaId) {
+  const q = query(
+    collection(db, 'atividades'),
+    where('professorId', '==', professorUid),
+    where('turmaIds', 'array-contains', turmaId)
+  );
+  const snap = await getDocs(q);
+  return snap.docs.map(d => {
+    const data = { ...d.data(), id: d.id };
+    delete data.gabarito;
+    if (Array.isArray(data.questoes)) {
+      data.questoes = data.questoes.map(({ gabarito: _g, rubrica: _r, ...rest }) => rest);
+    }
+    return data;
+  });
+}
+
+export async function getEntregasDoAluno(alunoId) {
+  const q = query(collection(db, 'entregas'), where('alunoId', '==', alunoId));
+  const snap = await getDocs(q);
+  return snap.docs.map(d => ({ ...d.data(), id: d.id }));
+}
+
+export async function getTokenAluno(activityId, alunoId) {
+  const snap = await getDoc(doc(db, 'atividades', activityId, 'tokens', alunoId));
+  return snap.exists() ? snap.data().token : null;
+}
