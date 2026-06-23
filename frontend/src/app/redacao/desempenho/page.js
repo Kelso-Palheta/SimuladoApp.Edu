@@ -6,7 +6,7 @@ import { useAuth } from '@/lib/auth-context';
 import { db } from '@/lib/firebase';
 import { collection, query, where, getDocs, doc, deleteDoc, getDoc, setDoc } from 'firebase/firestore';
 import { gerarLoginKey, gerarLoginAluno } from '@/utils/diario/loginAluno';
-import { ArrowLeft, BarChart3, Users, TrendingUp, Award, Trash2, Search, ExternalLink, Link2, Shield, AlertCircle, MoreVertical, Eye, Copy, Check } from 'lucide-react';
+import { ArrowLeft, BarChart3, Users, TrendingUp, Award, Trash2, Search, ExternalLink, Link2, Shield, AlertCircle, MoreVertical, Eye, Copy, Check, GraduationCap } from 'lucide-react';
 
 export default function DesempenhoPage() {
   const { user, perfil, loading: authLoading } = useAuth();
@@ -24,6 +24,7 @@ export default function DesempenhoPage() {
   const [viewingCorrection, setViewingCorrection] = useState(null);
   const [activeMenu, setActiveMenu] = useState(null);
   const [toast, setToast] = useState('');
+  const [selectedTurma, setSelectedTurma] = useState('all');
 
   useEffect(() => {
     if (toast) {
@@ -63,6 +64,14 @@ export default function DesempenhoPage() {
     if (!user) return;
     const loadTurmas = async () => {
       try {
+        // Tenta carregar do subdocumento 'turmas/data' (onde o diário salva de fato)
+        const refSub = doc(db, 'professores', user.uid, 'turmas', 'data');
+        const snapSub = await getDoc(refSub);
+        if (snapSub.exists() && snapSub.data().turmas) {
+          setTurmas(snapSub.data().turmas);
+          return;
+        }
+        // Fallback para o documento raiz
         const ref = doc(db, 'professores', user.uid);
         const snap = await getDoc(ref);
         if (snap.exists() && snap.data().turmas) {
@@ -298,6 +307,60 @@ export default function DesempenhoPage() {
     }
   };
 
+  const getTurmaRows = () => {
+    if (selectedTurma === 'all') return [];
+    const currentTurma = turmas.find(t => t.id === selectedTurma);
+    if (!currentTurma) return [];
+
+    const queryStr = search.toLowerCase().trim();
+    const students = currentTurma.alunos || [];
+
+    const rows = [];
+    students.forEach(al => {
+      const login = al.dataNascimento ? gerarLoginAluno(al.nome, al.dataNascimento) : '';
+      
+      // Busca correções deste aluno
+      const studentCorrections = corrections.filter(c => 
+        c.studentName?.trim().toLowerCase() === al.nome.trim().toLowerCase()
+      );
+
+      // Filtro de busca simples
+      const matchesSearch = !queryStr || 
+        al.nome.toLowerCase().includes(queryStr) ||
+        login.toLowerCase().includes(queryStr) ||
+        studentCorrections.some(c => 
+          c.essayTheme?.toLowerCase().includes(queryStr) || 
+          String(c.totalScore).includes(queryStr)
+        );
+
+      if (!matchesSearch) return;
+
+      if (studentCorrections.length === 0) {
+        rows.push({
+          id: `no-corr-${al.id}`,
+          alunoNome: al.nome,
+          login: login,
+          hasCorrection: false,
+          correction: null
+        });
+      } else {
+        studentCorrections.forEach((c, idx) => {
+          rows.push({
+            id: `${c.id || c._firestoreId}-${idx}`,
+            alunoNome: al.nome,
+            login: login,
+            hasCorrection: true,
+            correction: c
+          });
+        });
+      }
+    });
+
+    return rows;
+  };
+
+  const turmaRows = getTurmaRows();
+
   return (
     <div className="min-h-screen bg-[#f8fafc] flex flex-col font-sans"
       style={{
@@ -388,13 +451,44 @@ export default function DesempenhoPage() {
                 <div className="p-1 bg-violet-50 rounded-lg"><Search size={16} className="text-violet-500" /></div>
                 <h3 className="text-sm font-bold text-slate-800">Filtrar Histórico</h3>
               </div>
-              <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">{filtered.length} encontradas</span>
+              <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">
+                {selectedTurma === 'all' ? `${filtered.length} redações` : `${turmaRows.length} registros`}
+              </span>
             </div>
+
+            {/* Seletor de Turmas */}
+            {turmas.length > 0 && (
+              <div className="flex flex-wrap gap-2 pt-1 pb-1 border-b border-slate-100/80">
+                <button
+                  onClick={() => setSelectedTurma('all')}
+                  className={`px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all ${
+                    selectedTurma === 'all'
+                      ? 'bg-violet-600 border-violet-600 text-white shadow-sm'
+                      : 'bg-white border-slate-200 text-slate-600 hover:bg-slate-50'
+                  }`}
+                >
+                  Todas as Turmas
+                </button>
+                {turmas.map(t => (
+                  <button
+                    key={t.id}
+                    onClick={() => setSelectedTurma(t.id)}
+                    className={`px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all ${
+                      selectedTurma === t.id
+                        ? 'bg-violet-600 border-violet-600 text-white shadow-sm'
+                        : 'bg-white border-slate-200 text-slate-600 hover:bg-slate-50'
+                    }`}
+                  >
+                    {t.nome}
+                  </button>
+                ))}
+              </div>
+            )}
 
             <div className="relative">
               <Search size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
               <input value={search} onChange={e => setSearch(e.target.value)}
-                placeholder="Buscar por nome do aluno, turma, tema ou ID..."
+                placeholder={selectedTurma === 'all' ? "Buscar por nome do aluno, turma, tema ou ID..." : "Buscar aluno nesta turma..."}
                 className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-900 placeholder-slate-400 outline-none focus:bg-white focus:ring-2 focus:ring-violet-400/50 transition-all" />
             </div>
 
@@ -403,10 +497,10 @@ export default function DesempenhoPage() {
                 <div className="space-y-3 py-2">
                   {[1, 2, 3].map(i => <div key={i} className="h-16 bg-slate-100/65 rounded-xl animate-pulse" />)}
                 </div>
-              ) : filtered.length === 0 ? (
+              ) : (selectedTurma === 'all' ? filtered.length === 0 : turmaRows.length === 0) ? (
                 <div className="text-center py-16 flex-1 flex flex-col items-center justify-center">
                   <div className="text-4xl mb-2 opacity-30">📂</div>
-                  <p className="text-slate-400 text-sm font-medium">{search ? 'Nenhum resultado encontrado.' : 'Nenhuma correção realizada ainda.'}</p>
+                  <p className="text-slate-400 text-sm font-medium">{search ? 'Nenhum resultado encontrado.' : 'Nenhuma redação ou aluno encontrado.'}</p>
                 </div>
               ) : (
                 <div className="overflow-x-auto rounded-xl border border-slate-100 bg-white">
@@ -415,7 +509,9 @@ export default function DesempenhoPage() {
                       <tr className="border-b border-slate-100 bg-slate-50/75">
                         <th className="text-left px-4 py-3.5 text-[10px] font-bold text-slate-400 uppercase tracking-wider">Aluno</th>
                         <th className="text-left px-4 py-3.5 text-[10px] font-bold text-slate-400 uppercase tracking-wider">Data</th>
-                        <th className="text-left px-4 py-3.5 text-[10px] font-bold text-slate-400 uppercase tracking-wider">Turma</th>
+                        {selectedTurma === 'all' && (
+                          <th className="text-left px-4 py-3.5 text-[10px] font-bold text-slate-400 uppercase tracking-wider">Turma</th>
+                        )}
                         <th className="text-left px-4 py-3.5 text-[10px] font-bold text-slate-400 uppercase tracking-wider">Tema</th>
                         <th className="text-center px-4 py-3.5 text-[10px] font-bold text-slate-400 uppercase tracking-wider">Nota</th>
                         <th className="text-center px-4 py-3.5 text-[10px] font-bold text-slate-400 uppercase tracking-wider">Login</th>
@@ -423,71 +519,172 @@ export default function DesempenhoPage() {
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-slate-100">
-                      {filtered.map(c => (
-                        <tr key={c.id} className="hover:bg-slate-50/50 transition-colors group">
-                          <td className="px-4 py-3 font-semibold text-slate-800">{c.studentName}</td>
-                          <td className="px-4 py-3 text-xs text-slate-500 font-medium">{formatarData(c.createdAt)}</td>
-                          <td className="px-4 py-3 text-xs text-slate-500 font-medium">{c.studentClass}</td>
-                          <td className="px-4 py-3 text-xs text-slate-400 truncate max-w-[160px]" title={c.essayTheme}>{c.essayTheme}</td>
-                          <td className="px-4 py-3 text-center">
-                            <span className={`inline-flex font-mono font-bold text-xs px-2.5 py-1 rounded-lg border shadow-sm
-                              ${(c.totalScore || 0) >= 600
-                                ? 'bg-emerald-50 border-emerald-100 text-emerald-600'
-                                : (c.totalScore || 0) >= 400
-                                  ? 'bg-amber-50 border-amber-100 text-amber-600'
-                                  : 'bg-rose-50 border-rose-100 text-rose-500'}`}>
-                              {c.totalScore || 0}
-                            </span>
-                          </td>
-                          <td className="px-4 py-3 text-center">
-                            <span className="inline-flex items-center gap-1 font-mono text-[10px] font-semibold text-violet-600 bg-violet-50 border border-violet-100 px-2 py-0.5 rounded-full">
-                              <Shield size={10} /> {c.loginAluno || c.id.substring(0, 8)}
-                            </span>
-                          </td>
-                          <td className="px-4 py-3 text-right">
-                            <div className="flex items-center justify-end gap-1 opacity-80 group-hover:opacity-100 transition-opacity relative">
-                              <button onClick={(e) => { e.stopPropagation(); setActiveMenu(activeMenu === c.id ? null : c.id); }}
-                                className="p-2 text-slate-400 hover:bg-slate-100 hover:text-violet-500 rounded-xl transition-all"
-                                title="Ações"
+                      {selectedTurma === 'all' ? (
+                        filtered.map(c => (
+                          <tr key={c.id} className="hover:bg-slate-50/50 transition-colors group">
+                            <td className="px-4 py-3 font-semibold text-slate-800">{c.studentName}</td>
+                            <td className="px-4 py-3 text-xs text-slate-500 font-medium">{formatarData(c.createdAt)}</td>
+                            <td className="px-4 py-3 text-xs text-slate-500 font-medium">{c.studentClass}</td>
+                            <td className="px-4 py-3 text-xs text-slate-400 truncate max-w-[160px]" title={c.essayTheme}>{c.essayTheme}</td>
+                            <td className="px-4 py-3 text-center">
+                              <span className={`inline-flex font-mono font-bold text-xs px-2.5 py-1 rounded-lg border shadow-sm
+                                ${(c.totalScore || 0) >= 600
+                                  ? 'bg-emerald-50 border-emerald-100 text-emerald-600'
+                                  : (c.totalScore || 0) >= 400
+                                    ? 'bg-amber-50 border-amber-100 text-amber-600'
+                                    : 'bg-rose-50 border-rose-100 text-rose-500'}`}>
+                                {c.totalScore || 0}
+                              </span>
+                            </td>
+                            <td className="px-4 py-3 text-center">
+                              <span 
+                                onClick={() => {
+                                  const loginVal = c.loginAluno || c.id.substring(0, 8);
+                                  navigator.clipboard.writeText(loginVal);
+                                  setToast('Login do aluno copiado!');
+                                }}
+                                className="inline-flex items-center gap-1 font-mono text-[10px] font-semibold text-violet-600 bg-violet-50 hover:bg-violet-100 border border-violet-100 px-2 py-0.5 rounded-full cursor-pointer transition-colors"
+                                title="Clique para copiar"
                               >
-                                <MoreVertical size={14} />
-                              </button>
+                                <Shield size={10} /> {c.loginAluno || c.id.substring(0, 8)}
+                              </span>
+                            </td>
+                            <td className="px-4 py-3 text-right">
+                              <div className="flex items-center justify-end gap-1 opacity-80 group-hover:opacity-100 transition-opacity relative">
+                                <button onClick={(e) => { e.stopPropagation(); setActiveMenu(activeMenu === c.id ? null : c.id); }}
+                                  className="p-2 text-slate-400 hover:bg-slate-100 hover:text-violet-500 rounded-xl transition-all"
+                                  title="Ações"
+                                >
+                                  <MoreVertical size={14} />
+                                </button>
 
-                              {activeMenu === c.id && (
-                                <div className="absolute right-9 top-0 w-48 bg-white/95 backdrop-blur-md border border-slate-200 rounded-2xl shadow-xl py-1.5 z-30 animate-in fade-in slide-in-from-top-2 duration-150 text-left">
-                                  <button onClick={() => { setViewingCorrection(c); setActiveMenu(null); }}
-                                    className="w-full text-left px-3.5 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50 hover:text-violet-600 flex items-center gap-2 transition-all">
-                                    <Eye size={12} className="text-slate-400" />
-                                    Ver relatório
-                                  </button>
-                                  <button onClick={() => { handleCopyLink(c); setActiveMenu(null); }}
-                                    className="w-full text-left px-3.5 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50 hover:text-violet-600 flex items-center gap-2 transition-all">
-                                    <Link2 size={12} className="text-slate-400" />
-                                    Copiar link
-                                  </button>
-                                  <button onClick={() => { handleCopyLogin(c); setActiveMenu(null); }}
-                                    className="w-full text-left px-3.5 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50 hover:text-violet-600 flex items-center gap-2 transition-all">
-                                    <Shield size={12} className="text-slate-400" />
-                                    Copiar login
-                                  </button>
-                                  <a href={`/redacao/aluno/${c.id}`} target="_blank" rel="noopener noreferrer" onClick={() => setActiveMenu(null)}
-                                    className="w-full text-left px-3.5 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50 hover:text-violet-600 flex items-center gap-2 transition-all">
-                                    <ExternalLink size={12} className="text-slate-400" />
-                                    Abrir em nova aba
-                                  </a>
-                                </div>
-                              )}
+                                {activeMenu === c.id && (
+                                  <div className="absolute right-9 top-0 w-48 bg-white/95 backdrop-blur-md border border-slate-200 rounded-2xl shadow-xl py-1.5 z-30 animate-in fade-in slide-in-from-top-2 duration-150 text-left">
+                                    <button onClick={() => { setViewingCorrection(c); setActiveMenu(null); }}
+                                      className="w-full text-left px-3.5 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50 hover:text-violet-600 flex items-center gap-2 transition-all">
+                                      <Eye size={12} className="text-slate-400" />
+                                      Ver relatório
+                                    </button>
+                                    <button onClick={() => { handleCopyLink(c); setActiveMenu(null); }}
+                                      className="w-full text-left px-3.5 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50 hover:text-violet-600 flex items-center gap-2 transition-all">
+                                      <Link2 size={12} className="text-slate-400" />
+                                      Copiar link
+                                    </button>
+                                    <button onClick={() => { handleCopyLogin(c); setActiveMenu(null); }}
+                                      className="w-full text-left px-3.5 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50 hover:text-violet-600 flex items-center gap-2 transition-all">
+                                      <Shield size={12} className="text-slate-400" />
+                                      Copiar login
+                                    </button>
+                                    <a href={`/redacao/aluno/${c.id}`} target="_blank" rel="noopener noreferrer" onClick={() => setActiveMenu(null)}
+                                      className="w-full text-left px-3.5 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50 hover:text-violet-600 flex items-center gap-2 transition-all">
+                                      <ExternalLink size={12} className="text-slate-400" />
+                                      Abrir em nova aba
+                                    </a>
+                                  </div>
+                                )}
 
-                              <button onClick={() => handleDelete(c._firestoreId || c.id)} disabled={deleting === c.id}
-                                className="p-2 text-slate-400 hover:bg-rose-50 hover:text-rose-600 rounded-xl transition-all"
-                                title="Excluir"
-                              >
-                                <Trash2 size={14} />
-                              </button>
-                            </div>
-                          </td>
-                        </tr>
-                      ))}
+                                <button onClick={() => handleDelete(c._firestoreId || c.id)} disabled={deleting === c.id}
+                                  className="p-2 text-slate-400 hover:bg-rose-50 hover:text-rose-600 rounded-xl transition-all"
+                                  title="Excluir"
+                                >
+                                  <Trash2 size={14} />
+                                </button>
+                              </div>
+                            </td>
+                          </tr>
+                        ))
+                      ) : (
+                        turmaRows.map(row => {
+                          const { alunoNome, login, hasCorrection, correction, id } = row;
+                          const displayLogin = login || correction?.loginAluno || correction?.id?.substring(0, 8);
+
+                          return (
+                            <tr key={id} className="hover:bg-slate-50/50 transition-colors group">
+                              <td className="px-4 py-3 font-semibold text-slate-800">{alunoNome}</td>
+                              <td className="px-4 py-3 text-xs text-slate-500 font-medium">
+                                {hasCorrection ? formatarData(correction.createdAt) : '—'}
+                              </td>
+                              <td className="px-4 py-3 text-xs text-slate-400 truncate max-w-[200px]" title={hasCorrection ? correction.essayTheme : ''}>
+                                {hasCorrection ? correction.essayTheme : <span className="text-slate-300 italic">Nenhuma redação corrigida</span>}
+                              </td>
+                              <td className="px-4 py-3 text-center">
+                                {hasCorrection ? (
+                                  <span className={`inline-flex font-mono font-bold text-xs px-2.5 py-1 rounded-lg border shadow-sm
+                                    ${(correction.totalScore || 0) >= 600
+                                      ? 'bg-emerald-50 border-emerald-100 text-emerald-600'
+                                      : (correction.totalScore || 0) >= 400
+                                        ? 'bg-amber-50 border-amber-100 text-amber-600'
+                                        : 'bg-rose-50 border-rose-100 text-rose-500'}`}>
+                                    {correction.totalScore || 0}
+                                  </span>
+                                ) : '—'}
+                              </td>
+                              <td className="px-4 py-3 text-center">
+                                {displayLogin ? (
+                                  <span 
+                                    onClick={() => {
+                                      navigator.clipboard.writeText(displayLogin);
+                                      setToast('Login do aluno copiado!');
+                                    }}
+                                    className="inline-flex items-center gap-1 font-mono text-[10px] font-semibold text-violet-600 bg-violet-50 hover:bg-violet-100 border border-violet-100 px-2 py-0.5 rounded-full cursor-pointer transition-colors"
+                                    title="Clique para copiar"
+                                  >
+                                    <Shield size={10} /> {displayLogin}
+                                  </span>
+                                ) : (
+                                  <span className="text-[10px] text-slate-300 italic">Sem data</span>
+                                )}
+                              </td>
+                              <td className="px-4 py-3 text-right">
+                                {hasCorrection ? (
+                                  <div className="flex items-center justify-end gap-1 opacity-80 group-hover:opacity-100 transition-opacity relative">
+                                    <button onClick={(e) => { e.stopPropagation(); setActiveMenu(activeMenu === id ? null : id); }}
+                                      className="p-2 text-slate-400 hover:bg-slate-100 hover:text-violet-500 rounded-xl transition-all"
+                                      title="Ações"
+                                    >
+                                      <MoreVertical size={14} />
+                                    </button>
+
+                                    {activeMenu === id && (
+                                      <div className="absolute right-9 top-0 w-48 bg-white/95 backdrop-blur-md border border-slate-200 rounded-2xl shadow-xl py-1.5 z-30 animate-in fade-in slide-in-from-top-2 duration-150 text-left">
+                                        <button onClick={() => { setViewingCorrection(correction); setActiveMenu(null); }}
+                                          className="w-full text-left px-3.5 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50 hover:text-violet-600 flex items-center gap-2 transition-all">
+                                          <Eye size={12} className="text-slate-400" />
+                                          Ver relatório
+                                        </button>
+                                        <button onClick={() => { handleCopyLink(correction); setActiveMenu(null); }}
+                                          className="w-full text-left px-3.5 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50 hover:text-violet-600 flex items-center gap-2 transition-all">
+                                          <Link2 size={12} className="text-slate-400" />
+                                          Copiar link
+                                        </button>
+                                        {displayLogin && (
+                                          <button onClick={() => { handleCopyLogin(correction); setActiveMenu(null); }}
+                                            className="w-full text-left px-3.5 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50 hover:text-violet-600 flex items-center gap-2 transition-all">
+                                            <Shield size={12} className="text-slate-400" />
+                                            Copiar login
+                                          </button>
+                                        )}
+                                        <a href={`/redacao/aluno/${correction.id}`} target="_blank" rel="noopener noreferrer" onClick={() => setActiveMenu(null)}
+                                          className="w-full text-left px-3.5 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50 hover:text-violet-600 flex items-center gap-2 transition-all">
+                                          <ExternalLink size={12} className="text-slate-400" />
+                                          Abrir em nova aba
+                                        </a>
+                                      </div>
+                                    )}
+
+                                    <button onClick={() => handleDelete(correction._firestoreId || correction.id)} disabled={deleting === correction.id}
+                                      className="p-2 text-slate-400 hover:bg-rose-50 hover:text-rose-600 rounded-xl transition-all"
+                                      title="Excluir"
+                                    >
+                                      <Trash2 size={14} />
+                                    </button>
+                                  </div>
+                                ) : '—'}
+                              </td>
+                            </tr>
+                          );
+                        })
+                      )}
                     </tbody>
                   </table>
                 </div>
