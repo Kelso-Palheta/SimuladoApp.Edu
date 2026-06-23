@@ -14,6 +14,7 @@ import { db } from '@/lib/firebase';
 import { doc, getDoc, setDoc, serverTimestamp } from 'firebase/firestore';
 
 const STORAGE_KEY = 'diario_turmas';
+const USER_KEY = 'diario_userId';
 const NOVOS_DEFAULTS = {
   simuladoMaxLanca: 5, simuladoMaxFinal: 5,
   atividadesMaxFinal: 5, mediaAprovacao: 5, mediaRecuperacao: 4.99
@@ -37,7 +38,9 @@ export default function DiarioPage() {
   const { user, perfil, loading } = useAuth();
   const router = useRouter();
 
-  const localData = typeof window !== 'undefined' ? carregarLocal() : null;
+  // Verifica se o localStorage pertence ao usuário atual
+  const storedUserId = typeof window !== 'undefined' ? localStorage.getItem(USER_KEY) : null;
+  const localData = storedUserId === user?.uid ? carregarLocal() : null;
   const hasLocalData = localData?.length > 0;
   const [initialTurmas, setInitialTurmas] = useState(hasLocalData ? localData : []);
   const [loadingTurmas, setLoadingTurmas] = useState(!hasLocalData);
@@ -55,6 +58,7 @@ export default function DiarioPage() {
             // Dispositivo novo: carrega do Firestore
             setInitialTurmas(cloud);
             salvarLocal(cloud);
+            if (typeof window !== 'undefined') localStorage.setItem(USER_KEY, user.uid);
           } else if (JSON.stringify(localData) !== JSON.stringify(cloud)) {
             // Background sync: atualiza localStorage silenciosamente
             salvarLocal(cloud);
@@ -89,6 +93,7 @@ export default function DiarioPage() {
   // Persiste no Firestore (subcoleção isolada) + localStorage (com debounce)
   const persistir = useCallback((turmas) => {
     salvarLocal(turmas);
+    if (typeof window !== 'undefined' && user) localStorage.setItem(USER_KEY, user.uid);
     if (!user) return;
     if (persistTimeout.current) clearTimeout(persistTimeout.current);
     persistTimeout.current = setTimeout(() => {
