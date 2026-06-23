@@ -233,6 +233,22 @@ export default function DesempenhoPage() {
   const avgScore = total > 0 ? Math.round(corrections.reduce((s, c) => s + (c.totalScore || 0), 0) / total) : 0;
   const maxScore = total > 0 ? Math.max(...corrections.map(c => c.totalScore || 0)) : 0;
 
+  const formatarData = (timestamp) => {
+    if (!timestamp) return '—';
+    try {
+      const date = timestamp.toDate ? timestamp.toDate() : new Date(timestamp.seconds ? timestamp.seconds * 1000 : timestamp);
+      return date.toLocaleDateString('pt-BR', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+    } catch {
+      return '—';
+    }
+  };
+
   const handleDelete = async (id) => {
     if (!window.confirm('Excluir esta correção permanentemente?')) return;
     setDeleting(id);
@@ -362,6 +378,7 @@ export default function DesempenhoPage() {
                     <thead>
                       <tr className="border-b border-slate-100 bg-slate-50/75">
                         <th className="text-left px-4 py-3.5 text-[10px] font-bold text-slate-400 uppercase tracking-wider">Aluno</th>
+                        <th className="text-left px-4 py-3.5 text-[10px] font-bold text-slate-400 uppercase tracking-wider">Data</th>
                         <th className="text-left px-4 py-3.5 text-[10px] font-bold text-slate-400 uppercase tracking-wider">Turma</th>
                         <th className="text-left px-4 py-3.5 text-[10px] font-bold text-slate-400 uppercase tracking-wider">Tema</th>
                         <th className="text-center px-4 py-3.5 text-[10px] font-bold text-slate-400 uppercase tracking-wider">Nota</th>
@@ -373,6 +390,7 @@ export default function DesempenhoPage() {
                       {filtered.map(c => (
                         <tr key={c.id} className="hover:bg-slate-50/50 transition-colors group">
                           <td className="px-4 py-3 font-semibold text-slate-800">{c.studentName}</td>
+                          <td className="px-4 py-3 text-xs text-slate-500 font-medium">{formatarData(c.createdAt)}</td>
                           <td className="px-4 py-3 text-xs text-slate-500 font-medium">{c.studentClass}</td>
                           <td className="px-4 py-3 text-xs text-slate-400 truncate max-w-[160px]" title={c.essayTheme}>{c.essayTheme}</td>
                           <td className="px-4 py-3 text-center">
