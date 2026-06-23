@@ -398,6 +398,7 @@ export default function DiarioPage() {
               </div>
             )}
           </div>
+          </div>
         </div>
 
         {turmaAtual ? (

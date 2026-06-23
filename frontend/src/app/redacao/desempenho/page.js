@@ -6,7 +6,7 @@ import { useAuth } from '@/lib/auth-context';
 import { db } from '@/lib/firebase';
 import { collection, query, where, getDocs, doc, deleteDoc, getDoc, setDoc } from 'firebase/firestore';
 import { gerarLoginKey, gerarLoginAluno } from '@/utils/diario/loginAluno';
-import { ArrowLeft, BarChart3, Users, TrendingUp, Award, Trash2, Search, ExternalLink, Link2, Shield, AlertCircle, MoreVertical, Eye, Copy } from 'lucide-react';
+import { ArrowLeft, BarChart3, Users, TrendingUp, Award, Trash2, Search, ExternalLink, Link2, Shield, AlertCircle, MoreVertical, Eye, Copy, Check } from 'lucide-react';
 
 export default function DesempenhoPage() {
   const { user, perfil, loading: authLoading } = useAuth();
