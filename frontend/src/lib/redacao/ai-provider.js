@@ -67,7 +67,7 @@ export async function extractTextOnly(imageBase64, mediaType = "image/jpeg") {
           role: "user",
           content: [
             { type: "image", source: { type: "base64", media_type: mediaType, data: imageBase64.replace(/\s/g, '') } },
-            { type: "text", text: "Você é um especialista em transcrição de redações manuscritas. Transcreva fielmente todo o texto desta imagem, exatamente como o aluno escreveu. ATENÇÃO: NÃO corrija nenhum erro ortográfico, gramatical, de concordância ou de pontuação; se o aluno escreveu errado, transcreva errado. Mantenha parágrafos e pontuação originais. Retorne APENAS o texto transcrito, sem introduções ou comentários." }
+            { type: "text", text: "Você é um especialista em transcrição de redações manuscritas. Transcreva fielmente todo o texto desta imagem, exatamente como o aluno escreveu. ATENÇÃO: NÃO corrija nenhum erro ortográfico, gramatical, de concordância ou de pontuação; se o aluno escreveu errado, transcreva errado. Mantenha parágrafos e pontuação originais. IMPORTANTE: Ignore completamente a numeração das linhas (1, 2, 3... até 30) que fica na margem esquerda da folha de redação, transcrevendo apenas o texto dissertativo escrito pelo aluno. Retorne APENAS o texto transcrito, sem introduções ou comentários." }
           ]
         }],
       });
@@ -86,7 +86,7 @@ export async function extractTextOnly(imageBase64, mediaType = "image/jpeg") {
         messages: [{
           role: "user",
           content: [
-            { type: "text", text: "Transcreva fielmente todo o texto desta redação manuscrita. IMPORTANTE: Não corrija nenhum erro de português, grafia, concordância ou pontuação. Transcreva exatamente como o aluno escreveu, preservando erros para permitir a avaliação posterior. Retorne APENAS a transcrição textual, sem comentários periféricos." },
+            { type: "text", text: "Transcreva fielmente todo o texto desta redação manuscrita. IMPORTANTE: Não corrija nenhum erro de português, grafia, concordância ou pontuação. Transcreva exatamente como o aluno escreveu, preservando erros para permitir a avaliação posterior. IMPORTANTE: Ignore a numeração das linhas (1, 2, 3... 30) na margem esquerda da folha de redação; transcreva apenas o texto escrito pelo aluno. Retorne APENAS a transcrição textual, sem comentários periféricos." },
             { type: "image_url", image_url: { url: `data:${mediaType};base64,${imageBase64.replace(/\s/g, '')}` } }
           ]
         }]
@@ -109,7 +109,7 @@ export async function extractTextOnly(imageBase64, mediaType = "image/jpeg") {
           role: "user",
           content: [
             { type: "file", file: { filename: "redacao.jpg", file_data: `data:${mediaType};base64,${imageBase64.replace(/\s/g, '')}` } },
-            { type: "text", text: "Transcreva fielmente todo o texto desta redação manuscrita. IMPORTANTE: Não corrija erros de português, de concordância, ortografia ou pontuação. Transcreva exatamente o que está escrito na imagem. Retorne apenas o texto." }
+            { type: "text", text: "Transcreva fielmente todo o texto desta redação manuscrita. IMPORTANTE: Não corrija erros de português, de concordância, ortografia ou pontuação. Transcreva exatamente o que está escrito na imagem. IMPORTANTE: Ignore a numeração das linhas (1 a 30) na margem esquerda da folha, transcrevendo apenas o texto escrito pelo aluno. Retorne apenas o texto." }
           ]
         }]
       });
