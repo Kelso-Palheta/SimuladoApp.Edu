@@ -21,6 +21,7 @@ export default function DesempenhoPage() {
   const [claiming, setClaiming] = useState(false);
   const [claimMsg, setClaimMsg] = useState('');
   const [syncStatus, setSyncStatus] = useState('');
+  const [viewingCorrection, setViewingCorrection] = useState(null);
 
   // 1. Carrega as turmas do diário
   useEffect(() => {
@@ -410,12 +411,12 @@ export default function DesempenhoPage() {
                           </td>
                           <td className="px-4 py-3 text-right">
                             <div className="flex items-center justify-end gap-1 opacity-80 group-hover:opacity-100 transition-opacity">
-                              <a href={`/redacao/aluno/${c.id}`} target="_blank" rel="noopener noreferrer"
+                              <button onClick={() => setViewingCorrection(c)}
                                 className="p-2 text-slate-400 hover:bg-slate-100 hover:text-violet-500 rounded-xl transition-all"
-                                title="Abrir página do aluno"
+                                title="Visualizar correção"
                               >
                                 <ExternalLink size={14} />
-                              </a>
+                              </button>
                               <button onClick={() => handleDelete(c._firestoreId || c.id)} disabled={deleting === c.id}
                                 className="p-2 text-slate-400 hover:bg-rose-50 hover:text-rose-600 rounded-xl transition-all"
                                 title="Excluir"
@@ -435,6 +436,76 @@ export default function DesempenhoPage() {
         </div>
 
       </main>
+
+      {/* Modal de visualização da correção */}
+      {viewingCorrection && (
+        <div className="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm flex items-start justify-center pt-10 px-4 overflow-y-auto"
+          onClick={() => setViewingCorrection(null)}>
+          <div className="bg-white rounded-3xl shadow-2xl w-full max-w-3xl max-h-[90vh] overflow-y-auto animate-card-in my-8"
+            onClick={e => e.stopPropagation()}>
+            {/* Header */}
+            <div className="sticky top-0 bg-white border-b border-slate-200 px-6 py-4 flex items-center justify-between rounded-t-3xl z-10">
+              <div>
+                <h2 className="text-lg font-bold text-slate-900">{viewingCorrection.studentName}</h2>
+                <p className="text-xs text-slate-400">
+                  Turma {viewingCorrection.studentClass} • Tema: {viewingCorrection.essayTheme}
+                  {viewingCorrection.loginAluno && <span className="ml-2 font-mono text-violet-500">({viewingCorrection.loginAluno})</span>}
+                </p>
+              </div>
+              <button onClick={() => setViewingCorrection(null)}
+                className="p-2 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-xl transition-all">✕</button>
+            </div>
+
+            {/* Content */}
+            <div className="p-6 space-y-6">
+              {/* Score */}
+              {viewingCorrection.totalScore != null && (
+                <div className="text-center py-4 bg-gradient-to-br from-violet-50 to-indigo-50 rounded-2xl">
+                  <p className="text-xs text-slate-400 uppercase tracking-wider font-semibold mb-2">Nota Final</p>
+                  <span className={`text-6xl font-black tracking-tighter tabular-nums ${viewingCorrection.totalScore >= 600 ? 'text-green-500' : viewingCorrection.totalScore >= 400 ? 'text-amber-500' : 'text-red-500'}`}>
+                    {viewingCorrection.totalScore}
+                  </span>
+                  <span className="text-xl text-slate-400 font-bold ml-1">/ 1000</span>
+                </div>
+              )}
+
+              {/* Competency scores */}
+              {viewingCorrection.scoreData?.length > 0 && (
+                <div className="grid grid-cols-5 gap-2">
+                  {viewingCorrection.scoreData.map((item, i) => {
+                    const colors = ['#ef4444','#f97316','#eab308','#22c55e','#3b82f6'];
+                    const labels = ['C1','C2','C3','C4','C5'];
+                    return (
+                      <div key={i} className="bg-slate-50 rounded-xl p-3 text-center border border-slate-100">
+                        <p className="text-[10px] text-slate-400 font-semibold mb-1">{labels[i]}</p>
+                        <span className="text-lg font-black tabular-nums" style={{color: colors[i]}}>{item.A || 0}</span>
+                        <span className="text-[10px] text-slate-400 block">/200</span>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+
+              {/* Feedback text */}
+              <div className="bg-slate-50 rounded-2xl p-5 border border-slate-100">
+                <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3">Análise Pedagógica</h3>
+                <div className="prose prose-sm max-w-none text-slate-700 whitespace-pre-wrap leading-relaxed text-sm">
+                  {viewingCorrection.result}
+                </div>
+              </div>
+
+              {/* Student link */}
+              <div className="text-center pt-2 border-t border-slate-100">
+                <p className="text-xs text-slate-400 mb-2">O aluno acessa esta correção pelo login:</p>
+                <span className="inline-flex items-center gap-1.5 font-mono text-sm font-bold text-violet-600 bg-violet-50 px-3 py-1.5 rounded-xl">
+                  <Shield size={14} />
+                  {viewingCorrection.loginAluno || viewingCorrection.id?.substring(0, 8)}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
