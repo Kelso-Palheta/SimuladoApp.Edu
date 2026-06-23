@@ -8,6 +8,7 @@ import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   signOut,
+  sendPasswordResetEmail,
 } from "firebase/auth";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { auth, db } from "@/lib/firebase";
@@ -69,11 +70,20 @@ export function AuthProvider({ children }) {
     await setDoc(doc(db, "professores", cred.user.uid), novo);
   };
 
-  const logout = () => signOut(auth);
+  const recuperarSenha = (email) => sendPasswordResetEmail(auth, email);
+
+  const logout = () => {
+    if (typeof window !== "undefined") {
+      localStorage.removeItem("diario_turmas");
+      localStorage.removeItem("diario_bimestre");
+      localStorage.removeItem("atividades_bimestre");
+    }
+    return signOut(auth);
+  };
 
   return (
     <AuthContext.Provider
-      value={{ user, perfil, loading, loginGoogle, loginEmail, cadastrarEmail, logout }}
+      value={{ user, perfil, loading, loginGoogle, loginEmail, cadastrarEmail, recuperarSenha, logout }}
     >
       {children}
     </AuthContext.Provider>

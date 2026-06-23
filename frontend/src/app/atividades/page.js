@@ -15,6 +15,9 @@ import { Sidebar } from '@/components/diario/Sidebar';
 import { ProfileModal } from '@/components/diario/ProfileModal';
 import { ArrowLeft, GraduationCap, Layers, ExternalLink, Copy, Check } from 'lucide-react';
 
+import { db } from '@/lib/firebase';
+import { doc, getDoc, setDoc, serverTimestamp } from 'firebase/firestore';
+
 const STORAGE_KEY = 'diario_turmas';
 
 const carregarLocal = () => {
@@ -35,12 +38,56 @@ export default function AtividadesPage() {
   const { user, perfil, loading, logout } = useAuth();
   const router = useRouter();
 
-  const [initialTurmas] = useState(() => {
-    const dadosIniciais = typeof window !== 'undefined' ? carregarLocal() : null;
-    return dadosIniciais?.length > 0 ? dadosIniciais : turmasIniciais;
-  });
+  const [initialTurmas, setInitialTurmas] = useState(null);
+  const [firestoreLoaded, setFirestoreLoaded] = useState(false);
 
-  const { turmas, setTurmas, addTurma, removeTurma, addAlunos } = useTurmas(initialTurmas, salvarLocal);
+  // Carrega turmas: Firestore > localStorage > padrão
+  useEffect(() => {
+    if (!user) return;
+    const load = async () => {
+      try {
+        // Tenta carregar do Firestore (caminho antigo)
+        const oldRef = doc(db, 'users', user.uid, 'turmas', 'data');
+        const oldSnap = await getDoc(oldRef);
+        if (oldSnap.exists() && oldSnap.data().turmas?.length > 0) {
+          const firestoreData = oldSnap.data().turmas;
+          setInitialTurmas(firestoreData);
+          salvarLocal(firestoreData);
+          const newRef = doc(db, 'professores', user.uid);
+          await setDoc(newRef, { turmas: firestoreData, updatedAt: serverTimestamp() }, { merge: true });
+        } else {
+          // Tenta o novo caminho
+          const newRef = doc(db, 'professores', user.uid);
+          const newSnap = await getDoc(newRef);
+          if (newSnap.exists() && newSnap.data().turmas?.length > 0) {
+            setInitialTurmas(newSnap.data().turmas);
+            salvarLocal(newSnap.data().turmas);
+          } else {
+            const local = carregarLocal();
+            setInitialTurmas(local?.length > 0 ? local : []);
+          }
+        }
+      } catch (err) {
+        console.error('Erro ao carregar turmas:', err);
+        const local = carregarLocal();
+        setInitialTurmas(local?.length > 0 ? local : []);
+      } finally {
+        setFirestoreLoaded(true);
+      }
+    };
+    load();
+  }, [user]);
+
+  // Persiste no Firestore + localStorage quando turmas mudam
+  const persistir = (novasTurmas) => {
+    salvarLocal(novasTurmas);
+    if (user) {
+      const ref = doc(db, 'professores', user.uid);
+      setDoc(ref, { turmas: novasTurmas, updatedAt: serverTimestamp() }, { merge: true }).catch(() => {});
+    }
+  };
+
+  const { turmas, setTurmas, addTurma, removeTurma, addAlunos } = useTurmas(initialTurmas || [], persistir);
   const { addAtividade, removeAtividade, setNota } = useNotas(setTurmas);
   const atividadesHook = useAtividades(user?.uid);
   const [turmaSelecionada, setTurmaSelecionada] = useState(null);
@@ -82,7 +129,7 @@ export default function AtividadesPage() {
   }, [showAlunoDropdown]);
 
   // Auth guard
-  if (loading || (!perfil && user)) {
+  if (loading || !firestoreLoaded || (!perfil && user)) {
     return (
       <div className="flex h-screen items-center justify-center bg-white">
         <div className="text-center">

@@ -1,11 +1,13 @@
 "use client";
 
 import { useState } from 'react';
-import { updateProfile } from 'firebase/auth';
+import { updateProfile, updatePassword } from 'firebase/auth';
 import { auth } from '@/lib/firebase';
 
 export function ProfileModal({ user, onClose }) {
   const [nome, setNome] = useState(user?.displayName || '');
+  const [senhaNova, setSenhaNova] = useState('');
+  const [confirmarSenha, setConfirmarSenha] = useState('');
   const [msg, setMsg] = useState({ text: '', type: '' });
   const [saving, setSaving] = useState(false);
 
@@ -14,7 +16,7 @@ export function ProfileModal({ user, onClose }) {
 
   const flash = (text, type = 'ok') => {
     setMsg({ text, type });
-    setTimeout(() => setMsg({ text: '', type: '' }), 4000);
+    setTimeout(() => setMsg({ text: '', type: '' }), 5000);
   };
 
   const handleSaveNome = async () => {
@@ -25,6 +27,33 @@ export function ProfileModal({ user, onClose }) {
       flash('Nome atualizado!');
     } catch (err) {
       flash(err?.message || 'Erro ao salvar.', 'err');
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const handleUpdatePassword = async () => {
+    if (!senhaNova) return;
+    if (senhaNova.length < 6) {
+      flash('A senha deve ter pelo menos 6 caracteres.', 'err');
+      return;
+    }
+    if (senhaNova !== confirmarSenha) {
+      flash('As senhas não coincidem.', 'err');
+      return;
+    }
+    setSaving(true);
+    try {
+      await updatePassword(auth.currentUser, senhaNova);
+      flash('Senha atualizada com sucesso!');
+      setSenhaNova('');
+      setConfirmarSenha('');
+    } catch (err) {
+      if (err.code === 'auth/requires-recent-login') {
+        flash('Por segurança, saia da conta e entre novamente antes de trocar a senha.', 'err');
+      } else {
+        flash(err.message || 'Erro ao atualizar senha.', 'err');
+      }
     } finally {
       setSaving(false);
     }
@@ -67,23 +96,49 @@ export function ProfileModal({ user, onClose }) {
             </div>
           </div>
 
-          <div>
-            <label className="block text-[10px] uppercase tracking-wider text-slate-400 font-semibold mb-1.5">Nome de exibição</label>
-            <div className="flex gap-2">
-              <input
-                type="text" value={nome} onChange={(e) => setNome(e.target.value)} placeholder="Seu nome"
-                className="flex-1 px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-900 placeholder-slate-400 outline-none focus:bg-white focus:ring-2 focus:ring-violet-400/50 transition-all"
-              />
-              <button
-                onClick={handleSaveNome} disabled={saving || nome.trim() === (user?.displayName || '')}
-                className="px-4 py-2 bg-violet-500 hover:bg-violet-400 disabled:bg-slate-200 disabled:text-slate-400 rounded-xl text-white text-xs font-semibold transition-all whitespace-nowrap"
-              >
-                Salvar
-              </button>
+          <div className="space-y-4">
+            <div>
+              <label className="block text-[10px] uppercase tracking-wider text-slate-400 font-semibold mb-1.5">Nome de exibição</label>
+              <div className="flex gap-2">
+                <input
+                  type="text" value={nome} onChange={(e) => setNome(e.target.value)} placeholder="Seu nome"
+                  className="flex-1 px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-900 placeholder-slate-400 outline-none focus:bg-white focus:ring-2 focus:ring-violet-400/50 transition-all"
+                />
+                <button
+                  onClick={handleSaveNome} disabled={saving || nome.trim() === (user?.displayName || '')}
+                  className="px-4 py-2 bg-violet-500 hover:bg-violet-400 disabled:bg-slate-200 disabled:text-slate-400 rounded-xl text-white text-xs font-semibold transition-all whitespace-nowrap"
+                >
+                  Salvar
+                </button>
+              </div>
             </div>
-          </div>
+
+            {hasPwd && (
+              <div className="pt-4 border-t border-slate-100 space-y-3">
+                <label className="block text-[10px] uppercase tracking-wider text-slate-400 font-semibold">Trocar Senha</label>
+                <div>
+                  <input
+                    type="password" value={senhaNova} onChange={(e) => setSenhaNova(e.target.value)} placeholder="Nova senha (min. 6 caracteres)"
+                    className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-900 placeholder-slate-400 outline-none focus:bg-white focus:ring-2 focus:ring-violet-400/50 transition-all"
+                  />
+                </div>
+                <div className="flex gap-2">
+                  <input
+                    type="password" value={confirmarSenha} onChange={(e) => setConfirmarSenha(e.target.value)} placeholder="Confirmar nova senha"
+                    className="flex-1 px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-900 placeholder-slate-400 outline-none focus:bg-white focus:ring-2 focus:ring-violet-400/50 transition-all"
+                  />
+                  <button
+                    onClick={handleUpdatePassword} disabled={saving || !senhaNova || !confirmarSenha}
+                    className="px-4 py-2 bg-violet-500 hover:bg-violet-400 disabled:bg-slate-200 disabled:text-slate-400 rounded-xl text-white text-xs font-semibold transition-all whitespace-nowrap"
+                  >
+                    Alterar Senha
+                  </button>
+                </div>
+              </div>
+            )}
         </div>
       </div>
     </div>
+  </div>
   );
 }

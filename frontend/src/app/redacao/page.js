@@ -7,7 +7,7 @@ import { useAuth } from '@/lib/auth-context';
 import { generatePDF } from '@/lib/redacao/pdf-generator';
 import { gerarLoginAluno, gerarLoginKey } from '@/utils/diario/loginAluno';
 import { db } from '@/lib/firebase';
-import { doc, setDoc, serverTimestamp } from 'firebase/firestore';
+import { doc, getDoc, setDoc, serverTimestamp } from 'firebase/firestore';
 import { vincularAlunoProfessor } from '@/lib/firebase-aluno';
 import { extractTextFromPDF } from '@/utils/atividades/pdfExtractor';
 import { extractTextFromDocx } from '@/utils/atividades/docxExtractor';
@@ -92,12 +92,49 @@ export default function RedacaoPage() {
   const fileRef = useRef(null);
   const motivatorFileRef = useRef(null);
 
-  // Turmas do diário (compartilhadas via localStorage)
-  const [initialTurmas] = useState(() => {
-    const dados = typeof window !== 'undefined' ? carregarLocal() : null;
-    return dados?.length > 0 ? dados : turmasIniciais;
-  });
-  const { turmas } = useTurmas(initialTurmas, () => {});
+  const [initialTurmas, setInitialTurmas] = useState(null);
+  const [firestoreLoaded, setFirestoreLoaded] = useState(false);
+
+  // Carrega turmas: Firestore > localStorage > padrão
+  useEffect(() => {
+    if (!user) return;
+    const load = async () => {
+      try {
+        // Tenta carregar do Firestore (caminho antigo)
+        const oldRef = doc(db, 'users', user.uid, 'turmas', 'data');
+        const oldSnap = await getDoc(oldRef);
+        if (oldSnap.exists() && oldSnap.data().turmas?.length > 0) {
+          const firestoreData = oldSnap.data().turmas;
+          setInitialTurmas(firestoreData);
+          const raw = JSON.stringify(firestoreData);
+          try { localStorage.setItem(STORAGE_KEY, raw); } catch {}
+          const newRef = doc(db, 'professores', user.uid);
+          await setDoc(newRef, { turmas: firestoreData, updatedAt: serverTimestamp() }, { merge: true });
+        } else {
+          // Tenta o novo caminho
+          const newRef = doc(db, 'professores', user.uid);
+          const newSnap = await getDoc(newRef);
+          if (newSnap.exists() && newSnap.data().turmas?.length > 0) {
+            setInitialTurmas(newSnap.data().turmas);
+            const raw = JSON.stringify(newSnap.data().turmas);
+            try { localStorage.setItem(STORAGE_KEY, raw); } catch {}
+          } else {
+            const local = carregarLocal();
+            setInitialTurmas(local?.length > 0 ? local : []);
+          }
+        }
+      } catch (err) {
+        console.error('Erro ao carregar turmas:', err);
+        const local = carregarLocal();
+        setInitialTurmas(local?.length > 0 ? local : []);
+      } finally {
+        setFirestoreLoaded(true);
+      }
+    };
+    load();
+  }, [user]);
+
+  const { turmas } = useTurmas(initialTurmas || [], () => {});
 
   const [turmaSelecionada, setTurmaSelecionada] = useState(null);
   const [alunoSelecionado, setAlunoSelecionado] = useState(null);
@@ -126,7 +163,7 @@ export default function RedacaoPage() {
 
   useEffect(() => { setCharCount(text.length); }, [text]);
 
-  if (authLoading || (!perfil && user)) {
+  if (authLoading || !firestoreLoaded || (!perfil && user)) {
     return <div className="flex h-screen items-center justify-center bg-[#f8fafc]"><div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-violet-600 to-violet-400 animate-pulse shadow-2xl shadow-violet-500/20" /></div>;
   }
   if (!user) { router.replace('/'); return null; }

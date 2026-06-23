@@ -66,13 +66,13 @@ export default function DiarioPage() {
           } else {
             // Fallback: localStorage ou dados iniciais
             const local = carregarLocal();
-            setInitialTurmas(local?.length > 0 ? local : turmasIniciais);
+            setInitialTurmas(local?.length > 0 ? local : []);
           }
         }
       } catch (err) {
         console.error('Erro ao carregar turmas:', err);
         const local = carregarLocal();
-        setInitialTurmas(local?.length > 0 ? local : turmasIniciais);
+        setInitialTurmas(local?.length > 0 ? local : []);
       } finally {
         setFirestoreLoaded(true);
       }
@@ -93,7 +93,7 @@ export default function DiarioPage() {
     removeAluno, removeAlunos, setRecuperacao, updateAluno } = useTurmas(initialTurmas || [], persistir);
 
   const { setNota, addAtividade, removeAtividade, updateAtividadeMax, updateConfig,
-    clearAtividadesNota, clearAtividadesTurma } = useNotas(setTurmas);
+    clearAtividadesNota, clearAtividadesTurma, clearSimuladoNota, clearSimuladoTurma } = useNotas(setTurmas);
 
   const [turmaSelecionada, setTurmaSelecionada] = useState(null);
   const [showAlunoDropdown, setShowAlunoDropdown] = useState(false);
@@ -261,6 +261,8 @@ export default function DiarioPage() {
             onSetRecuperacao={setRecuperacao}
             onClearAtividadesNota={clearAtividadesNota}
             onClearAtividadesTurma={clearAtividadesTurma}
+            onClearSimuladoNota={clearSimuladoNota}
+            onClearSimuladoTurma={clearSimuladoTurma}
             onAddAlunoManual={addAlunoManual}
             onUpdateAluno={updateAluno}
             onRemoveTurma={handleRemoveTurma}

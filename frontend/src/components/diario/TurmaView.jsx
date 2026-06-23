@@ -33,7 +33,8 @@ const StatChip = ({ label, value, color }) => (
 export const TurmaView = ({
   turma, turmas, bimestre, user, onSetNota, onAddAtv, onRemoveAtv, onUpdateAtvMax,
   onAddAlunos, onRemoveAluno, onRemoveAlunos, onUpdateConfig, onSetRecuperacao,
-  onClearAtividadesNota, onClearAtividadesTurma, onAddAlunoManual, onUpdateAluno, onRemoveTurma
+  onClearAtividadesNota, onClearAtividadesTurma, onAddAlunoManual, onUpdateAluno, onRemoveTurma,
+  onClearSimuladoNota, onClearSimuladoTurma
 }) => {
   const [showImport, setShowImport] = useState(false);
   const [view, setView] = useState('bimestre');
@@ -118,6 +119,8 @@ export const TurmaView = ({
             onUpdateConfig={(cfg) => onUpdateConfig(turma.id, bimestre, cfg)}
             onClearAtividadesNota={onClearAtividadesNota}
             onClearAtividadesTurma={onClearAtividadesTurma}
+            onClearSimuladoNota={onClearSimuladoNota}
+            onClearSimuladoTurma={onClearSimuladoTurma}
           />
         )}
       </div>

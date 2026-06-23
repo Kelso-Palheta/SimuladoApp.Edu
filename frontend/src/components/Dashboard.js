@@ -13,7 +13,9 @@ import {
   LogOut,
   GraduationCap,
   X,
+  User,
 } from "lucide-react";
+import { ProfileModal } from "@/components/diario/ProfileModal";
 
 const ICON_MAP = {
   BookOpen,
@@ -46,9 +48,10 @@ function Toast({ message, onClose }) {
 }
 
 export default function Dashboard() {
-  const { perfil, logout } = useAuth();
+  const { user, perfil, logout } = useAuth();
   const router = useRouter();
   const [toast, setToast] = useState(null);
+  const [showProfile, setShowProfile] = useState(false);
 
   const permitidos = perfil?.modulos_permitidos || [];
 
@@ -88,18 +91,32 @@ export default function Dashboard() {
             </p>
           </div>
         </div>
-        <button
-          onClick={logout}
-          className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
-          style={{
-            background: "rgba(255,255,255,0.12)",
-            color: "white",
-            border: "1px solid rgba(255,255,255,0.2)",
-          }}
-        >
-          <LogOut size={16} />
-          Sair
-        </button>
+        <div className="flex items-center gap-2">
+          <button
+            onClick={() => setShowProfile(true)}
+            className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
+            style={{
+              background: "rgba(255,255,255,0.12)",
+              color: "white",
+              border: "1px solid rgba(255,255,255,0.2)",
+            }}
+          >
+            <User size={16} />
+            Perfil
+          </button>
+          <button
+            onClick={logout}
+            className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
+            style={{
+              background: "rgba(255,255,255,0.12)",
+              color: "white",
+              border: "1px solid rgba(255,255,255,0.2)",
+            }}
+          >
+            <LogOut size={16} />
+            Sair
+          </button>
+        </div>
       </header>
 
       {/* Grid de Cards */}
@@ -193,6 +210,10 @@ export default function Dashboard() {
           message={toast}
           onClose={() => setToast(null)}
         />
+      )}
+
+      {showProfile && (
+        <ProfileModal user={user} onClose={() => setShowProfile(false)} />
       )}
     </div>
   );

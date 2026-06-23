@@ -157,6 +157,39 @@ export const useNotas = (setTurmas) => {
     );
   }, [setTurmas]);
 
+  const clearSimuladoNota = useCallback((turmaId, bimestre, alunoId) => {
+    setTurmas((prev) =>
+      prev.map((t) => {
+        if (t.id !== turmaId) return t;
+        const b = String(bimestre);
+        const bData = t.bimestres[b];
+        if (!bData) return t;
+        const notas = { ...bData.notas };
+        const alunoNotas = notas[alunoId] || {};
+        const { simulado: _, ...atividades } = alunoNotas;
+        notas[alunoId] = atividades;
+        return { ...t, bimestres: { ...t.bimestres, [b]: { ...bData, notas } } };
+      })
+    );
+  }, [setTurmas]);
+
+  const clearSimuladoTurma = useCallback((turmaId, bimestre) => {
+    setTurmas((prev) =>
+      prev.map((t) => {
+        if (t.id !== turmaId) return t;
+        const b = String(bimestre);
+        const bData = t.bimestres[b];
+        if (!bData) return t;
+        const notas = {};
+        Object.entries(bData.notas || {}).forEach(([alId, val]) => {
+          const { simulado: _, ...atividades } = val || {};
+          notas[alId] = atividades;
+        });
+        return { ...t, bimestres: { ...t.bimestres, [b]: { ...bData, notas } } };
+      })
+    );
+  }, [setTurmas]);
+
   const updateAtividadeMax = useCallback((turmaId, bimestre, atvId, novoMax) => {
     setTurmas((prev) =>
       prev.map((t) => {
@@ -178,5 +211,5 @@ export const useNotas = (setTurmas) => {
     );
   }, [setTurmas]);
 
-  return { setNota, addAtividade, removeAtividade, renameAtividade, updateAtividadeMax, updateConfig, clearAtividadesNota, clearAtividadesTurma };
+  return { setNota, addAtividade, removeAtividade, renameAtividade, updateAtividadeMax, updateConfig, clearAtividadesNota, clearAtividadesTurma, clearSimuladoNota, clearSimuladoTurma };
 };

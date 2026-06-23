@@ -75,7 +75,8 @@ const AddAtvForm = ({ onAdd, somaAtual, maxAtv }) => {
 
 export const TabelaNotas = ({
   turma, bimestre, onSetNota, onAddAtv, onRemoveAtv, onRemoveAluno, onRemoveAlunos,
-  onUpdateConfig, onClearAtividadesNota, onClearAtividadesTurma, onUpdateAluno, onAddAlunoManual
+  onUpdateConfig, onClearAtividadesNota, onClearAtividadesTurma, onUpdateAluno, onAddAlunoManual,
+  onClearSimuladoNota, onClearSimuladoTurma
 }) => {
   const [selectedIds, setSelectedIds] = useState([]);
   const [showConfig, setShowConfig] = useState(false);
@@ -136,6 +137,18 @@ export const TabelaNotas = ({
     }
   };
 
+  const handleClearSingleSimulado = (alunoId, nome) => {
+    if (window.confirm(`Apagar apenas a nota do simulado do aluno ${titleCase(nome)}?`)) {
+      onClearSimuladoNota(turma.id, bimestre, alunoId);
+    }
+  };
+
+  const handleClearBulkSimulado = () => {
+    if (window.confirm("Apagar as notas de SIMULADO de TODOS os alunos neste bimestre?")) {
+      onClearSimuladoTurma(turma.id, bimestre);
+    }
+  };
+
   const handleSaveConfig = () => {
     const parseVal = (val, fallback) => { const p = parseFloat(String(val).replace(',', '.')); return isNaN(p) ? fallback : p; };
     onUpdateConfig({
@@ -164,7 +177,12 @@ export const TabelaNotas = ({
           </button>
           {turma.alunos.length > 0 && atividades.length > 0 && (
             <button onClick={handleClearBulkActivities} className="flex items-center gap-1.5 px-2.5 py-1 bg-red-50 text-red-500 hover:text-red-600 border border-red-200 hover:bg-red-100 rounded-lg text-xs transition-colors font-medium">
-              🧹 Limpar Atividades da Turma
+              🧹 Limpar Atividades
+            </button>
+          )}
+          {turma.alunos.length > 0 && (
+            <button onClick={handleClearBulkSimulado} className="flex items-center gap-1.5 px-2.5 py-1 bg-amber-50 text-amber-600 hover:text-amber-700 border border-amber-200 hover:bg-amber-100 rounded-lg text-xs transition-colors font-medium">
+              🧪 Limpar Simulados
             </button>
           )}
         </div>
@@ -279,6 +297,7 @@ export const TabelaNotas = ({
                     {atividades.length > 0 && (
                       <button onClick={() => handleClearSingleActivities(al.id, al.nome)} className="text-slate-400 hover:text-cyan-500 transition-colors p-1" title="Limpar notas de atividades">🧹</button>
                     )}
+                    <button onClick={() => handleClearSingleSimulado(al.id, al.nome)} className="text-slate-400 hover:text-amber-500 transition-colors p-1" title="Limpar nota do simulado">🧪</button>
                     <button onClick={() => handleRemoveSingle(al.id, al.nome)} className="text-slate-400 hover:text-red-500 transition-colors p-1" title="Excluir aluno">🗑</button>
                   </td>
                 </tr>
