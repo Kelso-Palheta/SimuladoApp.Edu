@@ -84,6 +84,7 @@ export default function RedacaoPage() {
   const { user, perfil, loading: authLoading } = useAuth();
   const router = useRouter();
   const fileRef = useRef(null);
+  const motivatorFileRef = useRef(null);
 
   // Turmas do diário (compartilhadas via localStorage)
   const [initialTurmas] = useState(() => {
@@ -115,6 +116,7 @@ export default function RedacaoPage() {
   const [showAlunoDropdown, setShowAlunoDropdown] = useState(false);
   const [alunoLinkCopied, setAlunoLinkCopied] = useState(false);
   const [charCount, setCharCount] = useState(0);
+  const [motivatorExtracting, setMotivatorExtracting] = useState(false);
 
   useEffect(() => { setCharCount(text.length); }, [text]);
 
@@ -180,6 +182,75 @@ export default function RedacaoPage() {
     const reader = new FileReader();
     reader.onload = () => { setImageBase64(reader.result.split(',')[1]); setImagePreview(reader.result); };
     reader.readAsDataURL(file);
+  };
+
+  const handleMotivatorFilePick = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setError('');
+    const name = file.name.toLowerCase();
+
+    // 1. Arquivos PDF
+    if (name.endsWith('.pdf')) {
+      setMotivatorExtracting(true);
+      try {
+        const extractedText = await extractTextFromPDF(file);
+        if (!extractedText.trim()) {
+          throw new Error('Nenhum texto pôde ser extraído deste PDF. Certifique-se de que não é um PDF composto exclusivamente por imagens escaneadas.');
+        }
+        setMotivatorText(extractedText);
+      } catch (err) {
+        setError('Erro ao extrair texto do PDF motivador: ' + err.message);
+      } finally {
+        setMotivatorExtracting(false);
+      }
+      return;
+    }
+
+    // 2. Arquivos de Texto (.txt)
+    if (name.endsWith('.txt')) {
+      try {
+        const textContent = await file.text();
+        setMotivatorText(textContent);
+      } catch (err) {
+        setError('Erro ao ler arquivo de texto motivador: ' + err.message);
+      }
+      return;
+    }
+
+    // 3. Imagens (requerem OCR via API)
+    setMotivatorExtracting(true);
+    try {
+      let activeBlob = file;
+      if (name.endsWith('.heic')) {
+        const heic2any = (await import('heic2any')).default;
+        const converted = await heic2any({ blob: file, toType: 'image/jpeg', quality: 0.9 });
+        activeBlob = Array.isArray(converted) ? converted[0] : converted;
+      }
+      
+      const reader = new FileReader();
+      reader.onload = async () => {
+        const base64Data = reader.result.split(',')[1];
+        try {
+          const res = await fetch('/api/extrair', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ imageBase64: base64Data, mediaType: 'image/jpeg' })
+          });
+          const data = await res.json();
+          if (!res.ok) throw new Error(data.error);
+          setMotivatorText(data.text);
+        } catch (err) {
+          setError('Erro ao extrair texto da imagem do motivador: ' + err.message);
+        } finally {
+          setMotivatorExtracting(false);
+        }
+      };
+      reader.readAsDataURL(activeBlob);
+    } catch (err) {
+      setError('Erro ao processar imagem do motivador: ' + err.message);
+      setMotivatorExtracting(false);
+    }
   };
 
   const handleExtract = async () => {
@@ -506,9 +577,24 @@ export default function RedacaoPage() {
 
                 {/* Texto Motivador */}
                 <div className="pt-2">
-                  <label className="block text-[11px] font-semibold text-slate-500 uppercase tracking-wider mb-1.5">Texto Motivador (Opcional - Usado para cruzar e verificar plágio)</label>
+                  <div className="flex items-center justify-between mb-1.5">
+                    <label className="block text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Texto Motivador (Opcional - Usado para cruzar e verificar plágio)</label>
+                    <button type="button" onClick={() => motivatorFileRef.current?.click()} className="text-xs text-violet-600 hover:text-violet-500 font-semibold flex items-center gap-1">
+                      {motivatorExtracting ? (
+                        <>
+                          <Loader2 size={12} className="animate-spin" /> Processando...
+                        </>
+                      ) : (
+                        <>
+                          <Download size={12} className="rotate-180" /> Importar arquivo...
+                        </>
+                      )}
+                    </button>
+                    <input ref={motivatorFileRef} type="file" accept="image/*,.heic,.HEIC,.pdf,.txt" className="hidden" onChange={handleMotivatorFilePick} />
+                  </div>
                   <textarea value={motivatorText} onChange={e => setMotivatorText(e.target.value)}
-                    placeholder="Cole aqui o texto motivador da redação..."
+                    placeholder={motivatorExtracting ? "Extraindo texto do arquivo enviado..." : "Cole aqui ou importe um arquivo com o texto motivador da redação..."}
+                    disabled={motivatorExtracting}
                     rows={3}
                     className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm text-slate-900 placeholder-slate-300 outline-none focus:border-violet-400 focus:ring-4 focus:ring-violet-50 transition-all duration-300 resize-y" />
                 </div>
