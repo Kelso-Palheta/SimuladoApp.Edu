@@ -83,10 +83,12 @@ export default function DiarioPage() {
   // Persiste no Firestore (subcoleção isolada) + localStorage
   const persistir = useCallback((turmas) => {
     salvarLocal(turmas);
-    if (user) {
-      const ref = doc(db, 'professores', user.uid, 'turmas', 'data');
-      setDoc(ref, { turmas, updatedAt: serverTimestamp() }, { merge: true }).catch(() => {});
-    }
+    if (!user) return;
+    // Debounce: evita múltiplos writes simultâneos
+    const ref = doc(db, 'professores', user.uid, 'turmas', 'data');
+    setDoc(ref, { turmas, updatedAt: serverTimestamp() }, { merge: true }).catch((e) => {
+      console.error('Erro ao salvar turmas:', e);
+    });
   }, [user]);
 
   const { turmas, setTurmas, addTurma, removeTurma, addAlunos, addAlunoManual,

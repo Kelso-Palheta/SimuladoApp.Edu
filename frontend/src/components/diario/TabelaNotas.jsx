@@ -125,27 +125,31 @@ export const TabelaNotas = ({
     }
   };
 
+  const safeClear = (fn, ...args) => {
+    try { fn(...args); } catch (e) { console.error('Erro ao limpar:', e); }
+  };
+
   const handleClearSingleActivities = (alunoId, nome) => {
     if (window.confirm(`Apagar apenas as notas de atividades do aluno ${titleCase(nome)}?`)) {
-      onClearAtividadesNota(turma.id, bimestre, alunoId);
+      safeClear(onClearAtividadesNota, turma.id, bimestre, alunoId);
     }
   };
 
   const handleClearBulkActivities = () => {
     if (window.confirm("Apagar notas de TODAS as atividades de TODOS os alunos neste bimestre?")) {
-      onClearAtividadesTurma(turma.id, bimestre);
+      safeClear(onClearAtividadesTurma, turma.id, bimestre);
     }
   };
 
   const handleClearSingleSimulado = (alunoId, nome) => {
     if (window.confirm(`Apagar apenas a nota do simulado do aluno ${titleCase(nome)}?`)) {
-      onClearSimuladoNota(turma.id, bimestre, alunoId);
+      safeClear(onClearSimuladoNota, turma.id, bimestre, alunoId);
     }
   };
 
   const handleClearBulkSimulado = () => {
     if (window.confirm("Apagar as notas de SIMULADO de TODOS os alunos neste bimestre?")) {
-      onClearSimuladoTurma(turma.id, bimestre);
+      safeClear(onClearSimuladoTurma, turma.id, bimestre);
     }
   };
 
