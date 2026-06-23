@@ -4,8 +4,9 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/lib/auth-context';
 import { db } from '@/lib/firebase';
-import { collection, query, where, getDocs, doc, deleteDoc } from 'firebase/firestore';
-import { ArrowLeft, BarChart3, Users, TrendingUp, Award, Trash2, Search, ExternalLink } from 'lucide-react';
+import { collection, query, where, getDocs, doc, deleteDoc, getDoc, setDoc } from 'firebase/firestore';
+import { gerarLoginKey } from '@/utils/diario/loginAluno';
+import { ArrowLeft, BarChart3, Users, TrendingUp, Award, Trash2, Search, ExternalLink, Link2 } from 'lucide-react';
 
 export default function DesempenhoPage() {
   const { user, perfil, loading: authLoading } = useAuth();
@@ -15,6 +16,83 @@ export default function DesempenhoPage() {
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
   const [deleting, setDeleting] = useState(null);
+  const [claimLogin, setClaimLogin] = useState('');
+  const [claiming, setClaiming] = useState(false);
+  const [claimMsg, setClaimMsg] = useState('');
+
+  const handleClaim = async () => {
+    const login = claimLogin.trim().toLowerCase();
+    if (!login) return;
+    setClaiming(true);
+    setClaimMsg('');
+
+    try {
+      const loginKey = await gerarLoginKey(login);
+
+      // Busca em todos os professores
+      const professoresSnap = await getDocs(collection(db, 'professores'));
+      let found = null;
+      let foundProfessorUid = null;
+
+      for (const profDoc of professoresSnap.docs) {
+        const corrRef = doc(db, 'professores', profDoc.id, 'correcoes', loginKey);
+        const corrSnap = await getDoc(corrRef);
+        if (corrSnap.exists()) {
+          found = corrSnap.data();
+          foundProfessorUid = profDoc.id;
+          break;
+        }
+      }
+
+      if (!found) {
+        // Tenta buscar por loginAluno (formato antigo)
+        for (const profDoc of professoresSnap.docs) {
+          const qSnap = await getDocs(query(
+            collection(db, 'professores', profDoc.id, 'correcoes'),
+            where('loginAluno', '==', login)
+          ));
+          if (!qSnap.empty) {
+            const docData = qSnap.docs[0].data();
+            // Re-save com a nova loginKey
+            found = docData;
+            foundProfessorUid = profDoc.id;
+            break;
+          }
+        }
+      }
+
+      if (!found) {
+        setClaimMsg('Correção não encontrada. Verifique o login do aluno.');
+      } else if (foundProfessorUid === user.uid) {
+        setClaimMsg('Esta correção já está no seu histórico.');
+      } else {
+        // Copia para o professor atual
+        const corrData = { ...found, userId: user.uid, id: loginKey };
+        await setDoc(doc(db, 'professores', user.uid, 'correcoes', loginKey), corrData);
+
+        // Cria vínculo
+        await setDoc(doc(db, 'alunoLogin', loginKey, 'vinculos', user.uid), {
+          professorUid: user.uid,
+          turmaId: found.studentClass || 'N/A',
+          modulo: 'redacao',
+          nomeProfessor: perfil?.nome || user?.displayName || 'Professor'
+        }, { merge: true });
+
+        setClaimMsg(`✅ Correção de "${found.studentName}" vinculada com sucesso!`);
+        setClaimLogin('');
+        // Recarrega a lista
+        const q = query(collection(db, 'professores', user.uid, 'correcoes'), where('userId', '==', user.uid));
+        const snap = await getDocs(q);
+        const list = snap.docs.map(d => ({ ...d.data(), _firestoreId: d.id }));
+        list.sort((a, b) => (b.createdAt?.toDate?.() || 0) - (a.createdAt?.toDate?.() || 0));
+        setCorrections(list);
+      }
+    } catch (err) {
+      setClaimMsg('Erro: ' + err.message);
+    } finally {
+      setClaiming(false);
+    }
+  };
 
   useEffect(() => {
     if (!user) return;
@@ -77,6 +155,33 @@ export default function DesempenhoPage() {
       </header>
 
       <main className="flex-1 max-w-5xl mx-auto w-full px-4 py-8">
+        {/* Vincular correção */}
+        <div className="glass-panel p-4 mb-6">
+          <div className="flex items-center gap-2 mb-3">
+            <Link2 size={16} className="text-violet-500" />
+            <h3 className="text-sm font-semibold text-slate-700">Vincular correção</h3>
+          </div>
+          <p className="text-xs text-slate-400 mb-3">Insira o login do aluno (primeiro nome + dia/mês de nascimento) para vincular a correção ao seu histórico.</p>
+          <div className="flex gap-2">
+            <input
+              value={claimLogin}
+              onChange={e => { setClaimLogin(e.target.value); setClaimMsg(''); }}
+              onKeyDown={e => e.key === 'Enter' && handleClaim()}
+              placeholder="Ex: maria0704"
+              className="flex-1 bg-white border border-slate-200 rounded-xl px-4 py-2 text-sm text-slate-900 placeholder-slate-300 outline-none focus:ring-2 focus:ring-violet-400/50 transition-all font-mono"
+            />
+            <button onClick={handleClaim} disabled={claiming || !claimLogin.trim()}
+              className="px-4 py-2 bg-violet-500 hover:bg-violet-400 disabled:bg-slate-200 disabled:text-slate-400 rounded-xl text-white text-sm font-semibold transition-all">
+              {claiming ? 'Vinculando...' : 'Vincular'}
+            </button>
+          </div>
+          {claimMsg && (
+            <p className={`text-xs mt-2 ${claimMsg.startsWith('✅') ? 'text-green-600' : claimMsg.startsWith('Erro') ? 'text-red-500' : 'text-amber-500'}`}>
+              {claimMsg}
+            </p>
+          )}
+        </div>
+
         {/* Stats */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
           <div className="glass-panel p-5 flex items-center gap-4">

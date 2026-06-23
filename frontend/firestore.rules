@@ -2,9 +2,14 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
 
-    // Professores: leem/escrevem próprio documento
+    // Professores: leem/escrevem próprio documento e subdocumentos
     match /professores/{userId} {
       allow read, write: if request.auth != null && request.auth.uid == userId;
+
+      // Subdocumentos internos (turmas, dados)
+      match /{document=**} {
+        allow read, write: if request.auth != null && request.auth.uid == userId;
+      }
 
       // Correções de redação: leitura pública (aluno), escrita pelo professor dono
       match /correcoes/{corrId} {
