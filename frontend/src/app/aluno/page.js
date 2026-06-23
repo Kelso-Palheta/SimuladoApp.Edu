@@ -12,6 +12,23 @@ export default function AlunoLoginPage() {
   const [alunoBase, setAlunoBase] = useState(null);
   const router = useRouter();
 
+  // Carrega do sessionStorage se estiver voltando das notas
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const storedBase = sessionStorage.getItem('aluno_base');
+      const storedVinculos = sessionStorage.getItem('aluno_vinculos');
+      if (storedBase && storedVinculos) {
+        try {
+          setAlunoBase(JSON.parse(storedBase));
+          setVinculos(JSON.parse(storedVinculos));
+        } catch (e) {
+          sessionStorage.removeItem('aluno_base');
+          sessionStorage.removeItem('aluno_vinculos');
+        }
+      }
+    }
+  }, []);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const valor = login.trim().toLowerCase();
@@ -60,6 +77,10 @@ export default function AlunoLoginPage() {
         // Se tiver múltiplos vínculos, exibe a lista para seleção
         setAlunoBase({ login: valor, nome: dados.nome, loginKey: dados.loginKey });
         setVinculos(dados.vinculos);
+        if (typeof window !== 'undefined') {
+          sessionStorage.setItem('aluno_base', JSON.stringify({ login: valor, nome: dados.nome, loginKey: dados.loginKey }));
+          sessionStorage.setItem('aluno_vinculos', JSON.stringify(dados.vinculos));
+        }
       }
     } catch (err) {
       console.error('Erro ao validar login:', err);
@@ -133,7 +154,15 @@ export default function AlunoLoginPage() {
                 </button>
               ))}
             </div>
-            <button onClick={() => { setVinculos(null); setAlunoBase(null); }} className="w-full text-center mt-4 text-xs text-slate-400 hover:text-slate-600 underline font-medium">
+            <button onClick={() => {
+              setVinculos(null);
+              setAlunoBase(null);
+              if (typeof window !== 'undefined') {
+                sessionStorage.removeItem('aluno_base');
+                sessionStorage.removeItem('aluno_vinculos');
+                sessionStorage.removeItem('aluno_login');
+              }
+            }} className="w-full text-center mt-4 text-xs text-slate-400 hover:text-slate-600 underline font-medium">
               Entrar com outra conta
             </button>
           </div>

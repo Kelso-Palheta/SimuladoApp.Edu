@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { getNotasAluno, getAtividadesDoAluno, getEntregasDoAluno, getTokenAluno } from '@/lib/firebase-aluno';
 import { calcTotal, calcSemestre, fmt } from '@/utils/diario/calculos';
+import { ArrowLeft } from 'lucide-react';
 
 const BimestreCard = ({ numero, turma, alunoId }) => {
   const bData = turma.bimestres[String(numero)];
@@ -143,7 +144,14 @@ export default function AlunoNotasPage() {
     }).finally(() => setLoading(false));
   }, [router]);
 
-  const handleLogout = () => { sessionStorage.removeItem('aluno_login'); router.push('/aluno'); };
+  const handleLogout = () => {
+    if (typeof window !== 'undefined') {
+      sessionStorage.removeItem('aluno_login');
+      sessionStorage.removeItem('aluno_base');
+      sessionStorage.removeItem('aluno_vinculos');
+    }
+    router.push('/aluno');
+  };
 
   if (loading) {
     return (
@@ -208,10 +216,12 @@ export default function AlunoNotasPage() {
       <div className="max-w-2xl mx-auto px-4 py-6 sm:py-10">
         {/* Header */}
         <div className="flex items-center justify-between mb-6">
-          <div className="flex items-center gap-2">
-            <div className="w-6 h-6 rounded-lg bg-gradient-to-tr from-violet-700 to-violet-400 flex items-center justify-center text-white text-[10px] font-extrabold">N</div>
-            <span className="text-xs text-slate-400 font-medium">Gestão de Notas</span>
-          </div>
+          <button 
+            onClick={() => router.push('/aluno')} 
+            className="text-xs text-slate-400 hover:text-violet-500 transition-colors flex items-center gap-1.5 font-semibold"
+          >
+            <ArrowLeft size={14} /> Voltar ao Portal
+          </button>
           <button onClick={handleLogout} className="text-xs text-slate-400 hover:text-red-500 transition-colors">Sair</button>
         </div>
 

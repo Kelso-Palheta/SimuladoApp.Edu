@@ -17,6 +17,13 @@ export default function AlunoRedacaoViewPage() {
   const [correction, setCorrection] = useState(null);
   const [loading, setLoading] = useState(true);
   const [erro, setErro] = useState('');
+  const [backUrl, setBackUrl] = useState('/redacao/aluno');
+
+  useEffect(() => {
+    if (typeof window !== 'undefined' && sessionStorage.getItem('aluno_login')) {
+      setBackUrl('/aluno');
+    }
+  }, []);
 
   useEffect(() => {
     const load = async () => {
@@ -112,8 +119,8 @@ export default function AlunoRedacaoViewPage() {
     <div className="min-h-screen bg-slate-50">
       <div className="max-w-3xl mx-auto px-4 py-6">
         <div className="flex items-center justify-between mb-6">
-          <a href="/redacao/aluno" className="inline-flex items-center gap-1.5 text-sm text-violet-500 hover:text-violet-400 font-medium transition-colors">
-            <ArrowLeft size={16} /> Buscar outro login
+          <a href={backUrl} className="inline-flex items-center gap-1.5 text-sm text-violet-500 hover:text-violet-400 font-medium transition-colors">
+            <ArrowLeft size={16} /> {backUrl === '/aluno' ? 'Voltar ao Portal' : 'Buscar outro login'}
           </a>
           <button onClick={handleExportPDF}
             className="inline-flex items-center gap-1.5 px-3 py-2 bg-violet-50 hover:bg-violet-100 border border-violet-200 rounded-xl text-xs font-semibold text-violet-600 transition-all">
