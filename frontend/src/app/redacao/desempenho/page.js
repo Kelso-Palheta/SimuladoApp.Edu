@@ -6,7 +6,7 @@ import { useAuth } from '@/lib/auth-context';
 import { db } from '@/lib/firebase';
 import { collection, query, where, getDocs, doc, deleteDoc, getDoc, setDoc } from 'firebase/firestore';
 import { gerarLoginKey, gerarLoginAluno } from '@/utils/diario/loginAluno';
-import { ArrowLeft, BarChart3, Users, TrendingUp, Award, Trash2, Search, ExternalLink, Link2, Shield, AlertCircle } from 'lucide-react';
+import { ArrowLeft, BarChart3, Users, TrendingUp, Award, Trash2, Search, ExternalLink, Link2, Shield, AlertCircle, MoreVertical, Eye, Copy } from 'lucide-react';
 
 export default function DesempenhoPage() {
   const { user, perfil, loading: authLoading } = useAuth();
@@ -22,6 +22,41 @@ export default function DesempenhoPage() {
   const [claimMsg, setClaimMsg] = useState('');
   const [syncStatus, setSyncStatus] = useState('');
   const [viewingCorrection, setViewingCorrection] = useState(null);
+  const [activeMenu, setActiveMenu] = useState(null);
+  const [toast, setToast] = useState('');
+
+  useEffect(() => {
+    if (toast) {
+      const t = setTimeout(() => setToast(''), 3000);
+      return () => clearTimeout(t);
+    }
+  }, [toast]);
+
+  useEffect(() => {
+    const handleClose = () => setActiveMenu(null);
+    if (activeMenu) {
+      window.addEventListener('click', handleClose);
+    }
+    return () => window.removeEventListener('click', handleClose);
+  }, [activeMenu]);
+
+  const handleCopyLink = (c) => {
+    const link = `${window.location.origin}/redacao/aluno/${c.id}`;
+    navigator.clipboard.writeText(link).then(() => {
+      setToast('Link de acesso copiado!');
+    }).catch(() => {
+      setToast('Erro ao copiar link');
+    });
+  };
+
+  const handleCopyLogin = (c) => {
+    const login = c.loginAluno || c.id.substring(0, 8);
+    navigator.clipboard.writeText(login).then(() => {
+      setToast('Login do aluno copiado!');
+    }).catch(() => {
+      setToast('Erro ao copiar login');
+    });
+  };
 
   // 1. Carrega as turmas do diário
   useEffect(() => {
@@ -410,13 +445,39 @@ export default function DesempenhoPage() {
                             </span>
                           </td>
                           <td className="px-4 py-3 text-right">
-                            <div className="flex items-center justify-end gap-1 opacity-80 group-hover:opacity-100 transition-opacity">
-                              <button onClick={() => setViewingCorrection(c)}
+                            <div className="flex items-center justify-end gap-1 opacity-80 group-hover:opacity-100 transition-opacity relative">
+                              <button onClick={(e) => { e.stopPropagation(); setActiveMenu(activeMenu === c.id ? null : c.id); }}
                                 className="p-2 text-slate-400 hover:bg-slate-100 hover:text-violet-500 rounded-xl transition-all"
-                                title="Visualizar correção"
+                                title="Ações"
                               >
-                                <ExternalLink size={14} />
+                                <MoreVertical size={14} />
                               </button>
+
+                              {activeMenu === c.id && (
+                                <div className="absolute right-9 top-0 w-48 bg-white/95 backdrop-blur-md border border-slate-200 rounded-2xl shadow-xl py-1.5 z-30 animate-in fade-in slide-in-from-top-2 duration-150 text-left">
+                                  <button onClick={() => { setViewingCorrection(c); setActiveMenu(null); }}
+                                    className="w-full text-left px-3.5 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50 hover:text-violet-600 flex items-center gap-2 transition-all">
+                                    <Eye size={12} className="text-slate-400" />
+                                    Ver relatório
+                                  </button>
+                                  <button onClick={() => { handleCopyLink(c); setActiveMenu(null); }}
+                                    className="w-full text-left px-3.5 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50 hover:text-violet-600 flex items-center gap-2 transition-all">
+                                    <Link2 size={12} className="text-slate-400" />
+                                    Copiar link
+                                  </button>
+                                  <button onClick={() => { handleCopyLogin(c); setActiveMenu(null); }}
+                                    className="w-full text-left px-3.5 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50 hover:text-violet-600 flex items-center gap-2 transition-all">
+                                    <Shield size={12} className="text-slate-400" />
+                                    Copiar login
+                                  </button>
+                                  <a href={`/redacao/aluno/${c.id}`} target="_blank" rel="noopener noreferrer" onClick={() => setActiveMenu(null)}
+                                    className="w-full text-left px-3.5 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50 hover:text-violet-600 flex items-center gap-2 transition-all">
+                                    <ExternalLink size={12} className="text-slate-400" />
+                                    Abrir em nova aba
+                                  </a>
+                                </div>
+                              )}
+
                               <button onClick={() => handleDelete(c._firestoreId || c.id)} disabled={deleting === c.id}
                                 className="p-2 text-slate-400 hover:bg-rose-50 hover:text-rose-600 rounded-xl transition-all"
                                 title="Excluir"
@@ -504,6 +565,14 @@ export default function DesempenhoPage() {
               </div>
             </div>
           </div>
+        </div>
+      )}
+
+      {/* Toast Notification */}
+      {toast && (
+        <div className="fixed bottom-6 right-6 z-50 bg-slate-900/90 backdrop-blur-md border border-slate-700 text-white text-xs font-semibold px-4 py-3 rounded-2xl shadow-2xl flex items-center gap-2 animate-in fade-in slide-in-from-bottom-3 duration-200">
+          <Check size={14} className="text-green-400" />
+          {toast}
         </div>
       )}
     </div>
