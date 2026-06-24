@@ -18,17 +18,8 @@ export const useTurmas = (initialTurmas, persistTurmas) => {
   }, [persistTurmas]);
 
   useEffect(() => {
-    if (initialTurmas && initialTurmas.length > 0) {
-      setTurmasState((prev) => {
-        // Aceita initialTurmas se a lista atual está vazia OU se initialTurmas
-        // é visivelmente diferente (ex: veio do Firestore e é mais atual)
-        if (prev.length === 0) return initialTurmas;
-        // Se initialTurmas tem turmas que não existem em prev, mescla
-        const prevIds = new Set(prev.map(t => t.id));
-        const novas = initialTurmas.filter(t => !prevIds.has(t.id));
-        if (novas.length > 0) return [...prev, ...novas];
-        return prev;
-      });
+    if (initialTurmas) {
+      setTurmasState(initialTurmas);
     }
   }, [initialTurmas]);
 
