@@ -7,7 +7,10 @@ export const useTurmas = (initialTurmas, persistTurmas) => {
     return [];
   });
 
+  const userEdited = useRef(false);
+
   const setTurmas = useCallback((newTurmasOrFn) => {
+    userEdited.current = true;
     setTurmasState((prev) => {
       const next = typeof newTurmasOrFn === 'function' ? newTurmasOrFn(prev) : newTurmasOrFn;
       if (persistTurmas) {
@@ -18,7 +21,7 @@ export const useTurmas = (initialTurmas, persistTurmas) => {
   }, [persistTurmas]);
 
   useEffect(() => {
-    if (initialTurmas) {
+    if (initialTurmas && !userEdited.current) {
       setTurmasState(initialTurmas);
     }
   }, [initialTurmas]);
