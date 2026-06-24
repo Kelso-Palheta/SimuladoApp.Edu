@@ -1,0 +1,199 @@
+[
+  {
+    "id": "turma-104",
+    "nome": "104",
+    "alunos": [
+      {
+        "id": "al_mplzgdbs_70t1w",
+        "nome": "AILA SOPHIA SOARES DO ROSARIO"
+      },
+      {
+        "id": "al_mplzgdbs_5pgp3",
+        "nome": "ANA GABRIELLE DE ALMEIDA PIRES",
+        "dataNascimento": "2802"
+      },
+      {
+        "id": "al_mplzgdbs_mjg9j",
+        "nome": "DAVI HENRIQUE SANTOS SILVA"
+      },
+      {
+        "id": "al_mplzgdbs_blm3a",
+        "nome": "EDUARDO TADEU CARDOSO GASPAR",
+        "dataNascimento": "0912"
+      },
+      {
+        "id": "al_mplzgdbs_cshdq",
+        "nome": "ELIAS VITOR AMARAL DE SOUZA"
+      },
+      {
+        "id": "al_mplzgdbs_q25sj",
+        "nome": "ENZO VIRGILIO MIRANDA DE OLIVEIRA"
+      },
+      {
+        "id": "al_mplzgdbs_75dfi",
+        "nome": "ESTEFANY SOEIRO NUNES"
+      },
+      {
+        "id": "al_mplzgdbs_duhz4",
+        "nome": "ESTHER CAROLINE BARBOSA PINHEIRO"
+      },
+      {
+        "id": "al_mplzgdbs_qttmi",
+        "nome": "FABIO CALEBE CARVALHO CARDOSO"
+      },
+      {
+        "id": "al_mplzgdbs_lf68x",
+        "nome": "GABRIELA DA CRUZ PINTO SOUSA"
+      },
+      {
+        "id": "al_mplzgdbs_0q7y8",
+        "nome": "GUSTAVO CORDEIRO PINTO",
+        "dataNascimento": "1012"
+      },
+      {
+        "id": "al_mplzgdbs_3cp2m",
+        "nome": "HILLARY DELIANE LOPES CARDOSO"
+      },
+      {
+        "id": "al_mplzgdbs_li8le",
+        "nome": "JOAO AUGUSTO RIBEIRO MOTA",
+        "dataNascimento": "1205"
+      },
+      {
+        "id": "al_mplzgdbs_fi8kw",
+        "nome": "JOAO FERNANDO FROTA DA ROCHA"
+      },
+      {
+        "id": "al_mplzgdbs_abk4i",
+        "nome": "JOAO VITOR DE SOUSA MATOS DA SILVA",
+        "dataNascimento": "2807"
+      },
+      {
+        "id": "al_mplzgdbs_ev8pb",
+        "nome": "JOSE GUILHERME NOGUEIRA DE LIMA"
+      },
+      {
+        "id": "al_mplzgdbs_401rd",
+        "nome": "JULLY VERONICA SOUZA COSTA"
+      },
+      {
+        "id": "al_mplzgdbs_95hug",
+        "nome": "KAIO RYAN LIMA OEIRAS"
+      },
+      {
+        "id": "al_mplzgdbs_1lofn",
+        "nome": "LARA PETERSON DE CASTRO GARCIA MARTINS"
+      },
+      {
+        "id": "al_mplzgdbs_uvylm",
+        "nome": "LAYS VITORIA FERREIRA DA SILVA"
+      },
+      {
+        "id": "al_mplzgdbs_k56hh",
+        "nome": "LORIANY VITORIA BARATA MONTEIRO"
+      },
+      {
+        "id": "al_mplzgdbs_g7tqi",
+        "nome": "LUANY BEATRIZ PAZ OLIVEIRA"
+      },
+      {
+        "id": "al_mplzgdbs_p6ttl",
+        "nome": "LUCAS SAMUEL DA LUZ AZEVEDO DELMONDES"
+      },
+      {
+        "id": "al_mplzgdbs_s3a4j",
+        "nome": "LUIS BERNARDO PANTOJA DE AVIZ"
+      },
+      {
+        "id": "al_mplzgdbs_ag0cl",
+        "nome": "MAYTHE LUIZA BARRETO DA SILVA",
+        "dataNascimento": "0906"
+      },
+      {
+        "id": "al_mplzgdbs_y5fud",
+        "nome": "PEDRO HENRIQUE BARATA SILVA"
+      },
+      {
+        "id": "al_mplzgdbs_2nhbm",
+        "nome": "PIETRO CALEBE DE FRANCA MARTINS"
+      },
+      {
+        "id": "al_mplzgdbs_vyosn",
+        "nome": "ROBERTO LAUAN SOARES DO NASCIMENTO"
+      },
+      {
+        "id": "al_mplzgdbs_3eugr",
+        "nome": "ROMULO CRISTIANO NUNES DOS SANTOS"
+      },
+      {
+        "id": "al_mplzgdbs_0edl6",
+        "nome": "SAMUEL HEITOR CARDOSO CAMPOS"
+      },
+      {
+        "id": "al_mplzgdbs_yxkt1",
+        "nome": "SOFIA ESTER DE SOUZA DE LIMA",
+        "dataNascimento": "0501"
+      },
+      {
+        "id": "al_mplzgdbs_6gsac",
+        "nome": "SORAYA KIMBERLY PINTO DE SOUSA",
+        "dataNascimento": "3011"
+      },
+      {
+        "id": "al_mplzgdbs_7eci6",
+        "nome": "THAISA GEOVANNA PANTOJA MELO"
+      },
+      {
+        "id": "al_mplzgdbs_n4l0c",
+        "nome": "YASMYN LAGO DOS ANJOS",
+        "dataNascimento": "1802"
+      }
+    ],
+    "bimestres": {
+      "1": {
+        "config": {
+          "mediaRecuperacao": 4.99,
+          "mediaAprovacao": 5,
+          "simuladoMaxLanca": 5,
+          "atividadesMaxFinal": 5,
+          "simuladoMaxFinal": 5
+        },
+        "atividades": [],
+        "notas": {}
+      },
+      "2": {
+        "config": {
+          "simuladoMaxFinal": 5,
+          "atividadesMaxFinal": 5,
+          "mediaAprovacao": 5,
+          "simuladoMaxLanca": 5,
+          "mediaRecuperacao": 4.99
+        },
+        "atividades": [],
+        "notas": {}
+      },
+      "3": {
+        "config": {
+          "simuladoMaxFinal": 5,
+          "mediaAprovacao": 5,
+          "mediaRecuperacao": 4.99,
+          "simuladoMaxLanca": 5,
+          "atividadesMaxFinal": 5
+        },
+        "atividades": [],
+        "notas": {}
+      },
+      "4": {
+        "config": {
+          "simuladoMaxLanca": 5,
+          "mediaRecuperacao": 4.99,
+          "mediaAprovacao": 5,
+          "atividadesMaxFinal": 5,
+          "simuladoMaxFinal": 5
+        },
+        "atividades": [],
+        "notas": {}
+      }
+    }
+  }
+]

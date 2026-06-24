@@ -1,0 +1,141 @@
+[
+  {
+    "id": "turma-301",
+    "nome": "301",
+    "alunos": [
+      {
+        "id": "al_mplzpcwy_qe9nk",
+        "nome": "ANIELLY DA CONCEICAO CUNHA",
+        "dataNascimento": "0905"
+      },
+      {
+        "id": "al_mplzpcwy_g6voh",
+        "nome": "ARLYLA NASCIMENTO DOS SANTOS"
+      },
+      {
+        "id": "al_mplzpcwy_531ga",
+        "nome": "AYRA SANTOS VIEIRA"
+      },
+      {
+        "id": "al_mplzpcwy_2ot5k",
+        "nome": "CLARA GIULIANA DA SILVA RODRIGUES",
+        "dataNascimento": "0112"
+      },
+      {
+        "id": "al_mplzpcwy_ceirw",
+        "nome": "DAYANDRA SANTANA FERREIRA"
+      },
+      {
+        "id": "al_mplzpcwy_pwm36",
+        "nome": "EDUARDO VICTOR PINHEIRO COSTA"
+      },
+      {
+        "id": "al_mplzpcwy_cqzpy",
+        "nome": "EMANUEL SILVA DE LIMA"
+      },
+      {
+        "id": "al_mplzpcwy_mmi87",
+        "nome": "EMILY TELMA LOBATO MOURA"
+      },
+      {
+        "id": "al_mplzpcwy_er2to",
+        "nome": "EVELYN MACEDO DA SILVA"
+      },
+      {
+        "id": "al_mplzpcwy_sxptu",
+        "nome": "FERNANDA GEISY DO ROSARIO LIMA"
+      },
+      {
+        "id": "al_mplzpcwy_elt6c",
+        "nome": "GABRIELE VITORIA FARIAS DA COSTA"
+      },
+      {
+        "id": "al_mplzpcwy_s0vda",
+        "nome": "GUILHERME DO CARMO ANTUNES"
+      },
+      {
+        "id": "al_mplzpcwy_p02mf",
+        "nome": "JAMILLY VITORIA BASTOS DUTRA"
+      },
+      {
+        "id": "al_mplzpcwy_vwm9h",
+        "nome": "KASSIANE OLIVEIRA DOS SANTOS",
+        "dataNascimento": "2803"
+      },
+      {
+        "id": "al_mplzpcwy_ufnos",
+        "nome": "KAUANY VITORIA SOUSA BRAGA"
+      },
+      {
+        "id": "al_mplzpcwy_mr3rc",
+        "nome": "KAUA RONALDO PANTOJA DE SOUSA"
+      },
+      {
+        "id": "al_mplzpcwy_vb5uh",
+        "nome": "LIVYA MENEZES DA SILVA"
+      },
+      {
+        "id": "al_mplzpcwy_ba25h",
+        "nome": "RYAN MICHEL DA SILVA NEGRAO"
+      },
+      {
+        "id": "al_mplzpcwy_zbldg",
+        "nome": "SAMYA VITORIA TRINDADE DE MORAIS"
+      },
+      {
+        "id": "al_mplzpcwy_tqf9g",
+        "nome": "YASMIN SOUZA DE OLIVEIRA"
+      },
+      {
+        "id": "al_mplzpcwy_1gfjr",
+        "nome": "YURI PYETRO RAMOS LIMA"
+      }
+    ],
+    "bimestres": {
+      "1": {
+        "config": {
+          "atividadesMaxFinal": 5,
+          "mediaRecuperacao": 4.99,
+          "mediaAprovacao": 5,
+          "simuladoMaxLanca": 5,
+          "simuladoMaxFinal": 5
+        },
+        "atividades": [],
+        "notas": {}
+      },
+      "2": {
+        "config": {
+          "simuladoMaxLanca": 5,
+          "mediaAprovacao": 5,
+          "mediaRecuperacao": 4.99,
+          "atividadesMaxFinal": 5,
+          "simuladoMaxFinal": 5
+        },
+        "atividades": [],
+        "notas": {}
+      },
+      "3": {
+        "config": {
+          "simuladoMaxFinal": 5,
+          "atividadesMaxFinal": 5,
+          "simuladoMaxLanca": 5,
+          "mediaRecuperacao": 4.99,
+          "mediaAprovacao": 5
+        },
+        "atividades": [],
+        "notas": {}
+      },
+      "4": {
+        "config": {
+          "simuladoMaxFinal": 5,
+          "atividadesMaxFinal": 5,
+          "mediaRecuperacao": 4.99,
+          "mediaAprovacao": 5,
+          "simuladoMaxLanca": 5
+        },
+        "atividades": [],
+        "notas": {}
+      }
+    }
+  }
+]

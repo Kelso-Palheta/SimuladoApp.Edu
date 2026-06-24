@@ -1,0 +1,200 @@
+[
+  {
+    "id": "turma-102",
+    "nome": "102",
+    "alunos": [
+      {
+        "id": "al_mplzar3y_8t860",
+        "nome": "ADRIANE LOPES BORRALHOS"
+      },
+      {
+        "id": "al_mplzar3y_89asw",
+        "nome": "AGATHA CRISTINA OLIVEIRA DE SOUZA"
+      },
+      {
+        "id": "al_mplzar3y_ieyle",
+        "nome": "ALANA MAYSA DA SILVA PINTO SILVA"
+      },
+      {
+        "id": "al_mplzar3y_jxwn7",
+        "nome": "ANA CARLA DOS SANTOS BRANDAO"
+      },
+      {
+        "id": "al_mplzar3y_9e6r6",
+        "nome": "ANNA BEATRIZ DA SILVA COSTA"
+      },
+      {
+        "id": "al_mplzar3y_kgn8h",
+        "nome": "BEATRIZ ALVES SANTOS"
+      },
+      {
+        "id": "al_mplzar3y_i12zg",
+        "nome": "CEZAR AUGUSTO DA SILVA GOMES"
+      },
+      {
+        "id": "al_mplzar3y_c4nne",
+        "nome": "DARIO BAIA DA COSTA FILHO"
+      },
+      {
+        "id": "al_mplzar3y_9nvjc",
+        "nome": "ELISSON ARIEL BARATA MONTEIRO"
+      },
+      {
+        "id": "al_mplzar3y_szpmu",
+        "nome": "ESTER COSTA DO NASCIMENTO"
+      },
+      {
+        "id": "al_mplzar3y_sccrc",
+        "nome": "GABRIEL THERRY BARRETO CAMPOS"
+      },
+      {
+        "id": "al_mplzar3y_1ip75",
+        "nome": "ISABELI KAROLINE CORREA VILHENA"
+      },
+      {
+        "id": "al_mplzar3y_y6hoi",
+        "nome": "IZABELLY VERA CRUZ SOARES",
+        "dataNascimento": "3105"
+      },
+      {
+        "id": "al_mplzar3y_zzad9",
+        "nome": "IZAIAS FERREIRA RIBEIRO NETO"
+      },
+      {
+        "id": "al_mplzar3y_qovro",
+        "nome": "JOAO VICTOR TEIXEIRA CAMPELO",
+        "dataNascimento": "0208"
+      },
+      {
+        "id": "al_mplzar3y_8uvs9",
+        "nome": "JULIANA PINHEIRO DA SILVA",
+        "dataNascimento": "3105"
+      },
+      {
+        "id": "al_mplzar3y_ck5hk",
+        "nome": "KAROLINNY VICTORIA SILVA DOS SANTOS",
+        "dataNascimento": "2512"
+      },
+      {
+        "id": "al_mplzar3y_tokyq",
+        "nome": "KAWANNY VICTORYA REIS DE SOUZA"
+      },
+      {
+        "id": "al_mplzar3y_nwapz",
+        "nome": "KEZIA CAROLINE RODRIGUES FARIAS",
+        "dataNascimento": "2208"
+      },
+      {
+        "id": "al_mplzar3y_2wdvv",
+        "nome": "LAIS CHRISTIANE DE SOUSA FERNANDES",
+        "dataNascimento": "0707"
+      },
+      {
+        "id": "al_mplzar3y_zut7w",
+        "nome": "LEO STIFLER PANTOJA LEAL",
+        "dataNascimento": "0905"
+      },
+      {
+        "id": "al_mplzar3y_f925f",
+        "nome": "LUIZ CESAR DE QUEIROZ SANTOS",
+        "dataNascimento": "2901"
+      },
+      {
+        "id": "al_mplzar3y_3vejs",
+        "nome": "MARCOS DA SILVA SOUSA",
+        "dataNascimento": "1701"
+      },
+      {
+        "id": "al_mplzar3y_um1sd",
+        "nome": "MARIA EDUARDA HOLANDA DE SOUSA"
+      },
+      {
+        "id": "al_mplzar3y_nulm3",
+        "nome": "MARIA ELISA SILVA DA SILVA"
+      },
+      {
+        "id": "al_mplzar3y_yzkpd",
+        "nome": "MATEUS DA SILVA SOUSA",
+        "dataNascimento": "1701"
+      },
+      {
+        "id": "al_mplzar3y_23xvm",
+        "nome": "MICAELY DA SILVA OLIVEIRA"
+      },
+      {
+        "id": "al_mplzar3y_ytrxx",
+        "nome": "RAKELLY PATRICIA DA SILVA MONTEIRO"
+      },
+      {
+        "id": "al_mplzar3y_3c8bo",
+        "nome": "RANGEL BATISTA BASTOS"
+      },
+      {
+        "id": "al_mplzar3y_wa0o0",
+        "nome": "RENATO LUCAS ARAUJO DA SILVA"
+      },
+      {
+        "id": "al_mplzar3y_12f4w",
+        "nome": "THAIS SOUZA DA SILVA"
+      },
+      {
+        "id": "al_mplzar3y_eqdae",
+        "nome": "VITORIA LOBATO DA COSTA"
+      },
+      {
+        "id": "al_mplzar3y_fe4g1",
+        "nome": "YASMIM FELIX DE OLIVEIRA"
+      },
+      {
+        "id": "al_mplzar3y_7i0qc",
+        "nome": "YASMIN SILVA DA CONCEICAO"
+      }
+    ],
+    "bimestres": {
+      "1": {
+        "config": {
+          "simuladoMaxLanca": 5,
+          "mediaAprovacao": 5,
+          "mediaRecuperacao": 4.99,
+          "atividadesMaxFinal": 5,
+          "simuladoMaxFinal": 5
+        },
+        "atividades": [],
+        "notas": {}
+      },
+      "2": {
+        "config": {
+          "simuladoMaxFinal": 5,
+          "mediaRecuperacao": 4.99,
+          "simuladoMaxLanca": 5,
+          "mediaAprovacao": 5,
+          "atividadesMaxFinal": 5
+        },
+        "atividades": [],
+        "notas": {}
+      },
+      "3": {
+        "config": {
+          "simuladoMaxLanca": 5,
+          "mediaAprovacao": 5,
+          "mediaRecuperacao": 4.99,
+          "atividadesMaxFinal": 5,
+          "simuladoMaxFinal": 5
+        },
+        "atividades": [],
+        "notas": {}
+      },
+      "4": {
+        "config": {
+          "simuladoMaxFinal": 5,
+          "simuladoMaxLanca": 5,
+          "mediaRecuperacao": 4.99,
+          "mediaAprovacao": 5,
+          "atividadesMaxFinal": 5
+        },
+        "atividades": [],
+        "notas": {}
+      }
+    }
+  }
+]

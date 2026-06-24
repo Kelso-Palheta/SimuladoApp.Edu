@@ -1,0 +1,159 @@
+[
+  {
+    "id": "turma-202",
+    "nome": "202",
+    "alunos": [
+      {
+        "id": "al_mplznid0_67p1v",
+        "nome": "ADONAI DE FARIAS COSTA",
+        "dataNascimento": "0908"
+      },
+      {
+        "id": "al_mplznid0_muj8f",
+        "nome": "ALANA GABRIELY DA SILVA RAMOS"
+      },
+      {
+        "id": "al_mplznid0_ywkbu",
+        "nome": "ANA BEATRIZ DOS SANTOS BENTES",
+        "dataNascimento": "3112"
+      },
+      {
+        "id": "al_mplznid0_sw41p",
+        "nome": "ANNA LETICIA DE ARAUJO CARVALHO",
+        "dataNascimento": "1307"
+      },
+      {
+        "id": "al_mplznid0_8pwcf",
+        "nome": "CARLA MELISSA BASTOS DOS SANTOS"
+      },
+      {
+        "id": "al_mplznid0_50hcg",
+        "nome": "DANRLEY DOS SANTOS BARATA"
+      },
+      {
+        "id": "al_mplznid0_ybvmq",
+        "nome": "DANYELLA LIMA BARROS"
+      },
+      {
+        "id": "al_mplznid0_kk0yf",
+        "nome": "EDSON DA CRUZ MEDEIROS"
+      },
+      {
+        "id": "al_mplznid0_og6ce",
+        "nome": "EDUARDA LUANNY XIMENDES SANTOS",
+        "dataNascimento": "0110"
+      },
+      {
+        "id": "al_mplznid0_on0fu",
+        "nome": "JHONATAN WESLLEY RODRIGUES PEREIRA"
+      },
+      {
+        "id": "al_mplznid0_6ax04",
+        "nome": "JOANA SANTOS DO ROSARIO",
+        "dataNascimento": "2406"
+      },
+      {
+        "id": "al_mplznid0_1n00z",
+        "nome": "JOSE RENATO CORREA SOUSA",
+        "dataNascimento": "2910"
+      },
+      {
+        "id": "al_mplznid0_s1grs",
+        "nome": "LARISSA SILVA DOS SANTOS"
+      },
+      {
+        "id": "al_mplznid0_ncqfd",
+        "nome": "LUCAS FELIPE FRANCA DO NASCIMENTO"
+      },
+      {
+        "id": "al_mplznid0_j6cc0",
+        "nome": "MARIA EDUARDA SANTOS DOS SANTOS",
+        "dataNascimento": "1109"
+      },
+      {
+        "id": "al_mplznid0_o403l",
+        "nome": "MIRELLA EDUARDA DOS SANTOS COSTA",
+        "dataNascimento": "0402"
+      },
+      {
+        "id": "al_mplznid0_u0zdw",
+        "nome": "MOIZES JUNIOR DOS SANTOS PANTOJA"
+      },
+      {
+        "id": "al_mplznid0_64fwn",
+        "nome": "RUTH ELOISE FERREIRA SARAIVA"
+      },
+      {
+        "id": "al_mplznid0_ayes6",
+        "nome": "SAMUEL KAUA DA SILVA DA SILVA"
+      },
+      {
+        "id": "al_mplznid0_80i2q",
+        "nome": "SOPHIA DE JESUS QUEIROZ PALHETA"
+      },
+      {
+        "id": "al_mplznid0_6sr2m",
+        "nome": "THAYSON HENRIQUE SANTOS GUIMARAES"
+      },
+      {
+        "id": "al_mplznid0_1bd0m",
+        "nome": "WESLLEY GUSTAVO PALHA SOARES",
+        "dataNascimento": "1110"
+      },
+      {
+        "id": "al_mplznid0_n2o2g",
+        "nome": "WESLLEY YSAAC SOUZA ALMEIDA"
+      },
+      {
+        "id": "al_mplznid0_mc4j1",
+        "nome": "ZIDANE MURILO RIBEIRO BARBOSA"
+      }
+    ],
+    "bimestres": {
+      "1": {
+        "config": {
+          "simuladoMaxFinal": 5,
+          "simuladoMaxLanca": 5,
+          "mediaRecuperacao": 4.99,
+          "mediaAprovacao": 5,
+          "atividadesMaxFinal": 5
+        },
+        "atividades": [],
+        "notas": {}
+      },
+      "2": {
+        "config": {
+          "simuladoMaxFinal": 5,
+          "mediaRecuperacao": 4.99,
+          "mediaAprovacao": 5,
+          "simuladoMaxLanca": 5,
+          "atividadesMaxFinal": 5
+        },
+        "atividades": [],
+        "notas": {}
+      },
+      "3": {
+        "config": {
+          "simuladoMaxFinal": 5,
+          "atividadesMaxFinal": 5,
+          "mediaAprovacao": 5,
+          "simuladoMaxLanca": 5,
+          "mediaRecuperacao": 4.99
+        },
+        "atividades": [],
+        "notas": {}
+      },
+      "4": {
+        "config": {
+          "simuladoMaxFinal": 5,
+          "atividadesMaxFinal": 5,
+          "mediaRecuperacao": 4.99,
+          "mediaAprovacao": 5,
+          "simuladoMaxLanca": 5
+        },
+        "atividades": [],
+        "notas": {}
+      }
+    }
+  }
+]

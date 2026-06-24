@@ -1,0 +1,151 @@
+[
+  {
+    "id": "turma-203-mplw1416_w2f8q",
+    "nome": "203",
+    "alunos": [
+      {
+        "id": "al_mplyry8z_8xipi",
+        "nome": "ANA CLARA FERREIRA LIMA"
+      },
+      {
+        "id": "al_mplyry8z_a275h",
+        "nome": "ATHUR FELIPE CUNHA DE SOUZA"
+      },
+      {
+        "id": "al_mplyry8z_po31z",
+        "nome": "BENICIO BARBOSA BENEDETTI"
+      },
+      {
+        "id": "al_mplyry8z_o19gb",
+        "nome": "BRUNO RAFAEL MORAIS DE MELO"
+      },
+      {
+        "id": "al_mplyry8z_e4iz7",
+        "nome": "BRUNO SILVA DA COSTA"
+      },
+      {
+        "id": "al_mplyry8z_96tmb",
+        "nome": "CAROLINE ELOA ROCHA DA SILVA"
+      },
+      {
+        "id": "al_mplyry8z_g1rab",
+        "nome": "ELOAH CRISTINA FREITAS MANITO"
+      },
+      {
+        "id": "al_mplyry8z_7cd1u",
+        "nome": "HUGO HENRIQUE FERREIRA VARELA"
+      },
+      {
+        "id": "al_mplyry8z_1a3w3",
+        "nome": "JACIVALDO BORRALHOS DIAS"
+      },
+      {
+        "id": "al_mplyry8z_rtkhk",
+        "nome": "JOAO EMANUEL PINHEIRO DA SILVA"
+      },
+      {
+        "id": "al_mplyry8z_blvtb",
+        "nome": "JOAO VICTOR FERREIRA ANDRADE"
+      },
+      {
+        "id": "al_mplyry8z_a7hly",
+        "nome": "JORGE HENRIQUE REIS SILVEIRA"
+      },
+      {
+        "id": "al_mplyry8z_jh7bv",
+        "nome": "JOSE ALESSANDRO DIAS BARROS"
+      },
+      {
+        "id": "al_mplyry8z_ev6zi",
+        "nome": "KEYVILLON MACIO RIBEIRO FONSECA"
+      },
+      {
+        "id": "al_mplyry8z_c95du",
+        "nome": "LARISSA SOUSA SILVA"
+      },
+      {
+        "id": "al_mplyry8z_x5peb",
+        "nome": "LUCIANO CORREA MONTEIRO VILELA"
+      },
+      {
+        "id": "al_mplyry8z_melnr",
+        "nome": "LUIZ HENRIQUE DO ROSARIO SILVA"
+      },
+      {
+        "id": "al_mplyry8z_8i8qb",
+        "nome": "NAYANE LIMA SANTOS"
+      },
+      {
+        "id": "al_mplyry8z_11spk",
+        "nome": "PAULO VICTOR LOBATO TRINDADE"
+      },
+      {
+        "id": "al_mplyry8z_5ckhf",
+        "nome": "SAULO ALBANO RODRIGUES"
+      },
+      {
+        "id": "al_mplyry8z_i4mvb",
+        "nome": "VINICIUS JOSE VIEIRA LIMA"
+      },
+      {
+        "id": "al_mplyry8z_ohtdt",
+        "nome": "VITORIA DOS SANTOS VITOR"
+      },
+      {
+        "id": "al_mplyry8z_x9u7q",
+        "nome": "WAGNER FELIPE BORRALHOS MORAIS"
+      },
+      {
+        "id": "al_mplyry8z_34se2",
+        "nome": "YAGO DOS SANTOS MORAES",
+        "dataNascimento": "1102"
+      }
+    ],
+    "bimestres": {
+      "1": {
+        "config": {
+          "simuladoMaxFinal": 5,
+          "atividadesMaxFinal": 5,
+          "mediaAprovacao": 5,
+          "simuladoMaxLanca": 5,
+          "mediaRecuperacao": 4.99
+        },
+        "atividades": [],
+        "notas": {}
+      },
+      "2": {
+        "config": {
+          "simuladoMaxFinal": 5,
+          "atividadesMaxFinal": 5,
+          "mediaRecuperacao": 4.99,
+          "simuladoMaxLanca": 5,
+          "mediaAprovacao": 5
+        },
+        "atividades": [],
+        "notas": {}
+      },
+      "3": {
+        "config": {
+          "atividadesMaxFinal": 5,
+          "mediaRecuperacao": 4.99,
+          "mediaAprovacao": 5,
+          "simuladoMaxLanca": 5,
+          "simuladoMaxFinal": 5
+        },
+        "atividades": [],
+        "notas": {}
+      },
+      "4": {
+        "config": {
+          "mediaAprovacao": 5,
+          "simuladoMaxLanca": 5,
+          "mediaRecuperacao": 4.99,
+          "atividadesMaxFinal": 5,
+          "simuladoMaxFinal": 5
+        },
+        "atividades": [],
+        "notas": {}
+      }
+    }
+  }
+]

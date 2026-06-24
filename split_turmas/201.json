@@ -1,0 +1,168 @@
+[
+  {
+    "id": "turma-201",
+    "nome": "201",
+    "alunos": [
+      {
+        "id": "al_mplzitq0_7p9yz",
+        "nome": "ADRIAN DO CARMO ANTUNES"
+      },
+      {
+        "id": "al_mplzitq0_ro9kf",
+        "nome": "ALANA IASMYN SILVA DE SOUSA"
+      },
+      {
+        "id": "al_mplzitq0_4q6zy",
+        "nome": "ANTONY LUCIANO DA SILVA VEIGA"
+      },
+      {
+        "id": "al_mplzitq0_b5u2b",
+        "nome": "CLARISSA LIMA DE AQUINO",
+        "dataNascimento": "1709"
+      },
+      {
+        "id": "al_mplzitq0_tg1ln",
+        "nome": "CLARISSE MIRANDA CARVALHO"
+      },
+      {
+        "id": "al_mplzitq0_9gq6d",
+        "nome": "CLEISILAYNE DOS SANTOS CRAVEIRO",
+        "dataNascimento": "1906"
+      },
+      {
+        "id": "al_mplzitq0_7dt5s",
+        "nome": "EMELLYN SAVANNA BARROS DE SOUZA",
+        "dataNascimento": "2807"
+      },
+      {
+        "id": "al_mplzitq0_c2wp1",
+        "nome": "EMILY VITORIA OLIVEIRA LOPES",
+        "dataNascimento": "1303"
+      },
+      {
+        "id": "al_mplzitq0_w1du8",
+        "nome": "EVENLYN JAMILLY DOS SANTOS FERREIRA",
+        "dataNascimento": "1510"
+      },
+      {
+        "id": "al_mplzitq0_nghvx",
+        "nome": "EVEN MANUELA MOUTA ALVES",
+        "dataNascimento": "0301"
+      },
+      {
+        "id": "al_mplzitq0_a0r2h",
+        "nome": "HORRANY CRISTINA DO NASCIMENTO COSTA"
+      },
+      {
+        "id": "al_mplzitq0_57e1d",
+        "nome": "ISAQUE PAIXAO GUIMARAES",
+        "dataNascimento": "2011"
+      },
+      {
+        "id": "al_mplzitq0_17wtb",
+        "nome": "ISAQUE REZENDE DE SOUSA",
+        "dataNascimento": "2808"
+      },
+      {
+        "id": "al_mplzitq0_n8g48",
+        "nome": "JOAO PEDRO DE OLIVEIRA DAMASCENO",
+        "dataNascimento": "3011"
+      },
+      {
+        "id": "al_mplzitq0_a8nz9",
+        "nome": "JOAO WESLEY MARCIEL DE MACEDO LIBORIO"
+      },
+      {
+        "id": "al_mplzitq0_xixcf",
+        "nome": "KLEVERTON ISACK SOUZA DA COSTA"
+      },
+      {
+        "id": "al_mplzitq0_rd0q6",
+        "nome": "MARIA LUIZA FAGUNDES DA SILVA"
+      },
+      {
+        "id": "al_mplzitq0_ll0rk",
+        "nome": "MELRYLUCE NAYAD FARIAS PINHEIRO"
+      },
+      {
+        "id": "al_mplzitq0_lfh2p",
+        "nome": "PEDRO HENRIQUE RIBEIRO NASCIMENTO"
+      },
+      {
+        "id": "al_mplzitq0_1st2t",
+        "nome": "PEDRO VITOR DOS SANTOS LIMA",
+        "dataNascimento": "1111"
+      },
+      {
+        "id": "al_mplzitq0_azgo3",
+        "nome": "SAMELA ARIELE PINHEIRO DA SILVA"
+      },
+      {
+        "id": "al_mplzitq0_s2sjj",
+        "nome": "SIBELLY VITORIA DUARTE QUEIROZ"
+      },
+      {
+        "id": "al_mplzitq0_rqa9q",
+        "nome": "TAYRON MESSIAS DA SILVA ALEIXO"
+      },
+      {
+        "id": "al_mplzitq0_v22h3",
+        "nome": "THAYLA ISABELA DA LUZ GARCIA"
+      },
+      {
+        "id": "al_mplzitq0_lndgf",
+        "nome": "VITORIA DO ROSARIO LIMA"
+      },
+      {
+        "id": "al_mplzitq0_qy0on",
+        "nome": "WILLIAN GABRIEL SOARES DO NASCIMENTO"
+      }
+    ],
+    "bimestres": {
+      "1": {
+        "config": {
+          "simuladoMaxFinal": 5,
+          "atividadesMaxFinal": 5,
+          "simuladoMaxLanca": 5,
+          "mediaAprovacao": 5,
+          "mediaRecuperacao": 4.99
+        },
+        "atividades": [],
+        "notas": {}
+      },
+      "2": {
+        "config": {
+          "simuladoMaxFinal": 5,
+          "atividadesMaxFinal": 5,
+          "simuladoMaxLanca": 5,
+          "mediaAprovacao": 5,
+          "mediaRecuperacao": 4.99
+        },
+        "atividades": [],
+        "notas": {}
+      },
+      "3": {
+        "config": {
+          "simuladoMaxLanca": 5,
+          "mediaAprovacao": 5,
+          "mediaRecuperacao": 4.99,
+          "atividadesMaxFinal": 5,
+          "simuladoMaxFinal": 5
+        },
+        "atividades": [],
+        "notas": {}
+      },
+      "4": {
+        "config": {
+          "atividadesMaxFinal": 5,
+          "simuladoMaxLanca": 5,
+          "mediaAprovacao": 5,
+          "mediaRecuperacao": 4.99,
+          "simuladoMaxFinal": 5
+        },
+        "atividades": [],
+        "notas": {}
+      }
+    }
+  }
+]

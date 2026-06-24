@@ -1,0 +1,201 @@
+[
+  {
+    "id": "turma-101",
+    "nome": "101",
+    "alunos": [
+      {
+        "id": "al_mplz74ba_qpa09",
+        "nome": "ALICE VITORIA SOUSA SANTA ROSA"
+      },
+      {
+        "id": "al_mplz74ba_2jvjc",
+        "nome": "ANA BEATRIZ DA FRANCA MASTOP"
+      },
+      {
+        "id": "al_mplz74ba_g8kbt",
+        "nome": "ANA CLARA DA CONCEICAO FERREIRA"
+      },
+      {
+        "id": "al_mplz74ba_6pvmd",
+        "nome": "ANA CLARA FARIAS PEREIRA"
+      },
+      {
+        "id": "al_mplz74ba_h2ybj",
+        "nome": "ANA GABRIELLA PEREIRA GOMES"
+      },
+      {
+        "id": "al_mplz74ba_wsjvg",
+        "nome": "CAUA FONSECA FAVACHO"
+      },
+      {
+        "id": "al_mplz74ba_agy13",
+        "nome": "CLAUDIO CEZAR MOURA DA CONCEICAO"
+      },
+      {
+        "id": "al_mplz74ba_d0lud",
+        "nome": "CLEWERTON SANTOS DO NASCIMENTO"
+      },
+      {
+        "id": "al_mplz74ba_l4jg2",
+        "nome": "DAVID GABRIEL DIAS DE LIMA"
+      },
+      {
+        "id": "al_mplz74ba_9wu0t",
+        "nome": "DAVI LOPES DE AZEVEDO"
+      },
+      {
+        "id": "al_mplz74ba_ctptm",
+        "nome": "ELBE KAUE OEIRAS BATISTA"
+      },
+      {
+        "id": "al_mplz74ba_5eh2b",
+        "nome": "ELIELTON SILVA DOS SANTOS"
+      },
+      {
+        "id": "al_mplz74ba_f73rl",
+        "nome": "EMANOEL DE OLIVEIRA FREITAS"
+      },
+      {
+        "id": "al_mplz74ba_0lset",
+        "nome": "EMANUELLY CORREA ARAUJO"
+      },
+      {
+        "id": "al_mplz74ba_9jid5",
+        "nome": "FERNANDA LEAL DO NASCIMENTO",
+        "dataNascimento": "1504"
+      },
+      {
+        "id": "al_mplz74ba_uykg5",
+        "nome": "FRANCISCO VINICIUS BARRETO OLIVEIRA"
+      },
+      {
+        "id": "al_mplz74ba_c69n2",
+        "nome": "GABRIEL NASCIMENTO DE SOUZA PROGENIO"
+      },
+      {
+        "id": "al_mplz74ba_pkn03",
+        "nome": "GLORIA MOURA GONCALVES"
+      },
+      {
+        "id": "al_mplz74ba_jyabd",
+        "nome": "HELCIANE PRISCILA CARDOSO PAIXAO",
+        "dataNascimento": "1212"
+      },
+      {
+        "id": "al_mplz74ba_pk7a9",
+        "nome": "HILMILLY RODRIGUES VILAR DA SILVA",
+        "dataNascimento": "2802"
+      },
+      {
+        "id": "al_mplz74ba_ijun0",
+        "nome": "ISABELA MOTA DE ARAUJO",
+        "dataNascimento": "0808"
+      },
+      {
+        "id": "al_mplz74ba_xrfcj",
+        "nome": "ISABELY MIRANDA BARATA",
+        "dataNascimento": "1801"
+      },
+      {
+        "id": "al_mplz74ba_8ynmc",
+        "nome": "JAMILY OLIVEIRA DE SOUSA"
+      },
+      {
+        "id": "al_mplz74ba_6zlol",
+        "nome": "JOAO MIGUEL DE MIRANDA DA SILVA"
+      },
+      {
+        "id": "al_mplz74ba_h30y9",
+        "nome": "JORGE AUGUSTO MONTEIRO DE BARROS NETO"
+      },
+      {
+        "id": "al_mplz74ba_7ku3d",
+        "nome": "KAUANE VITORIA DA CONCEICAO MADURO"
+      },
+      {
+        "id": "al_mplz74ba_bm7mf",
+        "nome": "LUIS OTAVIO DOS SANTOS BORGES"
+      },
+      {
+        "id": "al_mplz74ba_0fgm5",
+        "nome": "MARIA EDUARDA DOS SANTOS FERREIRA",
+        "dataNascimento": "1002"
+      },
+      {
+        "id": "al_mplz74ba_41sg7",
+        "nome": "MARLON GABRIEL CHAGAS NUNES"
+      },
+      {
+        "id": "al_mplz74ba_5ptfx",
+        "nome": "MATHEUS VINYCIUS BARBOSA TRINDADE"
+      },
+      {
+        "id": "al_mplz74ba_muhn7",
+        "nome": "MIGUEL INACIO SOARES LIMA"
+      },
+      {
+        "id": "al_mplz74ba_d5qtw",
+        "nome": "NICOLE DO CARMO MACIEL"
+      },
+      {
+        "id": "al_mplz74ba_a49mn",
+        "nome": "PEDRO EMMANUEL DA CUNHA DE MELO"
+      },
+      {
+        "id": "al_mplz74ba_yrj3w",
+        "nome": "RYAN BARBOSA GOMES"
+      },
+      {
+        "id": "al_mplz74ba_qw9ow",
+        "nome": "STEFANNY EDUARDA LIMA DE AQUINO",
+        "dataNascimento": "1301"
+      }
+    ],
+    "bimestres": {
+      "1": {
+        "config": {
+          "simuladoMaxFinal": 5,
+          "mediaRecuperacao": 4.99,
+          "simuladoMaxLanca": 5,
+          "mediaAprovacao": 5,
+          "atividadesMaxFinal": 5
+        },
+        "atividades": [],
+        "notas": {}
+      },
+      "2": {
+        "config": {
+          "atividadesMaxFinal": 5,
+          "mediaRecuperacao": 4.99,
+          "mediaAprovacao": 5,
+          "simuladoMaxLanca": 5,
+          "simuladoMaxFinal": 5
+        },
+        "atividades": [],
+        "notas": {}
+      },
+      "3": {
+        "config": {
+          "simuladoMaxLanca": 5,
+          "mediaAprovacao": 5,
+          "mediaRecuperacao": 4.99,
+          "atividadesMaxFinal": 5,
+          "simuladoMaxFinal": 5
+        },
+        "atividades": [],
+        "notas": {}
+      },
+      "4": {
+        "config": {
+          "simuladoMaxFinal": 5,
+          "mediaRecuperacao": 4.99,
+          "mediaAprovacao": 5,
+          "simuladoMaxLanca": 5,
+          "atividadesMaxFinal": 5
+        },
+        "atividades": [],
+        "notas": {}
+      }
+    }
+  }
+]

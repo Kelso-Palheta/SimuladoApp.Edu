@@ -1,0 +1,205 @@
+[
+  {
+    "id": "turma-103",
+    "nome": "103",
+    "alunos": [
+      {
+        "id": "al_mplzefrq_0okrc",
+        "nome": "ANA BEATRIZ PANTOJA DA COSTA",
+        "dataNascimento": "1602"
+      },
+      {
+        "id": "al_mplzefrq_jkzq5",
+        "nome": "BRENO DA CRUZ LOPES",
+        "dataNascimento": "1705"
+      },
+      {
+        "id": "al_mplzefrq_epufe",
+        "nome": "CARLOS EDUARDO BORCEM ARAUJO"
+      },
+      {
+        "id": "al_mplzefrq_3tvzx",
+        "nome": "CARLOS GABRIEL DA SILVA DE BRITO"
+      },
+      {
+        "id": "al_mplzefrq_crvm0",
+        "nome": "DANYELA SOUSA FERREIRA"
+      },
+      {
+        "id": "al_mplzefrq_3dbsq",
+        "nome": "DAVYD WALLACE CORDEIRO MONTEIRO",
+        "dataNascimento": "1407"
+      },
+      {
+        "id": "al_mplzefrq_qshte",
+        "nome": "ELIZABELLY FREITAS BORRALHOS"
+      },
+      {
+        "id": "al_mplzefrq_nenp3",
+        "nome": "ESEQUIEL YUDI MORAES BARRETO",
+        "dataNascimento": "2812"
+      },
+      {
+        "id": "al_mplzefrq_rq20q",
+        "nome": "GABRIEL DA SILVA SANTOS"
+      },
+      {
+        "id": "al_mplzefrq_w7nvr",
+        "nome": "GABRIEL DE LIMA LEAL"
+      },
+      {
+        "id": "al_mplzefrq_f9gd6",
+        "nome": "GABRYELLE AQUINO DA SILVA",
+        "dataNascimento": "1604"
+      },
+      {
+        "id": "al_mplzefrq_y2qf3",
+        "nome": "GUILHERME RODRIGUES LIMA",
+        "dataNascimento": "3012"
+      },
+      {
+        "id": "al_mplzefrq_qrj0h",
+        "nome": "HELLOYZE VICTORIA SOUSA MORAIS",
+        "dataNascimento": "1008"
+      },
+      {
+        "id": "al_mplzefrq_k4dky",
+        "nome": "IKARO MATEUS BORRALHOS TELES"
+      },
+      {
+        "id": "al_mplzefrq_2xz7x",
+        "nome": "ISMAEL PEREIRA LOBATO"
+      },
+      {
+        "id": "al_mplzefrq_ye9di",
+        "nome": "JADSON RODRIGUES BORRALHO"
+      },
+      {
+        "id": "al_mplzefrq_pgw53",
+        "nome": "KAUA WALLACE NASCIMENTO MONTEIRO",
+        "dataNascimento": "2905"
+      },
+      {
+        "id": "al_mplzefrq_6pgwo",
+        "nome": "KAYQUE GUSTAVO SANTANA",
+        "dataNascimento": "0609"
+      },
+      {
+        "id": "al_mplzefrq_qmq6e",
+        "nome": "LUAN DOS SANTOS ROSARIO"
+      },
+      {
+        "id": "al_mplzefrq_2gqzb",
+        "nome": "LUCAS DOS SANTOS ROSARIO DA SILVA"
+      },
+      {
+        "id": "al_mplzefrq_inv1n",
+        "nome": "MARCOS PAULO SOARES BASTOS"
+      },
+      {
+        "id": "al_mplzefrq_omgq2",
+        "nome": "MARIA CLARA DE SOUSA CAMPOS",
+        "dataNascimento": "3105"
+      },
+      {
+        "id": "al_mplzefrq_xg2wc",
+        "nome": "MATEUS ALVES SOEIRO"
+      },
+      {
+        "id": "al_mplzefrq_qv0uh",
+        "nome": "PAULO HENRIQUE SOUZA DA ROCHA"
+      },
+      {
+        "id": "al_mplzefrq_c4mxj",
+        "nome": "RAYANNE TAISSA DA COSTA MACHADO"
+      },
+      {
+        "id": "al_mplzefrq_fgs4c",
+        "nome": "RICARDO DA SILVA CORREA"
+      },
+      {
+        "id": "al_mplzefrq_mijke",
+        "nome": "RUAN ARAUJO DE SOUSA"
+      },
+      {
+        "id": "al_mplzefrq_ic57h",
+        "nome": "SAMYA BEATRIZ BORRALHOS GARCIA"
+      },
+      {
+        "id": "al_mplzefrq_rx6ow",
+        "nome": "SARAH PEREIRA DA SILVA",
+        "dataNascimento": "2905"
+      },
+      {
+        "id": "al_mplzefrq_06eog",
+        "nome": "SOFIA CRISTINA COSTA DA SILVA"
+      },
+      {
+        "id": "al_mplzefrq_abm3a",
+        "nome": "SUELEM VITORIA MONTEIRO DOS SANTOS"
+      },
+      {
+        "id": "al_mplzefrq_tocet",
+        "nome": "VITORIA NASCIMENTO FONSECA"
+      },
+      {
+        "id": "al_mplzefrq_vgu2p",
+        "nome": "WANDERSON YARLEI BRASIL DA COSTA"
+      },
+      {
+        "id": "al_mplzefrq_wgci0",
+        "nome": "WILLIAN NEGRAO DE OLIVEIRA"
+      },
+      {
+        "id": "al_mplzefrq_3yaxf",
+        "nome": "YARLEI FURTADO MELO"
+      }
+    ],
+    "bimestres": {
+      "1": {
+        "config": {
+          "atividadesMaxFinal": 5,
+          "mediaRecuperacao": 4.99,
+          "simuladoMaxLanca": 5,
+          "mediaAprovacao": 5,
+          "simuladoMaxFinal": 5
+        },
+        "atividades": [],
+        "notas": {}
+      },
+      "2": {
+        "config": {
+          "mediaRecuperacao": 4.99,
+          "mediaAprovacao": 5,
+          "simuladoMaxLanca": 5,
+          "atividadesMaxFinal": 5,
+          "simuladoMaxFinal": 5
+        },
+        "atividades": [],
+        "notas": {}
+      },
+      "3": {
+        "config": {
+          "simuladoMaxFinal": 5,
+          "atividadesMaxFinal": 5,
+          "mediaRecuperacao": 4.99,
+          "mediaAprovacao": 5,
+          "simuladoMaxLanca": 5
+        },
+        "atividades": [],
+        "notas": {}
+      },
+      "4": {
+        "config": {
+          "simuladoMaxFinal": 5,
+          "atividadesMaxFinal": 5,
+          "mediaAprovacao": 5,
+          "simuladoMaxLanca": 5,
+          "mediaRecuperacao": 4.99
+        },
+        "atividades": [],
+        "notas": {}
+      }
+    }
+  }
+]

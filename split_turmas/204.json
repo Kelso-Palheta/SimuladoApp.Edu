@@ -1,0 +1,157 @@
+[
+  {
+    "id": "turma-204-mplw19ji_df7qk",
+    "nome": "204",
+    "alunos": [
+      {
+        "id": "al_mpyc5y5c_t5o5r",
+        "nome": "ANA CLARA SILVA DA SILVA"
+      },
+      {
+        "id": "al_mpyc5y5c_xnwu8",
+        "nome": "AUGUSTO CESAR E SILVA BARATA"
+      },
+      {
+        "id": "al_mpyc5y5c_0nclr",
+        "nome": "CARLOS AUGUSTO BRASIL DE SOUZA NETO"
+      },
+      {
+        "id": "al_mpyc5y5c_gzi1r",
+        "nome": "CARLOS EDUARDO SILVA GADELHA"
+      },
+      {
+        "id": "al_mpyc5y5c_y42vt",
+        "nome": "CLEBER NICOLAS FERREIRA DE ARAUJO"
+      },
+      {
+        "id": "al_mpyc5y5c_qb9jz",
+        "nome": "DANIEL DOS SANTOS BARBOSA"
+      },
+      {
+        "id": "al_mpyc5y5c_3kn0h",
+        "nome": "ELIELSON DE JESUS NOGUEIRA DE LIMA",
+        "dataNascimento": "2706"
+      },
+      {
+        "id": "al_mpyc5y5c_7crr6",
+        "nome": "ELOA VICTORIA DE SOUZA FERREIRA"
+      },
+      {
+        "id": "al_mpyc5y5c_fm5ac",
+        "nome": "EMILLY EDUARDA NASCIMENTO SOUZA"
+      },
+      {
+        "id": "al_mpyc5y5c_oraeq",
+        "nome": "EMILLY KELEN FERREIRA TRINDADE"
+      },
+      {
+        "id": "al_mpyc5y5c_85jra",
+        "nome": "ESTEFANE ELOAH DOS SANTOS RIBEIRO",
+        "dataNascimento": "1008"
+      },
+      {
+        "id": "al_mpyc5y5c_tnsj2",
+        "nome": "EVELIN LORRANY RIPARDO OLIVEIRA"
+      },
+      {
+        "id": "al_mpyc5y5c_hkult",
+        "nome": "FELIPE COSTA DE ATALDE"
+      },
+      {
+        "id": "al_mpyc5y5c_ls530",
+        "nome": "FERNANDA VITORIA NUNES FERREIRA"
+      },
+      {
+        "id": "al_mpyc5y5c_kld9j",
+        "nome": "KAUAN HENRIQUE DE SOUZA DA PAIXAO"
+      },
+      {
+        "id": "al_mpyc5y5c_ia0up",
+        "nome": "LAURA BEATRIZ PARANHOS COSTA"
+      },
+      {
+        "id": "al_mpyc5y5c_j9hkd",
+        "nome": "LAYLA VITORIA GUIMARAES DA SILVA"
+      },
+      {
+        "id": "al_mpyc5y5c_cikc5",
+        "nome": "MARIA EDUARDA COSTA SOEIRO"
+      },
+      {
+        "id": "al_mpyc5y5c_xnx6q",
+        "nome": "MARIA HELOISA PINTO GUIMARAES"
+      },
+      {
+        "id": "al_mpyc5y5c_aavdh",
+        "nome": "MELISSA YASMIN DICKSON BORRALHOS"
+      },
+      {
+        "id": "al_mpyc5y5c_8j6mc",
+        "nome": "PETRIN SANTANA MARTINS",
+        "dataNascimento": "0606"
+      },
+      {
+        "id": "al_mpyc5y5c_p2thm",
+        "nome": "PRISCILLA RAYANA MARQUES MARTINS"
+      },
+      {
+        "id": "al_mpyc5y5c_m19k8",
+        "nome": "SOPHIA SANDRES FERREIRA"
+      },
+      {
+        "id": "al_mpyc5y5c_l60om",
+        "nome": "VINICIUS GABRIEL MONTEIRO DA SILVA"
+      },
+      {
+        "id": "al_mpyc5y5c_c6txi",
+        "nome": "YASMIN MAELY SILVA PACIFICO"
+      }
+    ],
+    "bimestres": {
+      "1": {
+        "config": {
+          "simuladoMaxFinal": 5,
+          "atividadesMaxFinal": 5,
+          "mediaAprovacao": 5,
+          "simuladoMaxLanca": 5,
+          "mediaRecuperacao": 4.99
+        },
+        "atividades": [],
+        "notas": {}
+      },
+      "2": {
+        "config": {
+          "atividadesMaxFinal": 5,
+          "mediaAprovacao": 5,
+          "simuladoMaxLanca": 5,
+          "mediaRecuperacao": 4.99,
+          "simuladoMaxFinal": 5
+        },
+        "atividades": [],
+        "notas": {}
+      },
+      "3": {
+        "config": {
+          "simuladoMaxLanca": 5,
+          "mediaAprovacao": 5,
+          "mediaRecuperacao": 4.99,
+          "atividadesMaxFinal": 5,
+          "simuladoMaxFinal": 5
+        },
+        "atividades": [],
+        "notas": {}
+      },
+      "4": {
+        "config": {
+          "simuladoMaxLanca": 5,
+          "mediaAprovacao": 5,
+          "mediaRecuperacao": 4.99,
+          "atividadesMaxFinal": 5,
+          "simuladoMaxFinal": 5
+        },
+        "atividades": [],
+        "notas": {}
+      }
+    }
+  }
+]

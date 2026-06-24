@@ -147,7 +147,7 @@ export default function RedacaoPage() {
           const oldSnap = await getDoc(oldRef);
           if (oldSnap.exists() && oldSnap.data().turmas?.length > 0) {
             const oldData = oldSnap.data().turmas;
-            await setDoc(ref, { turmas: oldData, updatedAt: serverTimestamp() }, { merge: true });
+            await setDoc(ref, { turmas: oldData, lastUpdated: Date.now() }, { merge: true });
             setInitialTurmas(oldData);
             salvarLocal(oldData);
           } else {
@@ -156,7 +156,7 @@ export default function RedacaoPage() {
             const profSnap = await getDoc(profRef);
             if (profSnap.exists() && profSnap.data().turmas?.length > 0) {
               const oldData = profSnap.data().turmas;
-              await setDoc(ref, { turmas: oldData, updatedAt: serverTimestamp() }, { merge: true });
+              await setDoc(ref, { turmas: oldData, lastUpdated: Date.now() }, { merge: true });
               setInitialTurmas(oldData);
               salvarLocal(oldData);
             } else if (local && local.length > 0) {

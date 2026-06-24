@@ -1,0 +1,134 @@
+[
+  {
+    "id": "turma-302",
+    "nome": "302",
+    "alunos": [
+      {
+        "id": "al_mplzqouh_7wl7i",
+        "nome": "ADRIA CAROLINE COSTA PEREIRA"
+      },
+      {
+        "id": "al_mplzqouh_iex44",
+        "nome": "ALBERTO KENNEDY DA SILVA DO AMARAL"
+      },
+      {
+        "id": "al_mplzqouh_ncf5z",
+        "nome": "ANA CAROLINA LUZ DO NASCIMENTO"
+      },
+      {
+        "id": "al_mplzqouh_x7zzj",
+        "nome": "ANTONIO FLORIANO DIAS DE MATOS NETO"
+      },
+      {
+        "id": "al_mplzqouh_d5c8y",
+        "nome": "CECILIA TAUANE OEIRAS MIRANDA"
+      },
+      {
+        "id": "al_mplzqouh_nef6x",
+        "nome": "DAVISON TORRES ALENCAR"
+      },
+      {
+        "id": "al_mplzqouh_inda7",
+        "nome": "DIOGO CARVALHO DA CONCEICAO"
+      },
+      {
+        "id": "al_mplzqouh_6ns07",
+        "nome": "ELOAH GABRIELLY MAGALHAES"
+      },
+      {
+        "id": "al_mplzqouh_xgiqi",
+        "nome": "EMANUELLY ARAUJO VIEIRA DE MORAES"
+      },
+      {
+        "id": "al_mplzqouh_4vgjg",
+        "nome": "ESTER EUFRAZIO CORDEIRO"
+      },
+      {
+        "id": "al_mplzqouh_twac0",
+        "nome": "GABRIEL DA SILVA DE SOUZA"
+      },
+      {
+        "id": "al_mplzqouh_nqd1y",
+        "nome": "HENRIQUE DA COSTA PINHEIRO FEITOSA"
+      },
+      {
+        "id": "al_mplzqouh_qt0qy",
+        "nome": "ILAMY MATOS MIRANDA"
+      },
+      {
+        "id": "al_mplzqouh_m4rl6",
+        "nome": "JOSIELE CONCEICAO DA SILVA"
+      },
+      {
+        "id": "al_mplzqouh_4gg5c",
+        "nome": "LUCAS SOUSA DA SILVA"
+      },
+      {
+        "id": "al_mplzqouh_5ym6j",
+        "nome": "MATHEUS DOS SANTOS SILVA"
+      },
+      {
+        "id": "al_mplzqouh_463if",
+        "nome": "MURILO HENRIQUE DE LIMA FAVACHO"
+      },
+      {
+        "id": "al_mplzqouh_rhjpr",
+        "nome": "RAFAELA DA FONSECA FAVACHO"
+      },
+      {
+        "id": "al_mplzqouh_18lvb",
+        "nome": "ROSANA SOUSA DA SILVA"
+      },
+      {
+        "id": "al_mplzqouh_lz4cw",
+        "nome": "SAMUEL HENRIQUE DOS SANTOS DE FRANCA"
+      }
+    ],
+    "bimestres": {
+      "1": {
+        "config": {
+          "mediaAprovacao": 5,
+          "mediaRecuperacao": 4.99,
+          "simuladoMaxLanca": 5,
+          "atividadesMaxFinal": 5,
+          "simuladoMaxFinal": 5
+        },
+        "atividades": [],
+        "notas": {}
+      },
+      "2": {
+        "config": {
+          "simuladoMaxFinal": 5,
+          "atividadesMaxFinal": 5,
+          "mediaRecuperacao": 4.99,
+          "simuladoMaxLanca": 5,
+          "mediaAprovacao": 5
+        },
+        "atividades": [],
+        "notas": {}
+      },
+      "3": {
+        "config": {
+          "atividadesMaxFinal": 5,
+          "mediaRecuperacao": 4.99,
+          "simuladoMaxLanca": 5,
+          "mediaAprovacao": 5,
+          "simuladoMaxFinal": 5
+        },
+        "atividades": [],
+        "notas": {}
+      },
+      "4": {
+        "config": {
+          "mediaAprovacao": 5,
+          "simuladoMaxLanca": 5,
+          "mediaRecuperacao": 4.99,
+          "atividadesMaxFinal": 5,
+          "simuladoMaxFinal": 5
+        },
+        "atividades": [],
+        "notas": {}
+      }
+    }
+  }
+]
