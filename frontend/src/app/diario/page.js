@@ -28,9 +28,10 @@ const carregarLocal = () => {
   return null;
 };
 
-const salvarLocal = (turmas) => {
+const salvarLocal = (turmas, timestamp = null) => {
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(turmas));
+    localStorage.setItem(STORAGE_KEY + '_lastUpdated', String(timestamp || Date.now()));
   } catch { /* ignora */ }
 };
 
@@ -38,7 +39,15 @@ export default function DiarioPage() {
   const { user, perfil, loading } = useAuth();
   const router = useRouter();
 
-  const [initialTurmas, setInitialTurmas] = useState([]);
+  const [initialTurmas, setInitialTurmas] = useState(() => {
+    if (typeof window !== 'undefined') {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (raw) return JSON.parse(raw);
+      } catch {}
+    }
+    return [];
+  });
   const [loadingTurmas, setLoadingTurmas] = useState(true);
 
   // Carrega do Firestore se localStorage estiver vazio, ou sync em background
@@ -60,8 +69,16 @@ export default function DiarioPage() {
 
         if (snap.exists() && snap.data().turmas?.length > 0) {
           const cloud = snap.data().turmas;
-          setInitialTurmas(cloud);
-          salvarLocal(cloud);
+          const cloudTime = snap.data().lastUpdated || 0;
+          const localTime = typeof window !== 'undefined' ? Number(localStorage.getItem(STORAGE_KEY + '_lastUpdated')) || 0 : 0;
+
+          if (cloudTime >= localTime || !local) {
+            setInitialTurmas(cloud);
+            salvarLocal(cloud, cloudTime);
+          } else {
+            setInitialTurmas(local);
+            await setDoc(ref, { turmas: local, lastUpdated: localTime }, { merge: true });
+          }
           if (typeof window !== 'undefined') localStorage.setItem(USER_KEY, user.uid);
         } else {
           // Sem dados na subcoleção: tenta migrar de caminhos antigos
@@ -116,7 +133,8 @@ export default function DiarioPage() {
   const persistir = useCallback((novasTurmas) => {
     if (loadingTurmas) return; // CRÍTICO: Não persiste enquanto estiver carregando os dados iniciais do Firestore!
     latestTurmasRef.current = novasTurmas;
-    salvarLocal(novasTurmas);
+    const nowTime = Date.now();
+    salvarLocal(novasTurmas, nowTime);
     setInitialTurmas(novasTurmas);
     if (typeof window !== 'undefined' && user) localStorage.setItem(USER_KEY, user.uid);
     if (!user) return;
@@ -124,7 +142,7 @@ export default function DiarioPage() {
     persistTimeout.current = setTimeout(async () => {
       const ref = doc(db, 'professores', user.uid, 'turmas', 'data');
       try {
-        await setDoc(ref, { turmas: novasTurmas, updatedAt: serverTimestamp() }, { merge: true });
+        await setDoc(ref, { turmas: novasTurmas, lastUpdated: nowTime }, { merge: true });
         
         // Sincroniza logins e notas dos alunos no portal do aluno automaticamente
         const nomeProfessor = perfil?.nome || user.displayName || 'Professor';
@@ -173,9 +191,10 @@ export default function DiarioPage() {
         clearTimeout(persistTimeout.current);
         const finalTurmas = latestTurmasRef.current;
         if (finalTurmas && finalTurmas.length > 0 && user?.uid) {
-          salvarLocal(finalTurmas);
+          const nowTime = Date.now();
+          salvarLocal(finalTurmas, nowTime);
           const ref = doc(db, 'professores', user.uid, 'turmas', 'data');
-          setDoc(ref, { turmas: finalTurmas, updatedAt: serverTimestamp() }, { merge: true }).catch((e) => {
+          setDoc(ref, { turmas: finalTurmas, lastUpdated: nowTime }, { merge: true }).catch((e) => {
             console.error('Erro ao persistir no unmount:', e);
           });
         }

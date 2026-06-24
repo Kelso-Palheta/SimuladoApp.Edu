@@ -29,9 +29,10 @@ const carregarLocal = () => {
   return null;
 };
 
-const salvarLocal = (turmas) => {
+const salvarLocal = (turmas, timestamp = null) => {
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(turmas));
+    localStorage.setItem(STORAGE_KEY + '_lastUpdated', String(timestamp || Date.now()));
   } catch { /* ignora */ }
 };
 
@@ -39,7 +40,15 @@ export default function AtividadesPage() {
   const { user, perfil, loading, logout } = useAuth();
   const router = useRouter();
 
-  const [initialTurmas, setInitialTurmas] = useState([]);
+  const [initialTurmas, setInitialTurmas] = useState(() => {
+    if (typeof window !== 'undefined') {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (raw) return JSON.parse(raw);
+      } catch {}
+    }
+    return [];
+  });
   const [loadingTurmas, setLoadingTurmas] = useState(true);
 
   // Carrega do Firestore se localStorage estiver vazio, ou sync em background
@@ -61,8 +70,16 @@ export default function AtividadesPage() {
 
         if (snap.exists() && snap.data().turmas?.length > 0) {
           const cloud = snap.data().turmas;
-          setInitialTurmas(cloud);
-          salvarLocal(cloud);
+          const cloudTime = snap.data().lastUpdated || 0;
+          const localTime = typeof window !== 'undefined' ? Number(localStorage.getItem(STORAGE_KEY + '_lastUpdated')) || 0 : 0;
+
+          if (cloudTime >= localTime || !local) {
+            setInitialTurmas(cloud);
+            salvarLocal(cloud, cloudTime);
+          } else {
+            setInitialTurmas(local);
+            await setDoc(ref, { turmas: local, lastUpdated: localTime }, { merge: true });
+          }
           if (typeof window !== 'undefined') localStorage.setItem(USER_KEY, user.uid);
         } else {
           // Sem dados no Firestore nem localStorage: migra do caminho antigo ou usa padrão
@@ -108,12 +125,13 @@ export default function AtividadesPage() {
   // Persiste no Firestore (subcoleção isolada) + localStorage
   const persistir = (novasTurmas) => {
     if (loadingTurmas) return; // CRÍTICO: Não persiste enquanto estiver carregando os dados iniciais do Firestore!
-    salvarLocal(novasTurmas);
+    const nowTime = Date.now();
+    salvarLocal(novasTurmas, nowTime);
     setInitialTurmas(novasTurmas);
     if (typeof window !== 'undefined' && user) localStorage.setItem(USER_KEY, user.uid);
     if (!user) return;
     const ref = doc(db, 'professores', user.uid, 'turmas', 'data');
-    setDoc(ref, { turmas: novasTurmas, updatedAt: serverTimestamp() }, { merge: true }).catch((e) => {
+    setDoc(ref, { turmas: novasTurmas, lastUpdated: nowTime }, { merge: true }).catch((e) => {
       console.error('Erro ao salvar turmas:', e);
     });
   };
