@@ -50,6 +50,14 @@ export default function DiarioPage() {
   });
   const [loadingTurmas, setLoadingTurmas] = useState(true);
 
+  // Timeout de segurança: evita tela de loading eterna
+  useEffect(() => {
+    const safetyTimer = setTimeout(() => {
+      setLoadingTurmas(false);
+    }, 8000);
+    return () => clearTimeout(safetyTimer);
+  }, []);
+
   // Carrega do Firestore se localStorage estiver vazio, ou sync em background
   useEffect(() => {
     if (loading) return; // Aguarda o carregamento do estado de autenticação
@@ -349,8 +357,14 @@ export default function DiarioPage() {
     return () => document.removeEventListener('click', handleClick);
   }, [showAlunoDropdown]);
 
+  const [authTimeout, setAuthTimeout] = useState(false);
+  useEffect(() => {
+    const t = setTimeout(() => setAuthTimeout(true), 10000);
+    return () => clearTimeout(t);
+  }, []);
+
   // Auth guard + carregamento inicial de turmas
-  if (loading || loadingTurmas || (!perfil && user)) {
+  if ((loading && !authTimeout) || loadingTurmas || (!perfil && user && !authTimeout)) {
     return (
       <div className="flex h-screen items-center justify-center bg-white">
         <div className="text-center">
@@ -361,7 +375,7 @@ export default function DiarioPage() {
     );
   }
 
-  if (!user) {
+  if (!user || authTimeout) {
     router.replace('/');
     return null;
   }
