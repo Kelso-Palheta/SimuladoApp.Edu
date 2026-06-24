@@ -8,17 +8,24 @@ export const useTurmas = (initialTurmas, persistTurmas) => {
   });
 
   const userEdited = useRef(false);
+  const persistRef = useRef(persistTurmas);
 
+  // Mantém a ref sempre apontando para o callback mais recente
+  useEffect(() => {
+    persistRef.current = persistTurmas;
+  }, [persistTurmas]);
+
+  // setTurmas é estável — usa a ref para sempre chamar o persist atual
   const setTurmas = useCallback((newTurmasOrFn) => {
     userEdited.current = true;
     setTurmasState((prev) => {
       const next = typeof newTurmasOrFn === 'function' ? newTurmasOrFn(prev) : newTurmasOrFn;
-      if (persistTurmas) {
-        persistTurmas(next);
+      if (persistRef.current) {
+        persistRef.current(next);
       }
       return next;
     });
-  }, [persistTurmas]);
+  }, []);
 
   useEffect(() => {
     if (initialTurmas && !userEdited.current) {
@@ -35,11 +42,11 @@ export const useTurmas = (initialTurmas, persistTurmas) => {
     const nova = { id, nome: nome.trim(), alunos: [], bimestres };
     setTurmas((prev) => [...prev, nova]);
     return nova;
-  }, []);
+  }, [setTurmas]);
 
   const removeTurma = useCallback((turmaId) => {
     setTurmas((prev) => prev.filter((t) => t.id !== turmaId));
-  }, []);
+  }, [setTurmas]);
 
   const addAlunos = useCallback((turmaId, nomesNovos) => {
     setTurmas((prev) =>
@@ -58,7 +65,7 @@ export const useTurmas = (initialTurmas, persistTurmas) => {
         return { ...t, alunos };
       })
     );
-  }, []);
+  }, [setTurmas]);
 
   const removeAluno = useCallback((turmaId, alunoId) => {
     setTurmas((prev) =>
@@ -74,7 +81,7 @@ export const useTurmas = (initialTurmas, persistTurmas) => {
         return { ...t, alunos, bimestres };
       })
     );
-  }, []);
+  }, [setTurmas]);
 
   const removeAlunos = useCallback((turmaId, alunoIds) => {
     const idsSet = new Set(alunoIds);
@@ -93,7 +100,7 @@ export const useTurmas = (initialTurmas, persistTurmas) => {
         return { ...t, alunos, bimestres, recuperacao };
       })
     );
-  }, []);
+  }, [setTurmas]);
 
   const setRecuperacao = useCallback((turmaId, alunoId, tipo, valor) => {
     setTurmas((prev) =>
@@ -111,7 +118,7 @@ export const useTurmas = (initialTurmas, persistTurmas) => {
         };
       })
     );
-  }, []);
+  }, [setTurmas]);
 
   const addAlunoManual = useCallback((turmaId, dados) => {
     const novoAluno = {
@@ -128,7 +135,7 @@ export const useTurmas = (initialTurmas, persistTurmas) => {
       })
     );
     return novoAluno;
-  }, []);
+  }, [setTurmas]);
 
   const updateAluno = useCallback((turmaId, alunoId, updates) => {
     setTurmas((prev) =>
@@ -137,7 +144,7 @@ export const useTurmas = (initialTurmas, persistTurmas) => {
         return { ...t, alunos: t.alunos.map((al) => al.id === alunoId ? { ...al, ...updates } : al) };
       })
     );
-  }, []);
+  }, [setTurmas]);
 
   return { turmas, setTurmas, addTurma, removeTurma, addAlunos, addAlunoManual, removeAluno, removeAlunos, setRecuperacao, updateAluno };
 };
