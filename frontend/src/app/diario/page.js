@@ -375,7 +375,7 @@ export default function DiarioPage() {
     );
   }
 
-  if (!user || authTimeout) {
+  if (!user) {
     router.replace('/');
     return null;
   }
