@@ -141,7 +141,7 @@ export const ImportModal = ({ turma, onConfirm, onClose }) => {
                           onKeyDown={(e) => { if (e.key === 'Enter') e.target.blur(); if (e.key === 'Escape') setEditNome(null); }}
                         />
                       ) : (
-                        <span className="flex-1 font-mono text-xs">{titleCase(nome)}</span>
+                        <span className="flex-1 font-mono text-xs text-slate-800">{titleCase(nome)}</span>
                       )}
                       {!isDup && (
                         <button onClick={() => setEditNome(i)} className="text-slate-400 hover:text-slate-600 text-xs">✎</button>
