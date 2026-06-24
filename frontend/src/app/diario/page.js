@@ -10,7 +10,7 @@ import { useTurmas } from '@/hooks/diario/useTurmas';
 import { useNotas } from '@/hooks/diario/useNotas';
 import { ArrowLeft, GraduationCap, ExternalLink, Copy, Check, Award } from 'lucide-react';
 import { db } from '@/lib/firebase';
-import { doc, getDoc, setDoc, serverTimestamp } from 'firebase/firestore';
+import { doc, getDoc, setDoc, serverTimestamp, writeBatch } from 'firebase/firestore';
 import { gerarLoginAluno, gerarLoginKey } from '@/utils/diario/loginAluno';
 
 const STORAGE_KEY = 'diario_turmas';
@@ -221,41 +221,70 @@ export default function DiarioPage() {
   const handlePublishGrades = async () => {
     if (publishing || !user || turmas.length === 0) return;
     setPublishing(true);
+    setToast('');
     try {
       const nomeProfessor = perfil?.nome || user.displayName || 'Professor';
+      let totalAlunos = 0;
+      let processados = 0;
+
+      // Conta total de alunos com dataNascimento
+      for (const turma of turmas) {
+        totalAlunos += (turma.alunos || []).filter(a => a.dataNascimento).length;
+      }
+
+      if (totalAlunos === 0) {
+        setToast('Nenhum aluno com data de nascimento cadastrada.');
+        setPublishing(false);
+        return;
+      }
+
+      // Pré-calcula todos os loginKeys (crypto é lento, faz em paralelo)
+      const alunosData = [];
       for (const turma of turmas) {
         for (const aluno of (turma.alunos || [])) {
           if (aluno.dataNascimento) {
             const loginStr = gerarLoginAluno(aluno.nome, aluno.dataNascimento);
             const loginKey = await gerarLoginKey(loginStr);
-            
-            // 1. Vincula aluno ao professor
-            const baseRef = doc(db, 'alunoLogin', loginKey);
-            await setDoc(baseRef, { nome: aluno.nome, login: loginStr }, { merge: true });
-            
-            const vinculoRef = doc(db, 'alunoLogin', loginKey, 'vinculos', user.uid);
-            await setDoc(vinculoRef, {
-              professorUid: user.uid,
-              turmaId: turma.id,
-              turmaNome: turma.nome,
-              alunoId: aluno.id,
-              modulo: 'diario',
-              nomeProfessor,
-              atualizadoEm: serverTimestamp()
-            }, { merge: true });
-            
-            // 2. Sincroniza as notas deste aluno
-            const recordId = `${user.uid}_${turma.id}_${aluno.id}`;
-            const notaRef = doc(db, 'notasAluno', recordId);
-            await setDoc(notaRef, {
-              nome: aluno.nome,
-              bimestres: turma.bimestres || {},
-              atualizadoEm: serverTimestamp()
-            }, { merge: true });
+            alunosData.push({ aluno, turma, loginStr, loginKey });
           }
         }
       }
-      setToast('Notas publicadas com sucesso no Portal do Aluno!');
+
+      // Processa em lotes de 400 operações (limite Firestore: 500)
+      const BATCH_SIZE = 400;
+      for (let i = 0; i < alunosData.length; i += Math.ceil(BATCH_SIZE / 3)) {
+        const batch = writeBatch(db);
+        let ops = 0;
+
+        for (let j = i; j < alunosData.length && ops < BATCH_SIZE; j++) {
+          const { aluno, turma, loginStr, loginKey } = alunosData[j];
+
+          // 1. Base do aluno
+          batch.set(doc(db, 'alunoLogin', loginKey), { nome: aluno.nome, login: loginStr }, { merge: true });
+          ops++;
+
+          // 2. Vínculo
+          batch.set(doc(db, 'alunoLogin', loginKey, 'vinculos', user.uid), {
+            professorUid: user.uid, turmaId: turma.id, turmaNome: turma.nome,
+            alunoId: aluno.id, modulo: 'diario', nomeProfessor, atualizadoEm: serverTimestamp()
+          }, { merge: true });
+          ops++;
+
+          // 3. Notas
+          const recordId = `${user.uid}_${turma.id}_${aluno.id}`;
+          batch.set(doc(db, 'notasAluno', recordId), {
+            nome: aluno.nome, bimestres: turma.bimestres || {}, atualizadoEm: serverTimestamp()
+          }, { merge: true });
+          ops++;
+
+          processados++;
+        }
+
+        await batch.commit();
+        setToast(`Publicando... ${processados}/${totalAlunos} alunos`);
+      }
+
+      setToast(`✅ ${totalAlunos} alunos publicados no Portal do Aluno!`);
     } catch (e) {
       console.error('Erro ao publicar notas:', e);
       setToast('Erro ao publicar notas. Tente novamente.');

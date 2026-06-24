@@ -1,0 +1,47 @@
+{
+  "atividades": [
+    {
+      "id": 1,
+      "titulo": "Validar PRD de Integracao",
+      "estado": "PENDENTE",
+      "plano_validado": false,
+      "responsavel": "prd-manager",
+      "pre_requisitos": [],
+      "criado_em": "2026-06-24T08:45:54.023686"
+    },
+    {
+      "id": 2,
+      "titulo": "Desenhar Arquitetura de Integracao",
+      "estado": "PENDENTE",
+      "plano_validado": false,
+      "responsavel": "software-architecture",
+      "pre_requisitos": [
+        1
+      ],
+      "criado_em": "2026-06-24T08:45:54.082581"
+    },
+    {
+      "id": 3,
+      "titulo": "Escrever SDD de Integracao",
+      "estado": "PENDENTE",
+      "plano_validado": false,
+      "responsavel": "sdd-spec",
+      "pre_requisitos": [
+        2
+      ],
+      "criado_em": "2026-06-24T08:45:54.132031"
+    },
+    {
+      "id": 4,
+      "titulo": "Implementar Endpoint",
+      "estado": "PENDENTE",
+      "plano_validado": false,
+      "responsavel": "executor",
+      "pre_requisitos": [
+        3
+      ],
+      "criado_em": "2026-06-24T08:45:54.185510"
+    }
+  ],
+  "integrantes": []
+}
