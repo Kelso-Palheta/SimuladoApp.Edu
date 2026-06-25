@@ -4,10 +4,14 @@ import { gerarLoginAluno, gerarLoginKey } from '@/utils/diario/loginAluno';
 const PROJECT_ID = process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID || 'dashboard-gestao-notas';
 const FIRESTORE_BASE = `https://firestore.googleapis.com/v1/projects/${PROJECT_ID}/databases/(default)/documents`;
 
+let AUTH_TOKEN = null;
+
 async function firestorePatch(path, fields) {
+  const headers = { 'Content-Type': 'application/json' };
+  if (AUTH_TOKEN) headers['Authorization'] = `Bearer ${AUTH_TOKEN}`;
   const res = await fetch(`${FIRESTORE_BASE}/${path}`, {
     method: 'PATCH',
-    headers: { 'Content-Type': 'application/json' },
+    headers,
     body: JSON.stringify({ fields })
   });
   if (!res.ok) {
@@ -37,6 +41,10 @@ function toFirestoreValue(v) {
 
 export async function POST(request) {
   try {
+    // Extrai o token de autenticação do header
+    const authHeader = request.headers.get('authorization') || '';
+    AUTH_TOKEN = authHeader.startsWith('Bearer ') ? authHeader.slice(7) : null;
+
     const { userId, nomeProfessor, turmas } = await request.json();
 
     if (!userId || !turmas?.length) {

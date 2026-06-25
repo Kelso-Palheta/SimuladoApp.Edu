@@ -233,10 +233,11 @@ export default function DiarioPage() {
 
     try {
       const nomeProfessor = perfil?.nome || user.displayName || 'Professor';
+      const token = await user.getIdToken();
 
       const res = await fetch('/api/publicar-notas', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
         body: JSON.stringify({ userId: user.uid, nomeProfessor, turmas })
       });
 
