@@ -4,11 +4,9 @@ import { gerarLoginAluno, gerarLoginKey } from '@/utils/diario/loginAluno';
 const PROJECT_ID = process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID || 'dashboard-gestao-notas';
 const FIRESTORE_BASE = `https://firestore.googleapis.com/v1/projects/${PROJECT_ID}/databases/(default)/documents`;
 
-let AUTH_TOKEN = null;
-
-async function firestorePatch(path, fields) {
+async function firestorePatch(path, fields, token) {
   const headers = { 'Content-Type': 'application/json' };
-  if (AUTH_TOKEN) headers['Authorization'] = `Bearer ${AUTH_TOKEN}`;
+  if (token) headers['Authorization'] = `Bearer ${token}`;
   const res = await fetch(`${FIRESTORE_BASE}/${path}`, {
     method: 'PATCH',
     headers,
@@ -43,7 +41,7 @@ export async function POST(request) {
   try {
     // Extrai o token de autenticação do header
     const authHeader = request.headers.get('authorization') || '';
-    AUTH_TOKEN = authHeader.startsWith('Bearer ') ? authHeader.slice(7) : null;
+    const token = authHeader.startsWith('Bearer ') ? authHeader.slice(7) : null;
 
     const { userId, nomeProfessor, turmas } = await request.json();
 
@@ -67,7 +65,7 @@ export async function POST(request) {
           await firestorePatch(`alunoLogin/${loginKey}`, {
             nome: { stringValue: aluno.nome },
             login: { stringValue: loginStr }
-          });
+          }, token);
 
           // 2. Vínculo professor-aluno
           await firestorePatch(`alunoLogin/${loginKey}/vinculos/${userId}`, {
@@ -78,7 +76,7 @@ export async function POST(request) {
             modulo: { stringValue: 'diario' },
             nomeProfessor: { stringValue: nomeProfessor || 'Professor' },
             atualizadoEm: { stringValue: now }
-          });
+          }, token);
 
           // 3. Notas
           const recordId = `${userId}_${turma.id}_${aluno.id}`;
@@ -88,7 +86,7 @@ export async function POST(request) {
             atualizadoEm: now
           }).mapValue.fields;
 
-          await firestorePatch(`notasAluno/${recordId}`, notaFields);
+          await firestorePatch(`notasAluno/${recordId}`, notaFields, token);
 
           total++;
         } catch (e) {
