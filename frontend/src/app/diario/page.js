@@ -304,7 +304,10 @@ export default function DiarioPage() {
           processados++;
         }
 
-        await batch.commit();
+        await Promise.race([
+          batch.commit(),
+          new Promise((_, reject) => setTimeout(() => reject(new Error('Timeout')), 30000))
+        ]);
         setToast(`Publicando... ${processados}/${totalAlunos} alunos`);
       }
 
