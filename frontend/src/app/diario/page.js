@@ -67,6 +67,7 @@ export default function DiarioPage() {
     }
 
     (async () => {
+      let finalLoadedTurmas = [];
       try {
         const storedUserId = typeof window !== 'undefined' ? localStorage.getItem(USER_KEY) : null;
         const isSameUser = storedUserId === user.uid;
@@ -83,9 +84,11 @@ export default function DiarioPage() {
           if (cloudTime >= localTime || !local) {
             setInitialTurmas(cloud);
             salvarLocal(cloud, cloudTime);
+            finalLoadedTurmas = cloud;
           } else {
             setInitialTurmas(local);
             await setDoc(ref, { turmas: local, lastUpdated: localTime }, { merge: true });
+            finalLoadedTurmas = local;
           }
           if (typeof window !== 'undefined') localStorage.setItem(USER_KEY, user.uid);
         } else {
@@ -97,6 +100,7 @@ export default function DiarioPage() {
             await setDoc(ref, { turmas: oldData, lastUpdated: Date.now() }, { merge: true });
             setInitialTurmas(oldData);
             salvarLocal(oldData);
+            finalLoadedTurmas = oldData;
           } else {
             // Tenta do outro caminho antigo (campo turmas no próprio perfil do professor)
             const profRef = doc(db, 'professores', user.uid);
@@ -106,11 +110,14 @@ export default function DiarioPage() {
               await setDoc(ref, { turmas: oldData, lastUpdated: Date.now() }, { merge: true });
               setInitialTurmas(oldData);
               salvarLocal(oldData);
+              finalLoadedTurmas = oldData;
             } else if (local && local.length > 0) {
               setInitialTurmas(local);
+              finalLoadedTurmas = local;
             } else {
               setInitialTurmas([]);
               salvarLocal([]);
+              finalLoadedTurmas = [];
             }
           }
           if (typeof window !== 'undefined') localStorage.setItem(USER_KEY, user.uid);
@@ -121,10 +128,17 @@ export default function DiarioPage() {
         const storedUserId = typeof window !== 'undefined' ? localStorage.getItem(USER_KEY) : null;
         if (storedUserId === user.uid) {
           const local = carregarLocal();
-          if (local) setInitialTurmas(local);
+          if (local) {
+            setInitialTurmas(local);
+            finalLoadedTurmas = local;
+          }
         }
       } finally {
         setLoadingTurmas(false);
+        if (user && finalLoadedTurmas) {
+          const { limparTodosVinculosOrfaos } = await import('@/lib/firebase-aluno');
+          limparTodosVinculosOrfaos(user.uid, finalLoadedTurmas).catch(console.error);
+        }
       }
     })();
   }, [user, loading]);

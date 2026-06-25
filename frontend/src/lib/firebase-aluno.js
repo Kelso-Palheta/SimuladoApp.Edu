@@ -145,3 +145,35 @@ export async function limparVinculosOrfaos(professorUid, turmasAtivas, alunosRem
     }
   }
 }
+
+export async function limparTodosVinculosOrfaos(professorUid, turmasAtivas) {
+  try {
+    const { collectionGroup, query, where, getDocs, deleteDoc } = await import('firebase/firestore');
+    const q = query(collectionGroup(db, 'vinculos'), where('professorUid', '==', professorUid));
+    const snap = await getDocs(q);
+    
+    const activeKeys = new Set();
+    turmasAtivas.forEach(t => {
+      if (t.alunos && Array.isArray(t.alunos)) {
+        t.alunos.forEach(a => {
+          activeKeys.add(`${t.id}_${a.id}`);
+        });
+      }
+    });
+
+    for (const d of snap.docs) {
+      const data = d.data();
+      const vinculoTurmaId = data.turmaId;
+      const vinculoAlunoId = data.alunoId;
+      const key = `${vinculoTurmaId}_${vinculoAlunoId}`;
+      
+      // If the link is not active anymore, delete it
+      if (!activeKeys.has(key)) {
+        console.log(`Deletando vinculo órfão retroativo: ${d.ref.path}`);
+        await deleteDoc(d.ref);
+      }
+    }
+  } catch (e) {
+    console.error('Erro ao limpar todos os vinculos órfãos:', e);
+  }
+}
