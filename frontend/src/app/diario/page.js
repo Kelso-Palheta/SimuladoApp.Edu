@@ -314,7 +314,8 @@ export default function DiarioPage() {
       setToast(`✅ ${totalAlunos} alunos publicados no Portal do Aluno!`);
     } catch (e) {
       console.error('Erro ao publicar notas:', e);
-      setToast('Erro ao publicar notas. Tente novamente.');
+      const msg = e?.message || e?.code || 'Erro desconhecido';
+      setToast(`Erro ao publicar: ${msg}. Tente novamente.`);
     } finally {
       setPublishing(false);
     }
