@@ -277,11 +277,47 @@ export default function DiarioPage() {
     setTurmaSelecionada(nova);
   };
 
-  const handleRemoveTurma = (id) => {
+  const handleRemoveTurma = async (id) => {
+    const turma = turmas.find(t => t.id === id);
     removeTurma(id);
     if (turmaSelecionada?.id === id) {
       const restantes = turmas.filter((t) => t.id !== id);
       setTurmaSelecionada(restantes[0] || null);
+    }
+    if (turma && user) {
+      const { limparVinculosOrfaos } = await import('@/lib/firebase-aluno');
+      const turmasAtivas = turmas.filter(t => t.id !== id);
+      await limparVinculosOrfaos(user.uid, turmasAtivas, turma.alunos || []);
+    }
+  };
+
+  const handleRemoveAluno = async (turmaId, alunoId) => {
+    const turma = turmas.find(t => t.id === turmaId);
+    const aluno = turma?.alunos?.find(a => a.id === alunoId);
+    removeAluno(turmaId, alunoId);
+    
+    if (aluno && user) {
+      const { limparVinculosOrfaos } = await import('@/lib/firebase-aluno');
+      const turmasAtivas = turmas.map(t => {
+        if (t.id === turmaId) return { ...t, alunos: t.alunos.filter(a => a.id !== alunoId) };
+        return t;
+      });
+      await limparVinculosOrfaos(user.uid, turmasAtivas, [aluno]);
+    }
+  };
+
+  const handleRemoveAlunos = async (turmaId, alunoIds) => {
+    const turma = turmas.find(t => t.id === turmaId);
+    const alunosRemovidos = turma?.alunos?.filter(a => alunoIds.includes(a.id)) || [];
+    removeAlunos(turmaId, alunoIds);
+    
+    if (alunosRemovidos.length > 0 && user) {
+      const { limparVinculosOrfaos } = await import('@/lib/firebase-aluno');
+      const turmasAtivas = turmas.map(t => {
+        if (t.id === turmaId) return { ...t, alunos: t.alunos.filter(a => !alunoIds.includes(a.id)) };
+        return t;
+      });
+      await limparVinculosOrfaos(user.uid, turmasAtivas, alunosRemovidos);
     }
   };
 
@@ -435,8 +471,8 @@ export default function DiarioPage() {
             onRemoveAtv={removeAtividade}
             onUpdateAtvMax={updateAtividadeMax}
             onAddAlunos={addAlunos}
-            onRemoveAluno={removeAluno}
-            onRemoveAlunos={removeAlunos}
+            onRemoveAluno={handleRemoveAluno}
+            onRemoveAlunos={handleRemoveAlunos}
             onUpdateConfig={updateConfig}
             onSetRecuperacao={setRecuperacao}
             onClearAtividadesNota={clearAtividadesNota}

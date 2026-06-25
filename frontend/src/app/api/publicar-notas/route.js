@@ -20,7 +20,7 @@ async function firestorePatch(path, fields, token) {
 }
 
 function toFirestoreValue(v) {
-  if (v === null || v === undefined) return { nullValue: null };
+  if (v === null || v === undefined) return { nullValue: 'NULL_VALUE' };
   if (typeof v === 'number') return { doubleValue: v };
   if (typeof v === 'boolean') return { booleanValue: v };
   if (typeof v === 'string') return { stringValue: v };

@@ -18,13 +18,15 @@ export async function submitEntrega({ activityId, alunoId, turmaId, bimestre, re
   const ref = doc(db, 'entregas', entregaId);
   const atvSnap = await getDoc(doc(db, 'atividades', activityId));
   const professorId = atvSnap.exists() ? atvSnap.data().professorId : null;
-  await setDoc(ref, {
+  const payload = {
     activityId, alunoId, turmaId, bimestre,
     ...(professorId ? { professorId } : {}),
     ...(respostas != null ? { respostas } : {}),
     ...(respostaTexto != null ? { respostaTexto } : {}),
     status: 'entregue', submittedAt: serverTimestamp()
-  });
+  };
+  Object.keys(payload).forEach(key => payload[key] === undefined && delete payload[key]);
+  await setDoc(ref, payload);
   return entregaId;
 }
 
@@ -120,4 +122,26 @@ export async function getEntregasDoAluno(alunoId) {
 export async function getTokenAluno(activityId, alunoId) {
   const snap = await getDoc(doc(db, 'atividades', activityId, 'tokens', alunoId));
   return snap.exists() ? snap.data().token : null;
+}
+
+export async function limparVinculosOrfaos(professorUid, turmasAtivas, alunosRemovidos) {
+  for (const aluno of alunosRemovidos) {
+    if (!aluno.nome || !aluno.dataNascimento) continue;
+    
+    // Check if student is still in ANY active turma
+    const aindaAtivo = turmasAtivas.some(t => 
+      t.alunos.some(a => a.id === aluno.id || (a.nome === aluno.nome && a.dataNascimento === aluno.dataNascimento))
+    );
+    
+    if (!aindaAtivo) {
+      try {
+        const loginStr = await import('@/utils/diario/loginAluno').then(m => m.gerarLoginAluno(aluno.nome, aluno.dataNascimento));
+        const loginKey = await gerarLoginKey(loginStr);
+        const { deleteDoc } = await import('firebase/firestore');
+        await deleteDoc(doc(db, 'alunoLogin', loginKey, 'vinculos', professorUid));
+      } catch (e) {
+        console.error('Erro ao limpar vinculo órfão:', e);
+      }
+    }
+  }
 }
