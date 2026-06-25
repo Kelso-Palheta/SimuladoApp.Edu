@@ -17,43 +17,22 @@ async function firestorePatch(path, fields) {
   return res.json();
 }
 
-function toFields(obj) {
-  const fields = {};
-  for (const [k, v] of Object.entries(obj)) {
-    if (v === null || v === undefined) fields[k] = { nullValue: null };
-    else if (typeof v === 'number') fields[k] = { doubleValue: v };
-    else if (typeof v === 'boolean') fields[k] = { booleanValue: v };
-    else if (typeof v === 'object' && !Array.isArray(v)) {
-      const nested = {};
-      for (const [nk, nv] of Object.entries(v)) {
-        if (typeof nv === 'number') nested[nk] = { doubleValue: nv };
-        else if (nv !== undefined) nested[nk] = { stringValue: String(nv) };
-      }
-      fields[k] = { mapValue: { fields: nested } };
-    } else {
-      fields[k] = { stringValue: String(v) };
-    }
+function toFirestoreValue(v) {
+  if (v === null || v === undefined) return { nullValue: null };
+  if (typeof v === 'number') return { doubleValue: v };
+  if (typeof v === 'boolean') return { booleanValue: v };
+  if (typeof v === 'string') return { stringValue: v };
+  if (Array.isArray(v)) {
+    return { arrayValue: { values: v.map(toFirestoreValue) } };
   }
-  return fields;
-}
-
-function toMapValue(obj) {
-  const fields = {};
-  for (const [k, v] of Object.entries(obj)) {
-    if (v === null || v === undefined) continue;
-    if (typeof v === 'number') fields[k] = { doubleValue: v };
-    else if (typeof v === 'object' && !Array.isArray(v)) {
-      const nested = {};
-      for (const [nk, nv] of Object.entries(v)) {
-        if (typeof nv === 'number') nested[nk] = { doubleValue: nv };
-        else if (nv !== undefined) nested[nk] = { stringValue: String(nv) };
-      }
-      fields[k] = { mapValue: { fields: nested } };
-    } else {
-      fields[k] = { stringValue: String(v) };
+  if (typeof v === 'object') {
+    const fields = {};
+    for (const [k, val] of Object.entries(v)) {
+      if (val !== undefined) fields[k] = toFirestoreValue(val);
     }
+    return { mapValue: { fields } };
   }
-  return { mapValue: { fields } };
+  return { stringValue: String(v) };
 }
 
 export async function POST(request) {
@@ -95,11 +74,13 @@ export async function POST(request) {
 
           // 3. Notas
           const recordId = `${userId}_${turma.id}_${aluno.id}`;
-          await firestorePatch(`notasAluno/${recordId}`, {
-            nome: { stringValue: aluno.nome },
-            bimestres: toMapValue(turma.bimestres || {}),
-            atualizadoEm: { stringValue: now }
-          });
+          const notaFields = toFirestoreValue({
+            nome: aluno.nome,
+            bimestres: turma.bimestres || {},
+            atualizadoEm: now
+          }).mapValue.fields;
+
+          await firestorePatch(`notasAluno/${recordId}`, notaFields);
 
           total++;
         } catch (e) {
