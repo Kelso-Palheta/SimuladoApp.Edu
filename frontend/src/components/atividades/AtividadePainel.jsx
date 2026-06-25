@@ -381,7 +381,7 @@ export const AtividadePainel = ({ atividade: atividadeInicial, currentTurmaId, o
               onAtividadeUpdated?.(fresh);
               if (onSyncAtvMapa) {
                 for (const turmaId of data.turmaIds) {
-                  onSyncAtvMapa(turmaId, data.bimestre, data.id || atividade.id, data.titulo, data.notaMaxima);
+                  onSyncAtvMapa(turmaId, atividade.bimestre, data.bimestre, data.id || atividade.id, data.titulo, data.notaMaxima);
                 }
               }
             }

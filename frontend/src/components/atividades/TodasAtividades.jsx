@@ -80,9 +80,11 @@ export const TodasAtividades = ({
         useAtividadesHook={useAtividadesHook}
         turmas={turmas}
         user={user}
-        onSyncAtvMapa={(turmaId, bimestre, atvId, titulo, max) => {
-          onRemoveAtv(turmaId, bimestre, atvId);
-          onAddAtv(turmaId, bimestre, titulo, max, atvId);
+        onSyncAtvMapa={(turmaId, oldBimestre, newBimestre, atvId, titulo, max) => {
+          if (String(oldBimestre) !== String(newBimestre)) {
+            onRemoveAtv(turmaId, oldBimestre, atvId);
+          }
+          onAddAtv(turmaId, newBimestre, titulo, max, atvId);
         }}
         onSetNota={onSetNota}
       />

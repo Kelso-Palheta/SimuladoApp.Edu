@@ -34,16 +34,24 @@ export const useNotas = (setTurmas) => {
       prev.map((t) => {
         if (t.id !== turmaId) return t;
         const b = String(bimestre);
+        const bData = t.bimestres[b] || { atividades: [], notas: {} };
+        const atividades = [...(bData.atividades || [])];
+        const index = atividades.findIndex((a) => a.id === id);
+        const novaAtv = { id, nome: nome.trim(), max: round2(clamp(Number(max) || 0, 0, 10)) };
+
+        if (index >= 0) {
+          atividades[index] = novaAtv;
+        } else {
+          atividades.push(novaAtv);
+        }
+
         return {
           ...t,
           bimestres: {
             ...t.bimestres,
             [b]: {
-              ...t.bimestres[b],
-              atividades: [
-                ...(t.bimestres[b]?.atividades || []),
-                { id, nome: nome.trim(), max: round2(clamp(Number(max) || 0, 0, 10)) }
-              ]
+              ...bData,
+              atividades
             }
           }
         };

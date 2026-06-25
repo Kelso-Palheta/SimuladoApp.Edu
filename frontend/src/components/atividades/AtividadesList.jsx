@@ -78,9 +78,11 @@ export const AtividadesList = ({
         onAtividadeUpdated={(atv) => { setPainelAtividade(atv); if (turma?.id) loadAtividades(turma.id); }}
         useAtividadesHook={useAtividadesHook}
         turmas={turmas}
-        onSyncAtvMapa={(turmaId, bimestre, atvId, titulo, max) => {
-          onRemoveAtv(turmaId, bimestre, atvId);
-          onAddAtv(turmaId, bimestre, titulo, max, atvId);
+        onSyncAtvMapa={(turmaId, oldBimestre, newBimestre, atvId, titulo, max) => {
+          if (String(oldBimestre) !== String(newBimestre)) {
+            onRemoveAtv(turmaId, oldBimestre, atvId);
+          }
+          onAddAtv(turmaId, newBimestre, titulo, max, atvId);
         }}
         onSetNota={onSetNota}
       />
