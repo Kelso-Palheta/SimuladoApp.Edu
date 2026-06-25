@@ -246,22 +246,6 @@ export default function DiarioPage() {
         return;
       }
 
-      // Limpa vínculos antigos de turmas removidas
-      try {
-        const q = query(collectionGroup(db, 'vinculos'), where('professorUid', '==', user.uid), where('modulo', '==', 'diario'));
-        const oldSnap = await getDocs(q);
-        const turmaAtuaisIds = new Set(turmas.map(t => t.id));
-        const toDelete = [];
-        oldSnap.forEach(d => {
-          if (!turmaAtuaisIds.has(d.data().turmaId)) toDelete.push(d.ref);
-        });
-        if (toDelete.length > 0) {
-          const cleanBatch = writeBatch(db);
-          toDelete.forEach(ref => cleanBatch.delete(ref));
-          await cleanBatch.commit();
-        }
-      } catch (e) { /* ignora erros de limpeza */ }
-
       // Pré-calcula todos os loginKeys (crypto é lento, faz em paralelo)
       const alunosData = [];
       for (const turma of turmas) {
@@ -312,6 +296,24 @@ export default function DiarioPage() {
       }
 
       setToast(`✅ ${totalAlunos} alunos publicados no Portal do Aluno!`);
+
+      // Limpa vínculos antigos em background (não bloqueia o publish)
+      setTimeout(async () => {
+        try {
+          const q = query(collectionGroup(db, 'vinculos'), where('professorUid', '==', user.uid), where('modulo', '==', 'diario'));
+          const oldSnap = await getDocs(q);
+          const turmaAtuaisIds = new Set(turmas.map(t => t.id));
+          const cleanBatch = writeBatch(db);
+          let deleted = 0;
+          oldSnap.forEach(d => {
+            if (!turmaAtuaisIds.has(d.data().turmaId)) {
+              cleanBatch.delete(d.ref);
+              deleted++;
+            }
+          });
+          if (deleted > 0) await cleanBatch.commit();
+        } catch (e) { console.error('Limpeza de vínculos:', e); }
+      }, 1000);
     } catch (e) {
       console.error('Erro ao publicar notas:', e);
       const msg = e?.message || e?.code || 'Erro desconhecido';
