@@ -10,7 +10,7 @@ import { useTurmas } from '@/hooks/diario/useTurmas';
 import { useNotas } from '@/hooks/diario/useNotas';
 import { ArrowLeft, GraduationCap, ExternalLink, Copy, Check, Award } from 'lucide-react';
 import { db } from '@/lib/firebase';
-import { doc, getDoc, setDoc, serverTimestamp, writeBatch } from 'firebase/firestore';
+import { doc, getDoc, setDoc, serverTimestamp, writeBatch, collectionGroup, getDocs, query, where, deleteDoc } from 'firebase/firestore';
 import { gerarLoginAluno, gerarLoginKey } from '@/utils/diario/loginAluno';
 
 const STORAGE_KEY = 'diario_turmas';
@@ -245,6 +245,22 @@ export default function DiarioPage() {
         setPublishing(false);
         return;
       }
+
+      // Limpa vínculos antigos de turmas removidas
+      try {
+        const q = query(collectionGroup(db, 'vinculos'), where('professorUid', '==', user.uid), where('modulo', '==', 'diario'));
+        const oldSnap = await getDocs(q);
+        const turmaAtuaisIds = new Set(turmas.map(t => t.id));
+        const toDelete = [];
+        oldSnap.forEach(d => {
+          if (!turmaAtuaisIds.has(d.data().turmaId)) toDelete.push(d.ref);
+        });
+        if (toDelete.length > 0) {
+          const cleanBatch = writeBatch(db);
+          toDelete.forEach(ref => cleanBatch.delete(ref));
+          await cleanBatch.commit();
+        }
+      } catch (e) { /* ignora erros de limpeza */ }
 
       // Pré-calcula todos os loginKeys (crypto é lento, faz em paralelo)
       const alunosData = [];
