@@ -10,7 +10,7 @@ import { useTurmas } from '@/hooks/diario/useTurmas';
 import { useNotas } from '@/hooks/diario/useNotas';
 import { ArrowLeft, GraduationCap, ExternalLink, Copy, Check, Award } from 'lucide-react';
 import { db } from '@/lib/firebase';
-import { doc, getDoc, setDoc, serverTimestamp, writeBatch, collectionGroup, getDocs, query, where, deleteDoc } from 'firebase/firestore';
+import { doc, getDoc, setDoc, serverTimestamp } from 'firebase/firestore';
 import { gerarLoginAluno, gerarLoginKey } from '@/utils/diario/loginAluno';
 
 const STORAGE_KEY = 'diario_turmas';
@@ -229,76 +229,29 @@ export default function DiarioPage() {
   const handlePublishGrades = async () => {
     if (publishing || !user || turmas.length === 0) return;
     setPublishing(true);
-    setToast('');
+    setToast('Publicando notas...');
+
     try {
       const nomeProfessor = perfil?.nome || user.displayName || 'Professor';
-      let totalAlunos = 0;
-      let processados = 0;
 
-      // Conta total de alunos com dataNascimento
-      for (const turma of turmas) {
-        totalAlunos += (turma.alunos || []).filter(a => a.dataNascimento).length;
+      const res = await fetch('/api/publicar-notas', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userId: user.uid, nomeProfessor, turmas })
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) throw new Error(data.error || 'Erro desconhecido');
+
+      if (data.erros > 0) {
+        setToast(`✅ ${data.total} alunos publicados (${data.erros} falhas).`);
+      } else {
+        setToast(`✅ ${data.total} alunos publicados no Portal do Aluno!`);
       }
-
-      if (totalAlunos === 0) {
-        setToast('Nenhum aluno com data de nascimento cadastrada.');
-        setPublishing(false);
-        return;
-      }
-
-      // Pré-calcula todos os loginKeys (crypto é lento, faz em paralelo)
-      const alunosData = [];
-      for (const turma of turmas) {
-        for (const aluno of (turma.alunos || [])) {
-          if (aluno.dataNascimento) {
-            const loginStr = gerarLoginAluno(aluno.nome, aluno.dataNascimento);
-            const loginKey = await gerarLoginKey(loginStr);
-            alunosData.push({ aluno, turma, loginStr, loginKey });
-          }
-        }
-      }
-
-      // Publica cada aluno (setDoc individual, mais confiável que batch no Vercel)
-      for (const { aluno, turma, loginStr, loginKey } of alunosData) {
-        try {
-          await setDoc(doc(db, 'alunoLogin', loginKey), { nome: aluno.nome, login: loginStr }, { merge: true });
-          await setDoc(doc(db, 'alunoLogin', loginKey, 'vinculos', user.uid), {
-            professorUid: user.uid, turmaId: turma.id, turmaNome: turma.nome,
-            alunoId: aluno.id, modulo: 'diario', nomeProfessor, atualizadoEm: new Date().toISOString()
-          }, { merge: true });
-          await setDoc(doc(db, 'notasAluno', `${user.uid}_${turma.id}_${aluno.id}`), {
-            nome: aluno.nome, bimestres: turma.bimestres || {}, atualizadoEm: new Date().toISOString()
-          }, { merge: true });
-          processados++;
-          if (processados % 10 === 0) setToast(`Publicando... ${processados}/${totalAlunos} alunos`);
-        } catch (e) {
-          console.error(`Erro no aluno ${aluno.nome}:`, e);
-        }
-      }
-
-      setToast(`✅ ${totalAlunos} alunos publicados no Portal do Aluno!`);
-
-      // Limpa vínculos antigos em background (não bloqueia o publish)
-      setTimeout(async () => {
-        try {
-          const q = query(collectionGroup(db, 'vinculos'), where('professorUid', '==', user.uid), where('modulo', '==', 'diario'));
-          const oldSnap = await getDocs(q);
-          const turmaAtuaisIds = new Set(turmas.map(t => t.id));
-          const cleanBatch = writeBatch(db);
-          let deleted = 0;
-          oldSnap.forEach(d => {
-            if (!turmaAtuaisIds.has(d.data().turmaId)) {
-              cleanBatch.delete(d.ref);
-              deleted++;
-            }
-          });
-          if (deleted > 0) await cleanBatch.commit();
-        } catch (e) { console.error('Limpeza de vínculos:', e); }
-      }, 1000);
     } catch (e) {
       console.error('Erro ao publicar notas:', e);
-      const msg = e?.message || e?.code || 'Erro desconhecido';
-      setToast(`Erro ao publicar: ${msg}. Tente novamente.`);
+      setToast(`Erro ao publicar: ${e.message}. Tente novamente.`);
     } finally {
       setPublishing(false);
     }
