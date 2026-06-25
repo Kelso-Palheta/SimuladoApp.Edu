@@ -1,0 +1,12 @@
+{
+  "indexes": [
+    {
+      "collectionGroup": "vinculos",
+      "queryScope": "COLLECTION_GROUP",
+      "fields": [
+        { "fieldPath": "professorUid", "order": "ASCENDING" },
+        { "fieldPath": "modulo", "order": "ASCENDING" }
+      ]
+    }
+  ]
+}
