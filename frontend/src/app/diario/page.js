@@ -258,41 +258,22 @@ export default function DiarioPage() {
         }
       }
 
-      // Processa em lotes de 400 operações (limite Firestore: 500)
-      const BATCH_SIZE = 400;
-      for (let i = 0; i < alunosData.length; i += Math.ceil(BATCH_SIZE / 3)) {
-        const batch = writeBatch(db);
-        let ops = 0;
-
-        for (let j = i; j < alunosData.length && ops < BATCH_SIZE; j++) {
-          const { aluno, turma, loginStr, loginKey } = alunosData[j];
-
-          // 1. Base do aluno
-          batch.set(doc(db, 'alunoLogin', loginKey), { nome: aluno.nome, login: loginStr }, { merge: true });
-          ops++;
-
-          // 2. Vínculo
-          batch.set(doc(db, 'alunoLogin', loginKey, 'vinculos', user.uid), {
+      // Publica cada aluno (setDoc individual, mais confiável que batch no Vercel)
+      for (const { aluno, turma, loginStr, loginKey } of alunosData) {
+        try {
+          await setDoc(doc(db, 'alunoLogin', loginKey), { nome: aluno.nome, login: loginStr }, { merge: true });
+          await setDoc(doc(db, 'alunoLogin', loginKey, 'vinculos', user.uid), {
             professorUid: user.uid, turmaId: turma.id, turmaNome: turma.nome,
-            alunoId: aluno.id, modulo: 'diario', nomeProfessor, atualizadoEm: serverTimestamp()
+            alunoId: aluno.id, modulo: 'diario', nomeProfessor, atualizadoEm: new Date().toISOString()
           }, { merge: true });
-          ops++;
-
-          // 3. Notas
-          const recordId = `${user.uid}_${turma.id}_${aluno.id}`;
-          batch.set(doc(db, 'notasAluno', recordId), {
-            nome: aluno.nome, bimestres: turma.bimestres || {}, atualizadoEm: serverTimestamp()
+          await setDoc(doc(db, 'notasAluno', `${user.uid}_${turma.id}_${aluno.id}`), {
+            nome: aluno.nome, bimestres: turma.bimestres || {}, atualizadoEm: new Date().toISOString()
           }, { merge: true });
-          ops++;
-
           processados++;
+          if (processados % 10 === 0) setToast(`Publicando... ${processados}/${totalAlunos} alunos`);
+        } catch (e) {
+          console.error(`Erro no aluno ${aluno.nome}:`, e);
         }
-
-        await Promise.race([
-          batch.commit(),
-          new Promise((_, reject) => setTimeout(() => reject(new Error('Timeout')), 30000))
-        ]);
-        setToast(`Publicando... ${processados}/${totalAlunos} alunos`);
       }
 
       setToast(`✅ ${totalAlunos} alunos publicados no Portal do Aluno!`);
