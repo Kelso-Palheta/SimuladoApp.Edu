@@ -90,6 +90,12 @@ export async function vincularAlunoProfessor({ login, nome, professorUid, turmaI
   return loginKey;
 }
 
+export async function getRedacaoAluno(professorUid, loginKey) {
+  const snap = await getDoc(doc(db, 'professores', professorUid, 'correcoes', loginKey));
+  if (!snap.exists()) return null;
+  return { ...snap.data(), id: snap.id };
+}
+
 export async function getNotasAluno(recordId) {
   const snap = await getDoc(doc(db, 'notasAluno', recordId));
   if (!snap.exists()) return null;

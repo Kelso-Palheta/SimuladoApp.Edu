@@ -52,35 +52,37 @@ export default function AlunoLoginPage() {
         return;
       }
 
-      // Se tiver apenas 1 vínculo, faz login direto nele
-      if (dados.vinculos.length === 1) {
-        const v = dados.vinculos[0];
+      // Se tiver apenas 1 vínculo (ou 1 professor com múltiplos módulos), faz login direto nele
+      const uniqueProfs = [];
+      const profMap = new Map();
+      
+      dados.vinculos.forEach(v => {
+        if (!profMap.has(v.professorUid)) {
+          profMap.set(v.professorUid, v);
+          uniqueProfs.push(v);
+        }
+      });
+
+      if (uniqueProfs.length === 1) {
+        const v = uniqueProfs[0];
         if (typeof window !== 'undefined') {
           sessionStorage.setItem('aluno_login', JSON.stringify({
             login: valor,
             nome: dados.nome,
             alunoId: v.alunoId || dados.loginKey,
             turmaId: v.turmaId,
-            professorUid: v.professorUid
+            professorUid: v.professorUid,
+            loginKey: dados.loginKey
           }));
         }
-        if (v.modulo === 'redacao') {
-          if (typeof window !== 'undefined') {
-            sessionStorage.setItem('redacao_aluno', JSON.stringify({
-              professorUid: v.professorUid
-            }));
-          }
-          router.push(`/redacao/aluno/${v.alunoId || dados.loginKey}`);
-        } else {
-          router.push('/aluno/notas');
-        }
+        router.push('/aluno/notas');
       } else {
-        // Se tiver múltiplos vínculos, exibe a lista para seleção
+        // Se tiver múltiplos professores, exibe a lista para seleção
         setAlunoBase({ login: valor, nome: dados.nome, loginKey: dados.loginKey });
-        setVinculos(dados.vinculos);
+        setVinculos(uniqueProfs);
         if (typeof window !== 'undefined') {
           sessionStorage.setItem('aluno_base', JSON.stringify({ login: valor, nome: dados.nome, loginKey: dados.loginKey }));
-          sessionStorage.setItem('aluno_vinculos', JSON.stringify(dados.vinculos));
+          sessionStorage.setItem('aluno_vinculos', JSON.stringify(uniqueProfs));
         }
       }
     } catch (err) {
@@ -99,19 +101,11 @@ export default function AlunoLoginPage() {
         nome: alunoBase.nome,
         alunoId: v.alunoId || alunoBase.loginKey,
         turmaId: v.turmaId,
-        professorUid: v.professorUid
+        professorUid: v.professorUid,
+        loginKey: alunoBase.loginKey
       }));
     }
-    if (v.modulo === 'redacao') {
-      if (typeof window !== 'undefined') {
-        sessionStorage.setItem('redacao_aluno', JSON.stringify({
-          professorUid: v.professorUid
-        }));
-      }
-      router.push(`/redacao/aluno/${v.alunoId || alunoBase.loginKey}`);
-    } else {
-      router.push('/aluno/notas');
-    }
+    router.push('/aluno/notas');
   };
 
   return (
@@ -146,9 +140,9 @@ export default function AlunoLoginPage() {
                   className="w-full text-left p-4 bg-slate-50 hover:bg-violet-50 hover:border-violet-300 border border-slate-200/80 rounded-2xl transition-all duration-300 flex items-center justify-between group"
                 >
                   <div className="min-w-0 pr-2">
-                    <p className="font-bold text-slate-800 text-sm truncate">{v.nomeProfessor}</p>
+                    <p className="font-bold text-slate-800 text-sm truncate">Professor(a) {v.nomeProfessor}</p>
                     <p className="text-xs text-slate-400 mt-0.5 font-medium">
-                      Turma: {v.turmaNome || v.turmaId} • {v.modulo === 'redacao' ? 'Redação' : 'Diário Pedagógico'}
+                      Turma: {v.turmaNome || v.turmaId}
                     </p>
                   </div>
                   <span className="text-violet-500 font-bold text-sm transform transition-transform group-hover:translate-x-1">→</span>
@@ -201,17 +195,6 @@ export default function AlunoLoginPage() {
             >
               {loading ? 'Verificando...' : 'Acessar Portal'}
             </button>
-            
-            <div className="mt-6 pt-5 border-t border-slate-100">
-              <p className="text-xs text-slate-400 font-medium mb-3">Quer ver apenas a correção da sua redação?</p>
-              <button
-                type="button"
-                onClick={() => router.push('/redacao/aluno')}
-                className="w-full py-3.5 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 rounded-2xl text-sm font-bold transition-all flex items-center justify-center gap-2 border border-indigo-100"
-              >
-                <PenTool size={18} /> Acessar Correção de Redação
-              </button>
-            </div>
           </form>
         )}
       </div>

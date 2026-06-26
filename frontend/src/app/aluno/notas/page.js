@@ -2,9 +2,9 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { getNotasAluno, getAtividadesDoAluno, getEntregasDoAluno, getTokenAluno } from '@/lib/firebase-aluno';
+import { getNotasAluno, getAtividadesDoAluno, getEntregasDoAluno, getTokenAluno, getRedacaoAluno } from '@/lib/firebase-aluno';
 import { calcTotal, calcSemestre, fmt } from '@/utils/diario/calculos';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, PenTool, Sparkles } from 'lucide-react';
 
 const BimestreCard = ({ numero, turma, alunoId }) => {
   const bData = turma.bimestres[String(numero)];
@@ -106,6 +106,8 @@ export default function AlunoNotasPage() {
   const [erro, setErro] = useState('');
   const [abaAtv, setAbaAtv] = useState('pendentes');
 
+  const [redacao, setRedacao] = useState(null);
+
   useEffect(() => {
     const raw = sessionStorage.getItem('aluno_login');
     if (!raw) { router.push('/aluno'); return; }
@@ -114,16 +116,17 @@ export default function AlunoNotasPage() {
     try { alunoData = JSON.parse(raw); }
     catch { sessionStorage.removeItem('aluno_login'); router.push('/aluno'); return; }
 
-    const { professorUid, turmaId, alunoId } = alunoData;
+    const { professorUid, turmaId, alunoId, loginKey } = alunoData;
     const recordId = `${professorUid}_${turmaId}_${alunoId}`;
 
     Promise.all([
       getNotasAluno(recordId),
       getAtividadesDoAluno(professorUid, turmaId),
-      getEntregasDoAluno(alunoId)
-    ]).then(async ([notasData, atvsData, entregasData]) => {
-      if (!notasData) setErro('Nenhuma nota publicada ainda. Aguarde o professor publicar as notas.');
-      else setDados({ ...alunoData, notas: notasData });
+      getEntregasDoAluno(alunoId),
+      getRedacaoAluno(professorUid, alunoData.loginKey || alunoData.alunoId)
+    ]).then(async ([notasData, atvsData, entregasData, redacaoData]) => {
+      setDados({ ...alunoData, notas: notasData || {} });
+      if (redacaoData) setRedacao(redacaoData);
 
       setAtividades(atvsData.sort((a, b) => {
         const pa = a.dataEntrega?.toDate?.() || new Date(a.dataEntrega);
@@ -228,12 +231,50 @@ export default function AlunoNotasPage() {
         <h1 className="text-xl font-bold text-slate-900 mb-1">Minhas Notas</h1>
         <p className="text-sm text-slate-400 mb-8">Aluno(a): {nome}</p>
 
+        {/* Card da Redação */}
+        {redacao && (
+          <div className="bg-indigo-50 border border-indigo-200 rounded-xl p-5 mb-8 flex flex-col sm:flex-row items-center gap-4 justify-between animate-card-in">
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12 rounded-full bg-indigo-100 flex items-center justify-center flex-shrink-0 text-indigo-500">
+                <PenTool size={24} />
+              </div>
+              <div>
+                <h3 className="font-bold text-slate-900 text-lg flex items-center gap-2">
+                  Correção de Redação <Sparkles size={16} className="text-violet-500" />
+                </h3>
+                <p className="text-sm text-slate-600 mt-1">
+                  Tema: <span className="font-semibold">{redacao.essayTheme}</span>
+                </p>
+                <div className="flex flex-wrap gap-2 mt-2">
+                  <span className="text-xs bg-indigo-100 text-indigo-700 px-2 py-1 rounded-md font-medium">Nota: {redacao.totalScore} pts</span>
+                  {redacao.bimestre && (
+                    <span className="text-xs bg-slate-200 text-slate-700 px-2 py-1 rounded-md">{redacao.bimestre}º Bimestre</span>
+                  )}
+                </div>
+              </div>
+            </div>
+            <button
+              onClick={() => {
+                sessionStorage.setItem('redacao_aluno', JSON.stringify({ professorUid: dados.professorUid }));
+                router.push(`/redacao/aluno/${redacao.id}`);
+              }}
+              className="w-full sm:w-auto px-5 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-sm rounded-xl transition-all shadow-md flex items-center justify-center whitespace-nowrap"
+            >
+              Ver Detalhes
+            </button>
+          </div>
+        )}
+
         {/* Bimestres */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
-          {[1, 2, 3, 4].map((b) => (
-            <BimestreCard key={b} numero={b} turma={turma} alunoId={alunoId} />
-          ))}
-        </div>
+        {(!turma.bimestres || Object.keys(turma.bimestres).length === 0) ? (
+          !redacao && <p className="text-sm text-slate-400 mb-8">Nenhuma nota do diário pedagógico disponível ainda.</p>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
+            {[1, 2, 3, 4].map((b) => (
+              <BimestreCard key={b} numero={b} turma={turma} alunoId={alunoId} />
+            ))}
+          </div>
+        )}
 
         {/* Resumo Anual */}
         <div className="bg-slate-50 border border-slate-200 rounded-xl p-4 sm:p-5 mb-8">

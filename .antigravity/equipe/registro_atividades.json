@@ -3,7 +3,7 @@
     {
       "id": 1,
       "titulo": "Validar PRD de Integracao",
-      "estado": "PENDENTE",
+      "estado": "CONCLUIDO",
       "plano_validado": false,
       "responsavel": "prd-manager",
       "pre_requisitos": [],
@@ -12,7 +12,7 @@
     {
       "id": 2,
       "titulo": "Desenhar Arquitetura de Integracao",
-      "estado": "PENDENTE",
+      "estado": "CONCLUIDO",
       "plano_validado": false,
       "responsavel": "software-architecture",
       "pre_requisitos": [
@@ -23,7 +23,7 @@
     {
       "id": 3,
       "titulo": "Escrever SDD de Integracao",
-      "estado": "PENDENTE",
+      "estado": "CONCLUIDO",
       "plano_validado": false,
       "responsavel": "sdd-spec",
       "pre_requisitos": [
@@ -34,7 +34,7 @@
     {
       "id": 4,
       "titulo": "Implementar Endpoint",
-      "estado": "PENDENTE",
+      "estado": "CONCLUIDO",
       "plano_validado": false,
       "responsavel": "executor",
       "pre_requisitos": [
