@@ -26,6 +26,8 @@ export default function DesempenhoPage() {
   const [toast, setToast] = useState('');
   const [selectedTurma, setSelectedTurma] = useState('all');
   const [selectedBimestre, setSelectedBimestre] = useState(1);
+  const [selectedIds, setSelectedIds] = useState(new Set());
+  const [bulkDeleting, setBulkDeleting] = useState(false);
 
   useEffect(() => {
     if (toast) {
@@ -181,6 +183,30 @@ export default function DesempenhoPage() {
 
     migrarLogins();
   }, [user, turmas, corrections, loading, perfil]);
+
+  const handleBulkDelete = async () => {
+    if (selectedIds.size === 0) return;
+    if (!confirm(`Tem certeza que deseja excluir as ${selectedIds.size} redações selecionadas? Essa ação apagará essas correções definitivamente do seu histórico e não poderá ser desfeita.`)) return;
+
+    setBulkDeleting(true);
+    try {
+      await Promise.all(Array.from(selectedIds).map(async (id) => {
+        const c = corrections.find(x => x.id === id);
+        const fbId = c?._firestoreId || id;
+        await deleteDoc(doc(db, 'professores', user.uid, 'correcoes', fbId));
+        await deleteDoc(doc(db, 'alunoLogin', id, 'vinculos', user.uid));
+      }));
+
+      setCorrections(prev => prev.filter(c => !selectedIds.has(c.id)));
+      setSelectedIds(new Set());
+      setToast(`${selectedIds.size} redações excluídas.`);
+    } catch (err) {
+      console.error('Erro na exclusão em lote:', err);
+      setToast('Erro ao excluir redações.');
+    } finally {
+      setBulkDeleting(false);
+    }
+  };
 
   const handleClaim = async () => {
     const login = claimLogin.trim().toLowerCase();
@@ -526,9 +552,44 @@ export default function DesempenhoPage() {
                 </div>
               ) : (
                 <div className="overflow-x-auto rounded-xl border border-slate-100 bg-white">
+                  
+                  {/* Bulk Actions Header */}
+                  {selectedIds.size > 0 && selectedTurma === 'all' && (
+                    <div className="bg-indigo-50/80 px-4 py-3 border-b border-indigo-100 flex items-center justify-between">
+                      <span className="text-sm font-semibold text-indigo-900 flex items-center gap-2">
+                        <Check size={16} className="text-indigo-600" />
+                        {selectedIds.size} redaç{selectedIds.size === 1 ? 'ão' : 'ões'} selecionada{selectedIds.size === 1 ? '' : 's'}
+                      </span>
+                      <button
+                        onClick={handleBulkDelete}
+                        disabled={bulkDeleting}
+                        className="flex items-center gap-1.5 px-3 py-1.5 bg-rose-100 text-rose-700 hover:bg-rose-200 font-semibold text-xs rounded-lg transition-colors disabled:opacity-50"
+                      >
+                        {bulkDeleting ? <div className="w-3.5 h-3.5 rounded-full border-2 border-rose-600 border-t-transparent animate-spin" /> : <Trash2 size={14} />}
+                        Excluir Selecionadas
+                      </button>
+                    </div>
+                  )}
+
                   <table className="w-full text-sm">
                     <thead>
                       <tr className="border-b border-slate-100 bg-slate-50/75">
+                        {selectedTurma === 'all' && (
+                          <th className="text-left px-4 py-3.5 w-10">
+                            <input 
+                              type="checkbox" 
+                              className="w-4 h-4 rounded text-indigo-600 focus:ring-indigo-500 border-slate-300 cursor-pointer"
+                              checked={filtered.length > 0 && selectedIds.size === filtered.length}
+                              onChange={(e) => {
+                                if (e.target.checked) {
+                                  setSelectedIds(new Set(filtered.map(c => c.id)));
+                                } else {
+                                  setSelectedIds(new Set());
+                                }
+                              }}
+                            />
+                          </th>
+                        )}
                         <th className="text-left px-4 py-3.5 text-[10px] font-bold text-slate-400 uppercase tracking-wider">Aluno</th>
                         <th className="text-left px-4 py-3.5 text-[10px] font-bold text-slate-400 uppercase tracking-wider">Data</th>
                         {selectedTurma === 'all' && (
@@ -543,7 +604,20 @@ export default function DesempenhoPage() {
                     <tbody className="divide-y divide-slate-100">
                       {selectedTurma === 'all' ? (
                         filtered.map(c => (
-                          <tr key={c.id} className="hover:bg-slate-50/50 transition-colors group">
+                          <tr key={c.id} className={`hover:bg-slate-50/50 transition-colors group ${selectedIds.has(c.id) ? 'bg-indigo-50/30' : ''}`}>
+                            <td className="px-4 py-3">
+                              <input 
+                                type="checkbox" 
+                                className="w-4 h-4 rounded text-indigo-600 focus:ring-indigo-500 border-slate-300 cursor-pointer"
+                                checked={selectedIds.has(c.id)}
+                                onChange={(e) => {
+                                  const next = new Set(selectedIds);
+                                  if (e.target.checked) next.add(c.id);
+                                  else next.delete(c.id);
+                                  setSelectedIds(next);
+                                }}
+                              />
+                            </td>
                             <td className="px-4 py-3 font-semibold text-slate-800">{c.studentName}</td>
                             <td className="px-4 py-3 text-xs text-slate-500 font-medium">{formatarData(c.createdAt)}</td>
                             <td className="px-4 py-3 text-xs text-slate-500 font-medium">{c.studentClass}</td>
