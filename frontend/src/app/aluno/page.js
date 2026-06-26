@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { validarLoginAluno } from '@/lib/firebase-aluno';
+import { PenTool } from 'lucide-react';
 
 export default function AlunoLoginPage() {
   const [login, setLogin] = useState('');
@@ -198,8 +199,19 @@ export default function AlunoLoginPage() {
               disabled={!login.trim() || loading}
               className="w-full py-3.5 bg-violet-600 hover:bg-violet-500 disabled:bg-slate-200 disabled:text-slate-400 disabled:cursor-not-allowed rounded-2xl text-white text-sm font-bold transition-all shadow-md shadow-violet-500/10"
             >
-              {loading ? 'Verificando...' : 'Acessar Notas'}
+              {loading ? 'Verificando...' : 'Acessar Portal'}
             </button>
+            
+            <div className="mt-6 pt-5 border-t border-slate-100">
+              <p className="text-xs text-slate-400 font-medium mb-3">Quer ver apenas a correção da sua redação?</p>
+              <button
+                type="button"
+                onClick={() => router.push('/redacao/aluno')}
+                className="w-full py-3.5 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 rounded-2xl text-sm font-bold transition-all flex items-center justify-center gap-2 border border-indigo-100"
+              >
+                <PenTool size={18} /> Acessar Correção de Redação
+              </button>
+            </div>
           </form>
         )}
       </div>
