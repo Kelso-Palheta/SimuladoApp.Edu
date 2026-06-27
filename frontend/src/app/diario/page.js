@@ -260,7 +260,8 @@ export default function DiarioPage() {
       if (!res.ok) throw new Error(data.error || 'Erro desconhecido');
 
       if (data.erros > 0) {
-        setToast(`✅ ${data.total} alunos publicados (${data.erros} falhas).`);
+        const errDetail = (data.errosDetails && data.errosDetails.length > 0) ? ` - Motivo: ${data.errosDetails[0]}` : '';
+        setToast(`⚠️ ${data.total} publicados, ${data.erros} falhas${errDetail}`);
       } else {
         setToast(`✅ ${data.total} alunos publicados no Portal do Aluno!`);
       }
