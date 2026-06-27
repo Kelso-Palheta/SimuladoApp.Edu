@@ -51,6 +51,7 @@ export async function POST(request) {
 
     let total = 0;
     let erros = 0;
+    let errosDetails = [];
 
     for (const turma of turmas) {
       for (const aluno of (turma.alunos || [])) {
@@ -92,11 +93,23 @@ export async function POST(request) {
         } catch (e) {
           console.error(`Erro aluno ${aluno.nome}:`, e.message);
           erros++;
+          errosDetails.push(e.message);
+          if (erros === 1) {
+            try {
+              await firestorePatch(`professores/${userId}/debug`, {
+                lastError: { stringValue: e.message }
+              }, token);
+            } catch (ignore) {}
+          }
         }
       }
     }
 
-    return NextResponse.json({ total, erros });
+    if (erros > 0 && errosDetails.length > 0) {
+      return NextResponse.json({ error: `Falha no Firestore: ${errosDetails[0]}` }, { status: 500 });
+    }
+
+    return NextResponse.json({ total, erros, errosDetails });
   } catch (e) {
     return NextResponse.json({ error: e.message }, { status: 500 });
   }
