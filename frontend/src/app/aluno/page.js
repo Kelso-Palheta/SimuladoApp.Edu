@@ -32,7 +32,11 @@ export default function AlunoLoginPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const valor = login.trim().toLowerCase();
+    const valor = login
+      .trim()
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '');
     if (!valor) return;
 
     setErro('');
