@@ -78,7 +78,11 @@ export const AtividadesList = ({
         onAtividadeUpdated={(atv) => { setPainelAtividade(atv); if (turma?.id) loadAtividades(turma.id); }}
         useAtividadesHook={useAtividadesHook}
         turmas={turmas}
-        onSyncAtvMapa={(turmaId, oldBimestre, newBimestre, atvId, titulo, max) => {
+        onSyncAtvMapa={(turmaId, oldBimestre, newBimestre, atvId, titulo, max, isRemoved) => {
+          if (isRemoved) {
+            onRemoveAtv(turmaId, oldBimestre, atvId);
+            return;
+          }
           if (String(oldBimestre) !== String(newBimestre)) {
             onRemoveAtv(turmaId, oldBimestre, atvId);
           }

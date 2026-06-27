@@ -380,8 +380,16 @@ export const AtividadePainel = ({ atividade: atividadeInicial, currentTurmaId, o
               setAtividade(fresh);
               onAtividadeUpdated?.(fresh);
               if (onSyncAtvMapa) {
+                // Sync all current turmas
                 for (const turmaId of data.turmaIds) {
-                  onSyncAtvMapa(turmaId, atividade.bimestre, data.bimestre, data.id || atividade.id, data.titulo, data.notaMaxima);
+                  onSyncAtvMapa(turmaId, atividade.bimestre, data.bimestre, data.id || atividade.id, data.titulo, data.notaMaxima, false);
+                }
+                // Remove from turmas that were unchecked
+                const turmasAntigas = atividade.turmaIds || [];
+                for (const tId of turmasAntigas) {
+                  if (!data.turmaIds.includes(tId)) {
+                    onSyncAtvMapa(tId, atividade.bimestre, data.bimestre, data.id || atividade.id, data.titulo, data.notaMaxima, true);
+                  }
                 }
               }
             }

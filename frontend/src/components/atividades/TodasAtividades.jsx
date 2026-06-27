@@ -80,7 +80,11 @@ export const TodasAtividades = ({
         useAtividadesHook={useAtividadesHook}
         turmas={turmas}
         user={user}
-        onSyncAtvMapa={(turmaId, oldBimestre, newBimestre, atvId, titulo, max) => {
+        onSyncAtvMapa={(turmaId, oldBimestre, newBimestre, atvId, titulo, max, isRemoved) => {
+          if (isRemoved) {
+            onRemoveAtv(turmaId, oldBimestre, atvId);
+            return;
+          }
           if (String(oldBimestre) !== String(newBimestre)) {
             onRemoveAtv(turmaId, oldBimestre, atvId);
           }

@@ -126,7 +126,14 @@ export default function AlunoNotasPage() {
       getRedacaoAluno(professorUid, alunoData.loginKey || alunoData.alunoId)
     ]).then(async ([notasData, atvsData, entregasData, redacaoData]) => {
       setDados({ ...alunoData, notas: notasData || {} });
-      if (redacaoData) setRedacao(redacaoData);
+      if (redacaoData) {
+        setRedacao(redacaoData);
+        if (alunoData.openRedacao) {
+          sessionStorage.setItem('redacao_aluno', JSON.stringify({ professorUid: alunoData.professorUid }));
+          router.replace(`/redacao/aluno/${redacaoData.id}`);
+          return; // Para aqui
+        }
+      }
 
       setAtividades(atvsData.sort((a, b) => {
         const pa = a.dataEntrega?.toDate?.() || new Date(a.dataEntrega);

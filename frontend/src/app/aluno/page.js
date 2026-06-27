@@ -93,7 +93,7 @@ export default function AlunoLoginPage() {
     }
   };
 
-  const handleSelectVinculo = (v) => {
+  const handleSelectVinculo = (v, openRedacao = false) => {
     if (!alunoBase) return;
     if (typeof window !== 'undefined') {
       sessionStorage.setItem('aluno_login', JSON.stringify({
@@ -102,7 +102,8 @@ export default function AlunoLoginPage() {
         alunoId: v.alunoId || alunoBase.loginKey,
         turmaId: v.turmaId,
         professorUid: v.professorUid,
-        loginKey: alunoBase.loginKey
+        loginKey: alunoBase.loginKey,
+        openRedacao
       }));
     }
     router.push('/aluno/notas');
@@ -134,19 +135,31 @@ export default function AlunoLoginPage() {
             <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2 text-left">Selecione uma matéria ou professor:</p>
             <div className="space-y-2 max-h-[300px] overflow-y-auto pr-1">
               {vinculos.map((v) => (
-                <button
-                  key={v.id || v.professorUid}
-                  onClick={() => handleSelectVinculo(v)}
-                  className="w-full text-left p-4 bg-slate-50 hover:bg-violet-50 hover:border-violet-300 border border-slate-200/80 rounded-2xl transition-all duration-300 flex items-center justify-between group"
-                >
-                  <div className="min-w-0 pr-2">
-                    <p className="font-bold text-slate-800 text-sm truncate">Professor(a) {v.nomeProfessor}</p>
-                    <p className="text-xs text-slate-400 mt-0.5 font-medium">
-                      Turma: {v.turmaNome || v.turmaId}
-                    </p>
+                <div key={v.id || v.professorUid} className="p-4 bg-slate-50 border border-slate-200/80 rounded-2xl flex flex-col gap-3">
+                  <div className="flex items-center justify-between min-w-0 pr-2">
+                    <div>
+                      <p className="font-bold text-slate-800 text-sm truncate">Professor(a) {v.nomeProfessor}</p>
+                      <p className="text-xs text-slate-400 mt-0.5 font-medium">
+                        Turma: {v.turmaNome || v.turmaId}
+                      </p>
+                    </div>
                   </div>
-                  <span className="text-violet-500 font-bold text-sm transform transition-transform group-hover:translate-x-1">→</span>
-                </button>
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => handleSelectVinculo(v, false)}
+                      className="flex-1 bg-violet-100 hover:bg-violet-200 text-violet-700 text-xs font-bold py-2 px-3 rounded-xl transition-colors text-center"
+                    >
+                      Acessar Diário
+                    </button>
+                    <button
+                      onClick={() => handleSelectVinculo(v, true)}
+                      className="flex-1 bg-indigo-500 hover:bg-indigo-600 text-white text-xs font-bold py-2 px-3 rounded-xl transition-colors text-center shadow-sm flex items-center justify-center gap-1"
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+                      Ver Redação
+                    </button>
+                  </div>
+                </div>
               ))}
             </div>
             <button onClick={() => {
