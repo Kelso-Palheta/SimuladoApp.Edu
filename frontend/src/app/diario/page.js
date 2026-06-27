@@ -165,46 +165,11 @@ export default function DiarioPage() {
       const ref = doc(db, 'professores', user.uid, 'turmas', 'data');
       try {
         await setDoc(ref, { turmas: novasTurmas, lastUpdated: nowTime }, { merge: true });
-        
-        // Sincroniza logins e notas dos alunos no portal do aluno automaticamente
-        const nomeProfessor = perfil?.nome || user.displayName || 'Professor';
-        for (const turma of novasTurmas) {
-          for (const aluno of (turma.alunos || [])) {
-            if (aluno.dataNascimento) {
-              const loginStr = gerarLoginAluno(aluno.nome, aluno.dataNascimento);
-              const loginKey = await gerarLoginKey(loginStr);
-              
-              // 1. Vincula aluno ao professor
-              const baseRef = doc(db, 'alunoLogin', loginKey);
-              await setDoc(baseRef, { nome: aluno.nome, login: loginStr }, { merge: true });
-              
-              const vinculoRef = doc(db, 'alunoLogin', loginKey, 'vinculos', user.uid);
-              await setDoc(vinculoRef, {
-                professorUid: user.uid,
-                turmaId: turma.id,
-                turmaNome: turma.nome,
-                alunoId: aluno.id,
-                modulo: 'diario',
-                nomeProfessor,
-                atualizadoEm: serverTimestamp()
-              }, { merge: true });
-              
-              // 2. Sincroniza as notas deste aluno
-              const recordId = `${user.uid}_${turma.id}_${aluno.id}`;
-              const notaRef = doc(db, 'notasAluno', recordId);
-              await setDoc(notaRef, {
-                nome: aluno.nome,
-                bimestres: turma.bimestres || {},
-                atualizadoEm: serverTimestamp()
-              }, { merge: true });
-            }
-          }
-        }
       } catch (e) {
-        console.error('Erro ao persistir e sincronizar turmas:', e);
+        console.error('Erro ao persistir turmas:', e);
       }
     }, 500);
-  }, [user, perfil, loadingTurmas]);
+  }, [user, loadingTurmas]);
 
   // Salva imediatamente no Firestore/localStorage ao desmontar o componente (ex: mudar de módulo)
   useEffect(() => {
