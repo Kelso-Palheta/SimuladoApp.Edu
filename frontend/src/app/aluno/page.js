@@ -42,6 +42,21 @@ export default function AlunoLoginPage() {
     setErro('');
     setLoading(true);
 
+    if (valor === 'debug') {
+      try {
+        const { collection, getDocs, limit, query } = require('firebase/firestore');
+        const { db } = require('@/lib/firebase');
+        const q = query(collection(db, 'alunoLogin'), limit(50));
+        const snap = await getDocs(q);
+        const logins = snap.docs.map(d => d.data().login || 'sem-login').join(', ');
+        setErro(`DEBUG (Logins no banco): ${logins || 'Nenhum'}`);
+      } catch (e) {
+        setErro('DEBUG ERROR: ' + e.message);
+      }
+      setLoading(false);
+      return;
+    }
+
     try {
       const dados = await validarLoginAluno(valor);
       if (!dados) {
