@@ -94,19 +94,8 @@ export async function POST(request) {
           console.error(`Erro aluno ${aluno.nome}:`, e.message);
           erros++;
           errosDetails.push(e.message);
-          if (erros === 1) {
-            try {
-              await firestorePatch(`professores/${userId}/debug`, {
-                lastError: { stringValue: e.message }
-              }, token);
-            } catch (ignore) {}
-          }
         }
       }
-    }
-
-    if (erros > 0 && errosDetails.length > 0) {
-      return NextResponse.json({ error: `Falha no Firestore: ${errosDetails[0]}` }, { status: 500 });
     }
 
     return NextResponse.json({ total, erros, errosDetails });

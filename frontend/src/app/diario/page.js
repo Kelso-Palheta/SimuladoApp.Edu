@@ -205,10 +205,12 @@ export default function DiarioPage() {
     }
   }, [toast]);
 
-  const handlePublishGrades = async () => {
-    if (publishing || !user || turmas.length === 0) return;
+  const handlePublishGrades = async (turmasParaPublicar) => {
+    const lista = turmasParaPublicar || turmas;
+    if (publishing || !user || lista.length === 0) return;
     setPublishing(true);
-    setToast('Publicando notas...');
+    const nomeTurma = lista.length === 1 ? ` (${lista[0].nome})` : ` (${lista.length} turmas)`;
+    setToast(`Publicando notas${nomeTurma}...`);
 
     try {
       const nomeProfessor = perfil?.nome || user.displayName || 'Professor';
@@ -217,7 +219,7 @@ export default function DiarioPage() {
       const res = await fetch('/api/publicar-notas', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
-        body: JSON.stringify({ userId: user.uid, nomeProfessor, turmas })
+        body: JSON.stringify({ userId: user.uid, nomeProfessor, turmas: lista })
       });
 
       const data = await res.json();
@@ -391,12 +393,13 @@ export default function DiarioPage() {
 
           <div className="flex items-center gap-2">
             <button
-              onClick={handlePublishGrades}
-              disabled={publishing}
+              onClick={() => handlePublishGrades(turmaAtual ? [turmaAtual] : undefined)}
+              disabled={publishing || !turmaAtual}
+              title={turmaAtual ? `Publicar notas da turma ${turmaAtual.nome}` : 'Selecione uma turma'}
               className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold bg-emerald-50 hover:bg-emerald-100 text-emerald-600 border border-emerald-200 hover:border-emerald-300 transition-all shadow-sm disabled:opacity-50"
             >
               <Award size={16} />
-              {publishing ? 'Publicando...' : 'Publicar Notas'}
+              {publishing ? 'Publicando...' : `Publicar${turmaAtual ? ` (${turmaAtual.nome})` : ''}`}
             </button>
 
             <div className="relative" ref={alunoDropdownRef}>
