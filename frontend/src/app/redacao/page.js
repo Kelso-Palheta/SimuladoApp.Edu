@@ -29,7 +29,18 @@ const EASE_SPRING = { type: "spring", stiffness: 300, damping: 24 };
 
 function cleanFeedbackText(text) {
   if (!text) return '';
-  return text.replace(/```json[\s\S]*?```/g, '').trim();
+  // Remove blocos de código JSON com code-fence
+  let cleaned = text.replace(/```json[\s\S]*?```/g, '');
+  // Remove também blocos JSON brutos no final (sem code-fence)
+  // Procura o último { que contenha c1/c2 para remover o bloco de notas
+  const lastBrace = cleaned.lastIndexOf('{');
+  if (lastBrace !== -1) {
+    const tail = cleaned.slice(lastBrace);
+    if (/"c[1-5]"/.test(tail)) {
+      cleaned = cleaned.slice(0, lastBrace);
+    }
+  }
+  return cleaned.trim();
 }
 
 const COMPETENCIAS = [

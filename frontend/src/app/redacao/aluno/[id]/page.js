@@ -9,7 +9,15 @@ import { ArrowLeft, Download, Search, FileText, User, BookOpen, Calendar, Award,
 
 function cleanFeedbackText(text) {
   if (!text) return '';
-  return text.replace(/```json[\s\S]*?```/g, '').trim();
+  let cleaned = text.replace(/```json[\s\S]*?```/g, '');
+  const lastBrace = cleaned.lastIndexOf('{');
+  if (lastBrace !== -1) {
+    const tail = cleaned.slice(lastBrace);
+    if (/"c[1-5]"/.test(tail)) {
+      cleaned = cleaned.slice(0, lastBrace);
+    }
+  }
+  return cleaned.trim();
 }
 
 function parseBoldText(text) {
