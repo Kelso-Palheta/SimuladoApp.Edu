@@ -29,7 +29,7 @@ const StatusBadge = ({ status }) => (
   </span>
 );
 
-export const AtividadePainel = ({ atividade: atividadeInicial, currentTurmaId, onBack, onDelete, onAtividadeUpdated, useAtividadesHook, turmas = [], onSyncAtvMapa = () => {}, onSetNota = () => {}, user, readOnly = false }) => {
+export const AtividadePainel = ({ atividade: atividadeInicial, currentTurmaId, onBack, onDelete, onAtividadeUpdated, useAtividadesHook, turmas = [], onSyncAtvMapa, onSetNota, user }) => {
   const [atividade, setAtividade] = useState(atividadeInicial);
 
   const handleNotaChanged = useCallback((info) => {
@@ -180,7 +180,7 @@ export const AtividadePainel = ({ atividade: atividadeInicial, currentTurmaId, o
           </p>
         </div>
         <div className="flex gap-2 items-center flex-wrap">
-          {!readOnly && pendentes > 0 && (
+          {pendentes > 0 && (
             <select
               value={nivelCorrecao}
               onChange={(e) => setNivelCorrecao(e.target.value)}
@@ -192,7 +192,7 @@ export const AtividadePainel = ({ atividade: atividadeInicial, currentTurmaId, o
               <option value="profunda">Profunda</option>
             </select>
           )}
-          {!readOnly && pendentes > 0 && (
+          {pendentes > 0 && (
             <button
               onClick={handleCorrigirTodas}
               className="px-3 py-1.5 bg-amber-500 hover:bg-amber-400 rounded-lg text-white text-xs font-semibold transition-all"
@@ -200,28 +200,24 @@ export const AtividadePainel = ({ atividade: atividadeInicial, currentTurmaId, o
               Corrigir Todas ({pendentes})
             </button>
           )}
-          {!readOnly && (
-            <button
-              onClick={() => setShowEdit(true)}
-              className="px-3 py-1.5 bg-slate-50 hover:bg-slate-200 border border-slate-200 rounded-lg text-xs text-slate-900 font-medium transition-all"
-            >
-              Editar
-            </button>
-          )}
+          <button
+            onClick={() => setShowEdit(true)}
+            className="px-3 py-1.5 bg-slate-50 hover:bg-slate-200 border border-slate-200 rounded-lg text-xs text-slate-900 font-medium transition-all"
+          >
+            Editar
+          </button>
           <button
             onClick={() => setShowUrls(true)}
             className="px-3 py-1.5 bg-slate-50 hover:bg-slate-200 border border-slate-200 rounded-lg text-xs text-slate-900 font-medium transition-all"
           >
             URLs
           </button>
-          {!readOnly && (
-            <button
-              onClick={() => onDelete(atividade.id)}
-              className="px-3 py-1.5 bg-red-50 hover:bg-red-100 border border-red-200 rounded-lg text-xs text-red-500 font-medium transition-all"
-            >
-              Excluir
-            </button>
-          )}
+          <button
+            onClick={() => onDelete(atividade.id)}
+            className="px-3 py-1.5 bg-red-50 hover:bg-red-100 border border-red-200 rounded-lg text-xs text-red-500 font-medium transition-all"
+          >
+            Excluir
+          </button>
         </div>
       </div>
 
@@ -317,7 +313,7 @@ export const AtividadePainel = ({ atividade: atividadeInicial, currentTurmaId, o
                       </td>
                       <td className="px-4 py-3 text-right">
                         <div className="flex items-center justify-end gap-1.5">
-                          {!readOnly && entrega?.status === 'entregue' && (
+                          {entrega?.status === 'entregue' && (
                             <button
                               onClick={() => handleCorrigir(entrega.id)}
                               disabled={corrigindo === entrega.id}
@@ -326,7 +322,7 @@ export const AtividadePainel = ({ atividade: atividadeInicial, currentTurmaId, o
                               {corrigindo === entrega.id ? 'Corrigindo...' : 'Corrigir IA'}
                             </button>
                           )}
-                          {!readOnly && entrega?.status === 'erro_correcao' && (
+                          {entrega?.status === 'erro_correcao' && (
                             <button
                               onClick={() => handleCorrigir(entrega.id)}
                               className="px-2 py-1 bg-red-50 hover:bg-red-100 text-red-500 rounded text-[10px] font-semibold transition-all"
