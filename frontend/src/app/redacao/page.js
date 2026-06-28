@@ -831,6 +831,7 @@ export default function RedacaoPage() {
 
                 <textarea value={text} onChange={e => setText(e.target.value)}
                   lang="pt-BR"
+                  spellCheck={false}
                   placeholder="Cole aqui o texto da redação para correção..."
                   rows={8}
                   className="w-full bg-slate-50 border border-slate-200 rounded-2xl px-5 py-4 text-sm text-slate-900 placeholder-slate-300 outline-none focus:border-violet-400 focus:ring-4 focus:ring-violet-50 transition-all duration-300 resize-y leading-relaxed" />
@@ -906,6 +907,7 @@ export default function RedacaoPage() {
               </div>
               <textarea value={text} onChange={e => setText(e.target.value)} rows={16}
                 lang="pt-BR"
+                spellCheck={false}
                 className="w-full bg-white border border-slate-200 rounded-2xl px-5 py-4 text-sm text-slate-900 outline-none focus:border-violet-400 focus:ring-4 focus:ring-violet-50 transition-all duration-300 resize-y font-serif leading-relaxed" />
               <div className="flex gap-3">
                 <button onClick={() => { setText(''); setStep('input'); }}
