@@ -114,3 +114,5 @@ coverage/
 *.lcov
 .vercel
 .env*.local
+.worktrees/
+scratch/
