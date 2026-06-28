@@ -91,6 +91,7 @@ export const TodasAtividades = ({
           onAddAtv(turmaId, newBimestre, titulo, max, atvId);
         }}
         onSetNota={onSetNota}
+        readOnly={true}
       />
     );
   }
@@ -103,21 +104,6 @@ export const TodasAtividades = ({
           <span className="text-xs text-slate-400 font-mono">({filtradas.length})</span>
         </div>
         <div className="flex gap-2">
-          <button
-            onClick={async () => {
-              if (!window.confirm('Sincronizar todas as notas corrigidas para o mapa bimestral?')) return;
-              try {
-                const result = await useAtividadesHook.sincronizarTodasAsNotas();
-                alert(`${result.sincronizadas} notas sincronizadas.${result.erros > 0 ? ` ${result.erros} erros.` : ''} Recarregue a página.`);
-                window.location.reload();
-              } catch (err) {
-                alert('Erro: ' + err.message);
-              }
-            }}
-            className="px-3 py-1.5 bg-green-500 hover:bg-green-400 rounded-lg text-white text-xs font-semibold transition-all"
-          >
-            Sincronizar notas
-          </button>
           <button
             onClick={() => setShowForm(true)}
             className="px-3 py-1.5 bg-violet-500 hover:bg-violet-400 rounded-lg text-white text-xs font-semibold transition-all btn-3d-primary"

@@ -13,7 +13,7 @@ import { AtividadesList } from '@/components/atividades/AtividadesList';
 import { TodasAtividades } from '@/components/atividades/TodasAtividades';
 import { Sidebar } from '@/components/diario/Sidebar';
 import { ProfileModal } from '@/components/diario/ProfileModal';
-import { ArrowLeft, GraduationCap, Layers, ExternalLink, Copy, Check } from 'lucide-react';
+import { ArrowLeft, GraduationCap, Layers, ExternalLink, Copy, Check, Award } from 'lucide-react';
 
 import { db } from '@/lib/firebase';
 import { doc, getDoc, setDoc, serverTimestamp } from 'firebase/firestore';
@@ -149,6 +149,15 @@ export default function AtividadesPage() {
     if (typeof window !== 'undefined') return Number(localStorage.getItem('atividades_bimestre')) || 1;
     return 1;
   });
+  const [syncing, setSyncing] = useState(false);
+  const [syncToast, setSyncToast] = useState(null);
+
+  useEffect(() => {
+    if (syncToast) {
+      const timer = setTimeout(() => setSyncToast(null), 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [syncToast]);
 
   const handleSetBimestre = (b) => { setBimestre(b); localStorage.setItem('atividades_bimestre', b); };
   const turmaAtual = turmas.find((t) => t.id === turmaSelecionada?.id) || turmas[0] || null;
@@ -163,6 +172,38 @@ export default function AtividadesPage() {
     if (turmaSelecionada?.id === id) {
       const restantes = turmas.filter((t) => t.id !== id);
       setTurmaSelecionada(restantes[0] || null);
+    }
+  };
+
+  const handleSyncTurma = async () => {
+    if (syncing || !user || !turmaAtual) return;
+    setSyncing(true);
+    setSyncToast(`Sincronizando notas da turma ${turmaAtual.nome}...`);
+
+    try {
+      const nomeProfessor = perfil?.nome || user.displayName || 'Professor';
+      const token = await user.getIdToken();
+
+      const res = await fetch('/api/publicar-notas', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+        body: JSON.stringify({ userId: user.uid, nomeProfessor, turmas: [turmaAtual] })
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) throw new Error(data.error || 'Erro desconhecido');
+
+      if (data.erros > 0) {
+        setSyncToast(`⚠️ ${data.total} sincronizados, ${data.erros} falhas`);
+      } else {
+        setSyncToast(`✅ Notas da Turma ${turmaAtual.nome} sincronizadas!`);
+      }
+    } catch (e) {
+      console.error('Erro ao sincronizar notas:', e);
+      setSyncToast(`Erro ao sincronizar: ${e.message}`);
+    } finally {
+      setSyncing(false);
     }
   };
 
@@ -234,6 +275,17 @@ export default function AtividadesPage() {
           </button>
 
           <div className="flex items-center gap-2">
+            {viewMode === 'turma' && turmaAtual && (
+              <button
+                onClick={handleSyncTurma}
+                disabled={syncing}
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold bg-emerald-50 hover:bg-emerald-100 text-emerald-600 border border-emerald-200 hover:border-emerald-300 transition-all shadow-sm disabled:opacity-50"
+              >
+                <Award size={16} />
+                {syncing ? 'Sincronizando...' : 'Sincronizar Notas'}
+              </button>
+            )}
+
             <div className="relative" ref={alunoDropdownRef}>
               <button
                 onClick={() => setShowAlunoDropdown(!showAlunoDropdown)}
@@ -328,6 +380,13 @@ export default function AtividadesPage() {
           )}
         </div>
       </main>
+
+      {syncToast && (
+        <div className="fixed bottom-6 right-6 z-50 bg-slate-900/90 backdrop-blur-md border border-slate-700 text-white text-xs font-semibold px-4 py-3 rounded-2xl shadow-2xl flex items-center gap-2 animate-in fade-in slide-in-from-bottom-3 duration-200">
+          <Check size={14} className="text-emerald-400" />
+          {syncToast}
+        </div>
+      )}
     </div>
   );
 }

@@ -784,8 +784,52 @@ export default function RedacaoPage() {
                 )}
               </motion.div>
 
-              {/* Upload Zone */}
+              {/* Correção Config */}
               <motion.div {...staggerItem(1)}
+                className="bg-white/70 backdrop-blur-xl rounded-2xl border border-slate-200/60 p-6 shadow-sm space-y-5">
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-xl bg-amber-50 flex items-center justify-center"><Target size={15} className="text-amber-500" /></div>
+                  <h3 className="text-sm font-bold text-slate-800">Configuração da Correção</h3>
+                </div>
+
+                {/* Depth */}
+                <div className="grid grid-cols-3 gap-2.5">
+                  {DEPTH_OPTIONS.map(opt => (
+                    <motion.button key={opt.value} onClick={() => setDepth(opt.value)}
+                      whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
+                      className={`relative p-4 rounded-2xl border text-left transition-all duration-300 overflow-hidden group
+                        ${depth === opt.value ? 'bg-violet-50 border-violet-300 shadow-sm' : 'bg-slate-50 border-slate-200 hover:border-slate-300 hover:bg-white'}`}>
+                      {depth === opt.value && <div className="absolute inset-0 bg-gradient-to-br from-violet-500/5 to-transparent" />}
+                      <span className={`relative text-xs font-bold ${depth === opt.value ? 'text-violet-700' : 'text-slate-700'}`}>{opt.label}</span>
+                      <p className="relative text-[10px] text-slate-400 mt-1 leading-tight">{opt.desc}</p>
+                      <span className="relative text-[10px] text-slate-400 mt-0.5 block font-mono">~{opt.words} palavras</span>
+                    </motion.button>
+                  ))}
+                </div>
+
+                {/* Competency pills */}
+                <div>
+                  <p className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider mb-2.5">Competências</p>
+                  <div className="flex flex-wrap gap-2">
+                    {COMPETENCIAS.map(c => {
+                      const active = selectedCompetencies.includes(c.id);
+                      return (
+                        <motion.button key={c.id} onClick={() => toggleCompetency(c.id)}
+                          whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }}
+                          className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold transition-all duration-300 border
+                            ${active ? 'shadow-sm' : 'bg-white border-slate-200 text-slate-400 hover:border-slate-300'}`}
+                          style={active ? { color: c.color, backgroundColor: c.bg, borderColor: c.bar } : {}}>
+                          <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: c.color }} />
+                          {c.label.split(' ')[0]}
+                        </motion.button>
+                      );
+                    })}
+                  </div>
+                </div>
+              </motion.div>
+
+              {/* Upload Zone */}
+              <motion.div {...staggerItem(2)}
                 className="bg-white/70 backdrop-blur-xl rounded-2xl border border-slate-200/60 p-6 shadow-sm space-y-5">
                 <div className="flex items-center gap-3">
                   <div className="w-8 h-8 rounded-xl bg-violet-50 flex items-center justify-center"><FileText size={15} className="text-violet-500" /></div>
@@ -835,50 +879,6 @@ export default function RedacaoPage() {
                   placeholder="Cole aqui o texto da redação para correção..."
                   rows={8}
                   className="w-full bg-slate-50 border border-slate-200 rounded-2xl px-5 py-4 text-sm text-slate-900 placeholder-slate-300 outline-none focus:border-violet-400 focus:ring-4 focus:ring-violet-50 transition-all duration-300 resize-y leading-relaxed" />
-              </motion.div>
-
-              {/* Correção Config */}
-              <motion.div {...staggerItem(2)}
-                className="bg-white/70 backdrop-blur-xl rounded-2xl border border-slate-200/60 p-6 shadow-sm space-y-5">
-                <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-xl bg-amber-50 flex items-center justify-center"><Target size={15} className="text-amber-500" /></div>
-                  <h3 className="text-sm font-bold text-slate-800">Configuração da Correção</h3>
-                </div>
-
-                {/* Depth */}
-                <div className="grid grid-cols-3 gap-2.5">
-                  {DEPTH_OPTIONS.map(opt => (
-                    <motion.button key={opt.value} onClick={() => setDepth(opt.value)}
-                      whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
-                      className={`relative p-4 rounded-2xl border text-left transition-all duration-300 overflow-hidden group
-                        ${depth === opt.value ? 'bg-violet-50 border-violet-300 shadow-sm' : 'bg-slate-50 border-slate-200 hover:border-slate-300 hover:bg-white'}`}>
-                      {depth === opt.value && <div className="absolute inset-0 bg-gradient-to-br from-violet-500/5 to-transparent" />}
-                      <span className={`relative text-xs font-bold ${depth === opt.value ? 'text-violet-700' : 'text-slate-700'}`}>{opt.label}</span>
-                      <p className="relative text-[10px] text-slate-400 mt-1 leading-tight">{opt.desc}</p>
-                      <span className="relative text-[10px] text-slate-400 mt-0.5 block font-mono">~{opt.words} palavras</span>
-                    </motion.button>
-                  ))}
-                </div>
-
-                {/* Competency pills */}
-                <div>
-                  <p className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider mb-2.5">Competências</p>
-                  <div className="flex flex-wrap gap-2">
-                    {COMPETENCIAS.map(c => {
-                      const active = selectedCompetencies.includes(c.id);
-                      return (
-                        <motion.button key={c.id} onClick={() => toggleCompetency(c.id)}
-                          whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }}
-                          className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold transition-all duration-300 border
-                            ${active ? 'shadow-sm' : 'bg-white border-slate-200 text-slate-400 hover:border-slate-300'}`}
-                          style={active ? { color: c.color, backgroundColor: c.bg, borderColor: c.bar } : {}}>
-                          <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: c.color }} />
-                          {c.label.split(' ')[0]}
-                        </motion.button>
-                      );
-                    })}
-                  </div>
-                </div>
               </motion.div>
 
               {/* CTA */}
