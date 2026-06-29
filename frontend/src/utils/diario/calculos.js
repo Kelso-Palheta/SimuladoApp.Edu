@@ -30,9 +30,9 @@ export const fmt = (v) => {
 
 export const statusColor = (total, config) => {
   const aprov = config?.mediaAprovacao !== undefined ? Number(config.mediaAprovacao) : 5;
-  const recup = config?.mediaRecuperacao !== undefined ? Number(config.mediaRecuperacao) : 4.99;
-  if (total >= aprov) return 'good';
-  if (total >= recup) return 'warn';
+  const ideal = config?.mediaIdeal !== undefined ? Number(config.mediaIdeal) : 7;
+  if (total >= ideal) return 'good';
+  if (total >= aprov) return 'warn';
   return 'bad';
 };
 
