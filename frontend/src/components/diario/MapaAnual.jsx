@@ -4,6 +4,7 @@ import { NumCell } from '@/components/diario/NumCell';
 import { calcDesempenhoAnual, fmt, titleCase, statusColor, round2 } from '@/utils/diario/calculos';
 
 const ANUAL_MIN = 50;
+const SEM_MIN = 25;
 
 const STATUS_STYLES = {
   good: 'text-green-600 bg-green-50 border border-green-200 font-semibold',
@@ -26,14 +27,17 @@ const BimCell = ({ value, status }) => {
 
 const SemestreCell = ({ value }) => {
   if (value === null) return <span className="text-slate-400 font-mono text-sm">&mdash;</span>;
-  return <span className="font-mono text-sm font-bold text-slate-900">{fmt(value)}</span>;
+  const style = value >= SEM_MIN
+    ? 'text-green-600 font-bold'
+    : 'text-red-600 font-bold';
+  return <span className={`font-mono text-sm px-1.5 py-0.5 rounded ${style}`}>{fmt(value)}</span>;
 };
 
 const PrecisaS2Cell = ({ s1Total, s2Completo }) => {
   if (s1Total === null) return <span className="text-slate-400 font-mono text-xs">&mdash;</span>;
-  if (s1Total >= ANUAL_MIN) return <span className="text-green-500 font-bold text-xs" title="Já alcançou 50 pontos">✓</span>;
+  if (s1Total >= SEM_MIN) return <span className="text-green-500 font-bold text-xs" title="Já garantiu o 1º semestre">✓</span>;
   if (s2Completo) return <span className="text-slate-400 font-mono text-xs">&mdash;</span>;
-  const falta = round2(ANUAL_MIN - s1Total);
+  const falta = round2(SEM_MIN - s1Total);
   return <span className="font-mono text-xs text-blue-500 font-semibold" title={`Precisa tirar ${fmt(falta)} no 2º semestre`}>+{fmt(falta)}</span>;
 };
 
@@ -41,7 +45,7 @@ const FaltaFinalCell = ({ total, todosBims }) => {
   if (total === null) return <span className="text-slate-400 font-mono text-xs">&mdash;</span>;
   if (total >= ANUAL_MIN) return <span className="text-green-500 font-bold text-xs">✓</span>;
   const falta = round2(ANUAL_MIN - total);
-  const color = todosBims ? 'text-red-500 font-semibold' : 'text-amber-500 font-semibold';
+  const color = todosBims ? 'text-red-500 font-semibold' : 'text-blue-500 font-semibold';
   return <span className={`font-mono text-xs ${color}`}>+{fmt(falta)}</span>;
 };
 

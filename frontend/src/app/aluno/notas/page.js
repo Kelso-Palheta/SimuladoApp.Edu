@@ -286,14 +286,14 @@ export default function AlunoNotasPage() {
         {/* Resumo Anual */}
         <div className="bg-slate-50 border border-slate-200 rounded-xl p-4 sm:p-5 mb-8">
           <h3 className="text-xs font-semibold text-slate-900 uppercase tracking-wider mb-4">Resumo Anual</h3>
-          <div className="grid grid-cols-2 gap-4 mb-4">
+          <div class="grid grid-cols-2 gap-4 mb-4">
             <div>
-              <span className="text-xs text-slate-400">1º Semestre</span>
-              <p className="text-lg font-bold font-mono text-slate-900 tabular-nums mt-1">{S1.total !== null ? fmt(S1.total) : '—'}</p>
+              <span class="text-xs text-slate-400">1º Semestre</span>
+              <p className={`text-lg font-bold font-mono tabular-nums mt-1 ${S1.total !== null ? (S1.total >= 25 ? 'text-green-600' : 'text-red-600') : 'text-slate-900'}`}>{S1.total !== null ? fmt(S1.total) : '—'}</p>
             </div>
             <div>
-              <span className="text-xs text-slate-400">2º Semestre</span>
-              <p className="text-lg font-bold font-mono text-slate-900 tabular-nums mt-1">{S2.total !== null ? fmt(S2.total) : '—'}</p>
+              <span class="text-xs text-slate-400">2º Semestre</span>
+              <p className={`text-lg font-bold font-mono tabular-nums mt-1 ${S2.total !== null ? (S2.total >= 25 ? 'text-green-600' : 'text-red-600') : 'text-slate-900'}`}>{S2.total !== null ? fmt(S2.total) : '—'}</p>
             </div>
           </div>
           <div className="border-t border-slate-200 pt-4">
