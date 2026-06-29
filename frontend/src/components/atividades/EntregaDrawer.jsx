@@ -124,7 +124,7 @@ export const EntregaDrawer = ({ entrega, atividade, alunoNome, onOverride, onCor
                         <span className={`w-5 h-5 rounded-full text-white text-[10px] font-bold flex items-center justify-center flex-shrink-0 ${q.tipo === 'objetiva' ? 'bg-blue-500' : 'bg-violet-500'}`}>{i + 1}</span>
                         <span className="text-xs text-slate-900 flex-1 truncate">{q.enunciado?.slice(0, 70)}{q.enunciado?.length > 70 ? '…' : ''}</span>
                         {res && (
-                          <span className={`text-xs font-mono font-bold tabular-nums flex-shrink-0 ${res.notaObtida >= res.notaMaxima ? 'text-green-600' : res.notaObtida > 0 ? 'text-amber-500' : 'text-red-500'}`}>
+                          <span className={`text-xs font-mono font-bold tabular-nums flex-shrink-0 ${res.notaObtida >= res.notaMaxima ? 'text-green-600' : res.notaObtida > 0 ? 'text-blue-500' : 'text-red-500'}`}>
                             {res.notaObtida.toFixed(1).replace('.', ',')} / {res.notaMaxima.toFixed(1).replace('.', ',')}
                           </span>
                         )}

@@ -7,7 +7,7 @@ const ANUAL_MIN = 50;
 
 const STATUS_STYLES = {
   good: 'text-green-600 bg-green-50 border border-green-200 font-semibold',
-  warn: 'text-amber-600 bg-amber-50 border border-amber-200 font-semibold',
+  warn: 'text-blue-600 bg-blue-50 border border-blue-200 font-semibold',
   bad:  'text-red-600 bg-red-50 border border-red-200 font-semibold',
   none: 'text-slate-400'
 };
@@ -34,7 +34,7 @@ const PrecisaS2Cell = ({ s1Total, s2Completo }) => {
   if (s1Total >= ANUAL_MIN) return <span className="text-green-500 font-bold text-xs" title="Já alcançou 50 pontos">✓</span>;
   if (s2Completo) return <span className="text-slate-400 font-mono text-xs">&mdash;</span>;
   const falta = round2(ANUAL_MIN - s1Total);
-  return <span className="font-mono text-xs text-amber-500 font-semibold" title={`Precisa tirar ${fmt(falta)} no 2º semestre`}>+{fmt(falta)}</span>;
+  return <span className="font-mono text-xs text-blue-500 font-semibold" title={`Precisa tirar ${fmt(falta)} no 2º semestre`}>+{fmt(falta)}</span>;
 };
 
 const FaltaFinalCell = ({ total, todosBims }) => {
@@ -91,11 +91,11 @@ export const MapaAnual = ({ turma, onSetRecuperacao }) => {
     <div>
       <div className="flex items-center gap-3 mb-5 flex-wrap">
         <StatChipAnual label="Aprovados" value={aprovados} color="border-green-200 text-green-600 bg-green-50" />
-        <StatChipAnual label="Pendentes" value={pendentes} color="border-amber-200 text-amber-600 bg-amber-50" />
+        <StatChipAnual label="Pendentes" value={pendentes} color="border-blue-200 text-blue-600 bg-blue-50" />
         <StatChipAnual label="Reprovados" value={reprovados} color="border-red-200 text-red-600 bg-red-50" />
         {mediaGeral !== null && (
           <div className="ml-auto flex items-center gap-2 text-sm text-slate-500">
-            Média geral: <span className={`font-mono font-bold text-base ${mediaGeral >= ANUAL_MIN ? 'text-green-600' : 'text-amber-600'}`}>{fmt(mediaGeral)}</span>
+            Média geral: <span className={`font-mono font-bold text-base ${mediaGeral >= ANUAL_MIN ? 'text-green-600' : 'text-blue-600'}`}>{fmt(mediaGeral)}</span>
           </div>
         )}
       </div>
@@ -110,7 +110,7 @@ export const MapaAnual = ({ turma, onSetRecuperacao }) => {
               <th className="px-2 py-3 text-xs text-slate-500 font-bold uppercase tracking-wider text-center w-20">2º Bim</th>
               <th className="px-2 py-3 text-xs text-violet-500 font-bold uppercase tracking-wider text-center w-20">REC 1</th>
               <th className="px-2 py-3 text-xs text-violet-500 font-bold uppercase tracking-wider text-center w-24">Total S1</th>
-              <th className="px-1 py-3 text-xs text-amber-600 font-bold uppercase tracking-wider text-center w-24" title="Pontos que precisa no 2º semestre">Precisa S2</th>
+              <th className="px-1 py-3 text-xs text-blue-600 font-bold uppercase tracking-wider text-center w-24" title="Pontos que precisa no 2º semestre">Precisa S2</th>
               <th className="px-2 py-3 text-xs text-slate-500 font-bold uppercase tracking-wider text-center border-l border-slate-200 w-20">3º Bim</th>
               <th className="px-2 py-3 text-xs text-slate-500 font-bold uppercase tracking-wider text-center w-20">4º Bim</th>
               <th className="px-2 py-3 text-xs text-violet-500 font-bold uppercase tracking-wider text-center w-20">REC 2</th>
@@ -179,7 +179,7 @@ export const MapaAnual = ({ turma, onSetRecuperacao }) => {
                 {avgS2 !== null ? <span className="font-mono font-bold text-sm text-slate-900">{fmt(avgS2)}</span> : <span className="text-slate-400 font-mono text-sm">&mdash;</span>}
               </td>
               <td className="px-2 py-3 text-center border-l border-slate-200">
-                {mediaGeral !== null ? <span className={`font-mono font-bold text-sm ${mediaGeral >= ANUAL_MIN ? 'text-green-600' : 'text-amber-600'}`}>{fmt(mediaGeral)}</span> : <span className="text-slate-400 font-mono text-sm">&mdash;</span>}
+                {mediaGeral !== null ? <span className={`font-mono font-bold text-sm ${mediaGeral >= ANUAL_MIN ? 'text-green-600' : 'text-blue-600'}`}>{fmt(mediaGeral)}</span> : <span className="text-slate-400 font-mono text-sm">&mdash;</span>}
               </td>
               <td className="px-1 py-3 text-center"><span className="text-slate-400 font-mono text-xs">&mdash;</span></td>
               <td className="px-2 py-3" />

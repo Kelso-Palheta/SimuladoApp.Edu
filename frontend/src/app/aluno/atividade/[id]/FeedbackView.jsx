@@ -31,7 +31,7 @@ export const FeedbackView = ({ entrega, atividade }) => {
               <div className="flex items-center gap-2 mb-2">
                 <span className={`w-6 h-6 rounded-full text-white text-xs font-bold flex items-center justify-center ${q.tipo === 'objetiva' ? 'bg-blue-500' : 'bg-violet-500'}`}>{i + 1}</span>
                 <span className="text-xs font-semibold text-slate-900 flex-1 truncate">{q.enunciado?.slice(0, 60)}{q.enunciado?.length > 60 ? '…' : ''}</span>
-                <span className={`text-xs font-mono font-bold tabular-nums ${res.notaObtida >= res.notaMaxima ? 'text-green-600' : res.notaObtida > 0 ? 'text-amber-500' : 'text-red-500'}`}>
+                <span className={`text-xs font-mono font-bold tabular-nums ${res.notaObtida >= res.notaMaxima ? 'text-green-600' : res.notaObtida > 0 ? 'text-blue-500' : 'text-red-500'}`}>
                   {res.notaObtida.toFixed(1).replace('.', ',')} / {res.notaMaxima.toFixed(1).replace('.', ',')}
                 </span>
               </div>

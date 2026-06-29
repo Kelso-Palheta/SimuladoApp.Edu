@@ -816,7 +816,7 @@ export default function DesempenhoPage() {
               {viewingCorrection.totalScore != null && (
                 <div className="text-center py-4 bg-gradient-to-br from-violet-50 to-indigo-50 rounded-2xl">
                   <p className="text-xs text-slate-400 uppercase tracking-wider font-semibold mb-2">Nota Final</p>
-                  <span className={`text-6xl font-black tracking-tighter tabular-nums ${viewingCorrection.totalScore >= 600 ? 'text-green-500' : viewingCorrection.totalScore >= 400 ? 'text-amber-500' : 'text-red-500'}`}>
+                  <span className={`text-6xl font-black tracking-tighter tabular-nums ${viewingCorrection.totalScore >= 600 ? 'text-green-500' : viewingCorrection.totalScore >= 400 ? 'text-blue-500' : 'text-red-500'}`}>
                     {viewingCorrection.totalScore}
                   </span>
                   <span className="text-xl text-slate-400 font-bold ml-1">/ 1000</span>

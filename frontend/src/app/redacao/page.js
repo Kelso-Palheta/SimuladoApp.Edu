@@ -977,12 +977,12 @@ export default function RedacaoPage() {
                     <p className="text-xs font-semibold text-slate-400 uppercase tracking-[0.15em] mb-3">Nota Final</p>
                     <div className="inline-flex items-baseline gap-2">
                       <span className={`text-[5rem] sm:text-[7rem] font-black tracking-tighter leading-none tabular-nums
-                        ${totalScore >= 600 ? 'text-green-500' : totalScore >= 400 ? 'text-amber-500' : 'text-red-500'}`}>
+                        ${totalScore >= 600 ? 'text-green-500' : totalScore >= 400 ? 'text-blue-500' : 'text-red-500'}`}>
                         <AnimatedCounter value={totalScore} color="currentColor" />
                       </span>
                       <span className="text-2xl sm:text-3xl text-slate-300 font-bold">/1000</span>
                     </div>
-                    <p className={`text-sm font-semibold mt-3 ${totalScore >= 600 ? 'text-green-600' : totalScore >= 400 ? 'text-amber-600' : 'text-red-500'}`}>
+                    <p className={`text-sm font-semibold mt-3 ${totalScore >= 600 ? 'text-green-600' : totalScore >= 400 ? 'text-blue-600' : 'text-red-500'}`}>
                       {totalScore >= 600 ? '✓ Desempenho satisfatório' : totalScore >= 400 ? '⚠ Precisa de atenção' : '✗ Abaixo do esperado'}
                     </p>
                   </div>

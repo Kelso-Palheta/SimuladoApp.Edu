@@ -21,7 +21,7 @@ const mediaTurma = (turma, bimestre) => {
 
 const MediaBadge = ({ value }) => {
   if (value === null) return <span className="text-slate-400 text-xs font-mono">&mdash;</span>;
-  const color = value >= 7 ? 'text-green-600' : value >= 5 ? 'text-amber-600' : 'text-red-600';
+  const color = value >= 7 ? 'text-green-600' : value >= 5 ? 'text-blue-600' : 'text-red-600';
   return <span className={`font-mono text-xs font-semibold ${color}`}>{value.toFixed(2).replace('.', ',')}</span>;
 };
 

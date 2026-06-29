@@ -6,7 +6,7 @@ import { calcTotal, fmt, statusColor, somaMaxAtv, round2, temNota, titleCase } f
 
 const STATUS_STYLES = {
   good: 'text-green-600 bg-green-50 border border-green-200 font-semibold',
-  warn: 'text-amber-600 bg-amber-50 border border-amber-200 font-semibold',
+  warn: 'text-blue-600 bg-blue-50 border border-blue-200 font-semibold',
   bad:  'text-red-600 bg-red-50 border border-red-200 font-semibold'
 };
 

@@ -64,7 +64,7 @@ export const TurmaView = ({
           {view === 'bimestre' && (
             <div className="flex gap-3 mt-4">
               <StatChip label="Aprovados" value={stats.aprovados} color="border-green-200 text-green-600 bg-green-50" />
-              <StatChip label="Recuperação" value={stats.recuperacao} color="border-amber-200 text-amber-600 bg-amber-50" />
+              <StatChip label="Recuperação" value={stats.recuperacao} color="border-blue-200 text-blue-600 bg-blue-50" />
               <StatChip label="Reprovados" value={stats.reprovados} color="border-red-200 text-red-600 bg-red-50" />
               {stats.semNota > 0 && <StatChip label="Sem nota" value={stats.semNota} color="border-slate-200 text-slate-500 bg-slate-50" />}
             </div>
