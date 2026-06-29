@@ -10,17 +10,17 @@ const statsByBimestre = (turma, bimestre) => {
   const b = turma.bimestres[String(bimestre)];
   if (!b) return { aprovados: 0, recuperacao: 0, reprovados: 0, semNota: 0 };
   const { atividades, notas, config } = b;
-  let aprovados = 0, recuperacao = 0, reprovados = 0, semNota = 0;
+  let aprovados = 0, naMedia = 0, abaixo = 0, semNota = 0;
   turma.alunos.forEach((al) => {
     const nota = notas[al.id];
     if (!temNota(nota, atividades)) { semNota++; return; }
     const t = calcTotal(nota.simulado, atividades, nota, config);
     const sc = statusColor(t, config);
     if (sc === 'good') aprovados++;
-    else if (sc === 'warn') recuperacao++;
-    else reprovados++;
+    else if (sc === 'warn') naMedia++;
+    else abaixo++;
   });
-  return { aprovados, recuperacao, reprovados, semNota };
+  return { aprovados, naMedia, abaixo, semNota };
 };
 
 const StatChip = ({ label, value, color }) => (
@@ -62,10 +62,10 @@ export const TurmaView = ({
           </div>
 
           {view === 'bimestre' && (
-            <div className="flex gap-3 mt-4">
-              <StatChip label="Aprovados" value={stats.aprovados} color="border-green-200 text-green-600 bg-green-50" />
-              <StatChip label="Recuperação" value={stats.recuperacao} color="border-blue-200 text-blue-600 bg-blue-50" />
-              <StatChip label="Reprovados" value={stats.reprovados} color="border-red-200 text-red-600 bg-red-50" />
+            <div className="flex flex-wrap gap-3 mt-4 lg:mt-0">
+              <StatChip label="Acima da Média" value={stats.aprovados} color="border-green-200 text-green-600 bg-green-50" />
+              <StatChip label="Na Média" value={stats.naMedia} color="border-blue-200 text-blue-600 bg-blue-50" />
+              <StatChip label="Recuperação" value={stats.abaixo} color="border-red-200 text-red-600 bg-red-50" />
               {stats.semNota > 0 && <StatChip label="Sem nota" value={stats.semNota} color="border-slate-200 text-slate-500 bg-slate-50" />}
             </div>
           )}
