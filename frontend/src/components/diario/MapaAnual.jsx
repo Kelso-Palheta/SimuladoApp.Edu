@@ -112,12 +112,12 @@ export const MapaAnual = ({ turma, onSetRecuperacao }) => {
               <th className="px-3 py-3 text-xs text-slate-500 font-bold uppercase tracking-wider min-w-[130px]">Aluno</th>
               <th className="px-2 py-3 text-xs text-slate-500 font-bold uppercase tracking-wider text-center border-l border-slate-200 w-20">1º Bim</th>
               <th className="px-2 py-3 text-xs text-slate-500 font-bold uppercase tracking-wider text-center w-20">2º Bim</th>
-              <th className="px-2 py-3 text-xs text-violet-500 font-bold uppercase tracking-wider text-center w-20">REC 1</th>
+              <th className="px-2 py-3 text-xs text-violet-500 font-bold uppercase tracking-wider text-center w-20" title="Recuperação do 1º Semestre">REC S1</th>
               <th className="px-2 py-3 text-xs text-violet-500 font-bold uppercase tracking-wider text-center w-24">Total S1</th>
               <th className="px-1 py-3 text-xs text-blue-600 font-bold uppercase tracking-wider text-center w-24" title="Pontos que precisa no 2º semestre">Precisa S2</th>
               <th className="px-2 py-3 text-xs text-slate-500 font-bold uppercase tracking-wider text-center border-l border-slate-200 w-20">3º Bim</th>
               <th className="px-2 py-3 text-xs text-slate-500 font-bold uppercase tracking-wider text-center w-20">4º Bim</th>
-              <th className="px-2 py-3 text-xs text-violet-500 font-bold uppercase tracking-wider text-center w-20">REC 2</th>
+              <th className="px-2 py-3 text-xs text-violet-500 font-bold uppercase tracking-wider text-center w-20" title="Recuperação do 2º Semestre">REC S2</th>
               <th className="px-2 py-3 text-xs text-violet-500 font-bold uppercase tracking-wider text-center w-24">Total S2</th>
               <th className="px-2 py-3 text-xs text-slate-500 font-bold uppercase tracking-wider text-center border-l border-slate-200 w-24">Soma Anual</th>
               <th className="px-1 py-3 text-xs text-red-500 font-bold uppercase tracking-wider text-center w-24" title="Pontos que faltam para 50">Falta Final</th>
