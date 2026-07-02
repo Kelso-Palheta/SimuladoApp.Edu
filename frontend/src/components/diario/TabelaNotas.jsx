@@ -33,8 +33,8 @@ const AddAlunoForm = ({ onAdd }) => {
       <input
         value={data} onChange={(e) => setData(e.target.value.replace(/\D/g, '').slice(0, 4))}
         onKeyDown={(e) => e.key === 'Enter' && submit()}
-        placeholder="ddMM (opcional)" maxLength={4}
-        className="w-28 sm:w-36 bg-slate-50 border border-slate-200 rounded-lg px-2.5 sm:px-3.5 py-1.5 sm:py-2 text-xs sm:text-sm text-slate-900 placeholder-slate-400 outline-none focus:bg-white focus:ring-1 focus:ring-violet-400/50 transition-all font-mono"
+        placeholder="ddMM" maxLength={4}
+        className="w-16 sm:w-36 bg-slate-50 border border-slate-200 rounded-lg px-2.5 sm:px-3.5 py-1.5 sm:py-2 text-xs sm:text-sm text-slate-900 placeholder-slate-400 outline-none focus:bg-white focus:ring-1 focus:ring-violet-400/50 transition-all font-mono text-center"
       />
       <button
         onClick={submit} disabled={!nome.trim()}
@@ -63,8 +63,8 @@ const AddAtvForm = ({ onAdd, somaAtual, maxAtv }) => {
     <div className="flex items-center gap-2 sm:gap-3 mt-4">
       <input value={nome} onChange={(e) => setNome(e.target.value)} placeholder="Nome da atividade"
         className="flex-1 bg-slate-50 border border-slate-200 rounded-lg px-2.5 sm:px-3.5 py-1.5 sm:py-2 text-xs sm:text-sm text-slate-900 placeholder-slate-400 outline-none focus:bg-white focus:ring-1 focus:ring-violet-400/50 transition-all" />
-      <input value={max} onChange={(e) => setMax(e.target.value)} placeholder={`max (livre: ${fmt(dispLeft)})`}
-        className="w-32 sm:w-40 bg-slate-50 border border-slate-200 rounded-lg px-2.5 sm:px-3.5 py-1.5 sm:py-2 text-xs sm:text-sm font-mono text-slate-900 placeholder-slate-400 outline-none focus:bg-white focus:ring-1 focus:ring-violet-400/50 transition-all" />
+      <input value={max} onChange={(e) => setMax(e.target.value)} placeholder={`máx: ${fmt(dispLeft)}`}
+        className="w-20 sm:w-40 bg-slate-50 border border-slate-200 rounded-lg px-2.5 sm:px-3.5 py-1.5 sm:py-2 text-xs sm:text-sm font-mono text-slate-900 placeholder-slate-400 outline-none focus:bg-white focus:ring-1 focus:ring-violet-400/50 transition-all text-center" />
       <button onClick={submit}
         className="px-3 sm:px-5 py-1.5 sm:py-2 bg-violet-500 hover:bg-violet-400 hover:scale-[1.03] active:scale-[0.97] rounded-lg text-xs sm:text-sm text-white font-semibold transition-all whitespace-nowrap">
         + Adicionar
