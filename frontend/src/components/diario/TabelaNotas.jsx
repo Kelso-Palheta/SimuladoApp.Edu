@@ -66,7 +66,7 @@ const AddAtvForm = ({ onAdd, somaAtual, maxAtv }) => {
       <input value={max} onChange={(e) => setMax(e.target.value)} placeholder={`max (livre: ${fmt(dispLeft)})`}
         className="w-32 sm:w-40 bg-slate-50 border border-slate-200 rounded-lg px-2.5 sm:px-3.5 py-1.5 sm:py-2 text-xs sm:text-sm font-mono text-slate-900 placeholder-slate-400 outline-none focus:bg-white focus:ring-1 focus:ring-violet-400/50 transition-all" />
       <button onClick={submit}
-        className="px-3 sm:px-5 py-1.5 sm:py-2 bg-violet-500 hover:bg-violet-400 hover:scale-[1.03] active:scale-[0.97] rounded-lg text-xs sm:text-sm text-white font-semibold transition-all">
+        className="px-3 sm:px-5 py-1.5 sm:py-2 bg-violet-500 hover:bg-violet-400 hover:scale-[1.03] active:scale-[0.97] rounded-lg text-xs sm:text-sm text-white font-semibold transition-all whitespace-nowrap">
         + Adicionar
       </button>
     </div>
@@ -275,9 +275,9 @@ export const TabelaNotas = ({
                     <input type="checkbox" checked={selectedIds.includes(al.id)} onChange={() => handleToggleSelect(al.id)} className="rounded border-slate-300 text-violet-500 focus:ring-violet-400" />
                   </td>
                   <td className="hidden sm:table-cell sticky left-10 z-10 bg-inherit px-3 py-1.5 text-slate-400 font-mono text-xs">{idx + 1}</td>
-                  <td className="sticky left-10 sm:left-[72px] z-10 bg-inherit px-3 py-1.5 text-slate-900 font-medium shadow-[4px_0_8px_-4px_rgba(0,0,0,0.05)]">
-                    <div className="flex items-center gap-2">
-                      <span>{titleCase(al.nome)}</span>
+                  <td className="sticky left-10 sm:left-[72px] z-10 bg-inherit px-2 sm:px-3 py-1.5 text-slate-900 font-medium shadow-[4px_0_8px_-4px_rgba(0,0,0,0.05)]">
+                    <div className="flex items-center gap-1 sm:gap-2">
+                      <span className="text-[11px] sm:text-sm leading-tight max-w-[100px] sm:max-w-none break-words">{titleCase(al.nome)}</span>
                       {editingBirthday === al.id ? (
                         <input autoFocus type="text" maxLength={4} placeholder="ddMM" defaultValue={al.dataNascimento || ''}
                           className="w-16 px-1.5 py-0.5 text-xs font-mono bg-slate-100 border border-violet-400 rounded text-slate-900 focus:outline-none"

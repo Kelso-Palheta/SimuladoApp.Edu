@@ -24,9 +24,9 @@ const statsByBimestre = (turma, bimestre) => {
 };
 
 const StatChip = ({ label, value, color }) => (
-  <div className={`flex flex-col items-center px-3 sm:px-5 py-1.5 sm:py-2.5 rounded-xl sm:rounded-2xl border transition-all duration-300 hover:scale-105 ${color}`}>
-    <span className="font-bold text-lg sm:text-xl font-mono tracking-tight tabular-nums">{value}</span>
-    <span className="text-[9px] sm:text-[10px] uppercase font-bold tracking-wider opacity-75">{label}</span>
+  <div className={`flex flex-col items-center px-2 sm:px-5 py-0.5 sm:py-2.5 rounded-xl sm:rounded-2xl border transition-all duration-300 hover:scale-105 ${color}`}>
+    <span className="font-bold text-base sm:text-xl font-mono tracking-tight tabular-nums">{value}</span>
+    <span className="text-[8px] sm:text-[10px] uppercase font-bold tracking-wider opacity-75">{label}</span>
   </div>
 );
 
