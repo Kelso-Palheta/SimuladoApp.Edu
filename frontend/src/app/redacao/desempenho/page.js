@@ -421,26 +421,26 @@ export default function DesempenhoPage() {
       <main className="flex-1 max-w-[1440px] mx-auto w-full px-6 py-8 space-y-6">
         
         {/* Stats Panel */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
-          <div className="bg-white/70 backdrop-blur-md border border-slate-200/60 p-6 rounded-2xl shadow-sm flex items-center gap-4 transition-transform duration-300 hover:-translate-y-0.5">
-            <div className="w-12 h-12 rounded-xl bg-blue-50 flex items-center justify-center border border-blue-100"><Users size={22} className="text-blue-500" /></div>
-            <div>
-              <p className="text-[10px] text-slate-400 uppercase tracking-wider font-bold">Total Corrigido</p>
-              <p className="text-3xl font-black text-slate-900 tabular-nums tracking-tight">{total}</p>
+        <div className="grid grid-cols-3 gap-2 sm:gap-5">
+          <div className="bg-white/70 backdrop-blur-md border border-slate-200/60 p-3 sm:p-6 rounded-xl sm:rounded-2xl shadow-sm flex flex-col sm:flex-row items-center sm:justify-start justify-center gap-1.5 sm:gap-4 transition-transform duration-300 hover:-translate-y-0.5 text-center sm:text-left">
+            <div className="w-8 h-8 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl bg-blue-50 flex flex-shrink-0 items-center justify-center border border-blue-100"><Users className="w-4 h-4 sm:w-[22px] sm:h-[22px] text-blue-500" /></div>
+            <div className="min-w-0">
+              <p className="text-[8px] sm:text-[10px] text-slate-400 uppercase tracking-wider font-bold mb-0.5 sm:mb-0 truncate" title="Total Corrigido">Total</p>
+              <p className="text-lg sm:text-3xl font-black text-slate-900 tabular-nums tracking-tight">{total}</p>
             </div>
           </div>
-          <div className="bg-white/70 backdrop-blur-md border border-slate-200/60 p-6 rounded-2xl shadow-sm flex items-center gap-4 transition-transform duration-300 hover:-translate-y-0.5">
-            <div className="w-12 h-12 rounded-xl bg-amber-50 flex items-center justify-center border border-amber-100"><TrendingUp size={22} className="text-amber-500" /></div>
-            <div>
-              <p className="text-[10px] text-slate-400 uppercase tracking-wider font-bold">Média Geral</p>
-              <p className="text-3xl font-black text-slate-900 tabular-nums tracking-tight">{avgScore}</p>
+          <div className="bg-white/70 backdrop-blur-md border border-slate-200/60 p-3 sm:p-6 rounded-xl sm:rounded-2xl shadow-sm flex flex-col sm:flex-row items-center sm:justify-start justify-center gap-1.5 sm:gap-4 transition-transform duration-300 hover:-translate-y-0.5 text-center sm:text-left">
+            <div className="w-8 h-8 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl bg-amber-50 flex flex-shrink-0 items-center justify-center border border-amber-100"><TrendingUp className="w-4 h-4 sm:w-[22px] sm:h-[22px] text-amber-500" /></div>
+            <div className="min-w-0">
+              <p className="text-[8px] sm:text-[10px] text-slate-400 uppercase tracking-wider font-bold mb-0.5 sm:mb-0 truncate" title="Média Geral">Média</p>
+              <p className="text-lg sm:text-3xl font-black text-slate-900 tabular-nums tracking-tight">{avgScore}</p>
             </div>
           </div>
-          <div className="bg-white/70 backdrop-blur-md border border-slate-200/60 p-6 rounded-2xl shadow-sm flex items-center gap-4 transition-transform duration-300 hover:-translate-y-0.5">
-            <div className="w-12 h-12 rounded-xl bg-emerald-50 flex items-center justify-center border border-emerald-100"><Award size={22} className="text-emerald-500" /></div>
-            <div>
-              <p className="text-[10px] text-slate-400 uppercase tracking-wider font-bold">Maior Nota</p>
-              <p className="text-3xl font-black text-slate-900 tabular-nums tracking-tight">{maxScore}</p>
+          <div className="bg-white/70 backdrop-blur-md border border-slate-200/60 p-3 sm:p-6 rounded-xl sm:rounded-2xl shadow-sm flex flex-col sm:flex-row items-center sm:justify-start justify-center gap-1.5 sm:gap-4 transition-transform duration-300 hover:-translate-y-0.5 text-center sm:text-left">
+            <div className="w-8 h-8 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl bg-emerald-50 flex flex-shrink-0 items-center justify-center border border-emerald-100"><Award className="w-4 h-4 sm:w-[22px] sm:h-[22px] text-emerald-500" /></div>
+            <div className="min-w-0">
+              <p className="text-[8px] sm:text-[10px] text-slate-400 uppercase tracking-wider font-bold mb-0.5 sm:mb-0 truncate" title="Maior Nota">Maior</p>
+              <p className="text-lg sm:text-3xl font-black text-slate-900 tabular-nums tracking-tight">{maxScore}</p>
             </div>
           </div>
         </div>
