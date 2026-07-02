@@ -8,7 +8,7 @@ import { TurmaView } from '@/components/diario/TurmaView';
 import { ProfileModal } from '@/components/diario/ProfileModal';
 import { useTurmas } from '@/hooks/diario/useTurmas';
 import { useNotas } from '@/hooks/diario/useNotas';
-import { ArrowLeft, GraduationCap, ExternalLink, Copy, Check, Award } from 'lucide-react';
+import { ArrowLeft, GraduationCap, ExternalLink, Copy, Check, Award, Menu } from 'lucide-react';
 import { db } from '@/lib/firebase';
 import { doc, getDoc, setDoc, serverTimestamp } from 'firebase/firestore';
 import { gerarLoginAluno, gerarLoginKey } from '@/utils/diario/loginAluno';
@@ -330,6 +330,7 @@ export default function DiarioPage() {
     return () => document.removeEventListener('click', handleClick);
   }, [showAlunoDropdown]);
 
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [authTimeout, setAuthTimeout] = useState(false);
   useEffect(() => {
     const t = setTimeout(() => setAuthTimeout(true), 10000);
@@ -360,19 +361,28 @@ export default function DiarioPage() {
 
   return (
     <div className="flex h-screen overflow-hidden bg-white">
-      <Sidebar
-        turmas={turmas}
-        turmaSelecionada={turmaAtual}
-        bimestreSelecionado={bimestre}
-        user={user}
-        onSelectTurma={setTurmaSelecionada}
-        onSelectBimestre={handleSetBimestre}
-        onAddTurma={handleAddTurma}
-        onRemoveTurma={handleRemoveTurma}
-        onReorderTurmas={setTurmas}
-        onLogout={() => router.push('/')}
-        onOpenProfile={() => setShowProfile(true)}
-      />
+      {/* Mobile sidebar backdrop */}
+      {sidebarOpen && (
+        <div className="fixed inset-0 bg-black/40 z-40 lg:hidden" onClick={() => setSidebarOpen(false)} />
+      )}
+
+      {/* Sidebar: off-canvas on mobile, always visible on desktop */}
+      <div className={`fixed inset-y-0 left-0 z-50 w-64 transition-transform duration-300 lg:relative lg:translate-x-0 lg:z-auto ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}>
+        <Sidebar
+          turmas={turmas}
+          turmaSelecionada={turmaAtual}
+          bimestreSelecionado={bimestre}
+          user={user}
+          onSelectTurma={(t) => { setTurmaSelecionada(t); setSidebarOpen(false); }}
+          onSelectBimestre={(b) => { handleSetBimestre(b); setSidebarOpen(false); }}
+          onAddTurma={handleAddTurma}
+          onRemoveTurma={handleRemoveTurma}
+          onReorderTurmas={setTurmas}
+          onLogout={() => router.push('/')}
+          onOpenProfile={() => setShowProfile(true)}
+          onClose={() => setSidebarOpen(false)}
+        />
+      </div>
 
       {showProfile && (
         <ProfileModal user={user} onClose={() => setShowProfile(false)} />
@@ -380,33 +390,42 @@ export default function DiarioPage() {
 
       <main className="flex-1 flex flex-col overflow-hidden">
         {/* Top bar */}
-        <div className="flex-shrink-0 px-6 py-2.5 border-b border-slate-200 bg-white flex items-center justify-between">
-          <button
-            onClick={() => router.push('/')}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold bg-violet-50 hover:bg-violet-100 text-violet-600 border border-violet-200 hover:border-violet-300 transition-all shadow-sm"
-          >
-            <ArrowLeft size={16} />
-            Hub
-          </button>
+        <div className="flex-shrink-0 px-3 sm:px-6 py-2 sm:py-2.5 border-b border-slate-200 bg-white flex items-center justify-between gap-2">
+          <div className="flex items-center gap-1.5 sm:gap-2">
+            <button
+              onClick={() => setSidebarOpen(true)}
+              className="inline-flex items-center p-2 rounded-xl text-slate-600 hover:bg-slate-100 transition-all lg:hidden"
+              aria-label="Abrir menu"
+            >
+              <Menu size={20} />
+            </button>
+            <button
+              onClick={() => router.push('/')}
+              className="inline-flex items-center gap-2 px-3 sm:px-4 py-2 rounded-xl text-sm font-semibold bg-violet-50 hover:bg-violet-100 text-violet-600 border border-violet-200 hover:border-violet-300 transition-all shadow-sm"
+            >
+              <ArrowLeft size={16} />
+              <span className="hidden sm:inline">Hub</span>
+            </button>
+          </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1.5 sm:gap-2">
             <button
               onClick={handlePublishGrades}
               disabled={publishing}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold bg-emerald-50 hover:bg-emerald-100 text-emerald-600 border border-emerald-200 hover:border-emerald-300 transition-all shadow-sm disabled:opacity-50"
+              className="inline-flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-4 py-2 rounded-xl text-sm font-semibold bg-emerald-50 hover:bg-emerald-100 text-emerald-600 border border-emerald-200 hover:border-emerald-300 transition-all shadow-sm disabled:opacity-50"
             >
               <Award size={16} />
-              {publishing ? 'Publicando...' : 'Publicar Notas'}
+              <span className="hidden sm:inline">{publishing ? 'Publicando...' : 'Publicar Notas'}</span>
             </button>
 
             <div className="relative" ref={alunoDropdownRef}>
               <button
                 onClick={() => setShowAlunoDropdown(!showAlunoDropdown)}
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold bg-violet-50 hover:bg-violet-100 text-violet-600 border border-violet-200 hover:border-violet-300 transition-all shadow-sm"
+                className="inline-flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-4 py-2 rounded-xl text-sm font-semibold bg-violet-50 hover:bg-violet-100 text-violet-600 border border-violet-200 hover:border-violet-300 transition-all shadow-sm"
               >
                 <GraduationCap size={16} />
-                Portal do Aluno
-                <ExternalLink size={12} className="opacity-40" />
+                <span className="hidden sm:inline">Portal do Aluno</span>
+                <ExternalLink size={12} className="opacity-40 hidden sm:inline" />
               </button>
 
             {showAlunoDropdown && (

@@ -240,12 +240,12 @@ export const TabelaNotas = ({
         <table className="w-full text-sm border-collapse">
           <thead>
             <tr className="bg-slate-50 border-b border-slate-200 text-left">
-              <th className="px-3 py-3 text-center w-10">
+              <th className="sticky left-0 z-20 bg-slate-50 px-3 py-3 text-center w-10">
                 <input type="checkbox" checked={turma.alunos.length > 0 && selectedIds.length === turma.alunos.length}
                   onChange={handleToggleSelectAll} className="rounded border-slate-300 text-violet-500 focus:ring-violet-400" />
               </th>
-              <th className="px-3 py-3 text-xs text-slate-500 font-bold uppercase tracking-wider w-8">#</th>
-              <th className="px-3 py-3 text-xs text-slate-500 font-bold uppercase tracking-wider min-w-[180px]">Aluno</th>
+              <th className="hidden sm:table-cell sticky left-10 z-20 bg-slate-50 px-3 py-3 text-xs text-slate-500 font-bold uppercase tracking-wider w-8">#</th>
+              <th className="sticky left-10 sm:left-[72px] z-20 bg-slate-50 px-3 py-3 text-xs text-slate-500 font-bold uppercase tracking-wider min-w-[180px] shadow-[4px_0_8px_-4px_rgba(0,0,0,0.05)]">Aluno</th>
               <th className="px-3 py-3 text-xs text-slate-500 font-bold uppercase tracking-wider text-center w-28">
                 Simulado<br /><span className="text-slate-400 font-normal font-mono normal-case tracking-normal">(0–{fmt(config?.simuladoMaxLanca ?? 10)})</span>
               </th>
@@ -270,12 +270,12 @@ export const TabelaNotas = ({
               const temNotaAluno = temNota(nota, atividades);
 
               return (
-                <tr key={al.id} className={`border-b border-slate-100 transition-all duration-300 ${idx % 2 === 0 ? 'bg-slate-50/50' : 'bg-transparent'} hover:bg-slate-100/50`}>
-                  <td className="px-3 py-1.5 text-center">
+                <tr key={al.id} className={`border-b border-slate-100 transition-all duration-300 ${idx % 2 === 0 ? 'bg-slate-50/80' : 'bg-white'} hover:bg-slate-100`}>
+                  <td className="sticky left-0 z-10 bg-inherit px-3 py-1.5 text-center">
                     <input type="checkbox" checked={selectedIds.includes(al.id)} onChange={() => handleToggleSelect(al.id)} className="rounded border-slate-300 text-violet-500 focus:ring-violet-400" />
                   </td>
-                  <td className="px-3 py-1.5 text-slate-400 font-mono text-xs">{idx + 1}</td>
-                  <td className="px-3 py-1.5 text-slate-900 font-medium">
+                  <td className="hidden sm:table-cell sticky left-10 z-10 bg-inherit px-3 py-1.5 text-slate-400 font-mono text-xs">{idx + 1}</td>
+                  <td className="sticky left-10 sm:left-[72px] z-10 bg-inherit px-3 py-1.5 text-slate-900 font-medium shadow-[4px_0_8px_-4px_rgba(0,0,0,0.05)]">
                     <div className="flex items-center gap-2">
                       <span>{titleCase(al.nome)}</span>
                       {editingBirthday === al.id ? (

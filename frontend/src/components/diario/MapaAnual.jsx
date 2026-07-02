@@ -108,8 +108,8 @@ export const MapaAnual = ({ turma, onSetRecuperacao }) => {
         <table className="w-full text-sm border-collapse">
           <thead>
             <tr className="bg-slate-50 border-b border-slate-200 text-left">
-              <th className="px-3 py-3 text-xs text-slate-500 font-bold uppercase tracking-wider w-8">#</th>
-              <th className="px-3 py-3 text-xs text-slate-500 font-bold uppercase tracking-wider min-w-[130px]">Aluno</th>
+              <th className="hidden sm:table-cell sticky left-0 z-20 bg-slate-50 px-3 py-3 text-xs text-slate-500 font-bold uppercase tracking-wider w-8">#</th>
+              <th className="sticky left-0 sm:left-[32px] z-20 bg-slate-50 px-3 py-3 text-xs text-slate-500 font-bold uppercase tracking-wider min-w-[130px] shadow-[4px_0_8px_-4px_rgba(0,0,0,0.05)]">Aluno</th>
               <th className="px-2 py-3 text-xs text-slate-500 font-bold uppercase tracking-wider text-center border-l border-slate-200 w-20">1º Bim</th>
               <th className="px-2 py-3 text-xs text-slate-500 font-bold uppercase tracking-wider text-center w-20">2º Bim</th>
               <th className="px-2 py-3 text-xs text-violet-500 font-bold uppercase tracking-wider text-center w-20" title="Recuperação do 1º Semestre">REC S1</th>
@@ -133,9 +133,9 @@ export const MapaAnual = ({ turma, onSetRecuperacao }) => {
               const todosBims = bimTotais[0] !== null && bimTotais[1] !== null && sem2Completo;
 
               return (
-                <tr key={aluno.id} className={`border-b border-slate-100 transition-all ${idx % 2 === 0 ? 'bg-slate-50/50' : 'bg-transparent'} hover:bg-slate-100/50`}>
-                  <td className="px-3 py-2 text-slate-400 font-mono text-xs">{idx + 1}</td>
-                  <td className="px-3 py-2 text-slate-900 font-medium">{titleCase(aluno.nome)}</td>
+                <tr key={aluno.id} className={`border-b border-slate-100 transition-all ${idx % 2 === 0 ? 'bg-slate-50/80' : 'bg-white'} hover:bg-slate-100`}>
+                  <td className="hidden sm:table-cell sticky left-0 z-10 bg-inherit px-3 py-2 text-slate-400 font-mono text-xs">{idx + 1}</td>
+                  <td className="sticky left-0 sm:left-[32px] z-10 bg-inherit px-3 py-2 text-slate-900 font-medium shadow-[4px_0_8px_-4px_rgba(0,0,0,0.05)]">{titleCase(aluno.nome)}</td>
                   <td className="px-2 py-2 text-center border-l border-slate-200"><BimCell value={bimTotais[0]} status={getBimStatus(0, bimTotais[0])} /></td>
                   <td className="px-2 py-2 text-center"><BimCell value={bimTotais[1]} status={getBimStatus(1, bimTotais[1])} /></td>
                   <td className="px-1 py-1 text-center"><NumCell value={alunoRec.rec1 ?? ''} min={0} max={10} onChange={(v) => onSetRecuperacao(turma.id, aluno.id, 'rec1', v)} placeholder="—" /></td>
@@ -161,8 +161,11 @@ export const MapaAnual = ({ turma, onSetRecuperacao }) => {
             })}
           </tbody>
           <tfoot>
-            <tr className="bg-slate-50/80 border-t-2 border-slate-200">
-              <td className="px-3 py-3" colSpan={2}><span className="text-xs text-slate-500 uppercase font-bold tracking-wider">Média da Turma</span></td>
+            <tr className="bg-slate-50 border-t-2 border-slate-200">
+              <td className="hidden sm:table-cell sticky left-0 z-10 bg-inherit px-3 py-3"></td>
+              <td className="sticky left-0 sm:left-[32px] z-10 bg-inherit px-3 py-3 shadow-[4px_0_8px_-4px_rgba(0,0,0,0.05)]">
+                <span className="text-xs text-slate-500 uppercase font-bold tracking-wider">Média da Turma</span>
+              </td>
               {mediaBim.slice(0, 2).map((m, i) => (
                 <td key={i} className="px-2 py-3 text-center border-l border-slate-200">
                   {m !== null ? <span className={`font-mono font-semibold text-sm ${STATUS_STYLES[statusColor(m, {})].split(' ')[0]}`}>{fmt(m)}</span> : <span className="text-slate-400 font-mono text-sm">&mdash;</span>}
