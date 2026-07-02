@@ -647,21 +647,21 @@ export default function RedacaoPage() {
 
         {/* Content */}
         <main className="flex-1 overflow-auto">
-          <div className="max-w-3xl mx-auto w-full px-4 py-10">
+          <div className="max-w-3xl mx-auto w-full px-4 py-6 sm:py-10">
         <AnimatePresence mode="wait">
           {/* ══════ INPUT ══════ */}
           {step === 'input' && (
-            <motion.div key="input" {...stepTransition} className="space-y-5">
+            <motion.div key="input" {...stepTransition} className="space-y-4 sm:space-y-5">
               {/* Hero */}
-              <motion.div className="text-center mb-6"
+              <motion.div className="text-center mb-4 sm:mb-6 flex flex-col items-center"
                 initial={{ opacity: 0, y: -16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, ease: EASE_EXPO }}>
-                <div className="mx-auto w-20 h-20 rounded-[2rem] bg-gradient-to-br from-violet-600 via-violet-500 to-indigo-500 flex items-center justify-center shadow-2xl shadow-violet-500/25 mb-4 ring-4 ring-violet-50">
-                  <PenTool size={32} color="white" />
+                <div className="w-12 h-12 sm:w-20 sm:h-20 rounded-2xl sm:rounded-[2rem] bg-gradient-to-br from-violet-600 via-violet-500 to-indigo-500 flex items-center justify-center shadow-xl sm:shadow-2xl shadow-violet-500/25 mb-2 sm:mb-4 ring-2 sm:ring-4 ring-violet-50">
+                  <PenTool className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
                 </div>
-                <h1 className="text-[2rem] font-black text-slate-900 tracking-tight" style={{ letterSpacing: '-0.03em' }}>
+                <h1 className="text-2xl sm:text-[2rem] font-black text-slate-900 tracking-tight" style={{ letterSpacing: '-0.03em' }}>
                   Redação <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-600 to-indigo-500">Corrigida</span>
                 </h1>
-                <p className="text-sm text-slate-500 mt-2 max-w-sm mx-auto leading-relaxed">
+                <p className="text-xs sm:text-sm text-slate-500 mt-1 sm:mt-2 max-w-sm mx-auto leading-relaxed px-4">
                   Correção por IA seguindo as 5 competências oficiais do INEP
                 </p>
               </motion.div>
