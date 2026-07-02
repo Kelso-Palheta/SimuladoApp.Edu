@@ -23,22 +23,22 @@ const AddAlunoForm = ({ onAdd }) => {
   };
 
   return (
-    <div className="flex items-center gap-3 mt-3 pt-3 border-t border-slate-200">
+    <div className="flex items-center gap-2 sm:gap-3 mt-3 pt-3 border-t border-slate-200">
       <input
         value={nome} onChange={(e) => setNome(e.target.value)}
         onKeyDown={(e) => e.key === 'Enter' && submit()}
         placeholder="Nome do aluno"
-        className="flex-1 bg-slate-50 border border-slate-200 rounded-lg px-3.5 py-2 text-sm text-slate-900 placeholder-slate-400 outline-none focus:bg-white focus:ring-1 focus:ring-violet-400/50 transition-all"
+        className="flex-1 bg-slate-50 border border-slate-200 rounded-lg px-2.5 sm:px-3.5 py-1.5 sm:py-2 text-xs sm:text-sm text-slate-900 placeholder-slate-400 outline-none focus:bg-white focus:ring-1 focus:ring-violet-400/50 transition-all"
       />
       <input
         value={data} onChange={(e) => setData(e.target.value.replace(/\D/g, '').slice(0, 4))}
         onKeyDown={(e) => e.key === 'Enter' && submit()}
         placeholder="ddMM (opcional)" maxLength={4}
-        className="w-36 bg-slate-50 border border-slate-200 rounded-lg px-3.5 py-2 text-sm text-slate-900 placeholder-slate-400 outline-none focus:bg-white focus:ring-1 focus:ring-violet-400/50 transition-all font-mono"
+        className="w-28 sm:w-36 bg-slate-50 border border-slate-200 rounded-lg px-2.5 sm:px-3.5 py-1.5 sm:py-2 text-xs sm:text-sm text-slate-900 placeholder-slate-400 outline-none focus:bg-white focus:ring-1 focus:ring-violet-400/50 transition-all font-mono"
       />
       <button
         onClick={submit} disabled={!nome.trim()}
-        className="px-4 py-2 bg-violet-500 hover:bg-violet-400 disabled:opacity-40 disabled:cursor-not-allowed rounded-lg text-white text-sm font-medium transition-all whitespace-nowrap"
+        className="px-3 sm:px-4 py-1.5 sm:py-2 bg-violet-500 hover:bg-violet-400 disabled:opacity-40 disabled:cursor-not-allowed rounded-lg text-white text-xs sm:text-sm font-medium transition-all whitespace-nowrap"
       >
         + Aluno
       </button>
@@ -60,13 +60,13 @@ const AddAtvForm = ({ onAdd, somaAtual, maxAtv }) => {
   };
 
   return (
-    <div className="flex items-center gap-3 mt-4">
+    <div className="flex items-center gap-2 sm:gap-3 mt-4">
       <input value={nome} onChange={(e) => setNome(e.target.value)} placeholder="Nome da atividade"
-        className="flex-1 bg-slate-50 border border-slate-200 rounded-lg px-3.5 py-2 text-sm text-slate-900 placeholder-slate-400 outline-none focus:bg-white focus:ring-1 focus:ring-violet-400/50 transition-all" />
+        className="flex-1 bg-slate-50 border border-slate-200 rounded-lg px-2.5 sm:px-3.5 py-1.5 sm:py-2 text-xs sm:text-sm text-slate-900 placeholder-slate-400 outline-none focus:bg-white focus:ring-1 focus:ring-violet-400/50 transition-all" />
       <input value={max} onChange={(e) => setMax(e.target.value)} placeholder={`max (livre: ${fmt(dispLeft)})`}
-        className="w-40 bg-slate-50 border border-slate-200 rounded-lg px-3.5 py-2 text-sm font-mono text-slate-900 placeholder-slate-400 outline-none focus:bg-white focus:ring-1 focus:ring-violet-400/50 transition-all" />
+        className="w-32 sm:w-40 bg-slate-50 border border-slate-200 rounded-lg px-2.5 sm:px-3.5 py-1.5 sm:py-2 text-xs sm:text-sm font-mono text-slate-900 placeholder-slate-400 outline-none focus:bg-white focus:ring-1 focus:ring-violet-400/50 transition-all" />
       <button onClick={submit}
-        className="px-5 py-2 bg-violet-500 hover:bg-violet-400 hover:scale-[1.03] active:scale-[0.97] rounded-lg text-sm text-white font-semibold transition-all">
+        className="px-3 sm:px-5 py-1.5 sm:py-2 bg-violet-500 hover:bg-violet-400 hover:scale-[1.03] active:scale-[0.97] rounded-lg text-xs sm:text-sm text-white font-semibold transition-all">
         + Adicionar
       </button>
     </div>
