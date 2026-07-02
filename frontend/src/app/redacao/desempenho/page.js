@@ -399,19 +399,19 @@ export default function DesempenhoPage() {
       }}
     >
       {/* Header */}
-      <header className="bg-white/80 backdrop-blur-xl border-b border-slate-200/60 px-6 py-3 flex items-center justify-between sticky top-0 z-30 shadow-sm">
+      <header className="bg-white/80 backdrop-blur-xl border-b border-slate-200/60 px-4 sm:px-6 py-3 flex items-center justify-between sticky top-0 z-30 shadow-sm overflow-x-auto no-scrollbar gap-4">
         <div className="flex items-center gap-3">
           <button onClick={() => router.push('/redacao')}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold bg-violet-50 hover:bg-violet-100 text-violet-600 border border-violet-200/50 hover:border-violet-300 transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] shadow-sm">
-            <ArrowLeft size={16} /> Voltar
+            className="inline-flex items-center gap-2 px-3 sm:px-4 py-2 rounded-xl text-sm font-semibold bg-violet-50 hover:bg-violet-100 text-violet-600 border border-violet-200/50 hover:border-violet-300 transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] shadow-sm whitespace-nowrap">
+            <ArrowLeft size={16} /> <span className="hidden sm:inline">Voltar</span>
           </button>
           <div className="h-6 w-px bg-slate-200" />
-          <h1 className="text-base font-bold text-slate-800 flex items-center gap-2 tracking-tight">
+          <h1 className="text-sm sm:text-base font-bold text-slate-800 flex items-center gap-2 tracking-tight whitespace-nowrap">
             <BarChart3 size={18} className="text-violet-500" /> Minhas Correções
           </h1>
         </div>
         {syncStatus && (
-          <span className="text-xs text-violet-600 bg-violet-50 border border-violet-100 px-3 py-1 rounded-full animate-pulse font-medium">
+          <span className="text-[10px] sm:text-xs text-violet-600 bg-violet-50 border border-violet-100 px-2 sm:px-3 py-1 rounded-full animate-pulse font-medium whitespace-nowrap">
             🔄 {syncStatus}
           </span>
         )}

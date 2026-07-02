@@ -19,12 +19,12 @@ export default function CriteriosPage() {
   return (
     <div className="min-h-screen bg-[#f8fafc]"
       style={{ backgroundImage: 'radial-gradient(ellipse 80% 80% at 50% -20%, rgba(99,102,241,0.06), transparent)' }}>
-      <header className="bg-white/80 backdrop-blur-xl border-b border-slate-200/60 px-5 py-3 flex items-center gap-3 sticky top-0 z-30">
+      <header className="bg-white/80 backdrop-blur-xl border-b border-slate-200/60 px-4 sm:px-6 py-3 flex items-center gap-3 sticky top-0 z-30 overflow-x-auto no-scrollbar">
         <button onClick={() => router.push('/redacao')}
-          className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold bg-violet-50 hover:bg-violet-100 text-violet-600 border border-violet-200/50 hover:border-violet-300 transition-all duration-300 shadow-sm">
-          <ArrowLeft size={16} /> Voltar
+          className="inline-flex items-center gap-2 px-3 sm:px-4 py-2 rounded-xl text-sm font-semibold bg-violet-50 hover:bg-violet-100 text-violet-600 border border-violet-200/50 hover:border-violet-300 transition-all duration-300 shadow-sm whitespace-nowrap">
+          <ArrowLeft size={16} /> <span className="hidden sm:inline">Voltar</span>
         </button>
-        <h1 className="text-sm font-semibold text-slate-700 flex items-center gap-2"><BookOpen size={16} /> Critérios INEP</h1>
+        <h1 className="text-sm font-semibold text-slate-700 flex items-center gap-2 whitespace-nowrap"><BookOpen size={16} /> Critérios INEP</h1>
       </header>
 
       <main className="max-w-3xl mx-auto px-4 py-10 space-y-8">

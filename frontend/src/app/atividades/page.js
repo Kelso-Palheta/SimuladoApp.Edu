@@ -13,7 +13,7 @@ import { AtividadesList } from '@/components/atividades/AtividadesList';
 import { TodasAtividades } from '@/components/atividades/TodasAtividades';
 import { Sidebar } from '@/components/diario/Sidebar';
 import { ProfileModal } from '@/components/diario/ProfileModal';
-import { ArrowLeft, GraduationCap, Layers, ExternalLink, Copy, Check } from 'lucide-react';
+import { ArrowLeft, GraduationCap, Layers, ExternalLink, Copy, Check, Menu, X } from 'lucide-react';
 
 import { db } from '@/lib/firebase';
 import { doc, getDoc, setDoc, serverTimestamp } from 'firebase/firestore';
@@ -144,6 +144,7 @@ export default function AtividadesPage() {
   const [alunoLinkCopied, setAlunoLinkCopied] = useState(false);
   const alunoDropdownRef = useRef(null);
   const [showProfile, setShowProfile] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [viewMode, setViewMode] = useState('todas'); // 'turma' | 'todas'
   const [bimestre, setBimestre] = useState(() => {
     if (typeof window !== 'undefined') return Number(localStorage.getItem('atividades_bimestre')) || 1;
@@ -204,19 +205,30 @@ export default function AtividadesPage() {
 
   return (
     <div className="flex h-screen overflow-hidden bg-white">
-      <Sidebar
-        turmas={turmas}
-        turmaSelecionada={viewMode === 'turma' ? turmaAtual : null}
-        bimestreSelecionado={bimestre}
-        user={user}
-        onSelectTurma={(t) => { setTurmaSelecionada(t); setViewMode('turma'); }}
-        onSelectBimestre={handleSetBimestre}
-        onAddTurma={handleAddTurma}
-        onRemoveTurma={handleRemoveTurma}
-        onReorderTurmas={setTurmas}
-        onLogout={() => router.push('/')}
-        onOpenProfile={() => setShowProfile(true)}
-      />
+      {/* Mobile Sidebar Overlay */}
+      {sidebarOpen && (
+        <div 
+          className="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-30 md:hidden"
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
+
+      {/* Sidebar - Off-canvas on mobile */}
+      <div className={`fixed inset-y-0 left-0 z-40 transform ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} md:relative md:translate-x-0 transition-transform duration-300 md:w-auto h-full bg-white border-r border-slate-200`}>
+        <Sidebar
+          turmas={turmas}
+          turmaSelecionada={viewMode === 'turma' ? turmaAtual : null}
+          bimestreSelecionado={bimestre}
+          user={user}
+          onSelectTurma={(t) => { setTurmaSelecionada(t); setViewMode('turma'); setSidebarOpen(false); }}
+          onSelectBimestre={handleSetBimestre}
+          onAddTurma={handleAddTurma}
+          onRemoveTurma={handleRemoveTurma}
+          onReorderTurmas={setTurmas}
+          onLogout={() => router.push('/')}
+          onOpenProfile={() => setShowProfile(true)}
+        />
+      </div>
 
       {showProfile && (
         <ProfileModal user={user} onClose={() => setShowProfile(false)} />
@@ -224,14 +236,22 @@ export default function AtividadesPage() {
 
       <main className="flex-1 flex flex-col overflow-hidden">
         {/* Top bar */}
-        <div className="flex-shrink-0 px-6 py-2.5 border-b border-slate-200 bg-white flex items-center justify-between gap-3">
-          <button
-            onClick={() => router.push('/')}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold bg-violet-50 hover:bg-violet-100 text-violet-600 border border-violet-200 hover:border-violet-300 transition-all shadow-sm"
-          >
-            <ArrowLeft size={16} />
-            Hub
-          </button>
+        <div className="flex-shrink-0 px-4 sm:px-6 py-2.5 border-b border-slate-200 bg-white flex items-center justify-between gap-3 overflow-x-auto no-scrollbar">
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => setSidebarOpen(true)}
+              className="md:hidden p-2 -ml-2 rounded-xl text-slate-500 hover:bg-slate-100 transition-colors"
+            >
+              <Menu size={20} />
+            </button>
+            <button
+              onClick={() => router.push('/')}
+              className="inline-flex items-center gap-2 px-3 sm:px-4 py-2 rounded-xl text-sm font-semibold bg-violet-50 hover:bg-violet-100 text-violet-600 border border-violet-200 hover:border-violet-300 transition-all shadow-sm whitespace-nowrap"
+            >
+              <ArrowLeft size={16} />
+              <span className="hidden sm:inline">Hub</span>
+            </button>
+          </div>
 
           <div className="flex items-center gap-2">
             <div className="relative" ref={alunoDropdownRef}>

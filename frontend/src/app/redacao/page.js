@@ -18,7 +18,7 @@ import {
   FileText, Sparkles, Download, User, BookOpen,
   Zap, Camera, Loader2, Trash2, RefreshCw, BarChart3,
   ChevronRight, PenTool, Clock, Target, Shield,
-  LayoutDashboard, History, LogOut
+  LayoutDashboard, History, LogOut, Menu, X
 } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 
@@ -509,14 +509,24 @@ export default function RedacaoPage() {
     { label: 'Critérios INEP', icon: BookOpen, href: '/redacao/criterios' },
   ];
 
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
   return (
     <div className="h-screen flex overflow-hidden bg-[#f8fafc]"
       style={{
         backgroundImage: 'radial-gradient(ellipse 80% 80% at 50% -20%, rgba(99,102,241,0.06), transparent), radial-gradient(ellipse 60% 60% at 100% 100%, rgba(99,102,241,0.03), transparent)',
       }}>
 
+      {/* Mobile Sidebar Overlay */}
+      {sidebarOpen && (
+        <div 
+          className="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-30 md:hidden"
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
+
       {/* ══════ SIDEBAR ══════ */}
-      <aside className="w-64 flex-shrink-0 bg-white border-r border-slate-200 flex flex-col h-full">
+      <aside className={`fixed inset-y-0 left-0 z-40 transform ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} md:relative md:translate-x-0 transition-transform duration-300 w-64 flex-shrink-0 bg-white border-r border-slate-200 flex flex-col h-full`}>
         {/* Logo */}
         <div className="px-5 pt-6 pb-4 border-b border-slate-100">
           <button onClick={() => router.push('/')} className="flex items-center gap-2.5 hover:opacity-80 transition-opacity">
@@ -605,11 +615,19 @@ export default function RedacaoPage() {
       {/* ══════ MAIN ══════ */}
       <div className="flex-1 flex flex-col overflow-hidden">
         {/* Top bar */}
-        <header className="flex-shrink-0 bg-white/80 backdrop-blur-xl border-b border-slate-200/60 px-6 py-2.5 flex items-center gap-3">
-          <button onClick={() => router.push('/')}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold bg-violet-50 hover:bg-violet-100 text-violet-600 border border-violet-200/50 hover:border-violet-300 transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] shadow-sm">
-            <ArrowLeft size={16} /> Hub
-          </button>
+        <header className="flex-shrink-0 bg-white/80 backdrop-blur-xl border-b border-slate-200/60 px-4 sm:px-6 py-2.5 flex items-center gap-3 overflow-x-auto no-scrollbar">
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => setSidebarOpen(true)}
+              className="md:hidden p-2 -ml-2 rounded-xl text-slate-500 hover:bg-slate-100 transition-colors"
+            >
+              <Menu size={20} />
+            </button>
+            <button onClick={() => router.push('/')}
+              className="inline-flex items-center gap-2 px-3 sm:px-4 py-2 rounded-xl text-sm font-semibold bg-violet-50 hover:bg-violet-100 text-violet-600 border border-violet-200/50 hover:border-violet-300 transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] shadow-sm whitespace-nowrap">
+              <ArrowLeft size={16} /> <span className="hidden sm:inline">Hub</span>
+            </button>
+          </div>
           {step !== 'input' && (
             <button onClick={handleReset}
               className="inline-flex items-center gap-1.5 px-3 py-2 text-xs text-slate-500 hover:text-violet-600 transition-colors duration-300">
