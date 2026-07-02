@@ -220,6 +220,7 @@ export default function AtividadesPage() {
           turmaSelecionada={viewMode === 'turma' ? turmaAtual : null}
           bimestreSelecionado={bimestre}
           user={user}
+          onClose={() => setSidebarOpen(false)}
           onSelectTurma={(t) => { setTurmaSelecionada(t); setViewMode('turma'); setSidebarOpen(false); }}
           onSelectBimestre={handleSetBimestre}
           onAddTurma={handleAddTurma}

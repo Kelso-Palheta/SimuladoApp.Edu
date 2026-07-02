@@ -527,7 +527,7 @@ export default function RedacaoPage() {
       {/* ══════ SIDEBAR ══════ */}
       <aside className={`fixed inset-y-0 left-0 z-40 transform ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} md:relative md:translate-x-0 transition-transform duration-300 w-64 flex-shrink-0 bg-white border-r border-slate-200 flex flex-col h-full`}>
         {/* Logo */}
-        <div className="px-5 pt-6 pb-4 border-b border-slate-100">
+        <div className="px-5 pt-6 pb-4 border-b border-slate-100 flex items-center justify-between">
           <button onClick={() => router.push('/')} className="flex items-center gap-2.5 hover:opacity-80 transition-opacity">
             <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-violet-600 to-indigo-500 flex items-center justify-center shadow-lg shadow-violet-500/20">
               <Zap size={16} color="white" />
@@ -536,6 +536,9 @@ export default function RedacaoPage() {
               <span className="font-bold text-slate-900 tracking-tight text-sm">Redação AI</span>
               <p className="text-[10px] text-slate-400 font-semibold uppercase tracking-wider">Corretor ENEM</p>
             </div>
+          </button>
+          <button onClick={() => setSidebarOpen(false)} className="md:hidden p-1.5 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-all" aria-label="Fechar menu">
+            <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
           </button>
         </div>
 
@@ -672,16 +675,18 @@ export default function RedacaoPage() {
                 </div>
 
                 {/* Depth */}
-                <div className="grid grid-cols-3 gap-2.5">
+                <div className="grid grid-cols-3 gap-2 sm:gap-2.5">
                   {DEPTH_OPTIONS.map(opt => (
                     <motion.button key={opt.value} onClick={() => setDepth(opt.value)}
                       whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
-                      className={`relative p-4 rounded-2xl border text-left transition-all duration-300 overflow-hidden group
+                      className={`relative p-2 sm:p-4 rounded-xl sm:rounded-2xl border text-left transition-all duration-300 overflow-hidden group flex flex-col justify-between h-full
                         ${depth === opt.value ? 'bg-violet-50 border-violet-300 shadow-sm' : 'bg-slate-50 border-slate-200 hover:border-slate-300 hover:bg-white'}`}>
                       {depth === opt.value && <div className="absolute inset-0 bg-gradient-to-br from-violet-500/5 to-transparent" />}
-                      <span className={`relative text-xs font-bold ${depth === opt.value ? 'text-violet-700' : 'text-slate-700'}`}>{opt.label}</span>
-                      <p className="relative text-[10px] text-slate-400 mt-1 leading-tight">{opt.desc}</p>
-                      <span className="relative text-[10px] text-slate-400 mt-0.5 block font-mono">~{opt.words} palavras</span>
+                      <div className="w-full">
+                        <span className={`relative text-[11px] sm:text-xs font-bold block mb-0.5 sm:mb-1 ${depth === opt.value ? 'text-violet-700' : 'text-slate-700'}`}>{opt.label}</span>
+                        <p className="relative text-[9px] sm:text-[10px] text-slate-400 leading-tight line-clamp-2 sm:line-clamp-none">{opt.desc}</p>
+                      </div>
+                      <span className="relative text-[9px] sm:text-[10px] text-slate-400 mt-1.5 sm:mt-2 block font-mono">~{opt.words} pal.</span>
                     </motion.button>
                   ))}
                 </div>

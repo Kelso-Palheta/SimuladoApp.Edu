@@ -373,6 +373,7 @@ export default function DiarioPage() {
           turmaSelecionada={turmaAtual}
           bimestreSelecionado={bimestre}
           user={user}
+          onClose={() => setSidebarOpen(false)}
           onSelectTurma={(t) => { setTurmaSelecionada(t); setSidebarOpen(false); }}
           onSelectBimestre={(b) => { handleSetBimestre(b); setSidebarOpen(false); }}
           onAddTurma={handleAddTurma}
