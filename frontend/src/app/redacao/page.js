@@ -220,6 +220,7 @@ export default function RedacaoPage() {
   const [alunoLinkCopied, setAlunoLinkCopied] = useState(false);
   const [charCount, setCharCount] = useState(0);
   const [motivatorExtracting, setMotivatorExtracting] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   useEffect(() => { setCharCount(text.length); }, [text]);
 
@@ -508,8 +509,6 @@ export default function RedacaoPage() {
     { label: 'Minhas Correções', icon: LayoutDashboard, href: '/redacao/desempenho' },
     { label: 'Critérios INEP', icon: BookOpen, href: '/redacao/criterios' },
   ];
-
-  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
     <div className="h-screen flex overflow-hidden bg-[#f8fafc]"
