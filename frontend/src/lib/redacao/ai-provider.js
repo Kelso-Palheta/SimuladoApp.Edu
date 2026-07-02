@@ -115,11 +115,12 @@ export async function extractTextOnly(imageBase64, mediaType = "image/jpeg") {
       });
       return response.choices[0].message.content || "";
     } catch (e) {
-      console.error("Todos os provedores de OCR falharam.", e);
+      console.error("[Maritaca OCR] Falhou:", e?.message || e);
+      throw new Error(`Maritaca OCR falhou: ${e?.message || 'Erro desconhecido'}`);
     }
   }
 
-  throw new Error("Nenhum provedor de OCR disponível.");
+  throw new Error("Nenhum provedor de OCR configurado. Verifique as variáveis ANTHROPIC_API_KEY, OPENAI_API_KEY ou MARITACA_API_KEY.");
 }
 
 async function handleMaritaca(maritaca, text, imageBase64, mediaType = "image/jpeg", prompt) {

@@ -16,9 +16,9 @@ export async function POST(request) {
 
     return NextResponse.json({ text });
   } catch (error) {
-    console.error('ERRO NA EXTRAÇÃO DE TEXTO:', error);
+    console.error('ERRO NA EXTRAÇÃO DE TEXTO:', error?.message || error);
     return NextResponse.json(
-      { error: 'Não foi possível extrair o texto desta imagem.' },
+      { error: error?.message || 'Não foi possível extrair o texto desta imagem.' },
       { status: 500 }
     );
   }
