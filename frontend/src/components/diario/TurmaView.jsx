@@ -38,6 +38,9 @@ export const TurmaView = ({
 }) => {
   const [showImport, setShowImport] = useState(false);
   const [view, setView] = useState('bimestre');
+  const [showAddManual, setShowAddManual] = useState(false);
+  const [manualNome, setManualNome] = useState('');
+  const [manualData, setManualData] = useState('');
 
   const stats = statsByBimestre(turma, bimestre);
 
@@ -102,12 +105,67 @@ export const TurmaView = ({
       {/* Body */}
       <div className="flex-1 overflow-auto p-6">
         {turma.alunos.length === 0 ? (
-          <div className="flex flex-col items-center justify-center h-full gap-4 text-center">
+          <div className="flex flex-col items-center justify-center h-full gap-4 text-center max-w-md mx-auto">
             <div className="text-6xl opacity-20">📃</div>
             <p className="text-slate-400">Nenhum aluno cadastrado nesta turma.</p>
-            <button onClick={() => setShowImport(true)} className="px-5 py-2.5 bg-violet-500 hover:bg-violet-400 rounded-xl text-white text-sm font-medium transition-all">
-              Importar lista de alunos
-            </button>
+            {!showAddManual ? (
+              <div className="flex flex-col sm:flex-row gap-3 w-full justify-center">
+                <button onClick={() => setShowImport(true)} className="px-5 py-2.5 bg-violet-500 hover:bg-violet-400 rounded-xl text-white text-sm font-medium transition-all">
+                  Importar lista de alunos
+                </button>
+                <button onClick={() => setShowAddManual(true)} className="px-5 py-2.5 bg-white hover:bg-slate-50 border border-slate-200 rounded-xl text-slate-700 text-sm font-medium transition-all">
+                  Cadastrar manualmente
+                </button>
+              </div>
+            ) : (
+              <div className="w-full bg-white border border-slate-200 rounded-2xl p-5 shadow-sm mt-2 flex flex-col gap-3">
+                <h3 className="text-sm font-semibold text-slate-950 text-left">Cadastrar Aluno</h3>
+                <div className="flex flex-col gap-2">
+                  <input
+                    value={manualNome}
+                    onChange={(e) => setManualNome(e.target.value)}
+                    placeholder="Nome completo do aluno"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2 text-sm text-slate-900 placeholder-slate-400 outline-none focus:bg-white focus:ring-1 focus:ring-violet-400/50 transition-all"
+                  />
+                  <input
+                    value={manualData}
+                    onChange={(e) => setManualData(e.target.value.replace(/\D/g, '').slice(0, 4))}
+                    placeholder="Data de nascimento (ddMM)"
+                    maxLength={4}
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2 text-sm text-slate-900 placeholder-slate-400 outline-none focus:bg-white focus:ring-1 focus:ring-violet-400/50 transition-all font-mono text-center"
+                  />
+                </div>
+                <div className="flex gap-2 justify-end mt-2">
+                  <button
+                    onClick={() => {
+                      setShowAddManual(false);
+                      setManualNome('');
+                      setManualData('');
+                    }}
+                    className="px-4 py-2 bg-slate-100 hover:bg-slate-200 rounded-xl text-slate-700 text-xs font-medium transition-all"
+                  >
+                    Cancelar
+                  </button>
+                  <button
+                    onClick={() => {
+                      if (!manualNome.trim()) return;
+                      const birth = manualData.replace(/\D/g, '').slice(0, 4);
+                      onAddAlunoManual(turma.id, {
+                        nome: manualNome.trim(),
+                        ...(birth.length === 4 ? { dataNascimento: birth } : {})
+                      });
+                      setManualNome('');
+                      setManualData('');
+                      setShowAddManual(false);
+                    }}
+                    disabled={!manualNome.trim()}
+                    className="px-4 py-2 bg-violet-500 hover:bg-violet-400 disabled:opacity-40 disabled:cursor-not-allowed rounded-xl text-white text-xs font-medium transition-all"
+                  >
+                    Adicionar
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
         ) : view === 'anual' ? (
           <MapaAnual turma={turma} onSetRecuperacao={onSetRecuperacao} />
