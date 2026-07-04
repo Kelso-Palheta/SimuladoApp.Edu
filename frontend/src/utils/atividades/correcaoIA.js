@@ -156,7 +156,8 @@ Exemplo:
 0.5 pts — Identificação do tema: O aluno identifica corretamente o tema central e demonstra entender o contexto.
 0.8 pts — Argumentação: Apresenta ao menos dois argumentos fundamentados no conteúdo estudado.`;
 
-  return (await callAI([{ type: 'text', text: prompt }], apiKey)).trim();
+  const rawRubrica = (await callAI([{ type: 'text', text: prompt }], apiKey)).trim();
+  return normalizeRubrica(rawRubrica, questao.notaMaxima);
 }
 
 /**
