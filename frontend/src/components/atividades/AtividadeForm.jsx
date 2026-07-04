@@ -474,57 +474,6 @@ export const AtividadeForm = ({ turmas, onSave, onClose, initialData }) => {
             </div>
           </div>
 
-          <div>
-            <div className="flex items-center justify-between mb-2">
-              <label className="text-xs font-semibold text-slate-900">
-                Texto de apoio <span className="text-slate-400 font-normal">(visível para o aluno)</span>
-              </label>
-              <button type="button" onClick={addTextoBase}
-                className="flex items-center gap-1 px-2.5 py-1 bg-violet-50 hover:bg-violet-100 border border-violet-200 rounded-lg text-[11px] font-semibold text-violet-600 transition-all">
-                + Adicionar texto
-              </button>
-            </div>
-
-            {textosBase.length === 0 && (
-              <button type="button" onClick={addTextoBase}
-                className="w-full py-4 border border-dashed border-slate-200 rounded-xl text-xs text-slate-400 hover:text-violet-500 hover:border-violet-300 transition-colors">
-                + Clique para adicionar um texto de apoio
-              </button>
-            )}
-
-            <div className="space-y-3">
-              {textosBase.map((t, i) => (
-                <div key={t.id} className="border border-slate-200 rounded-xl p-3 bg-white">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Texto {i + 1}</span>
-                    <div className="flex items-center gap-2">
-                      <select
-                        value={t.aposQuestao ?? ''}
-                        onChange={(e) => updateTextoBase(t.id, 'aposQuestao', e.target.value === '' ? null : Number(e.target.value))}
-                        className="text-[11px] bg-white border border-slate-200 rounded-lg px-2 py-1 text-slate-900 outline-none focus:ring-1 focus:ring-violet-400/50"
-                      >
-                        <option value="">Início da atividade</option>
-                        {questoes.map((_, qi) => (
-                          <option key={qi} value={qi}>Após questão {qi + 1}</option>
-                        ))}
-                      </select>
-                      <button type="button" onClick={() => removeTextoBase(t.id)}
-                        className="text-xs text-slate-400 hover:text-red-500 transition-colors">
-                        Remover
-                      </button>
-                    </div>
-                  </div>
-                  <RichTextEditor
-                    value={t.html}
-                    onChange={(html) => updateTextoBase(t.id, 'html', html)}
-                    placeholder="Cole aqui o texto base, trecho do livro ou contextualização para o aluno..."
-                    rows={5}
-                  />
-                </div>
-              ))}
-            </div>
-          </div>
-
           <div className="border border-dashed border-slate-200 rounded-xl p-4">
             <div className="flex items-center justify-between mb-3">
               <div>
@@ -597,6 +546,57 @@ export const AtividadeForm = ({ turmas, onSave, onClose, initialData }) => {
                 </button>
               </div>
             )}
+          </div>
+
+          <div>
+            <div className="flex items-center justify-between mb-2">
+              <label className="text-xs font-semibold text-slate-900">
+                Texto de apoio <span className="text-slate-400 font-normal">(visível para o aluno)</span>
+              </label>
+              <button type="button" onClick={addTextoBase}
+                className="flex items-center gap-1 px-2.5 py-1 bg-violet-50 hover:bg-violet-100 border border-violet-200 rounded-lg text-[11px] font-semibold text-violet-600 transition-all">
+                + Adicionar texto
+              </button>
+            </div>
+
+            {textosBase.length === 0 && (
+              <button type="button" onClick={addTextoBase}
+                className="w-full py-4 border border-dashed border-slate-200 rounded-xl text-xs text-slate-400 hover:text-violet-500 hover:border-violet-300 transition-colors">
+                + Clique para adicionar um texto de apoio
+              </button>
+            )}
+
+            <div className="space-y-3">
+              {textosBase.map((t, i) => (
+                <div key={t.id} className="border border-slate-200 rounded-xl p-3 bg-white">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Texto {i + 1}</span>
+                    <div className="flex items-center gap-2">
+                      <select
+                        value={t.aposQuestao ?? ''}
+                        onChange={(e) => updateTextoBase(t.id, 'aposQuestao', e.target.value === '' ? null : Number(e.target.value))}
+                        className="text-[11px] bg-white border border-slate-200 rounded-lg px-2 py-1 text-slate-900 outline-none focus:ring-1 focus:ring-violet-400/50"
+                      >
+                        <option value="">Início da atividade</option>
+                        {questoes.map((_, qi) => (
+                          <option key={qi} value={qi}>Após questão {qi + 1}</option>
+                        ))}
+                      </select>
+                      <button type="button" onClick={() => removeTextoBase(t.id)}
+                        className="text-xs text-slate-400 hover:text-red-500 transition-colors">
+                        Remover
+                      </button>
+                    </div>
+                  </div>
+                  <RichTextEditor
+                    value={t.html}
+                    onChange={(html) => updateTextoBase(t.id, 'html', html)}
+                    placeholder="Cole aqui o texto base, trecho do livro ou contextualização para o aluno..."
+                    rows={5}
+                  />
+                </div>
+              ))}
+            </div>
           </div>
 
           <div>

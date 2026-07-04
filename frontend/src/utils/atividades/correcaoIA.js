@@ -182,19 +182,19 @@ ${materialTexto.slice(0, 8000)}
 INSTRUÇÕES:
 - Crie ${incluirObjetivas ? 'apenas questões objetivas (múltipla escolha)' : 'apenas questões discursivas'}
 - DIFICULDADE: ${instrucoesDificuldade[dificuldade] || instrucoesDificuldade.medio}
-- Cada questão deve ter: enunciado claro, rubrica de correção com critérios e pontos, e nota máxima sugerida (entre 0.25 e 5)
-- Para questões objetivas, inclua 5 alternativas (A, B, C, D, E) no padrão ENEM e indique o gabarito correto
+- Cada questão deve ter: enunciado claro e nota máxima sugerida (entre 0.25 e 5)
+${incluirObjetivas ? '- A questão deve ter 5 alternativas e indicar a letra do gabarito correto. Não precisa de rubrica.' : '- A questão deve incluir a rubrica de correção detalhada.'}
 - Use linguagem adequada ao Ensino Médio
-${incluirTextoApoio ? '- Inclua um "textoApoio" (texto introdutório/contextualização) antes do enunciado quando necessário para a compreensão' : ''}
+${incluirTextoApoio ? '- Inclua "textoApoio" (introdutório) quando for necessário um texto base' : ''}
+- NÃO utilize aspas duplas ("") dentro dos textos das questões. Substitua por aspas simples ('') para não quebrar o formato JSON.
 
-Retorne APENAS um JSON válido, sem markdown, neste formato:
+Retorne APENAS um JSON válido, estritamente no formato abaixo, sem nenhum bloco markdown ou texto antes/depois:
 {
   "questoes": [
     {
       "tipo": "${incluirObjetivas ? 'objetiva' : 'discursiva'}",
-      "enunciado": "texto do enunciado",
-      "rubrica": "critério 1: X pts — descrição\\ncritério 2: Y pts — descrição",
-      "notaMaxima": 2.0${incluirTextoApoio ? ',\n      "textoApoio": "texto de contextualização opcional antes do enunciado"' : ''}
+      "enunciado": "texto do enunciado com aspas simples",
+      "notaMaxima": 2.0${incluirTextoApoio ? ',\n      "textoApoio": "texto base opcional com aspas simples"' : ''}${incluirObjetivas ? ',\n      "alternativas": [\n        {"id": "A", "texto": "texto da alternativa A com aspas simples"},\n        {"id": "B", "texto": "texto da alternativa B com aspas simples"},\n        {"id": "C", "texto": "texto da alternativa C com aspas simples"},\n        {"id": "D", "texto": "texto da alternativa D com aspas simples"},\n        {"id": "E", "texto": "texto da alternativa E com aspas simples"}\n      ],\n      "gabarito": "A"' : ',\n      "rubrica": "critério 1: X pts — descrição\\ncritério 2: Y pts — descrição"'}
     }
   ]
 }`;
