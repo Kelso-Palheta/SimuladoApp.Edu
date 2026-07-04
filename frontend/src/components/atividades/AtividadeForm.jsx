@@ -296,7 +296,8 @@ export const AtividadeForm = ({ turmas, onSave, onClose, initialData }) => {
       tipo,
       dificuldade: 'medio',
       incluirTextoApoio: tipo === 'objetiva',
-      tema: ''
+      tema: '',
+      pontuacao: ''
     });
   };
 
@@ -306,32 +307,45 @@ export const AtividadeForm = ({ turmas, onSave, onClose, initialData }) => {
       setErro('Adicione um PDF ou cole o material de apoio antes de gerar.');
       return;
     }
+    if (!gerarPopup.pontuacao || isNaN(parseFloat(gerarPopup.pontuacao.replace(',', '.')))) {
+      setErro('Informe uma pontuação válida para a questão (ex: 2.5).');
+      return;
+    }
+
     setGerandoQuestoes(true);
+    const pontuacao = parseFloat(gerarPopup.pontuacao.replace(',', '.'));
+    const popupAtual = gerarPopup;
     setGerarPopup(null);
     setErro('');
     try {
       const geradas = await gerarQuestoesComIA({
         materialTexto: materialTotal,
         qtdQuestoes: 1,
-        incluirObjetivas: gerarPopup.tipo === 'objetiva',
-        dificuldade: gerarPopup.dificuldade,
-        incluirTextoApoio: gerarPopup.incluirTextoApoio,
-        tema: gerarPopup.tema || ''
+        incluirObjetivas: popupAtual.tipo === 'objetiva',
+        dificuldade: popupAtual.dificuldade,
+        incluirTextoApoio: popupAtual.incluirTextoApoio,
+        tema: popupAtual.tema || ''
       });
       geradas.forEach(q => {
         addQuestao(q.tipo, {
           enunciado: q.enunciado,
           rubrica: q.rubrica,
-          notaMaxima: q.notaMaxima,
+          notaMaxima: pontuacao,
           alternativas: q.alternativas,
           gabarito: q.gabarito,
           textoApoio: q.textoApoio || ''
         });
       });
-      if (gerarPopup.incluirTextoApoio) {
+      if (popupAtual.incluirTextoApoio) {
         geradas.forEach(q => {
           if (q.textoApoio?.trim()) {
-            setTextosBase(prev => [...prev, { id: genId(), html: q.textoApoio.trim(), aposQuestao: questoes.length }]);
+            // Se questoes.length == 0, null = Início da Atividade
+            // Se questoes.length > 0, questoes.length - 1 = Após a última questão ANTES dessa nova
+            setTextosBase(prev => [...prev, { 
+              id: genId(), 
+              html: q.textoApoio.trim(), 
+              aposQuestao: questoes.length > 0 ? questoes.length - 1 : null 
+            }]);
           }
         });
       }
@@ -637,15 +651,29 @@ export const AtividadeForm = ({ turmas, onSave, onClose, initialData }) => {
                   <p className="text-xs font-semibold text-amber-700 mb-3">
                     Configurar geração — {gerarPopup.tipo === 'discursiva' ? 'Discursiva' : 'Objetiva'}
                   </p>
-                  <div className="mb-3">
-                    <label className="block text-[10px] font-semibold text-slate-900 mb-1">Tema da questão</label>
-                    <input
-                      type="text"
-                      value={gerarPopup.tema || ''}
-                      onChange={(e) => setGerarPopup(p => ({ ...p, tema: e.target.value }))}
-                      placeholder="Ex: Revolução Industrial, Fotossíntese... (extraído do material de apoio)"
-                      className="w-full bg-white border border-slate-200 rounded-lg px-3 py-2 text-xs text-slate-900 placeholder-slate-400 outline-none focus:ring-1 focus:ring-amber-400/50"
-                    />
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-3">
+                    <div>
+                      <label className="block text-[10px] font-semibold text-slate-900 mb-1">Tema da questão</label>
+                      <input
+                        type="text"
+                        value={gerarPopup.tema || ''}
+                        onChange={(e) => setGerarPopup(p => ({ ...p, tema: e.target.value }))}
+                        placeholder="Ex: Revolução Industrial..."
+                        className="w-full bg-white border border-slate-200 rounded-lg px-3 py-2 text-xs text-slate-900 placeholder-slate-400 outline-none focus:ring-1 focus:ring-amber-400/50"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-[10px] font-semibold text-slate-900 mb-1">Pontuação da questão *</label>
+                      <input
+                        type="number"
+                        min="0.1"
+                        step="0.1"
+                        value={gerarPopup.pontuacao || ''}
+                        onChange={(e) => setGerarPopup(p => ({ ...p, pontuacao: e.target.value }))}
+                        placeholder="Ex: 2.5"
+                        className="w-full bg-white border border-slate-200 rounded-lg px-3 py-2 text-xs text-slate-900 placeholder-slate-400 outline-none focus:ring-1 focus:ring-amber-400/50"
+                      />
+                    </div>
                   </div>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-3">
                     <div>

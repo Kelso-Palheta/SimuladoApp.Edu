@@ -182,7 +182,7 @@ ${materialTexto.slice(0, 8000)}
 INSTRUÇÕES:
 - Crie ${incluirObjetivas ? 'apenas questões objetivas (múltipla escolha)' : 'apenas questões discursivas'}
 - DIFICULDADE: ${instrucoesDificuldade[dificuldade] || instrucoesDificuldade.medio}
-- Cada questão deve ter: enunciado claro e nota máxima sugerida (entre 0.25 e 5)
+- Cada questão deve ter um enunciado claro.
 ${incluirObjetivas ? '- A questão deve ter 5 alternativas e indicar a letra do gabarito correto. Não precisa de rubrica.' : '- A questão deve incluir a rubrica de correção detalhada.'}
 - Use linguagem adequada ao Ensino Médio
 ${incluirTextoApoio ? '- Inclua "textoApoio" (introdutório) quando for necessário um texto base' : ''}
@@ -196,8 +196,7 @@ REGRAS CRÍTICAS DE FORMATAÇÃO (OBRIGATÓRIO):
   "questoes": [
     {
       "tipo": "${incluirObjetivas ? 'objetiva' : 'discursiva'}",
-      "enunciado": "texto do enunciado com aspas simples e sem quebras de linha reais",
-      "notaMaxima": 2.0${incluirTextoApoio ? ',\n      "textoApoio": "texto base opcional com aspas simples"' : ''}${incluirObjetivas ? ',\n      "alternativas": [\n        {"id": "A", "texto": "texto da alternativa A com aspas simples"},\n        {"id": "B", "texto": "texto da alternativa B com aspas simples"},\n        {"id": "C", "texto": "texto da alternativa C com aspas simples"},\n        {"id": "D", "texto": "texto da alternativa D com aspas simples"},\n        {"id": "E", "texto": "texto da alternativa E com aspas simples"}\n      ],\n      "gabarito": "A"' : ',\n      "rubrica": "critério 1: X pts — descrição\\ncritério 2: Y pts — descrição"'}
+      "enunciado": "texto do enunciado com aspas simples e sem quebras de linha reais"${incluirTextoApoio ? ',\n      "textoApoio": "texto base opcional com aspas simples"' : ''}${incluirObjetivas ? ',\n      "alternativas": [\n        {"id": "A", "texto": "texto da alternativa A com aspas simples"},\n        {"id": "B", "texto": "texto da alternativa B com aspas simples"},\n        {"id": "C", "texto": "texto da alternativa C com aspas simples"},\n        {"id": "D", "texto": "texto da alternativa D com aspas simples"},\n        {"id": "E", "texto": "texto da alternativa E com aspas simples"}\n      ],\n      "gabarito": "A"' : ',\n      "rubrica": "critério 1: X pts — descrição\\ncritério 2: Y pts — descrição"'}
     }
   ]
 }`;
