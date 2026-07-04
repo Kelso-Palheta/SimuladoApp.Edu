@@ -231,7 +231,7 @@ export const AtividadeForm = ({ turmas, onSave, onClose, initialData }) => {
   const [questoes, setQuestoes] = useState(() =>
     initialData?.questoes?.length > 0
       ? initialData.questoes.map(q => ({ ...q, imagensLocais: [] }))
-      : [novaQuestao('discursiva')]
+      : []
   );
   const [textosBase, setTextosBase] = useState(() => {
     if (initialData?.textosBase?.length > 0) return initialData.textosBase;
@@ -608,10 +608,6 @@ export const AtividadeForm = ({ turmas, onSave, onClose, initialData }) => {
                 <p className="text-[10px] text-slate-400 mt-0.5">Nota total: <span className="font-bold text-violet-500">{notaTotalMaxima.toFixed(1).replace('.', ',')} pts</span></p>
               </div>
               <div className="flex gap-1.5 flex-wrap">
-                <button type="button" onClick={addTextoBase}
-                  className="px-2.5 py-1.5 bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-600 rounded-lg text-xs font-semibold transition-all">
-                  + Texto de Apoio
-                </button>
                 <button type="button" onClick={() => abrirGerarPopup('discursiva')} disabled={gerandoQuestoes}
                   className="px-2.5 py-1.5 bg-amber-50 hover:bg-amber-100 disabled:bg-slate-100 border border-amber-200 disabled:border-slate-200 text-amber-600 disabled:text-slate-400 rounded-lg text-xs font-semibold transition-all flex items-center gap-1">
                   {gerandoQuestoes ? (
@@ -731,7 +727,12 @@ export const AtividadeForm = ({ turmas, onSave, onClose, initialData }) => {
               )}
             </div>
 
-            {questoes.length === 0 && renderTextos(null)}
+            {questoes.length === 0 && (
+              <div className="py-10 border-2 border-dashed border-slate-200 rounded-xl flex flex-col items-center justify-center gap-1">
+                <p className="text-sm text-slate-400 font-medium">Nenhuma questão adicionada</p>
+                <p className="text-xs text-slate-300">Use os botões acima para criar questões</p>
+              </div>
+            )}
             {questoes.map((q, i) => (
               <div key={q.id} className="contents">
                 {renderTextos(i === 0 ? null : i - 1)}
@@ -746,6 +747,13 @@ export const AtividadeForm = ({ turmas, onSave, onClose, initialData }) => {
                 {i === questoes.length - 1 && renderTextos(i)}
               </div>
             ))}
+
+            <div className="mt-3 flex gap-2">
+              <button type="button" onClick={() => { addTextoBase(); }}
+                className="flex-1 py-3 border border-dashed border-slate-200 rounded-xl text-xs text-slate-400 hover:text-violet-500 hover:border-violet-300 transition-colors text-center">
+                + Adicionar texto de apoio
+              </button>
+            </div>
           </div>
 
           {erro && (
