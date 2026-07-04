@@ -213,8 +213,8 @@ REGRAS CRÍTICAS DE FORMATAÇÃO (OBRIGATÓRIO):
   return parsed.questoes.map(q => ({
     tipo: q.tipo === 'objetiva' ? 'objetiva' : 'discursiva',
     enunciado: q.enunciado?.trim() || '',
-    rubrica: q.rubrica?.trim() || '',
-    notaMaxima: Math.max(0.25, Number(q.notaMaxima) || 2),
+    rubrica: normalizeRubrica(q.rubrica?.trim() || '', notaMaxima),
+    notaMaxima,
     alternativas: q.tipo === 'objetiva' ? (q.alternativas || [
       { id: 'A', texto: '' }, { id: 'B', texto: '' }, { id: 'C', texto: '' }, { id: 'D', texto: '' }, { id: 'E', texto: '' }
     ]) : [],
@@ -222,6 +222,49 @@ REGRAS CRÍTICAS DE FORMATAÇÃO (OBRIGATÓRIO):
     textoApoio: q.textoApoio?.trim() || ''
   }));
 }
+
+/**
+ * Reescala os valores de pontuação de uma rubrica de texto para que somem exatamente `notaMaxima`.
+ * Preserva o texto descritivo de cada critério.
+ * Ex: "0.6 pts — Critério A\n0.4 pts — Critério B" com notaMaxima=1 → permanece igual.
+ *     "4 pts — Critério A\n6 pts — Critério B" com notaMaxima=1 → "0.40 pts — Critério A\n0.60 pts — Critério B"
+ */
+function normalizeRubrica(rubrica, notaMaxima) {
+  if (!rubrica || !notaMaxima) return rubrica;
+
+  // Regex que captura o número de pontos no início de cada linha
+  // Suporta formatos: "2 pts —", "0.5 pts —", "critério 1: 3 pts —", etc.
+  const lineRegex = /^(.*?)(\d+(?:[.,]\d+)?)\s*pts?\s*[—\-–]/i;
+
+  const lines = rubrica.split(/\\n|\n/);
+  const valores = [];
+
+  for (const line of lines) {
+    const m = line.match(lineRegex);
+    if (m) {
+      valores.push(parseFloat(m[2].replace(',', '.')));
+    } else {
+      valores.push(null);
+    }
+  }
+
+  const soma = valores.reduce((s, v) => s + (v ?? 0), 0);
+  if (soma === 0) return rubrica; // nada a normalizar
+
+  const fator = notaMaxima / soma;
+
+  return lines.map((line, i) => {
+    if (valores[i] === null) return line;
+    const novoValor = Math.round(valores[i] * fator * 100) / 100;
+    // substitui apenas o número de pontos, preservando o restante da linha
+    return line.replace(lineRegex, (_, prefix, _val, ...rest) => {
+      const suffixMatch = line.match(/(\d+(?:[.,]\d+)?)\s*pts?\s*[—\-–](.*)/i);
+      const suffix = suffixMatch ? suffixMatch[2] : '';
+      return `${prefix}${novoValor} pts —${suffix}`;
+    });
+  }).join('\\n');
+}
+
 
 export function detectarRespostasSimilares(entregas) {
   const discursivas = entregas.filter(e => {
