@@ -435,6 +435,45 @@ export const AtividadeForm = ({ turmas, onSave, onClose, initialData }) => {
       setSaving(false);
     }
   };
+  const renderTextos = (aposIndex) => {
+    const texts = textosBase.filter(t => t.aposQuestao === aposIndex);
+    if (texts.length === 0) return null;
+    return (
+      <div className="space-y-3 mb-4 mt-2">
+        {texts.map((t, idx) => (
+          <div key={t.id} className="border border-slate-200 rounded-xl p-3 bg-white shadow-sm">
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">
+                {texts.length > 1 ? `Texto ${idx + 1}` : 'Texto de apoio'}
+              </span>
+              <div className="flex items-center gap-2">
+                <select
+                  value={t.aposQuestao ?? ''}
+                  onChange={(e) => updateTextoBase(t.id, 'aposQuestao', e.target.value === '' ? null : Number(e.target.value))}
+                  className="text-[11px] bg-white border border-slate-200 rounded-lg px-2 py-1 text-slate-900 outline-none focus:ring-1 focus:ring-violet-400/50"
+                >
+                  <option value="">Antes de todas</option>
+                  {questoes.map((_, qi) => (
+                    <option key={qi} value={qi}>Antes da questão {qi + 2}</option>
+                  ))}
+                </select>
+                <button type="button" onClick={() => removeTextoBase(t.id)}
+                  className="text-xs text-slate-400 hover:text-red-500 transition-colors">
+                  Excluir
+                </button>
+              </div>
+            </div>
+            <RichTextEditor
+              value={t.html}
+              onChange={(html) => updateTextoBase(t.id, 'html', html)}
+              placeholder="Cole aqui o texto base, trecho do livro ou contextualização..."
+              rows={4}
+            />
+          </div>
+        ))}
+      </div>
+    );
+  };
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/20 backdrop-blur-sm">
@@ -563,63 +602,16 @@ export const AtividadeForm = ({ turmas, onSave, onClose, initialData }) => {
           </div>
 
           <div>
-            <div className="flex items-center justify-between mb-2">
-              <label className="text-xs font-semibold text-slate-900">
-                Texto de apoio <span className="text-slate-400 font-normal">(visível para o aluno)</span>
-              </label>
-              <button type="button" onClick={addTextoBase}
-                className="flex items-center gap-1 px-2.5 py-1 bg-violet-50 hover:bg-violet-100 border border-violet-200 rounded-lg text-[11px] font-semibold text-violet-600 transition-all">
-                + Adicionar texto
-              </button>
-            </div>
-
-            {textosBase.length === 0 && (
-              <button type="button" onClick={addTextoBase}
-                className="w-full py-4 border border-dashed border-slate-200 rounded-xl text-xs text-slate-400 hover:text-violet-500 hover:border-violet-300 transition-colors">
-                + Clique para adicionar um texto de apoio
-              </button>
-            )}
-
-            <div className="space-y-3">
-              {textosBase.map((t, i) => (
-                <div key={t.id} className="border border-slate-200 rounded-xl p-3 bg-white">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Texto {i + 1}</span>
-                    <div className="flex items-center gap-2">
-                      <select
-                        value={t.aposQuestao ?? ''}
-                        onChange={(e) => updateTextoBase(t.id, 'aposQuestao', e.target.value === '' ? null : Number(e.target.value))}
-                        className="text-[11px] bg-white border border-slate-200 rounded-lg px-2 py-1 text-slate-900 outline-none focus:ring-1 focus:ring-violet-400/50"
-                      >
-                        <option value="">Início da atividade</option>
-                        {questoes.map((_, qi) => (
-                          <option key={qi} value={qi}>Após questão {qi + 1}</option>
-                        ))}
-                      </select>
-                      <button type="button" onClick={() => removeTextoBase(t.id)}
-                        className="text-xs text-slate-400 hover:text-red-500 transition-colors">
-                        Remover
-                      </button>
-                    </div>
-                  </div>
-                  <RichTextEditor
-                    value={t.html}
-                    onChange={(html) => updateTextoBase(t.id, 'html', html)}
-                    placeholder="Cole aqui o texto base, trecho do livro ou contextualização para o aluno..."
-                    rows={5}
-                  />
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div>
             <div className="flex items-center justify-between mb-3">
               <div>
                 <p className="text-xs font-semibold text-slate-900">Questões *</p>
                 <p className="text-[10px] text-slate-400 mt-0.5">Nota total: <span className="font-bold text-violet-500">{notaTotalMaxima.toFixed(1).replace('.', ',')} pts</span></p>
               </div>
               <div className="flex gap-1.5 flex-wrap">
+                <button type="button" onClick={addTextoBase}
+                  className="px-2.5 py-1.5 bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-600 rounded-lg text-xs font-semibold transition-all">
+                  + Texto de Apoio
+                </button>
                 <button type="button" onClick={() => abrirGerarPopup('discursiva')} disabled={gerandoQuestoes}
                   className="px-2.5 py-1.5 bg-amber-50 hover:bg-amber-100 disabled:bg-slate-100 border border-amber-200 disabled:border-slate-200 text-amber-600 disabled:text-slate-400 rounded-lg text-xs font-semibold transition-all flex items-center gap-1">
                   {gerandoQuestoes ? (
@@ -739,16 +731,20 @@ export const AtividadeForm = ({ turmas, onSave, onClose, initialData }) => {
               )}
             </div>
 
+            {questoes.length === 0 && renderTextos(null)}
             {questoes.map((q, i) => (
-              <QuestaoEditor
-                key={q.id}
-                questao={q}
-                index={i}
-                total={questoes.length}
-                onChange={(novaQ) => updateQuestao(i, novaQ)}
-                onRemove={() => removeQuestao(i)}
-                materialTexto={materialTotal}
-              />
+              <div key={q.id} className="contents">
+                {renderTextos(i === 0 ? null : i - 1)}
+                <QuestaoEditor
+                  questao={q}
+                  index={i}
+                  total={questoes.length}
+                  onChange={(novaQ) => updateQuestao(i, novaQ)}
+                  onRemove={() => removeQuestao(i)}
+                  materialTexto={materialTotal}
+                />
+                {i === questoes.length - 1 && renderTextos(i)}
+              </div>
             ))}
           </div>
 
