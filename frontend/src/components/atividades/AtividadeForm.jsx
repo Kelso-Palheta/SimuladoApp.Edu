@@ -95,7 +95,7 @@ function QuestaoEditor({ questao, index, total, onChange, onRemove, materialText
         <input
           type="number"
           value={questao.notaMaxima}
-          onChange={(e) => update('notaMaxima', Number(e.target.value))}
+          onChange={(e) => update('notaMaxima', e.target.value === '' ? '' : Number(e.target.value))}
           min="0.25" max="10" step="0.25"
           title="Nota máxima desta questão"
           className="w-20 ml-auto bg-slate-50 border border-slate-200 rounded-lg px-2 py-1.5 text-xs text-slate-900 text-center outline-none focus:ring-1 focus:ring-violet-400/50"
