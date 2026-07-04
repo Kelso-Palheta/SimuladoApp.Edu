@@ -163,7 +163,7 @@ Exemplo:
  * Gera questões (discursivas ou objetivas) a partir do material de apoio usando IA.
  * Retorna array de objetos: { tipo, enunciado, rubrica, notaMaxima }
  */
-export async function gerarQuestoesComIA({ materialTexto, qtdQuestoes = 3, incluirObjetivas = true, dificuldade = 'medio', incluirTextoApoio = false, tema = '' }) {
+export async function gerarQuestoesComIA({ materialTexto, qtdQuestoes = 3, incluirObjetivas = true, dificuldade = 'medio', incluirTextoApoio = false, tema = '', notaMaxima = 2 }) {
   const apiKey = 'client-side';
 
   const labelsDificuldade = { facil: 'fácil', medio: 'média', dificil: 'difícil' };
@@ -183,7 +183,7 @@ INSTRUÇÕES:
 - Crie ${incluirObjetivas ? 'apenas questões objetivas (múltipla escolha)' : 'apenas questões discursivas'}
 - DIFICULDADE: ${instrucoesDificuldade[dificuldade] || instrucoesDificuldade.medio}
 - Cada questão deve ter um enunciado claro.
-${incluirObjetivas ? '- A questão deve ter 5 alternativas e indicar a letra do gabarito correto. Não precisa de rubrica.' : '- A questão deve incluir a rubrica de correção detalhada.'}
+${incluirObjetivas ? '- A questão deve ter 5 alternativas e indicar a letra do gabarito correto. Não precisa de rubrica.' : `- A questão deve incluir a rubrica de correção detalhada. A SOMA de todos os critérios deve ser EXATAMENTE ${notaMaxima} pontos (ex: se notaMaxima=1, distribua entre os critérios somando 1 no total).`}
 - Use linguagem adequada ao Ensino Médio
 ${incluirTextoApoio ? '- Inclua "textoApoio" (introdutório) quando for necessário um texto base' : ''}
 
