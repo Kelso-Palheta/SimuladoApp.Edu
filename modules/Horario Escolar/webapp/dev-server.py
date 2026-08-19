@@ -210,7 +210,7 @@ class Handler(http.server.SimpleHTTPRequestHandler):
             payload = json.loads(body)
 
             action = payload.get('action', 'chat')
-            model = payload.get('model', 'sabia-3')
+            model = payload.get('model', 'sabiazinho-4')
 
             messages = [
                 {'role': 'system', 'content': SYSTEM_PROMPT},

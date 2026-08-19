@@ -9,9 +9,17 @@ const ACCEPT_IA = '.pdf,.jpg,.jpeg,.png,.webp';
 const ACCEPT_XLSX = '.xlsx,.xls,.csv';
 const ACCEPT_ALL = ACCEPT_XLSX + ',' + ACCEPT_IA;
 
+/**
+ * Normaliza entrada para formato { nome, dataNascimento? }
+ */
+const normalizeEntry = (item) => {
+  if (typeof item === 'string') return { nome: item };
+  return item;
+};
+
 export const ImportModal = ({ turma, onConfirm, onClose }) => {
   const [stage, setStage] = useState('drop');
-  const [nomes, setNomes] = useState([]);
+  const [alunos, setAlunos] = useState([]); // array de { nome, dataNascimento? }
   const [erro, setErro] = useState('');
   const [dragging, setDragging] = useState(false);
   const [editNome, setEditNome] = useState(null);
@@ -23,17 +31,30 @@ export const ImportModal = ({ turma, onConfirm, onClose }) => {
     setStage('processing');
     setErro('');
     try {
-      let nomes;
+      let resultado;
       const ext = file.name.split('.').pop().toLowerCase();
       if (['xlsx', 'xls', 'csv'].includes(ext)) {
-        nomes = await importarXlsxOuCsv(file);
+        resultado = await importarXlsxOuCsv(file);
       } else {
-        nomes = await importarViaIA(file);
+        resultado = await importarViaIA(file);
       }
-      const limpos = [...new Set(nomes.map(cleanNome).filter(Boolean))].sort((a, b) =>
-        a.localeCompare(b, 'pt-BR')
-      );
-      setNomes(limpos);
+      // Normaliza para array de objetos
+      const items = resultado.map(normalizeEntry);
+      const limpos = items
+        .map(item => ({ ...item, nome: cleanNome(item.nome) }))
+        .filter(item => item.nome)
+        .sort((a, b) => a.nome.localeCompare(b.nome, 'pt-BR'));
+
+      // Deduplica por nome
+      const seen = new Set();
+      const unicos = limpos.filter(item => {
+        const key = normalizeNome(item.nome);
+        if (seen.has(key)) return false;
+        seen.add(key);
+        return true;
+      });
+
+      setAlunos(unicos);
       setStage('preview');
     } catch (e) {
       setErro(e.message);
@@ -53,10 +74,12 @@ export const ImportModal = ({ turma, onConfirm, onClose }) => {
     if (file) processarArquivo(file);
   };
 
-  const novos = nomes.filter((n) => !existentes.has(normalizeNome(n)));
-  const duplicatas = nomes.filter((n) => existentes.has(normalizeNome(n)));
+  const novos = alunos.filter((a) => !existentes.has(normalizeNome(a.nome)));
+  const duplicatas = alunos.filter((a) => existentes.has(normalizeNome(a.nome)));
+  const comData = novos.filter(a => a.dataNascimento).length;
 
   const confirmar = () => {
+    // Retorna objetos para manter dataNascimento
     onConfirm(novos);
     onClose();
   };
@@ -112,19 +135,24 @@ export const ImportModal = ({ turma, onConfirm, onClose }) => {
 
           {stage === 'preview' && (
             <>
-              <div className="flex items-center gap-2 mb-3">
+              <div className="flex items-center gap-2 mb-3 flex-wrap">
                 <span className="text-sm text-slate-600">
                   <strong className="text-green-600">{novos.length}</strong> novo{novos.length !== 1 && 's'}
                   {duplicatas.length > 0 && (
                     <>, <strong className="text-amber-500">{duplicatas.length}</strong> já exist{duplicatas.length !== 1 ? 'em' : 'e'}</>
                   )}
                 </span>
+                {comData > 0 && (
+                  <span className="text-[10px] bg-violet-50 text-violet-600 border border-violet-200 px-2 py-0.5 rounded-full font-medium">
+                    📅 {comData} com data de nascimento
+                  </span>
+                )}
                 <button onClick={() => setStage('drop')} className="ml-auto text-xs text-slate-400 hover:text-slate-600">← trocar arquivo</button>
               </div>
 
               <div className="max-h-64 overflow-y-auto space-y-1 pr-1">
-                {nomes.map((nome, i) => {
-                  const isDup = existentes.has(nome);
+                {alunos.map((aluno, i) => {
+                  const isDup = existentes.has(normalizeNome(aluno.nome));
                   return (
                     <div key={i} className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm ${isDup ? 'opacity-40' : 'bg-slate-50'}`}>
                       <span className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${isDup ? 'bg-amber-400' : 'bg-green-400'}`} />
@@ -132,21 +160,26 @@ export const ImportModal = ({ turma, onConfirm, onClose }) => {
                         <input
                           autoFocus
                           className="flex-1 bg-transparent border-b border-violet-500 outline-none text-slate-900 font-mono text-xs"
-                          defaultValue={nome}
+                          defaultValue={aluno.nome}
                           onBlur={(e) => {
                             const novo = cleanNome(e.target.value);
-                            if (novo) setNomes((prev) => { const n = [...prev]; n[i] = novo; return n; });
+                            if (novo) setAlunos((prev) => { const n = [...prev]; n[i] = { ...n[i], nome: novo }; return n; });
                             setEditNome(null);
                           }}
                           onKeyDown={(e) => { if (e.key === 'Enter') e.target.blur(); if (e.key === 'Escape') setEditNome(null); }}
                         />
                       ) : (
-                        <span className="flex-1 font-mono text-xs text-slate-800">{titleCase(nome)}</span>
+                        <span className="flex-1 font-mono text-xs text-slate-800">{titleCase(aluno.nome)}</span>
+                      )}
+                      {aluno.dataNascimento && (
+                        <span className="text-[10px] font-mono text-violet-500 bg-violet-50 px-1.5 py-0.5 rounded border border-violet-200" title="Data de nascimento (ddMM)">
+                          📅 {aluno.dataNascimento}
+                        </span>
                       )}
                       {!isDup && (
                         <button onClick={() => setEditNome(i)} className="text-slate-400 hover:text-slate-600 text-xs">✎</button>
                       )}
-                      <button onClick={() => setNomes((prev) => prev.filter((_, j) => j !== i))} className="text-slate-400 hover:text-red-500 text-xs">×</button>
+                      <button onClick={() => setAlunos((prev) => prev.filter((_, j) => j !== i))} className="text-slate-400 hover:text-red-500 text-xs">×</button>
                     </div>
                   );
                 })}
@@ -171,3 +204,4 @@ export const ImportModal = ({ turma, onConfirm, onClose }) => {
     </div>
   );
 };
+

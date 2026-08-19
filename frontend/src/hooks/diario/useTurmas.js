@@ -54,13 +54,24 @@ export const useTurmas = (initialTurmas, persistTurmas) => {
         if (t.id !== turmaId) return t;
         const existentesNormalizados = new Set(t.alunos.map((a) => normalizeNome(a.nome)));
         const novos = nomesNovos
-          .filter((n) => {
-            const norm = normalizeNome(n);
+          .map((item) => {
+            // Suporta tanto string quanto objeto { nome, dataNascimento }
+            const isObj = typeof item === 'object' && item !== null;
+            const nome = isObj ? item.nome : item;
+            const dataNascimento = isObj ? item.dataNascimento : undefined;
+            return { nome, dataNascimento };
+          })
+          .filter(({ nome }) => {
+            const norm = normalizeNome(nome);
             if (existentesNormalizados.has(norm)) return false;
             existentesNormalizados.add(norm);
             return true;
           })
-          .map((nome) => ({ id: `al_${genId()}`, nome: cleanNome(nome) }));
+          .map(({ nome, dataNascimento }) => ({
+            id: `al_${genId()}`,
+            nome: cleanNome(nome),
+            ...(dataNascimento ? { dataNascimento } : {})
+          }));
         const alunos = [...t.alunos, ...novos].sort((a, b) => a.nome.localeCompare(b.nome, 'pt-BR'));
         return { ...t, alunos };
       })

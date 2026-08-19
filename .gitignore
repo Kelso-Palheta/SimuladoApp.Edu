@@ -22,6 +22,8 @@
 .env.*.local
 *.pem
 *.key
+*serviceAccount*.json
+backend/test_logins.js
 
 # === Node.js / npm ===
 node_modules/

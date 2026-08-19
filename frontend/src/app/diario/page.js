@@ -207,6 +207,24 @@ export default function DiarioPage() {
 
   const handlePublishGrades = async () => {
     if (publishing || !user || turmas.length === 0) return;
+
+    // Verificar alunos sem dataNascimento antes de publicar
+    const alunosSemData = [];
+    turmas.forEach(t => {
+      (t.alunos || []).forEach(a => {
+        if (!a.dataNascimento) alunosSemData.push({ nome: a.nome, turma: t.nome });
+      });
+    });
+
+    if (alunosSemData.length > 0) {
+      const nomes = alunosSemData.slice(0, 5).map(a => `• ${a.nome} (${a.turma})`).join('\n');
+      const extra = alunosSemData.length > 5 ? `\n...e mais ${alunosSemData.length - 5} aluno(s)` : '';
+      const confirma = window.confirm(
+        `⚠️ ${alunosSemData.length} aluno(s) sem data de nascimento não terão login no Portal do Aluno:\n\n${nomes}${extra}\n\nPreencha a data (ddMM) no diário para gerar o login.\nDeseja publicar mesmo assim?`
+      );
+      if (!confirma) return;
+    }
+
     setPublishing(true);
     setToast('Publicando notas...');
 
@@ -224,12 +242,14 @@ export default function DiarioPage() {
 
       if (!res.ok) throw new Error(data.error || 'Erro desconhecido');
 
+      const parts = [];
+      if (data.total > 0) parts.push(`✅ ${data.total} publicados`);
+      if (data.semData > 0) parts.push(`⚠️ ${data.semData} sem data de nascimento`);
       if (data.erros > 0) {
-        const errDetail = (data.errosDetails && data.errosDetails.length > 0) ? ` - Motivo: ${data.errosDetails[0]}` : '';
-        setToast(`⚠️ ${data.total} publicados, ${data.erros} falhas${errDetail}`);
-      } else {
-        setToast(`✅ ${data.total} alunos publicados no Portal do Aluno!`);
+        const errDetail = (data.errosDetails && data.errosDetails.length > 0) ? ` (${data.errosDetails[0]})` : '';
+        parts.push(`❌ ${data.erros} falhas${errDetail}`);
       }
+      setToast(parts.join(' · ') || '✅ Publicação concluída!');
     } catch (e) {
       console.error('Erro ao publicar notas:', e);
       setToast(`Erro ao publicar: ${e.message}. Tente novamente.`);

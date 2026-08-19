@@ -288,6 +288,15 @@ export const TabelaNotas = ({
                           {al.dataNascimento || '+ data'}
                         </button>
                       )}
+                      {al.dataNascimento ? (
+                        <span className="hidden sm:inline text-[9px] font-mono text-emerald-600 bg-emerald-50 px-1 py-0.5 rounded border border-emerald-200" title="Login do aluno no Portal">
+                          🔑 {al.nome.split(' ')[0].toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')}{al.dataNascimento}
+                        </span>
+                      ) : (
+                        <span className="hidden sm:inline text-[9px] text-amber-500 font-medium" title="Sem data = sem login no Portal do Aluno">
+                          ⚠ sem login
+                        </span>
+                      )}
                     </div>
                   </td>
                   <td className="px-2 py-1"><NumCell value={nota.simulado ?? ''} min={0} max={config?.simuladoMaxLanca !== undefined ? Number(config.simuladoMaxLanca) : 10} onChange={(v) => onSetNota(al.id, 'simulado', v)} /></td>

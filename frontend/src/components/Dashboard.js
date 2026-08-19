@@ -14,6 +14,7 @@ import {
   GraduationCap,
   X,
   User,
+  Calendar,
 } from "lucide-react";
 import { ProfileModal } from "@/components/diario/ProfileModal";
 
@@ -22,6 +23,7 @@ const ICON_MAP = {
   PenTool,
   MessageSquare,
   ClipboardList,
+  Calendar,
 };
 
 function Toast({ message, onClose }) {
@@ -56,7 +58,7 @@ export default function Dashboard() {
   const permitidos = perfil?.modulos_permitidos || [];
 
   const handleCardClick = (mod) => {
-    if (permitidos.includes(mod.id)) {
+    if (permitidos.includes(mod.id) || mod.id === 'calendario-pedagogico') {
       router.push(mod.path);
     } else {
       setToast(
@@ -129,7 +131,7 @@ export default function Dashboard() {
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {PLATFORM_MODULES.map((mod) => {
-            const temAcesso = permitidos.includes(mod.id);
+            const temAcesso = permitidos.includes(mod.id) || mod.id === 'calendario-pedagogico';
             const Icon = ICON_MAP[mod.icon] || BookOpen;
 
             return (

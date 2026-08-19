@@ -21,6 +21,13 @@ export const PLATFORM_MODULES = [
     descricao: "Correção de redações com IA por competência ENEM",
   },
   {
+    id: "calendario-pedagogico",
+    nome: "Calendário Pedagógico",
+    icon: "Calendar",
+    path: "/calendario",
+    descricao: "Grade horária e remanejamento automático de aulas",
+  },
+  {
     id: "agente-linguagens",
     nome: "Agente ENEM: Linguagens",
     icon: "MessageSquare",

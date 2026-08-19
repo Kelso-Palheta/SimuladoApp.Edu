@@ -15,7 +15,7 @@ class MaritacaClient {
     this.mode = 'backend';
     this.apiKey = config.apiKey || window.MARITACA_API_KEY || '';
     this.backendUrl = config.backendUrl || '/api/maritaca-assistant';
-    this.model = config.model || 'sabia-3'; // sabia-3 (melhor) | sabiazinho-3 (barato)
+    this.model = config.model || 'sabiazinho-4'; // sabiazinho-4
     this.debug = config.debug || false;
 
     if (this.debug) {

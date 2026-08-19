@@ -51,11 +51,17 @@ export async function POST(request) {
 
     let total = 0;
     let erros = 0;
+    let semData = 0;
+    let alunosSemData = [];
     let errosDetails = [];
 
     for (const turma of turmas) {
       for (const aluno of (turma.alunos || [])) {
-        if (!aluno.dataNascimento) continue;
+        if (!aluno.dataNascimento) {
+          semData++;
+          alunosSemData.push({ nome: aluno.nome, turma: turma.nome });
+          continue;
+        }
 
         try {
           const loginStr = gerarLoginAluno(aluno.nome, aluno.dataNascimento);
@@ -98,7 +104,7 @@ export async function POST(request) {
       }
     }
 
-    return NextResponse.json({ total, erros, errosDetails });
+    return NextResponse.json({ total, erros, errosDetails, semData, alunosSemData });
   } catch (e) {
     return NextResponse.json({ error: e.message }, { status: 500 });
   }

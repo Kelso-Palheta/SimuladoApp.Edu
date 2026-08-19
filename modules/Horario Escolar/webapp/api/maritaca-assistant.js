@@ -81,7 +81,7 @@ export default async function handler(req, res) {
       userMessage,      // texto do usuário
       schoolData,       // dados atuais da escola (slots, profs, salas)
       pdfText,          // texto extraído do PDF (para action=parse_pdf)
-      model = 'sabia-3' // 'sabia-3' (melhor) ou 'sabiazinho-3' (mais barato)
+      model = 'sabiazinho-4' // 'sabiazinho-4' (recomendado)
     } = req.body;
 
     // Build context-specific messages based on action
