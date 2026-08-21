@@ -1,12 +1,15 @@
-"use client";
+'use client';
 
-import { useAuth } from '@/lib/auth-context';
+import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { ArrowLeft, MessageSquare } from 'lucide-react';
 
+// Rota legacy — redirecionada para o Hub de Agentes Pedagógicos
 export default function AgenteLinguagensPage() {
-  const { user, perfil, loading } = useAuth();
   const router = useRouter();
+  useEffect(() => { router.replace('/agentes'); }, [router]);
+  return null;
+}
+
 
   if (loading || (!perfil && user)) {
     return (

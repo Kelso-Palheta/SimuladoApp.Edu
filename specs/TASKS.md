@@ -11,6 +11,7 @@
 - [x] **TASK-08:** Gestão de Feriados e Recessos Escolares com importação de feriados nacionais e Smart Shift automático.
 - [x] **TASK-09:** Redesign Global e Polimento do Portal do Aluno (`/aluno`, `/aluno/notas`, `/aluno/atividade`) com emissão de Boletim Escolar em PDF.
 - [x] **TASK-10:** Exportação da Caderneta Escolar Oficial em PDF (Paisagem A4 com assinaturas) e Planilha Excel/CSV no Diário Pedagógico.
+- [x] **TASK-11:** Hub de Agentes Pedagógicos MVP — 2 agentes conversacionais (Ensino Médio e Fundamental II) com chat persistente, API segura e design glassmorphism.
 
 ---
 

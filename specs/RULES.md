@@ -42,3 +42,17 @@ Este documento define as regras de negócio inegociáveis do sistema. Qualquer c
    - Se uma aula que possui tópicos associados for cancelada (`NAO_REALIZADA`), seus tópicos devem ser transferidos para a próxima aula ativa disponível no cronograma (`AGENDADA`), e os tópicos das aulas subsequentes devem ser deslocados em cascata (+1 slot) sem sobrescrita destrutiva.
 5. **RN-12 (Bloqueio de Dias Não Letivos & Feriados):**
    - Dias registrados como Feriado ou Recesso Escolar não comportam aulas ativas. Ao registrar um feriado em data que possua aulas com tópicos, o sistema deve acionar automaticamente o Smart Shift para transferir o conteúdo para o próximo dia letivo subsequente.
+
+---
+
+## 4. Regras dos Agentes Pedagógicos
+
+1. **RN-13 (Modelo Exclusivo de IA):**
+   - Agentes pedagógicos devem utilizar exclusivamente o modelo `sabiazinho-4` via Maritalk API. É terminantemente proibido usar qualquer outro modelo ou alias.
+2. **RN-14 (Identidade Pedagógica Imutável):**
+   - Cada agente possui um `systemPrompt` pedagógico fixo com nome, segmento escolar e metodologia. Os prompts residem **apenas no servidor** (rota API) e nunca são expostos ao cliente.
+3. **RN-15 (Histórico de Sessão por Agente):**
+   - O histórico de mensagens é armazenado em `localStorage` com a chave `agente_history_{agentId}` e só é apagado sob demanda explícita do usuário (ação "Limpar histórico").
+4. **RN-16 (Segmentos Suportados no MVP):**
+   - O MVP suporta exatamente dois segmentos de agente: `ensino-medio` (Ensino Médio — 1º ao 3º EM) e `fundamental-2` (Ensino Fundamental II — 6º ao 9º ano).
+
