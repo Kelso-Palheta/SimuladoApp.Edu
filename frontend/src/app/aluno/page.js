@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { validarLoginAluno } from '@/lib/firebase-aluno';
-import { PenTool } from 'lucide-react';
+import { GraduationCap, ArrowLeft, ArrowRight, BookOpen, PenTool, CheckCircle2, User } from 'lucide-react';
 
 export default function AlunoLoginPage() {
   const [login, setLogin] = useState('');
@@ -41,21 +41,6 @@ export default function AlunoLoginPage() {
 
     setErro('');
     setLoading(true);
-
-    if (valor === 'debug') {
-      try {
-        const { collection, getDocs, limit, query } = require('firebase/firestore');
-        const { db } = require('@/lib/firebase');
-        const q = query(collection(db, 'alunoLogin'), limit(50));
-        const snap = await getDocs(q);
-        const logins = snap.docs.map(d => d.data().login || 'sem-login').join(', ');
-        setErro(`DEBUG (Logins no banco): ${logins || 'Nenhum'}`);
-      } catch (e) {
-        setErro('DEBUG ERROR: ' + e.message);
-      }
-      setLoading(false);
-      return;
-    }
 
     try {
       const dados = await validarLoginAluno(valor);
@@ -129,103 +114,134 @@ export default function AlunoLoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4"
-      style={{
-        backgroundImage: 'radial-gradient(ellipse 80% 80% at 50% -20%, rgba(99,102,241,0.06), transparent)',
-      }}
-    >
-      <div className="w-full max-w-md bg-white border border-slate-200 rounded-3xl shadow-xl p-8 animate-card-in">
-        <div className="text-center mb-8">
-          <div className="w-14 h-14 mx-auto mb-4 rounded-2xl bg-gradient-to-tr from-violet-700 to-violet-400 flex items-center justify-center text-white text-xl font-extrabold shadow-lg shadow-violet-500/20">
-            N
+    <div className="min-h-screen bg-[#f7f8fc] flex items-center justify-center p-4 font-sans selection:bg-[#f60c49] selection:text-white relative overflow-hidden">
+      {/* Elementos decorativos sutis */}
+      <div className="absolute -top-32 -left-32 w-96 h-96 bg-[#f60c49]/5 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute -bottom-32 -right-32 w-96 h-96 bg-[#101942]/5 rounded-full blur-3xl pointer-events-none" />
+
+      <div className="w-full max-w-md bg-white border border-[#dce0f0] rounded-3xl shadow-xl p-8 z-10">
+        {/* Topo / Voltar */}
+        <div className="flex items-center justify-between mb-6">
+          <button
+            onClick={() => router.push('/')}
+            className="inline-flex items-center gap-1.5 text-xs font-bold text-[#6070a0] hover:text-[#101942] transition-colors"
+          >
+            <ArrowLeft size={14} /> Voltar ao Início
+          </button>
+          <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#f60c49] bg-[#fff2f6] border border-[#fde4ec] px-2 py-0.5 rounded-full">
+            Área do Estudante
+          </span>
+        </div>
+
+        {/* Logo e Cabeçalho */}
+        <div className="text-center mb-6">
+          <div className="w-14 h-14 mx-auto mb-3.5 rounded-2xl bg-[#101942] border-2 border-[#f60c49]/20 flex items-center justify-center text-white shadow-md shadow-[#101942]/10">
+            <GraduationCap size={28} className="text-[#f60c49]" />
           </div>
-          <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Portal do Aluno</h1>
-          <p className="text-xs text-slate-400 mt-1">
-            Acesse suas notas, redações e simulados
+          <h1 className="font-head text-2xl font-extrabold text-[#101942] tracking-tight">
+            Portal do Aluno
+          </h1>
+          <p className="text-xs text-[#6070a0] mt-1">
+            Consulte seu boletim, redações corrigidas e atividades
           </p>
         </div>
 
         {vinculos ? (
           <div className="space-y-4">
-            <div className="text-left bg-violet-50/50 border border-violet-100 p-4 rounded-2xl mb-4">
-              <p className="text-xs text-slate-500 font-semibold uppercase tracking-wider">Aluno(a) Identificado(a)</p>
-              <p className="text-sm font-bold text-slate-800 mt-0.5">{alunoBase?.nome}</p>
+            <div className="text-left bg-[#f7f8fc] border border-[#dce0f0] p-4 rounded-2xl">
+              <span className="text-[10px] text-[#6070a0] font-bold uppercase tracking-wider block">
+                Aluno(a) Identificado(a)
+              </span>
+              <p className="text-sm font-extrabold text-[#101942] mt-0.5 flex items-center gap-1.5">
+                <User size={14} className="text-[#f60c49]" />
+                {alunoBase?.nome}
+              </p>
             </div>
-            <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2 text-left">Selecione uma matéria ou professor:</p>
-            <div className="space-y-2 max-h-[300px] overflow-y-auto pr-1">
+
+            <p className="text-xs font-bold text-[#6070a0] uppercase tracking-wider mb-2 text-left font-head">
+              Selecione o Professor / Turma:
+            </p>
+
+            <div className="space-y-2.5 max-h-[300px] overflow-y-auto pr-1">
               {vinculos.map((v) => (
-                <div key={v.id || v.professorUid} className="p-4 bg-slate-50 border border-slate-200/80 rounded-2xl flex flex-col gap-3">
-                  <div className="flex items-center justify-between min-w-0 pr-2">
-                    <div>
-                      <p className="font-bold text-slate-800 text-sm truncate">Professor(a) {v.nomeProfessor}</p>
-                      <p className="text-xs text-slate-400 mt-0.5 font-medium">
-                        Turma: {v.turmaNome || v.turmaId}
-                      </p>
-                    </div>
+                <div key={v.id || v.professorUid} className="p-4 bg-white border border-[#dce0f0] hover:border-[#f60c49]/40 rounded-2xl shadow-2xs transition-all flex flex-col gap-3">
+                  <div>
+                    <p className="font-extrabold text-[#101942] text-sm truncate font-head">
+                      Professor(a) {v.nomeProfessor}
+                    </p>
+                    <p className="text-xs text-[#6070a0] mt-0.5 font-medium">
+                      Turma: {v.turmaNome || v.turmaId}
+                    </p>
                   </div>
                   <div className="flex gap-2">
                     <button
                       onClick={() => handleSelectVinculo(v, false)}
-                      className="flex-1 bg-violet-100 hover:bg-violet-200 text-violet-700 text-xs font-bold py-2 px-3 rounded-xl transition-colors text-center"
+                      className="flex-1 bg-[#101942] hover:bg-[#090f28] text-white text-xs font-bold py-2 px-3 rounded-xl transition-all text-center flex items-center justify-center gap-1 shadow-2xs"
                     >
-                      Acessar Diário
+                      <BookOpen size={13} />
+                      <span>Ver Notas</span>
                     </button>
                     <button
                       onClick={() => handleSelectVinculo(v, true)}
-                      className="flex-1 bg-indigo-500 hover:bg-indigo-600 text-white text-xs font-bold py-2 px-3 rounded-xl transition-colors text-center shadow-sm flex items-center justify-center gap-1"
+                      className="flex-1 bg-[#fff2f6] hover:bg-[#ffe6ee] text-[#d40840] border border-[#fde4ec] text-xs font-bold py-2 px-3 rounded-xl transition-all text-center flex items-center justify-center gap-1"
                     >
-                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
-                      Ver Redação
+                      <PenTool size={13} />
+                      <span>Redação</span>
                     </button>
                   </div>
                 </div>
               ))}
             </div>
-            <button onClick={() => {
-              setVinculos(null);
-              setAlunoBase(null);
-              if (typeof window !== 'undefined') {
-                sessionStorage.removeItem('aluno_base');
-                sessionStorage.removeItem('aluno_vinculos');
-                sessionStorage.removeItem('aluno_login');
-              }
-            }} className="w-full text-center mt-4 text-xs text-slate-400 hover:text-slate-600 underline font-medium">
-              Entrar com outra conta
+
+            <button 
+              onClick={() => {
+                setVinculos(null);
+                setAlunoBase(null);
+                if (typeof window !== 'undefined') {
+                  sessionStorage.removeItem('aluno_base');
+                  sessionStorage.removeItem('aluno_vinculos');
+                  sessionStorage.removeItem('aluno_login');
+                }
+              }} 
+              className="w-full text-center mt-3 text-xs text-[#6070a0] hover:text-[#101942] underline font-semibold"
+            >
+              Entrar com outro usuário
             </button>
           </div>
         ) : (
-          <form onSubmit={handleSubmit}>
-            <div className="mb-5">
-              <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 text-left">
-                Login do Aluno
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div>
+              <label className="block text-xs font-bold text-[#6070a0] uppercase tracking-wider mb-1.5 text-left font-head">
+                Código de Acesso do Aluno
               </label>
               <input
                 type="text"
                 value={login}
                 onChange={(e) => { setLogin(e.target.value); setErro(''); }}
                 placeholder="Ex: kelso0407"
-                className="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3.5 text-sm text-slate-900 placeholder-slate-400 outline-none focus:bg-white focus:ring-2 focus:ring-violet-400/50 transition-all duration-300 font-mono"
+                className="w-full bg-[#f7f8fc] border border-[#dce0f0] rounded-2xl px-4 py-3.5 text-sm text-[#101942] placeholder-[#9098c0] outline-none focus:bg-white focus:ring-2 focus:ring-[#f60c49]/30 focus:border-[#f60c49] transition-all font-mono font-bold"
                 autoFocus
                 disabled={loading}
               />
-              <p className="text-xs text-slate-400 mt-2 text-left leading-relaxed">
+              <p className="text-[11px] text-[#6070a0] mt-2 text-left leading-relaxed">
                 Insira seu primeiro nome + dia e mês de nascimento.<br />
-                Exemplo: KELSO PALHETA nascido em 07/04 → <strong>kelso0407</strong>
+                Exemplo: <strong>KELSO</strong> nascido em 07/04 → <span className="font-mono text-[#101942] font-bold">kelso0407</span>
               </p>
             </div>
 
             {erro && (
-              <div className="mb-4 p-3 bg-red-50 border border-red-100 rounded-xl text-left">
-                <p className="text-xs text-red-500 font-medium">{erro}</p>
+              <div className="p-3 bg-[#fef2f2] border border-[#fecaca] rounded-2xl text-left">
+                <p className="text-xs text-[#991b1b] font-semibold">{erro}</p>
               </div>
             )}
 
             <button
               type="submit"
               disabled={!login.trim() || loading}
-              className="w-full py-3.5 bg-violet-600 hover:bg-violet-500 disabled:bg-slate-200 disabled:text-slate-400 disabled:cursor-not-allowed rounded-2xl text-white text-sm font-bold transition-all shadow-md shadow-violet-500/10"
+              className="w-full py-3.5 btn-brand-primary disabled:opacity-50 disabled:cursor-not-allowed rounded-2xl text-white text-sm font-extrabold transition-all shadow-md flex items-center justify-center gap-2"
             >
-              {loading ? 'Verificando...' : 'Acessar Portal'}
+              <span>{loading ? 'Verificando...' : 'Acessar Meu Boletim'}</span>
+              {!loading && <ArrowRight size={16} />}
             </button>
           </form>
         )}

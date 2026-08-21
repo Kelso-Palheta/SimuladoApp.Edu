@@ -81,8 +81,11 @@ export default function AtividadeContent() {
 
   if (estado === 'carregando') {
     return (
-      <div className="min-h-screen bg-white flex items-center justify-center">
-        <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-violet-700 to-violet-400 animate-pulse" />
+      <div className="min-h-screen bg-[#f7f8fc] flex items-center justify-center font-sans">
+        <div className="flex flex-col items-center gap-3">
+          <div className="w-10 h-10 rounded-2xl bg-[#101942] border-2 border-[#f60c49] animate-spin" />
+          <span className="text-xs font-bold text-[#6070a0]">Carregando atividade...</span>
+        </div>
       </div>
     );
   }
@@ -97,25 +100,27 @@ export default function AtividadeContent() {
   const prazoStr = prazo.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' });
 
   return (
-    <div className="min-h-screen bg-white">
-      <div className="max-w-2xl mx-auto px-4 py-6 sm:py-10">
+    <div className="min-h-screen bg-[#f7f8fc] font-sans selection:bg-[#f60c49] selection:text-white">
+      <div className="max-w-3xl mx-auto px-4 py-6 sm:py-10">
         {/* Header */}
-        <div className="mb-6">
-          <div className="flex items-center justify-between mb-1">
+        <div className="bg-white border border-[#dce0f0] rounded-3xl p-6 mb-6 shadow-sm">
+          <div className="flex items-center justify-between mb-3">
             <div className="flex items-center gap-2">
-              <div className="w-6 h-6 rounded-lg bg-gradient-to-tr from-violet-700 to-violet-400 flex items-center justify-center text-white text-[10px] font-extrabold">N</div>
-              <span className="text-xs text-slate-400 font-medium">Gestão de Notas</span>
+              <div className="w-7 h-7 rounded-xl bg-[#101942] text-white flex items-center justify-center text-xs font-extrabold shadow-xs">
+                S
+              </div>
+              <span className="text-xs text-[#6070a0] font-bold">SimuladoApp.Edu</span>
             </div>
-            <a href={typeof window !== 'undefined' && sessionStorage.getItem('aluno_login') ? '/aluno/notas' : '/aluno'} className="flex items-center gap-1 text-xs text-violet-500 hover:text-violet-400 font-medium transition-colors">
-              <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <polyline points="15 18 9 12 15 6" />
-              </svg>
-              Voltar
+            <a 
+              href={typeof window !== 'undefined' && sessionStorage.getItem('aluno_login') ? '/aluno/notas' : '/aluno'} 
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold text-[#101942] hover:bg-[#f7f8fc] border border-[#dce0f0] bg-white transition-all shadow-2xs"
+            >
+              Voltar ao Boletim
             </a>
           </div>
-          <h1 className="text-xl font-bold text-slate-900 mt-2">{atividade?.titulo}</h1>
-          {alunoInfo?.nome && <p className="text-sm text-slate-400 mt-0.5">Aluno(a): {alunoInfo.nome}</p>}
-          <p className="text-xs text-slate-400 mt-1">Prazo: {prazoStr}</p>
+          <h1 className="font-head text-xl sm:text-2xl font-extrabold text-[#101942] leading-tight">{atividade?.titulo}</h1>
+          {alunoInfo?.nome && <p className="text-xs font-semibold text-[#6070a0] mt-1">Estudante: <span className="text-[#101942]">{alunoInfo.nome}</span></p>}
+          <p className="text-[11px] text-[#9098c0] mt-0.5">Prazo de entrega: {prazoStr}</p>
         </div>
 
         {estado === 'form' && (() => {
