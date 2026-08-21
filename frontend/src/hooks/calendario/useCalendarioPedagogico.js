@@ -302,6 +302,50 @@ export function useCalendarioPedagogico() {
     }
   }, [user]);
 
+  /**
+   * Salva a lista de feriados e recessos da turma.
+   */
+  const salvarFeriados = useCallback(async (turmaId, feriados) => {
+    if (!user || !turmaId) return;
+    setLoading(true);
+    try {
+      const feriadosRef = doc(db, 'professores', user.uid, 'feriados_turmas', turmaId);
+      await setDoc(feriadosRef, {
+        turmaId,
+        feriados,
+        atualizadoEm: new Date().toISOString()
+      }, { merge: true });
+    } catch (err) {
+      console.error("Erro ao salvar feriados:", err);
+      setError(err.message);
+      throw err;
+    } finally {
+      setLoading(false);
+    }
+  }, [user]);
+
+  /**
+   * Carrega a lista de feriados e recessos da turma.
+   */
+  const carregarFeriados = useCallback(async (turmaId) => {
+    if (!user || !turmaId) return [];
+    setLoading(true);
+    try {
+      const feriadosRef = doc(db, 'professores', user.uid, 'feriados_turmas', turmaId);
+      const snap = await getDoc(feriadosRef);
+      if (snap.exists()) {
+        return snap.data().feriados || [];
+      }
+      return [];
+    } catch (err) {
+      console.error("Erro ao carregar feriados:", err);
+      setError(err.message);
+      return [];
+    } finally {
+      setLoading(false);
+    }
+  }, [user]);
+
   return {
     loading,
     error,
@@ -313,6 +357,8 @@ export function useCalendarioPedagogico() {
     associarTopicoAula,
     desassociarTopicoAula,
     atualizarStatusAula,
-    cancelarAulaComRemanejamento
+    cancelarAulaComRemanejamento,
+    salvarFeriados,
+    carregarFeriados
   };
 }

@@ -8,6 +8,7 @@
 - [x] **TASK-05:** Redesign Global de todas as telas internas unificando a identidade visual.
 - [x] **TASK-06:** Setup do framework de governança Spec-Driven Development (`specs/`, `tests/`, `.devcontainer/`).
 - [x] **TASK-07:** Implementação do Remanejamento em Cascata (Smart Shift), status interativos, visão semanal e exportação PDF no Calendário Pedagógico.
+- [x] **TASK-08:** Gestão de Feriados e Recessos Escolares com importação de feriados nacionais e Smart Shift automático.
 
 ---
 

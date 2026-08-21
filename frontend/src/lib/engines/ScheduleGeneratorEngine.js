@@ -133,5 +133,52 @@ export class ScheduleGeneratorEngine {
 
     return copiaAulas;
   }
+
+  /**
+   * Retorna os principais feriados nacionais brasileiros fixos e móveis para um determinado ano.
+   * 
+   * @param {Number} ano 
+   * @returns {Array} Lista de feriados { data: "YYYY-MM-DD", nome: string }
+   */
+  static obterFeriadosNacionais(ano = new Date().getFullYear()) {
+    return [
+      { data: `${ano}-01-01`, nome: 'Confraternização Universal' },
+      { data: `${ano}-04-21`, nome: 'Tiradentes' },
+      { data: `${ano}-05-01`, nome: 'Dia do Trabalho' },
+      { data: `${ano}-09-07`, nome: 'Independência do Brasil' },
+      { data: `${ano}-10-12`, nome: 'Nossa Senhora Aparecida' },
+      { data: `${ano}-11-02`, nome: 'Finados' },
+      { data: `${ano}-11-15`, nome: 'Proclamação da República' },
+      { data: `${ano}-11-20`, nome: 'Dia da Consciência Negra' },
+      { data: `${ano}-12-25`, nome: 'Natal' }
+    ];
+  }
+
+  /**
+   * Aplica um feriado ou recesso escolar a uma data no calendário.
+   * Cancela as aulas do dia atribuindo o motivo e remaneja os tópicos em cascata (RN-12).
+   * 
+   * @param {Array} aulas 
+   * @param {String} dataFeriado - "YYYY-MM-DD"
+   * @param {String} motivo - Nome do feriado/recesso
+   * @returns {Array} Aulas atualizadas com o feriado aplicado e tópicos remanejados
+   */
+  static aplicarFeriadoNoCalendario(aulas, dataFeriado, motivo = 'Feriado / Recesso Escolar') {
+    if (!aulas || aulas.length === 0) return [];
+
+    let aulasAtualizadas = [...aulas];
+    const aulasDoDia = aulasAtualizadas.filter(a => a.dataAgendada === dataFeriado);
+
+    aulasDoDia.forEach(aula => {
+      aulasAtualizadas = this.remanejarAulasEmCascata(aulasAtualizadas, aula.id);
+      const aulaModificada = aulasAtualizadas.find(a => a.id === aula.id);
+      if (aulaModificada) {
+        aulaModificada.motivoCancelamento = motivo;
+      }
+    });
+
+    return aulasAtualizadas;
+  }
 }
+
 

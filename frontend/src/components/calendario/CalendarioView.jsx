@@ -22,12 +22,22 @@ export function CalendarioView({
   aulas, 
   dataAtual, 
   setDataAtual, 
+  feriados = [],
   onDropTopico, 
   onRemoveTopico, 
   onUpdateStatus, 
   onSmartShift 
 }) {
   const [modoVisualizacao, setModoVisualizacao] = useState('mes'); // 'mes' | 'semana'
+
+  // Mapa de feriados por data "YYYY-MM-DD"
+  const feriadosPorData = useMemo(() => {
+    const mapa = new Map();
+    feriados.forEach(f => {
+      mapa.set(f.data, f.nome);
+    });
+    return mapa;
+  }, [feriados]);
 
   // Configuração para a visão MENSAL
   const { diasDoMes, diasVaziosAntes } = useMemo(() => {
@@ -170,13 +180,18 @@ export function CalendarioView({
           {diasDoMes.map(dia => {
             const dataStr = format(dia, 'yyyy-MM-dd');
             const aulasDoDia = aulasPorData.get(dataStr) || [];
+            const feriadoNome = feriadosPorData.get(dataStr);
             const ehHoje = isToday(dia);
 
             return (
               <div 
                 key={dataStr} 
                 className={`p-2 flex flex-col min-h-[120px] transition-colors ${
-                  ehHoje ? 'bg-[#fff2f6]/30' : 'hover:bg-[#f7f8fc]/60'
+                  feriadoNome 
+                    ? 'bg-[#fff2f6]/50 border-t-2 border-t-[#f60c49]'
+                    : ehHoje 
+                    ? 'bg-[#fff2f6]/30' 
+                    : 'hover:bg-[#f7f8fc]/60'
                 }`}
               >
                 <div className="flex justify-between items-center mb-1.5">
@@ -189,11 +204,15 @@ export function CalendarioView({
                   >
                     {format(dia, 'd')}
                   </span>
-                  {aulasDoDia.length > 0 && (
+                  {feriadoNome ? (
+                    <span className="text-[9px] font-bold text-[#d40840] bg-[#fff2f6] border border-[#fde4ec] px-1.5 py-0.5 rounded-full truncate max-w-[80px]" title={feriadoNome}>
+                      {feriadoNome}
+                    </span>
+                  ) : aulasDoDia.length > 0 ? (
                     <span className="text-[10px] font-bold text-[#6070a0] font-mono">
                       {aulasDoDia.length} {aulasDoDia.length > 1 ? 'aulas' : 'aula'}
                     </span>
-                  )}
+                  ) : null}
                 </div>
 
                 <div className="flex-1 space-y-1.5 overflow-y-auto">
