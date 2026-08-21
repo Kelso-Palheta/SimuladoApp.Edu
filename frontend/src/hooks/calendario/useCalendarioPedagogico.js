@@ -249,6 +249,59 @@ export function useCalendarioPedagogico() {
     }
   }, [user]);
 
+  /**
+   * Atualiza o status de uma aula agendada (ex: CONCLUIDA, PARCIAL, NAO_REALIZADA, AGENDADA).
+   */
+  const atualizarStatusAula = useCallback(async (aulaId, novoStatus) => {
+    if (!user || !aulaId) return;
+    setLoading(true);
+    try {
+      const aulaRef = doc(db, 'professores', user.uid, 'aulas_agendadas', aulaId);
+      await setDoc(aulaRef, {
+        status: novoStatus,
+        atualizadoEm: new Date().toISOString()
+      }, { merge: true });
+    } catch (err) {
+      console.error("Erro ao atualizar status da aula:", err);
+      setError(err.message);
+      throw err;
+    } finally {
+      setLoading(false);
+    }
+  }, [user]);
+
+  /**
+   * Cancela uma aula (NAO_REALIZADA) e remaneja os tópicos em cascata (Smart Shift) no Firestore.
+   */
+  const cancelarAulaComRemanejamento = useCallback(async (turmaId, aulaId, todasAulas) => {
+    if (!user || !turmaId || !aulaId || !todasAulas) return;
+    setLoading(true);
+    try {
+      const aulasRemanejadas = ScheduleGeneratorEngine.remanejarAulasEmCascata(todasAulas, aulaId);
+      
+      const batch = writeBatch(db);
+      const aulasRef = collection(db, 'professores', user.uid, 'aulas_agendadas');
+
+      aulasRemanejadas.forEach(aula => {
+        const docRef = doc(aulasRef, aula.id);
+        batch.set(docRef, {
+          status: aula.status,
+          topicosAssociados: aula.topicosAssociados,
+          atualizadoEm: new Date().toISOString()
+        }, { merge: true });
+      });
+
+      await batch.commit();
+      return aulasRemanejadas;
+    } catch (err) {
+      console.error("Erro ao remanejar aulas em cascata:", err);
+      setError(err.message);
+      throw err;
+    } finally {
+      setLoading(false);
+    }
+  }, [user]);
+
   return {
     loading,
     error,
@@ -258,6 +311,8 @@ export function useCalendarioPedagogico() {
     salvarPlanejamento,
     carregarPlanejamento,
     associarTopicoAula,
-    desassociarTopicoAula
+    desassociarTopicoAula,
+    atualizarStatusAula,
+    cancelarAulaComRemanejamento
   };
 }

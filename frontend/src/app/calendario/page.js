@@ -11,6 +11,8 @@ import { CalendarioView } from '@/components/calendario/CalendarioView';
 import { ConfigGradeModal } from '@/components/calendario/ConfigGradeModal';
 import { ImportPlanejamentoModal } from '@/components/calendario/ImportPlanejamentoModal';
 import { useCalendarioPedagogico } from '@/hooks/calendario/useCalendarioPedagogico';
+import { generateCalendarioPDF } from '@/lib/calendario/pdf-generator';
+import { ArrowLeft, Download } from 'lucide-react';
 
 export default function CalendarioPage() {
   const { user, loading: authLoading } = useAuth();
@@ -35,7 +37,9 @@ export default function CalendarioPage() {
     carregarPlanejamento,
     salvarPlanejamento,
     associarTopicoAula,
-    desassociarTopicoAula
+    desassociarTopicoAula,
+    atualizarStatusAula,
+    cancelarAulaComRemanejamento
   } = useCalendarioPedagogico();
 
   // 1. Carrega as turmas do professor logado (aproveitando a mesma estrutura do Diário)
@@ -139,6 +143,30 @@ export default function CalendarioPage() {
     }
   };
 
+  const handleUpdateStatus = async (aulaId, novoStatus) => {
+    try {
+      await atualizarStatusAula(aulaId, novoStatus);
+      const aulasAgendadas = await carregarAulasAgendadas(turmaSelecionada.id);
+      setAulas(aulasAgendadas);
+    } catch (err) {
+      alert("Erro ao atualizar status: " + err.message);
+    }
+  };
+
+  const handleSmartShift = async (aulaId) => {
+    try {
+      const aulasAtualizadas = await cancelarAulaComRemanejamento(turmaSelecionada.id, aulaId, aulas);
+      if (aulasAtualizadas) {
+        setAulas(aulasAtualizadas);
+      } else {
+        const aulasAgendadas = await carregarAulasAgendadas(turmaSelecionada.id);
+        setAulas(aulasAgendadas);
+      }
+    } catch (err) {
+      alert("Erro ao executar Smart Shift: " + err.message);
+    }
+  };
+
   if (authLoading || !user) {
     return <div className="flex h-screen items-center justify-center bg-slate-50 text-slate-500">Carregando...</div>;
   }
@@ -178,12 +206,23 @@ export default function CalendarioPage() {
           </div>
           
           {turmaSelecionada && (
-            <button
-              onClick={() => setIsConfigOpen(true)}
-              className="btn-brand-ghost px-4 py-2 text-xs sm:text-sm flex items-center gap-1.5"
-            >
-              ⚙ Configurar Grade Semanal
-            </button>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => generateCalendarioPDF(aulas, turmaSelecionada.nome, user?.email)}
+                disabled={aulas.length === 0}
+                className="btn-brand-ghost px-3.5 py-2 text-xs sm:text-sm flex items-center gap-1.5 disabled:opacity-40"
+                title="Exportar cronograma de aulas em PDF"
+              >
+                <Download size={14} className="text-[#f60c49]" />
+                <span className="hidden sm:inline">Exportar PDF</span>
+              </button>
+              <button
+                onClick={() => setIsConfigOpen(true)}
+                className="btn-brand-primary px-3.5 py-2 text-xs sm:text-sm flex items-center gap-1.5 shadow-sm"
+              >
+                ⚙ <span className="hidden sm:inline">Configurar Grade</span>
+              </button>
+            </div>
           )}
         </header>
 
@@ -200,6 +239,8 @@ export default function CalendarioPage() {
                 setDataAtual={setDataAtual}
                 onDropTopico={handleDropTopico}
                 onRemoveTopico={handleRemoveTopico}
+                onUpdateStatus={handleUpdateStatus}
+                onSmartShift={handleSmartShift}
               />
             ) : (
               <div className="flex flex-col h-full items-center justify-center text-[#6070a0] bg-white rounded-3xl border border-dashed border-[#dce0f0] p-8 text-center">

@@ -76,4 +76,62 @@ export class ScheduleGeneratorEngine {
 
     return aulasGeradas;
   }
+
+  /**
+   * Executa o remanejamento em cascata (Smart Shift) quando uma aula é cancelada (NAO_REALIZADA).
+   * Empurra os tópicos da aula cancelada e das aulas subsequentes para os próximos slots válidos.
+   * 
+   * @param {Array} aulas - Lista de todas as aulas agendadas da turma
+   * @param {String} aulaIdCancelada - ID da aula que foi cancelada
+   * @returns {Array} Nova lista de aulas com os tópicos remanejados em cascata
+   */
+  static remanejarAulasEmCascata(aulas, aulaIdCancelada) {
+    if (!aulas || aulas.length === 0) return [];
+
+    // Clona as aulas para evitar mutação direta
+    const copiaAulas = aulas.map(a => ({
+      ...a,
+      topicosAssociados: a.topicosAssociados ? [...a.topicosAssociados] : []
+    }));
+
+    // Ordena as aulas cronologicamente
+    copiaAulas.sort((a, b) => new Date(a.dataAgendada) - new Date(b.dataAgendada));
+
+    const indexCancelada = copiaAulas.findIndex(a => a.id === aulaIdCancelada);
+    if (indexCancelada === -1) return copiaAulas;
+
+    const aulaCancelada = copiaAulas[indexCancelada];
+    const topicosParaEmpurrar = [...aulaCancelada.topicosAssociados];
+
+    // Marca aula cancelada como NAO_REALIZADA e esvazia seus tópicos
+    aulaCancelada.status = 'NAO_REALIZADA';
+    aulaCancelada.topicosAssociados = [];
+
+    // Se não tinha tópicos associados para empurrar, encerra
+    if (topicosParaEmpurrar.length === 0) {
+      return copiaAulas;
+    }
+
+    // Percorre em cascata as aulas seguintes ativas
+    let bufferTopicos = topicosParaEmpurrar;
+
+    for (let i = indexCancelada + 1; i < copiaAulas.length; i++) {
+      const aulaAtual = copiaAulas[i];
+
+      // Só remaneja em aulas agendadas (não substitui aulas concluídas ou outras já canceladas)
+      if (aulaAtual.status === 'AGENDADA') {
+        const topicosOriginais = [...aulaAtual.topicosAssociados];
+        aulaAtual.topicosAssociados = bufferTopicos;
+        bufferTopicos = topicosOriginais;
+
+        // Se o buffer ficou vazio, não há mais nada a empurrar
+        if (bufferTopicos.length === 0) {
+          break;
+        }
+      }
+    }
+
+    return copiaAulas;
+  }
 }
+

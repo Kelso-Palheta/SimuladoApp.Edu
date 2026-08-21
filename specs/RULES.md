@@ -36,3 +36,7 @@ Este documento define as regras de negócio inegociáveis do sistema. Qualquer c
    - Nenhuma aula pode ser agendada fora dos horários configurados na Grade Semanal da turma.
 2. **RN-09 (Remanejamento e Associação):**
    - Ao desassociar ou remover um tópico de uma aula, o tópico deve retornar imediatamente à lista de tópicos disponíveis para reagendamento.
+3. **RN-10 (Transição de Status da Aula):**
+   - Uma aula agendada pode transitar entre os status: `AGENDADA`, `CONCLUIDA`, `PARCIAL` e `NAO_REALIZADA`.
+4. **RN-11 (Remanejamento Automático em Cascata - Smart Shift):**
+   - Se uma aula que possui tópicos associados for cancelada (`NAO_REALIZADA`), seus tópicos devem ser transferidos para a próxima aula ativa disponível no cronograma (`AGENDADA`), e os tópicos das aulas subsequentes devem ser deslocados em cascata (+1 slot) sem sobrescrita destrutiva.
