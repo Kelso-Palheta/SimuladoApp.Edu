@@ -10,6 +10,7 @@
 - [x] **TASK-07:** Implementação do Remanejamento em Cascata (Smart Shift), status interativos, visão semanal e exportação PDF no Calendário Pedagógico.
 - [x] **TASK-08:** Gestão de Feriados e Recessos Escolares com importação de feriados nacionais e Smart Shift automático.
 - [x] **TASK-09:** Redesign Global e Polimento do Portal do Aluno (`/aluno`, `/aluno/notas`, `/aluno/atividade`) com emissão de Boletim Escolar em PDF.
+- [x] **TASK-10:** Exportação da Caderneta Escolar Oficial em PDF (Paisagem A4 com assinaturas) e Planilha Excel/CSV no Diário Pedagógico.
 
 ---
 
