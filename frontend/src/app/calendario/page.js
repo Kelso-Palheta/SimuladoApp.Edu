@@ -144,7 +144,7 @@ export default function CalendarioPage() {
   }
 
   return (
-    <div className="flex h-screen bg-slate-50 overflow-hidden font-sans">
+    <div className="flex h-screen bg-[#f7f8fc] overflow-hidden font-sans selection:bg-[#f60c49] selection:text-white">
       <Sidebar 
         turmas={turmas}
         turmaSelecionada={turmaSelecionada}
@@ -158,30 +158,39 @@ export default function CalendarioPage() {
       />
       
       <main className="flex-1 flex flex-col min-w-0 h-screen overflow-hidden relative">
-        <header className="bg-white border-b border-gray-200 px-8 py-4 shrink-0 flex items-center justify-between">
-          <div>
-            <h1 className="text-xl font-bold text-gray-800">
-              {turmaSelecionada ? `Calendário: ${turmaSelecionada.nome}` : 'Selecione uma turma'}
-            </h1>
-            <p className="text-sm text-gray-500">
-              Gerencie a grade horária e o planejamento anual da disciplina.
-            </p>
+        <header className="bg-white border-b border-[#dce0f0] px-6 sm:px-8 py-3.5 shrink-0 flex items-center justify-between shadow-2xs">
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => router.push('/')}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold bg-[#101942] hover:bg-[#090f28] text-white shadow-xs transition-all"
+            >
+              <ArrowLeft size={14} />
+              <span>Hub</span>
+            </button>
+            <div>
+              <h1 className="font-head text-lg sm:text-xl font-extrabold text-[#101942]">
+                {turmaSelecionada ? `Calendário: ${turmaSelecionada.nome}` : 'Selecione uma turma'}
+              </h1>
+              <p className="text-xs text-[#6070a0]">
+                Grade horária e remanejamento automático de aulas
+              </p>
+            </div>
           </div>
           
           {turmaSelecionada && (
             <button
               onClick={() => setIsConfigOpen(true)}
-              className="px-4 py-2 bg-white border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors shadow-sm"
+              className="btn-brand-ghost px-4 py-2 text-xs sm:text-sm flex items-center gap-1.5"
             >
-              Configurar Grade Semanal
+              ⚙ Configurar Grade Semanal
             </button>
           )}
         </header>
 
-        <div className="flex-1 p-6 overflow-hidden">
+        <div className="flex-1 p-4 sm:p-6 overflow-hidden">
           {turmaSelecionada ? (
             calLoading && !aulas.length ? (
-              <div className="flex h-full items-center justify-center text-gray-400">
+              <div className="flex h-full items-center justify-center text-[#6070a0] font-semibold text-sm">
                 Carregando calendário...
               </div>
             ) : gradeHoraria || aulas.length > 0 ? (
@@ -193,18 +202,18 @@ export default function CalendarioPage() {
                 onRemoveTopico={handleRemoveTopico}
               />
             ) : (
-              <div className="flex flex-col h-full items-center justify-center text-gray-500 bg-white rounded-lg border border-dashed border-gray-300">
-                <p className="mb-4">Nenhuma grade horária configurada para esta turma.</p>
+              <div className="flex flex-col h-full items-center justify-center text-[#6070a0] bg-white rounded-3xl border border-dashed border-[#dce0f0] p-8 text-center">
+                <p className="mb-4 font-medium text-sm">Nenhuma grade horária configurada para esta turma.</p>
                 <button 
                   onClick={() => setIsConfigOpen(true)}
-                  className="px-4 py-2 bg-indigo-600 text-white rounded-md text-sm font-medium shadow-sm hover:bg-indigo-700"
+                  className="btn-brand-primary px-6 py-3 text-sm font-bold shadow-md"
                 >
-                  Configurar Agora
+                  Configurar Grade Agora
                 </button>
               </div>
             )
           ) : (
-            <div className="flex h-full items-center justify-center text-gray-400 bg-white rounded-lg border border-dashed border-gray-300">
+            <div className="flex h-full items-center justify-center text-[#6070a0] bg-white rounded-3xl border border-dashed border-[#dce0f0]">
               Selecione uma turma na barra lateral para ver o calendário.
             </div>
           )}

@@ -5,9 +5,9 @@ import { NumCell } from '@/components/diario/NumCell';
 import { calcTotal, fmt, statusColor, somaMaxAtv, round2, temNota, titleCase } from '@/utils/diario/calculos';
 
 const STATUS_STYLES = {
-  good: 'text-green-600 bg-green-50 border border-green-200 font-semibold',
-  warn: 'text-blue-600 bg-blue-50 border border-blue-200 font-semibold',
-  bad:  'text-red-600 bg-red-50 border border-red-200 font-semibold'
+  good: 'text-[#101942] bg-[#eef0f8] border border-[#dce0f0] font-bold',
+  warn: 'text-[#d40840] bg-[#fff2f6] border border-[#fde4ec] font-bold',
+  bad:  'text-red-600 bg-red-50 border border-red-200 font-bold'
 };
 
 const AddAlunoForm = ({ onAdd }) => {
@@ -23,24 +23,24 @@ const AddAlunoForm = ({ onAdd }) => {
   };
 
   return (
-    <div className="flex items-center gap-2 sm:gap-3 mt-3 pt-3 border-t border-slate-200">
+    <div className="flex items-center gap-2 sm:gap-3 mt-3 pt-3 border-t border-[#dce0f0]">
       <input
         value={nome} onChange={(e) => setNome(e.target.value)}
         onKeyDown={(e) => e.key === 'Enter' && submit()}
-        placeholder="Nome do aluno"
-        className="flex-1 bg-slate-50 border border-slate-200 rounded-lg px-2.5 sm:px-3.5 py-1.5 sm:py-2 text-xs sm:text-sm text-slate-900 placeholder-slate-400 outline-none focus:bg-white focus:ring-1 focus:ring-violet-400/50 transition-all"
+        placeholder="Nome completo do aluno"
+        className="flex-1 bg-[#f7f8fc] border border-[#dce0f0] rounded-xl px-3 py-2 text-xs sm:text-sm text-[#101942] placeholder-[#9098c0] outline-none focus:bg-white focus:ring-2 focus:ring-[#f60c49]/30 focus:border-[#f60c49] transition-all"
       />
       <input
         value={data} onChange={(e) => setData(e.target.value.replace(/\D/g, '').slice(0, 4))}
         onKeyDown={(e) => e.key === 'Enter' && submit()}
-        placeholder="ddMM" maxLength={4}
-        className="w-16 sm:w-36 bg-slate-50 border border-slate-200 rounded-lg px-2.5 sm:px-3.5 py-1.5 sm:py-2 text-xs sm:text-sm text-slate-900 placeholder-slate-400 outline-none focus:bg-white focus:ring-1 focus:ring-violet-400/50 transition-all font-mono text-center"
+        placeholder="ddMM (Nascimento)" maxLength={4}
+        className="w-24 sm:w-36 bg-[#f7f8fc] border border-[#dce0f0] rounded-xl px-3 py-2 text-xs sm:text-sm text-[#101942] placeholder-[#9098c0] outline-none focus:bg-white focus:ring-2 focus:ring-[#f60c49]/30 focus:border-[#f60c49] transition-all font-mono text-center"
       />
       <button
         onClick={submit} disabled={!nome.trim()}
-        className="px-3 sm:px-4 py-1.5 sm:py-2 bg-violet-500 hover:bg-violet-400 disabled:opacity-40 disabled:cursor-not-allowed rounded-lg text-white text-xs sm:text-sm font-medium transition-all whitespace-nowrap"
+        className="px-4 py-2 btn-brand-primary disabled:opacity-40 disabled:cursor-not-allowed rounded-xl text-white text-xs sm:text-sm font-bold transition-all whitespace-nowrap shadow-xs"
       >
-        + Aluno
+        + Adicionar Aluno
       </button>
     </div>
   );

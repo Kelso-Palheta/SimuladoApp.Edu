@@ -525,59 +525,71 @@ export default function RedacaoPage() {
       )}
 
       {/* ══════ SIDEBAR ══════ */}
-      <aside className={`fixed inset-y-0 left-0 z-40 transform ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} md:relative md:translate-x-0 transition-transform duration-300 w-64 flex-shrink-0 bg-white border-r border-slate-200 flex flex-col h-full`}>
+      <aside className={`fixed inset-y-0 left-0 z-40 transform ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} md:relative md:translate-x-0 transition-transform duration-300 w-64 flex-shrink-0 bg-white border-r border-[#dce0f0] flex flex-col h-full font-sans`}>
         {/* Logo */}
-        <div className="px-5 pt-6 pb-4 border-b border-slate-100 flex items-center justify-between">
-          <button onClick={() => router.push('/')} className="flex items-center gap-2.5 hover:opacity-80 transition-opacity">
-            <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-violet-600 to-indigo-500 flex items-center justify-center shadow-lg shadow-violet-500/20">
+        <div className="px-5 pt-6 pb-4 border-b border-[#dce0f0] flex items-center justify-between">
+          <button onClick={() => router.push('/')} className="flex items-center gap-2.5 hover:opacity-80 transition-opacity text-left">
+            <div className="w-8 h-8 rounded-xl bg-[#f60c49] flex items-center justify-center shadow-sm text-white">
               <Zap size={16} color="white" />
             </div>
             <div>
-              <span className="font-bold text-slate-900 tracking-tight text-sm">Redação AI</span>
-              <p className="text-[10px] text-slate-400 font-semibold uppercase tracking-wider">Corretor ENEM</p>
+              <span className="font-head font-extrabold text-[#101942] tracking-tight text-sm block leading-none">
+                Redação ENEM
+              </span>
+              <p className="text-[10px] text-[#6070a0] font-medium mt-0.5">Correção Pedagógica</p>
             </div>
           </button>
-          <button onClick={() => setSidebarOpen(false)} className="md:hidden p-1.5 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-all" aria-label="Fechar menu">
+          <button onClick={() => setSidebarOpen(false)} className="md:hidden p-1.5 rounded-lg text-[#6070a0] hover:text-[#101942] hover:bg-[#eef0f8] transition-all" aria-label="Fechar menu">
             <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
           </button>
         </div>
 
         {/* User */}
-        <div className="px-5 py-4 border-b border-slate-100">
+        <div className="px-5 py-4 border-b border-[#dce0f0] bg-[#f7f8fc]/50">
           <div className="flex items-center gap-3">
             {user?.photoURL ? (
-              <img src={user.photoURL} alt="" className="w-8 h-8 rounded-xl" referrerPolicy="no-referrer" />
+              <img src={user.photoURL} alt="" className="w-8 h-8 rounded-xl border border-[#dce0f0]" referrerPolicy="no-referrer" />
             ) : (
-              <div className="w-8 h-8 rounded-xl bg-violet-100 flex items-center justify-center text-violet-600 text-xs font-bold">
-                {(perfil?.nome || user?.displayName || user?.email || '?')[0].toUpperCase()}
+              <div className="w-8 h-8 rounded-xl bg-[#fff2f6] border border-[#fde4ec] flex items-center justify-center text-[#d40840] font-extrabold text-xs">
+                {user?.displayName?.[0] || user?.email?.[0]?.toUpperCase() || 'P'}
               </div>
             )}
-            <div className="min-w-0">
-              <p className="text-xs font-semibold text-slate-800 truncate">{perfil?.nome || user?.displayName || 'Professor'}</p>
-              <p className="text-[10px] text-slate-400 truncate uppercase tracking-wider font-semibold">Professor</p>
+            <div className="flex-1 min-w-0">
+              <p className="text-xs font-bold text-[#101942] truncate">{user?.displayName || 'Professor'}</p>
+              <p className="text-[10px] text-[#6070a0] truncate">{user?.email}</p>
             </div>
           </div>
         </div>
 
-        {/* Menu */}
-        <nav className="flex-1 px-3 py-4 space-y-1">
-          <p className="text-[10px] text-slate-400 uppercase tracking-wider mb-2.5 px-2 font-semibold">Menu</p>
-          {sidebarItems.map(item => (
-            item.href ? (
-              <button key={item.label} onClick={() => router.push(item.href)}
-                className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-all duration-200 text-left">
-                <item.icon size={17} className="text-slate-400" />
+        {/* Nav Items */}
+        <nav className="flex-1 px-3 py-4 space-y-1 overflow-y-auto">
+          {sidebarItems.map((item, idx) => {
+            const Icon = item.icon;
+            const isNova = item.label === 'Nova Correção';
+            return item.href ? (
+              <a
+                key={idx}
+                href={item.href}
+                className="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-bold text-[#101942] hover:bg-[#f7f8fc] hover:text-[#f60c49] transition-all"
+              >
+                <Icon size={16} className="text-[#6070a0]" />
                 {item.label}
-              </button>
+              </a>
             ) : (
-              <button key={item.label} onClick={item.action}
-                className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 text-left
-                  ${step === 'input' ? 'bg-violet-50 text-violet-700' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'}`}>
-                <item.icon size={17} className={step === 'input' ? 'text-violet-500' : 'text-slate-400'} />
+              <button
+                key={idx}
+                onClick={item.action}
+                className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all text-left ${
+                  isNova
+                    ? 'bg-[#fff2f6] text-[#d40840] border border-[#fde4ec] shadow-2xs'
+                    : 'text-[#101942] hover:bg-[#f7f8fc]'
+                }`}
+              >
+                <Icon size={16} className={isNova ? 'text-[#f60c49]' : 'text-[#6070a0]'} />
                 {item.label}
               </button>
-            )
-          ))}
+            );
+          })}
         </nav>
 
         {/* Bottom */}
@@ -884,15 +896,15 @@ export default function RedacaoPage() {
                 {imagePreview && !text && (
                   <motion.button onClick={handleExtract} disabled={extracting}
                     whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.99 }}
-                    className="w-full py-3.5 bg-gradient-to-r from-violet-600 to-indigo-500 hover:from-violet-500 hover:to-indigo-400 disabled:from-slate-300 disabled:to-slate-300 rounded-2xl text-white text-sm font-bold transition-all duration-300 flex items-center justify-center gap-2 shadow-lg shadow-violet-500/20 disabled:shadow-none">
-                    {extracting ? <><Loader2 size={16} className="animate-spin" /> Extraindo texto com OCR...</> : <><Zap size={16} /> Extrair Texto da Imagem</>}
+                    className="w-full py-3.5 btn-brand-navy rounded-2xl text-white text-sm font-bold transition-all duration-300 flex items-center justify-center gap-2 shadow-md disabled:opacity-50">
+                    {extracting ? <><Loader2 size={16} className="animate-spin" /> Extraindo texto com OCR...</> : <><Zap size={16} className="text-[#f60c49]" /> Extrair Texto da Imagem</>}
                   </motion.button>
                 )}
 
                 <div className="flex items-center gap-3">
-                  <div className="flex-1 h-px bg-slate-200" />
-                  <span className="text-[11px] text-slate-400 font-semibold uppercase tracking-wider">ou cole o texto</span>
-                  <div className="flex-1 h-px bg-slate-200" />
+                  <div className="flex-1 h-px bg-[#dce0f0]" />
+                  <span className="text-[11px] text-[#6070a0] font-bold uppercase tracking-wider">ou cole o texto</span>
+                  <div className="flex-1 h-px bg-[#dce0f0]" />
                 </div>
 
                 <textarea value={text} onChange={e => setText(e.target.value)}
@@ -900,7 +912,7 @@ export default function RedacaoPage() {
                   spellCheck={false}
                   placeholder="Cole aqui o texto da redação para correção..."
                   rows={8}
-                  className="w-full bg-slate-50 border border-slate-200 rounded-2xl px-5 py-4 text-sm text-slate-900 placeholder-slate-300 outline-none focus:border-violet-400 focus:ring-4 focus:ring-violet-50 transition-all duration-300 resize-y leading-relaxed" />
+                  className="w-full bg-[#f7f8fc] border border-[#dce0f0] rounded-2xl px-5 py-4 text-sm text-[#101942] placeholder-[#9098c0] outline-none focus:border-[#f60c49] focus:ring-4 focus:ring-[#f60c49]/10 transition-all duration-300 resize-y leading-relaxed" />
               </motion.div>
 
               {/* CTA */}
@@ -908,12 +920,12 @@ export default function RedacaoPage() {
                 disabled={!text.trim() || !studentName.trim() || selectedCompetencies.length === 0}
                 whileHover={text.trim() && studentName.trim() ? { scale: 1.015 } : {}}
                 whileTap={text.trim() && studentName.trim() ? { scale: 0.985 } : {}}
-                className="w-full py-4.5 bg-gradient-to-r from-violet-600 via-violet-500 to-indigo-500 hover:from-violet-500 hover:via-violet-400 hover:to-indigo-400 disabled:from-slate-300 disabled:via-slate-300 disabled:to-slate-300 disabled:text-slate-500 rounded-2xl text-white text-base font-bold transition-all duration-500 flex items-center justify-center gap-2.5 shadow-xl shadow-violet-500/25 disabled:shadow-none">
-                <Sparkles size={20} /> Corrigir Redação
+                className="w-full py-4.5 btn-brand-primary rounded-2xl text-white text-base font-extrabold transition-all duration-300 flex items-center justify-center gap-2.5 shadow-xl disabled:opacity-40 disabled:cursor-not-allowed">
+                <Sparkles size={20} /> Corrigir Redação com IA
               </motion.button>
 
               {error && <motion.div initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }}
-                className="p-4 bg-red-50 border border-red-200 rounded-2xl text-sm text-red-600">{error}</motion.div>}
+                className="p-4 bg-[#fff2f6] border border-[#fde4ec] rounded-2xl text-sm font-semibold text-[#d40840]">{error}</motion.div>}
             </motion.div>
           )}
 

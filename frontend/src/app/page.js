@@ -1,7 +1,7 @@
 "use client";
 
 import { useAuth } from "@/lib/auth-context";
-import LoginScreen from "@/components/LoginScreen";
+import LandingPage from "@/components/landing/LandingPage";
 import Dashboard from "@/components/Dashboard";
 
 export const dynamic = "force-dynamic";
@@ -12,21 +12,17 @@ export default function Home() {
   if (loading) {
     return (
       <div
-        className="flex min-h-screen items-center justify-center"
-        style={{ background: "var(--background)" }}
+        className="flex min-h-screen items-center justify-center bg-white"
       >
         <div
-          className="w-8 h-8 rounded-full border-2 animate-spin"
-          style={{
-            borderColor: "var(--primary)",
-            borderTopColor: "transparent",
-          }}
+          className="w-9 h-9 rounded-full border-3 animate-spin border-[#f60c49] border-t-transparent"
         />
       </div>
     );
   }
 
-  if (!user) return <LoginScreen />;
+  if (!user) return <LandingPage />;
 
   return <Dashboard />;
 }
+

@@ -411,18 +411,18 @@ export default function DiarioPage() {
 
       <main className="flex-1 flex flex-col overflow-hidden">
         {/* Top bar */}
-        <div className="flex-shrink-0 px-3 sm:px-6 py-2 sm:py-2.5 border-b border-slate-200 bg-white flex items-center justify-between gap-2">
+        <div className="flex-shrink-0 px-3 sm:px-6 py-2.5 sm:py-3 border-b border-[#dce0f0] bg-white flex items-center justify-between gap-2 shadow-2xs">
           <div className="flex items-center gap-1.5 sm:gap-2">
             <button
               onClick={() => setSidebarOpen(true)}
-              className="inline-flex items-center p-2 rounded-xl text-slate-600 hover:bg-slate-100 transition-all lg:hidden"
+              className="inline-flex items-center p-2 rounded-xl text-[#101942] hover:bg-[#eef0f8] transition-all lg:hidden"
               aria-label="Abrir menu"
             >
               <Menu size={20} />
             </button>
             <button
               onClick={() => router.push('/')}
-              className="inline-flex items-center gap-2 px-3 sm:px-4 py-2 rounded-xl text-sm font-semibold bg-violet-50 hover:bg-violet-100 text-violet-600 border border-violet-200 hover:border-violet-300 transition-all shadow-sm"
+              className="inline-flex items-center gap-2 px-3.5 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-[#101942] hover:bg-[#090f28] text-white shadow-xs transition-all"
             >
               <ArrowLeft size={16} />
               <span className="hidden sm:inline">Hub</span>
@@ -433,7 +433,7 @@ export default function DiarioPage() {
             <button
               onClick={handlePublishGrades}
               disabled={publishing}
-              className="inline-flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-4 py-2 rounded-xl text-sm font-semibold bg-emerald-50 hover:bg-emerald-100 text-emerald-600 border border-emerald-200 hover:border-emerald-300 transition-all shadow-sm disabled:opacity-50"
+              className="inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-[#f60c49] hover:bg-[#d40840] text-white shadow-sm transition-all disabled:opacity-50"
             >
               <Award size={16} />
               <span className="hidden sm:inline">{publishing ? 'Publicando...' : 'Publicar Notas'}</span>
@@ -442,11 +442,11 @@ export default function DiarioPage() {
             <div className="relative" ref={alunoDropdownRef}>
               <button
                 onClick={() => setShowAlunoDropdown(!showAlunoDropdown)}
-                className="inline-flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-4 py-2 rounded-xl text-sm font-semibold bg-violet-50 hover:bg-violet-100 text-violet-600 border border-violet-200 hover:border-violet-300 transition-all shadow-sm"
+                className="inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-[#eef0f8] hover:bg-[#dce0f0] text-[#101942] border border-[#dce0f0] transition-all shadow-2xs"
               >
-                <GraduationCap size={16} />
+                <GraduationCap size={16} className="text-[#f60c49]" />
                 <span className="hidden sm:inline">Portal do Aluno</span>
-                <ExternalLink size={12} className="opacity-40 hidden sm:inline" />
+                <ExternalLink size={12} className="opacity-50 hidden sm:inline" />
               </button>
 
             {showAlunoDropdown && (

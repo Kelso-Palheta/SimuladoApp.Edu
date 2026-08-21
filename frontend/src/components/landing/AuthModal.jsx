@@ -2,17 +2,18 @@
 
 import { useState } from "react";
 import { useAuth } from "@/lib/auth-context";
-import { ArrowRight, Sparkles, CheckCircle2, ArrowLeft } from "lucide-react";
-import Link from "next/link";
+import { X, ArrowRight, Sparkles, CheckCircle2 } from "lucide-react";
 
-export default function LoginScreen() {
+export function AuthModal({ isOpen, onClose, initialMode = "cadastro" }) {
   const { loginGoogle, loginEmail, cadastrarEmail, recuperarSenha } = useAuth();
-  const [modo, setModo] = useState("login"); // "login" | "cadastro" | "recuperar"
+  const [modo, setModo] = useState(initialMode); // "login" | "cadastro" | "recuperar"
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
   const [erro, setErro] = useState("");
   const [sucesso, setSucesso] = useState("");
   const [loading, setLoading] = useState(false);
+
+  if (!isOpen) return null;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -22,8 +23,10 @@ export default function LoginScreen() {
     try {
       if (modo === "login") {
         await loginEmail(email, senha);
+        onClose();
       } else if (modo === "cadastro") {
         await cadastrarEmail(email, senha);
+        onClose();
       } else {
         await recuperarSenha(email);
         setSucesso("Email de redefinição de senha enviado com sucesso! Verifique sua caixa de entrada.");
@@ -47,6 +50,7 @@ export default function LoginScreen() {
     try {
       setErro("");
       await loginGoogle();
+      onClose();
     } catch (err) {
       if (err.code === "auth/operation-not-allowed") {
         setErro("Login com Google desativado no Firebase Console.");
@@ -59,46 +63,48 @@ export default function LoginScreen() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 bg-gradient-to-b from-[#fff2f6]/60 via-[#f7f8fc] to-white selection:bg-[#f60c49] selection:text-white">
-      <div className="w-full max-w-md bg-white rounded-3xl shadow-2xl border border-[#dce0f0] overflow-hidden">
-        {/* Header com Identidade da Marca */}
-        <div className="p-8 pb-6 bg-gradient-to-b from-[#fff2f6] to-white border-b border-[#fde4ec]/70 text-center relative">
-          <div className="mx-auto w-14 h-14 rounded-2xl bg-[#101942] flex items-center justify-center text-white shadow-lg mb-4">
-            <svg
-              width="26"
-              height="26"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2.2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
-              <path d="M6 12v5c0 1.1 2.7 2 6 2s6-.9 6-2v-5" />
-            </svg>
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-[#101942]/70 backdrop-blur-md animate-card-in">
+      <div className="relative w-full max-w-md bg-white rounded-3xl shadow-2xl border border-[#dce0f0] overflow-hidden">
+        {/* Header decorativo */}
+        <div className="p-6 pb-4 bg-gradient-to-b from-[#fff2f6] to-white border-b border-[#fde4ec]/60 relative">
+          <button
+            onClick={onClose}
+            className="absolute top-5 right-5 w-8 h-8 rounded-full flex items-center justify-center text-[#6070a0] hover:text-[#101942] hover:bg-[#101942]/5 transition-colors"
+          >
+            <X className="w-5 h-5" />
+          </button>
+
+          <div className="flex items-center gap-2 mb-2">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-[#fde4ec] text-[#d40840]">
+              <Sparkles className="w-3.5 h-3.5 text-[#f60c49]" />
+              {modo === "cadastro" ? "15 Créditos Grátis" : "Hub Educacional"}
+            </span>
           </div>
 
-          <h2 className="font-head text-2xl font-extrabold text-[#101942] tracking-tight">
-            SimuladoApp<span className="text-[#f60c49]">.Edu</span>
-          </h2>
-          <p className="text-xs text-[#6070a0] mt-1 font-medium">
+          <h3 className="font-head text-2xl font-extrabold text-[#101942]">
             {modo === "cadastro"
-              ? "Crie sua conta e ganhe 15 créditos grátis todo mês"
+              ? "Crie sua conta no SimuladoApp.Edu"
               : modo === "login"
-              ? "Acesse o Hub Pedagógico de Inteligência Artificial"
-              : "Recuperação de acesso da sua conta"}
+              ? "Bem-vindo de volta, professor!"
+              : "Recuperar sua senha"}
+          </h3>
+          <p className="text-xs text-[#6070a0] mt-1">
+            {modo === "cadastro"
+              ? "Sem necessidade de cartão de crédito. Comece a usar em menos de 1 minuto."
+              : modo === "login"
+              ? "Acesse seus diários, turmas, atividades e correções."
+              : "Informe seu email para enviarmos as instruções de redefinição."}
           </p>
         </div>
 
-        {/* Formulário e Ações */}
-        <div className="p-8 space-y-5">
+        <div className="p-6 space-y-4">
           {modo !== "recuperar" && (
             <>
+              {/* Google Button */}
               <button
                 type="button"
                 onClick={handleGoogleLogin}
-                className="w-full flex items-center justify-center gap-3 py-3.5 px-4 rounded-xl font-semibold text-sm text-[#101942] bg-white border border-[#dce0f0] shadow-sm hover:bg-[#eef0f8]/50 transition-all hover:scale-[1.01] active:scale-[0.99]"
+                className="w-full flex items-center justify-center gap-3 py-3 px-4 rounded-xl font-semibold text-sm text-[#101942] bg-white border border-[#dce0f0] shadow-sm hover:bg-[#eef0f8]/50 hover:border-[#6070a0]/30 transition-all duration-200 hover:scale-[1.01] active:scale-[0.99]"
               >
                 <svg width="20" height="20" viewBox="0 0 24 24">
                   <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/>
@@ -106,21 +112,22 @@ export default function LoginScreen() {
                   <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
                   <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
                 </svg>
-                Entrar com Google
+                Continuar com Google
               </button>
 
               <div className="flex items-center gap-3">
                 <div className="flex-1 h-px bg-[#dce0f0]" />
-                <span className="text-xs font-bold text-[#9098c0] uppercase tracking-wider">ou com email</span>
+                <span className="text-xs font-semibold text-[#9098c0] uppercase tracking-wider">ou com email</span>
                 <div className="flex-1 h-px bg-[#dce0f0]" />
               </div>
             </>
           )}
 
-          <form onSubmit={handleSubmit} className="space-y-4">
+          {/* Form */}
+          <form onSubmit={handleSubmit} className="space-y-3.5">
             <div>
-              <label className="block text-xs font-bold text-[#101942] mb-1.5">
-                Email
+              <label className="block text-xs font-bold text-[#101942] mb-1">
+                Email institucional ou pessoal
               </label>
               <input
                 type="email"
@@ -128,13 +135,13 @@ export default function LoginScreen() {
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="seu.email@escola.com.br"
                 required
-                className="w-full px-4 py-3 rounded-xl text-sm border border-[#dce0f0] bg-[#f7f8fc] text-[#101942] placeholder-[#9098c0] focus:outline-none focus:ring-2 focus:ring-[#f60c49]/30 focus:border-[#f60c49] transition-all"
+                className="w-full px-3.5 py-2.5 rounded-xl text-sm border border-[#dce0f0] bg-[#eef0f8]/30 text-[#101942] placeholder-[#9098c0] focus:outline-none focus:ring-2 focus:ring-[#f60c49]/30 focus:border-[#f60c49] transition-all"
               />
             </div>
 
             {modo !== "recuperar" && (
               <div>
-                <div className="flex items-center justify-between mb-1.5">
+                <div className="flex items-center justify-between mb-1">
                   <label className="block text-xs font-bold text-[#101942]">
                     Senha
                   </label>
@@ -142,7 +149,7 @@ export default function LoginScreen() {
                     <button
                       type="button"
                       onClick={() => { setModo("recuperar"); setErro(""); setSucesso(""); }}
-                      className="text-xs font-bold text-[#f60c49] hover:underline"
+                      className="text-xs font-semibold text-[#f60c49] hover:underline"
                     >
                       Esqueceu a senha?
                     </button>
@@ -155,19 +162,19 @@ export default function LoginScreen() {
                   placeholder="••••••••"
                   required={modo !== "recuperar"}
                   minLength={6}
-                  className="w-full px-4 py-3 rounded-xl text-sm border border-[#dce0f0] bg-[#f7f8fc] text-[#101942] placeholder-[#9098c0] focus:outline-none focus:ring-2 focus:ring-[#f60c49]/30 focus:border-[#f60c49] transition-all"
+                  className="w-full px-3.5 py-2.5 rounded-xl text-sm border border-[#dce0f0] bg-[#eef0f8]/30 text-[#101942] placeholder-[#9098c0] focus:outline-none focus:ring-2 focus:ring-[#f60c49]/30 focus:border-[#f60c49] transition-all"
                 />
               </div>
             )}
 
             {erro && (
-              <p className="text-xs text-[#d40840] font-semibold bg-[#fff2f6] border border-[#fde4ec] px-4 py-2.5 rounded-xl">
+              <p className="text-xs text-[#d40840] font-medium bg-[#fff2f6] border border-[#fde4ec] px-3 py-2 rounded-xl">
                 {erro}
               </p>
             )}
 
             {sucesso && (
-              <div className="flex items-start gap-2 text-xs text-[#101942] font-semibold bg-[#eef0f8] border border-[#dce0f0] px-4 py-3 rounded-xl">
+              <div className="flex items-start gap-2 text-xs text-[#101942] font-medium bg-[#eef0f8] border border-[#dce0f0] px-3 py-2.5 rounded-xl">
                 <CheckCircle2 className="w-4 h-4 text-[#22c55e] shrink-0 mt-0.5" />
                 <span>{sucesso}</span>
               </div>
@@ -176,18 +183,18 @@ export default function LoginScreen() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full btn-brand-primary py-3.5 px-6 text-sm flex items-center justify-center gap-2 group disabled:opacity-60"
+              className="w-full btn-brand-primary py-3 px-5 text-sm flex items-center justify-center gap-2 group disabled:opacity-60"
             >
               {loading ? (
-                <span>Aguarde...</span>
+                <span>Processando...</span>
               ) : (
                 <>
                   <span>
                     {modo === "login"
                       ? "Acessar Plataforma"
                       : modo === "cadastro"
-                      ? "Criar Conta Gratuita"
-                      : "Enviar Link"}
+                      ? "Criar Minha Conta Gratuita"
+                      : "Enviar Link de Recuperação"}
                   </span>
                   <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                 </>
@@ -201,13 +208,13 @@ export default function LoginScreen() {
               <button
                 type="button"
                 onClick={() => { setModo("login"); setErro(""); setSucesso(""); }}
-                className="font-bold text-[#f60c49] hover:underline inline-flex items-center gap-1"
+                className="font-bold text-[#f60c49] hover:underline"
               >
-                <ArrowLeft className="w-3.5 h-3.5" /> Voltar ao login
+                ← Voltar para o Login
               </button>
             ) : (
               <p>
-                {modo === "login" ? "Ainda não possui conta?" : "Já é cadastrado?"}{" "}
+                {modo === "login" ? "Ainda não tem conta?" : "Já possui cadastro?"}{" "}
                 <button
                   type="button"
                   onClick={() => {
@@ -217,7 +224,7 @@ export default function LoginScreen() {
                   }}
                   className="font-bold text-[#f60c49] hover:underline"
                 >
-                  {modo === "login" ? "Cadastre-se grátis" : "Entrar"}
+                  {modo === "login" ? "Cadastre-se grátis" : "Fazer login"}
                 </button>
               </p>
             )}

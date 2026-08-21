@@ -2,6 +2,7 @@ import React, { useMemo } from 'react';
 import { CardAula } from './CardAula';
 import { format, parseISO, startOfMonth, endOfMonth, eachDayOfInterval, getDay, isSameMonth, isToday } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
+import { ChevronLeft, ChevronRight, Calendar as CalendarIcon } from 'lucide-react';
 
 export function CalendarioView({ aulas, dataAtual, setDataAtual, onDropTopico, onRemoveTopico }) {
   // Configuração básica do mês atual na view
@@ -43,64 +44,93 @@ export function CalendarioView({ aulas, dataAtual, setDataAtual, onDropTopico, o
   const diasSemanaNomes = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
 
   return (
-    <div className="bg-white rounded-lg shadow border border-gray-200 overflow-hidden flex flex-col h-full">
+    <div className="bg-white rounded-3xl shadow-sm border border-[#dce0f0] overflow-hidden flex flex-col h-full font-sans">
       {/* Header do Calendário */}
-      <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200 bg-gray-50">
-        <h2 className="text-lg font-semibold text-gray-800">
-          {meses[dataAtual.getMonth()]} de {dataAtual.getFullYear()}
-        </h2>
-        <div className="flex space-x-2">
-          <button onClick={() => mudarMes(-1)} className="p-2 hover:bg-gray-200 rounded-md transition-colors text-gray-600">
-            &larr; Anterior
+      <div className="flex items-center justify-between px-6 py-4 border-b border-[#dce0f0] bg-[#f7f8fc]">
+        <div className="flex items-center gap-2">
+          <CalendarIcon className="w-5 h-5 text-[#f60c49]" />
+          <h2 className="font-head text-lg font-extrabold text-[#101942]">
+            {meses[dataAtual.getMonth()]} de {dataAtual.getFullYear()}
+          </h2>
+        </div>
+
+        <div className="flex items-center gap-2">
+          <button 
+            onClick={() => mudarMes(-1)} 
+            className="p-2 hover:bg-[#eef0f8] rounded-xl transition-all text-[#101942] border border-[#dce0f0] bg-white shadow-2xs"
+            title="Mês Anterior"
+          >
+            <ChevronLeft size={16} />
           </button>
-          <button onClick={() => setDataAtual(new Date())} className="p-2 hover:bg-gray-200 rounded-md transition-colors font-medium text-gray-600">
+          <button 
+            onClick={() => setDataAtual(new Date())} 
+            className="px-3.5 py-1.5 hover:bg-[#eef0f8] rounded-xl transition-all font-bold text-xs text-[#101942] border border-[#dce0f0] bg-white shadow-2xs"
+          >
             Hoje
           </button>
-          <button onClick={() => mudarMes(1)} className="p-2 hover:bg-gray-200 rounded-md transition-colors text-gray-600">
-            Próximo &rarr;
+          <button 
+            onClick={() => mudarMes(1)} 
+            className="p-2 hover:bg-[#eef0f8] rounded-xl transition-all text-[#101942] border border-[#dce0f0] bg-white shadow-2xs"
+            title="Próximo Mês"
+          >
+            <ChevronRight size={16} />
           </button>
         </div>
       </div>
 
-      {/* Grid de Dias da Semana */}
-      <div className="grid grid-cols-7 border-b border-gray-200 bg-gray-100 text-sm font-medium text-gray-500 text-center">
-        {diasSemanaNomes.map(d => (
-          <div key={d} className="py-2 border-r last:border-r-0 border-gray-200">{d}</div>
+      {/* Dias da Semana (Header) */}
+      <div className="grid grid-cols-7 border-b border-[#dce0f0] bg-[#f7f8fc]/70 text-center font-bold text-xs text-[#6070a0] py-2.5 uppercase tracking-wider font-head">
+        {diasSemanaNomes.map((dia, index) => (
+          <div key={dia} className={index === 0 || index === 6 ? 'text-[#9098c0]' : ''}>
+            {dia}
+          </div>
         ))}
       </div>
 
-      {/* Grid de Dias do Mês */}
-      <div className="grid grid-cols-7 flex-1 auto-rows-[minmax(120px,auto)] bg-gray-200 gap-[1px] overflow-y-auto">
-        {/* Espaços vazios no início do mês */}
+      {/* Grade do Mês */}
+      <div className="grid grid-cols-7 auto-rows-[minmax(120px,auto)] flex-1 overflow-y-auto divide-x divide-y divide-[#dce0f0] bg-white">
+        {/* Espaços vazios antes do dia 1 */}
         {diasVaziosAntes.map((_, i) => (
-          <div key={`empty-${i}`} className="bg-gray-50 min-h-[120px]"></div>
+          <div key={`vazio-${i}`} className="bg-[#f7f8fc]/40 min-h-[120px]" />
         ))}
 
-        {/* Dias do Mês */}
+        {/* Dias do mês */}
         {diasDoMes.map(dia => {
           const dataStr = format(dia, 'yyyy-MM-dd');
           const aulasDoDia = aulasPorData.get(dataStr) || [];
-          const hoje = isToday(dia);
+          const ehHoje = isToday(dia);
 
           return (
-            <div key={dataStr} className={`bg-white min-h-[120px] p-2 transition-colors hover:bg-gray-50 relative ${hoje ? 'ring-2 ring-inset ring-indigo-500' : ''}`}>
-              <div className="flex items-center justify-between mb-2">
-                <span className={`text-sm font-semibold flex items-center justify-center w-7 h-7 rounded-full ${hoje ? 'bg-indigo-600 text-white' : 'text-gray-700'}`}>
+            <div 
+              key={dataStr} 
+              className={`p-2 flex flex-col min-h-[120px] transition-colors ${
+                ehHoje ? 'bg-[#fff2f6]/30' : 'hover:bg-[#f7f8fc]/60'
+              }`}
+            >
+              <div className="flex justify-between items-center mb-1.5">
+                <span 
+                  className={`text-xs font-bold w-6 h-6 flex items-center justify-center rounded-full ${
+                    ehHoje 
+                      ? 'bg-[#f60c49] text-white shadow-xs' 
+                      : 'text-[#101942]'
+                  }`}
+                >
                   {format(dia, 'd')}
                 </span>
                 {aulasDoDia.length > 0 && (
-                  <span className="text-[10px] text-gray-500 font-medium">
-                    {aulasDoDia.length} aula(s)
+                  <span className="text-[10px] font-bold text-[#6070a0] font-mono">
+                    {aulasDoDia.length} {aulasDoDia.length > 1 ? 'aulas' : 'aula'}
                   </span>
                 )}
               </div>
-              
-              <div className="space-y-1">
+
+              {/* Lista de Aulas */}
+              <div className="flex-1 space-y-1.5 overflow-y-auto">
                 {aulasDoDia.map(aula => (
                   <CardAula 
                     key={aula.id} 
                     aula={aula} 
-                    onDropTopico={onDropTopico} 
+                    onDropTopico={onDropTopico}
                     onRemoveTopico={onRemoveTopico}
                   />
                 ))}

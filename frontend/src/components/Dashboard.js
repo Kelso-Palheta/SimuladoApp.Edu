@@ -11,10 +11,11 @@ import {
   ClipboardList,
   Lock,
   LogOut,
-  GraduationCap,
   X,
   User,
   Calendar,
+  ArrowRight,
+  Sparkles,
 } from "lucide-react";
 import { ProfileModal } from "@/components/diario/ProfileModal";
 
@@ -32,16 +33,10 @@ function Toast({ message, onClose }) {
       className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 animate-bounce"
       style={{ animationDuration: "0.4s" }}
     >
-      <div
-        className="flex items-center gap-3 px-5 py-3 rounded-xl text-sm font-medium shadow-lg"
-        style={{
-          background: "var(--foreground)",
-          color: "var(--background)",
-        }}
-      >
-        <Lock size={16} />
+      <div className="flex items-center gap-3 px-5 py-3 rounded-2xl text-sm font-semibold shadow-2xl bg-[#101942] text-white border border-white/10">
+        <Lock size={16} className="text-[#f60c49]" />
         <span>{message}</span>
-        <button onClick={onClose} className="ml-2 opacity-60 hover:opacity-100">
+        <button onClick={onClose} className="ml-2 opacity-60 hover:opacity-100 transition-opacity">
           <X size={16} />
         </button>
       </div>
@@ -58,7 +53,7 @@ export default function Dashboard() {
   const permitidos = perfil?.modulos_permitidos || [];
 
   const handleCardClick = (mod) => {
-    if (permitidos.includes(mod.id) || mod.id === 'calendario-pedagogico') {
+    if (permitidos.includes(mod.id) || mod.id === "calendario-pedagogico") {
       router.push(mod.path);
     } else {
       setToast(
@@ -68,152 +63,158 @@ export default function Dashboard() {
   };
 
   return (
-    <div
-      className="min-h-screen p-4 md:p-8 flex flex-col"
-      style={{
-        background:
-          "linear-gradient(135deg, var(--primary) 0%, #7c3aed 40%, #2563eb 100%)",
-      }}
-    >
-      {/* Header */}
-      <header className="flex items-center justify-between mb-8 max-w-5xl mx-auto w-full">
-        <div className="flex items-center gap-3">
-          <div
-            className="w-10 h-10 rounded-xl flex items-center justify-center"
-            style={{ background: "rgba(255,255,255,0.15)" }}
-          >
-            <GraduationCap size={22} color="white" />
+    <div className="min-h-screen bg-[#f7f8fc] text-[#101942] font-sans flex flex-col selection:bg-[#f60c49] selection:text-white">
+      {/* Header Superior Navy */}
+      <header className="bg-[#101942] text-white border-b border-white/10 px-4 sm:px-8 py-4 shadow-md sticky top-0 z-40">
+        <div className="max-w-7xl mx-auto w-full flex items-center justify-between">
+          {/* Logo SimuladoApp.Edu */}
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-[#f60c49] flex items-center justify-center text-white shadow-md">
+              <svg
+                width="22"
+                height="22"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
+                <path d="M6 12v5c0 1.1 2.7 2 6 2s6-.9 6-2v-5" />
+              </svg>
+            </div>
+            <div>
+              <h1 className="font-head text-xl font-extrabold tracking-tight text-white leading-none">
+                SimuladoApp<span className="text-[#f60c49]">.Edu</span>
+              </h1>
+              <p className="text-xs text-white/60 mt-1 flex items-center gap-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#22c55e]"></span>
+                Olá, {perfil?.nome || "Professor(a)"}
+              </p>
+            </div>
           </div>
-          <div>
-            <h1 className="text-lg font-bold" style={{ color: "white" }}>
-              SimuladoApp.Edu
-            </h1>
-            <p className="text-xs" style={{ color: "rgba(255,255,255,0.65)" }}>
-              {perfil?.nome || "Professor"}
-            </p>
+
+          {/* Ações de Usuário */}
+          <div className="flex items-center gap-2.5">
+            <button
+              onClick={() => setShowProfile(true)}
+              className="flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-white/10 text-white border border-white/15 hover:bg-white/15 transition-all"
+            >
+              <User size={15} className="text-[#f60c49]" />
+              <span className="hidden sm:inline">Perfil</span>
+            </button>
+            <button
+              onClick={logout}
+              className="flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-white/10 text-white border border-white/15 hover:bg-[#d40840] hover:border-[#d40840] transition-all"
+            >
+              <LogOut size={15} />
+              <span className="hidden sm:inline">Sair</span>
+            </button>
           </div>
-        </div>
-        <div className="flex items-center gap-2">
-          <button
-            onClick={() => setShowProfile(true)}
-            className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
-            style={{
-              background: "rgba(255,255,255,0.12)",
-              color: "white",
-              border: "1px solid rgba(255,255,255,0.2)",
-            }}
-          >
-            <User size={16} />
-            Perfil
-          </button>
-          <button
-            onClick={logout}
-            className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
-            style={{
-              background: "rgba(255,255,255,0.12)",
-              color: "white",
-              border: "1px solid rgba(255,255,255,0.2)",
-            }}
-          >
-            <LogOut size={16} />
-            Sair
-          </button>
         </div>
       </header>
 
-      {/* Grid de Cards */}
-      <main className="flex-1 max-w-5xl mx-auto w-full">
-        <h2
-          className="text-sm font-semibold mb-4 uppercase tracking-wider"
-          style={{ color: "rgba(255,255,255,0.7)" }}
-        >
-          Módulos disponíveis
-        </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {PLATFORM_MODULES.map((mod) => {
-            const temAcesso = permitidos.includes(mod.id) || mod.id === 'calendario-pedagogico';
-            const Icon = ICON_MAP[mod.icon] || BookOpen;
+      {/* Conteúdo Principal do Hub */}
+      <main className="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-8 py-8 space-y-8">
+        {/* Banner de Boas-Vindas */}
+        <div className="bg-gradient-to-r from-[#101942] via-[#1a255a] to-[#101942] rounded-3xl p-6 sm:p-8 text-white shadow-xl border border-[#101942]/20 relative overflow-hidden flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+          <div className="space-y-2 relative z-10 max-w-2xl">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-extrabold bg-[#f60c49] text-white">
+              <Sparkles size={12} />
+              <span>Painel do Docente</span>
+            </div>
+            <h2 className="font-head text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+              Seu Hub Pedagógico de Inteligência Artificial
+            </h2>
+            <p className="text-sm text-white/70 leading-relaxed">
+              Selecione uma ferramenta abaixo para gerenciar notas, planejar suas semanas de aula ou gerar e corrigir atividades e redações em segundos.
+            </p>
+          </div>
 
-            return (
-              <button
-                key={mod.id}
-                type="button"
-                onClick={() => handleCardClick(mod)}
-                className="glass-panel p-6 text-left space-y-3 transition-all duration-300 hover:scale-[1.03] active:scale-[0.98] relative group"
-                style={{
-                  opacity: temAcesso ? 1 : 0.45,
-                  cursor: temAcesso ? "pointer" : "not-allowed",
-                  ...(temAcesso && {
-                    backdropFilter: "blur(16px)",
-                    WebkitBackdropFilter: "blur(16px)",
-                  }),
-                }}
-              >
-                {/* Lock badge */}
-                {!temAcesso && (
-                  <div className="absolute top-3 right-3">
-                    <Lock size={16} style={{ color: "var(--foreground)" }} />
-                  </div>
-                )}
+          <div className="relative z-10 shrink-0">
+            <div className="px-5 py-3 rounded-2xl bg-white/10 border border-white/15 backdrop-blur-md text-center">
+              <span className="text-[11px] text-white/60 block font-medium uppercase tracking-wider">Status da Assinatura</span>
+              <span className="text-sm font-extrabold text-[#f60c49] flex items-center justify-center gap-1.5 mt-0.5">
+                <span className="w-2 h-2 rounded-full bg-[#22c55e]"></span>
+                Acesso Liberado
+              </span>
+            </div>
+          </div>
+        </div>
 
-                {/* Icon */}
-                <div
-                  className="w-11 h-11 rounded-xl flex items-center justify-center transition-colors"
-                  style={{
-                    background: temAcesso
-                      ? "var(--primary)"
-                      : "rgba(128,128,128,0.2)",
-                  }}
+        {/* Seção de Módulos */}
+        <div>
+          <div className="flex items-center justify-between mb-5">
+            <h3 className="font-head text-base font-bold text-[#101942] uppercase tracking-wider flex items-center gap-2">
+              <span className="w-2 h-4 bg-[#f60c49] rounded-full"></span>
+              Ferramentas Disponíveis
+            </h3>
+            <span className="text-xs font-semibold text-[#6070a0]">
+              {PLATFORM_MODULES.length} módulos ativos
+            </span>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            {PLATFORM_MODULES.map((mod) => {
+              const temAcesso =
+                permitidos.includes(mod.id) ||
+                mod.id === "calendario-pedagogico";
+              const Icon = ICON_MAP[mod.icon] || BookOpen;
+
+              return (
+                <button
+                  key={mod.id}
+                  type="button"
+                  onClick={() => handleCardClick(mod)}
+                  className={`p-6 rounded-3xl text-left bg-white border border-[#dce0f0] shadow-sm transition-all duration-300 relative group flex flex-col justify-between min-h-[200px] ${
+                    temAcesso
+                      ? "hover:shadow-xl hover:border-[#f60c49]/40 hover:-translate-y-1 cursor-pointer"
+                      : "opacity-50 cursor-not-allowed bg-[#f7f8fc]"
+                  }`}
                 >
-                  <Icon
-                    size={22}
-                    style={{
-                      color: temAcesso
-                        ? "var(--primary-foreground)"
-                        : "var(--foreground)",
-                    }}
-                  />
-                </div>
+                  {/* Badge de Cadeado */}
+                  {!temAcesso && (
+                    <div className="absolute top-4 right-4 p-2 rounded-xl bg-[#eef0f8] text-[#6070a0]">
+                      <Lock size={16} />
+                    </div>
+                  )}
 
-                {/* Text */}
-                <div>
-                  <h3
-                    className="font-semibold text-base"
-                    style={{ color: "var(--foreground)" }}
-                  >
-                    {mod.nome}
-                  </h3>
-                  <p
-                    className="text-xs mt-1 leading-relaxed"
-                    style={{ color: "var(--foreground)", opacity: 0.55 }}
-                  >
-                    {mod.descricao}
-                  </p>
-                </div>
+                  <div className="space-y-4">
+                    {/* Ícone com Fundo Rosa Suave */}
+                    <div className="w-12 h-12 rounded-2xl bg-[#fff2f6] border border-[#fde4ec] text-[#f60c49] flex items-center justify-center shadow-xs group-hover:scale-105 transition-transform">
+                      <Icon size={24} />
+                    </div>
 
-                {/* Hover indicator for allowed cards */}
-                {temAcesso && (
-                  <div
-                    className="text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity"
-                    style={{ color: "var(--primary)" }}
-                  >
-                    Acessar →
+                    {/* Título e Descrição */}
+                    <div>
+                      <h4 className="font-head font-bold text-lg text-[#101942] group-hover:text-[#f60c49] transition-colors">
+                        {mod.nome}
+                      </h4>
+                      <p className="text-xs text-[#6070a0] mt-1.5 leading-relaxed">
+                        {mod.descricao}
+                      </p>
+                    </div>
                   </div>
-                )}
-              </button>
-            );
-          })}
+
+                  {/* Ação Inferior */}
+                  {temAcesso && (
+                    <div className="pt-4 border-t border-[#dce0f0]/60 flex items-center justify-between text-xs font-bold text-[#f60c49]">
+                      <span>Abrir ferramenta</span>
+                      <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                    </div>
+                  )}
+                </button>
+              );
+            })}
+          </div>
         </div>
       </main>
 
       {/* Toast */}
-      {toast && (
-        <Toast
-          message={toast}
-          onClose={() => setToast(null)}
-        />
-      )}
+      {toast && <Toast message={toast} onClose={() => setToast(null)} />}
 
+      {/* Modal de Perfil */}
       {showProfile && (
         <ProfileModal user={user} onClose={() => setShowProfile(false)} />
       )}

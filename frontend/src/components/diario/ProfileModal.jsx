@@ -79,11 +79,11 @@ export function ProfileModal({ user, onClose }) {
           )}
 
           <div className="flex items-center gap-4">
-            {user?.photoURL ? (
-              <img src={user.photoURL} alt="" className="w-14 h-14 rounded-2xl border-2 border-violet-200" referrerPolicy="no-referrer" />
+            {user.photoURL ? (
+              <img src={user.photoURL} alt="" className="w-14 h-14 rounded-2xl border border-[#dce0f0]" referrerPolicy="no-referrer" />
             ) : (
-              <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-violet-700 to-violet-400 flex items-center justify-center text-white text-xl font-bold">
-                {(user?.displayName || user?.email || '?')[0].toUpperCase()}
+              <div className="w-14 h-14 rounded-2xl bg-[#fff2f6] border border-[#fde4ec] flex items-center justify-center text-[#d40840] text-xl font-extrabold shadow-sm">
+                {user.displayName?.[0] || '?'}
               </div>
             )}
             <div className="flex-1 min-w-0">
