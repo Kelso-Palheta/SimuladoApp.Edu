@@ -12,6 +12,7 @@ import {
   AlertCircle,
   LogOut,
   Layers,
+  Calendar as CalendarIcon,
 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
@@ -72,7 +73,18 @@ export function Sidebar({
 
   return (
     <aside className="w-80 bg-white border-r border-[#dce0f0] flex flex-col h-full z-20 shrink-0 font-sans shadow-xs">
-      {/* Topo: Seletor de Turmas */}
+      {/* Brand Header */}
+      <div className="p-4 border-b border-[#dce0f0] flex items-center gap-3">
+        <div className="w-10 h-10 rounded-2xl bg-[#fff2f6] border border-[#fde4ec] flex items-center justify-center text-[#f60c49] shadow-2xs shrink-0">
+          <CalendarIcon className="w-5 h-5" />
+        </div>
+        <div>
+          <h2 className="font-head font-extrabold text-[#101942] text-sm leading-tight">Calendário</h2>
+          <p className="text-[10px] text-[#6070a0] font-semibold">Planejamento Letivo</p>
+        </div>
+      </div>
+
+      {/* Seletor de Turmas */}
       <div className="p-4 border-b border-[#dce0f0]">
         <div className="flex items-center justify-between mb-2">
           <span className="font-bold text-[10px] uppercase tracking-wider text-[#6070a0]">
