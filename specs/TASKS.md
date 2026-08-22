@@ -13,6 +13,7 @@
 - [x] **TASK-10:** Exportação da Caderneta Escolar Oficial em PDF (Paisagem A4 com assinaturas) e Planilha Excel/CSV no Diário Pedagógico.
 - [x] **TASK-11:** Hub de Agentes Pedagógicos MVP — 2 agentes conversacionais (Ensino Médio e Fundamental II) com chat persistente, API segura e design glassmorphism.
 - [x] **TASK-12:** Dashboard Analytics Pedagógico (`/analytics`) — Métricas de rendimento (média geral, aprovação, radar de risco), gráficos Recharts (evolução bimestral, faixas de notas, comparativo multiturmas) e filtros interativos.
+- [x] **TASK-13:** Calendário Pedagógico Flexível — Auto-Agendamento em 1 clique com data de partida selecionável (RN-19), Decisão Pedagógica interativa ao mudar status (Smart Shift vs Pular Tópico - RN-20), Edição/Exclusão manual de tópicos e Barra de Progresso Curricular.
 
 ---
 

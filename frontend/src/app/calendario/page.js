@@ -11,10 +11,13 @@ import { CalendarioView } from '@/components/calendario/CalendarioView';
 import { ConfigGradeModal } from '@/components/calendario/ConfigGradeModal';
 import { ImportPlanejamentoModal } from '@/components/calendario/ImportPlanejamentoModal';
 import { FeriadosModal } from '@/components/calendario/FeriadosModal';
+import { AutoDistribuirModal } from '@/components/calendario/AutoDistribuirModal';
+import { DecisaoStatusModal } from '@/components/calendario/DecisaoStatusModal';
+import { TopicoModal } from '@/components/calendario/TopicoModal';
 import { useCalendarioPedagogico } from '@/hooks/calendario/useCalendarioPedagogico';
 import { generateCalendarioPDF } from '@/lib/calendario/pdf-generator';
 import { ScheduleGeneratorEngine } from '@/lib/engines/ScheduleGeneratorEngine';
-import { ArrowLeft, Download, CalendarOff } from 'lucide-react';
+import { ArrowLeft, Download, CalendarOff, Sparkles } from 'lucide-react';
 
 export default function CalendarioPage() {
   const { user, loading: authLoading } = useAuth();
@@ -23,15 +26,26 @@ export default function CalendarioPage() {
   const [turmas, setTurmas] = useState([]);
   const [turmaSelecionada, setTurmaSelecionada] = useState(null);
   const [dataAtual, setDataAtual] = useState(new Date());
-  
+
   const [gradeHoraria, setGradeHoraria] = useState(null);
   const [aulas, setAulas] = useState([]);
   const [planejamento, setPlanejamento] = useState(null);
   const [feriados, setFeriados] = useState([]);
-  
+
+  // Modais de Controle
   const [isConfigOpen, setIsConfigOpen] = useState(false);
   const [isImportOpen, setIsImportOpen] = useState(false);
   const [isFeriadosOpen, setIsFeriadosOpen] = useState(false);
+  const [isAutoDistribuirOpen, setIsAutoDistribuirOpen] = useState(false);
+  const [isTopicoModalOpen, setIsTopicoModalOpen] = useState(false);
+  const [topicoEmEdicao, setTopicoEmEdicao] = useState(null);
+
+  // Modal de Decisão de Status (Smart Shift vs Pular)
+  const [decisaoModalData, setDecisaoModalData] = useState({
+    isOpen: false,
+    aula: null,
+    novoStatus: null,
+  });
 
   const {
     loading: calLoading,
@@ -43,12 +57,17 @@ export default function CalendarioPage() {
     associarTopicoAula,
     desassociarTopicoAula,
     atualizarStatusAula,
+    atualizarStatusComDecisao,
     cancelarAulaComRemanejamento,
+    autoDistribuirTopicos,
+    adicionarTopicoManual,
+    editarTopico,
+    excluirTopico,
     salvarFeriados,
-    carregarFeriados
+    carregarFeriados,
   } = useCalendarioPedagogico();
 
-  // 1. Carrega as turmas do professor logado (aproveitando a mesma estrutura do Diário)
+  // 1. Carrega as turmas do professor logado
   useEffect(() => {
     if (authLoading) return;
     if (!user) {
@@ -68,7 +87,7 @@ export default function CalendarioPage() {
           }
         }
       } catch (err) {
-        console.error("Erro ao carregar turmas:", err);
+        console.error('Erro ao carregar turmas:', err);
       }
     };
 
@@ -85,36 +104,39 @@ export default function CalendarioPage() {
           carregarGradeHoraria(turmaSelecionada.id),
           carregarAulasAgendadas(turmaSelecionada.id),
           carregarPlanejamento(turmaSelecionada.id),
-          carregarFeriados(turmaSelecionada.id)
+          carregarFeriados(turmaSelecionada.id),
         ]);
 
         setGradeHoraria(grade);
         setAulas(aulasAgendadas);
         setPlanejamento(plan);
         setFeriados(feriadosCarregados || []);
-        
+
         if (!grade) {
           setIsConfigOpen(true);
         }
       } catch (err) {
-        console.error("Erro ao carregar dados:", err);
+        console.error('Erro ao carregar dados:', err);
       }
     };
+
     loadData();
-  }, [turmaSelecionada, carregarGradeHoraria, carregarAulasAgendadas, carregarPlanejamento, carregarFeriados]);
+  }, [
+    turmaSelecionada,
+    carregarGradeHoraria,
+    carregarAulasAgendadas,
+    carregarPlanejamento,
+    carregarFeriados,
+  ]);
 
   const handleSaveGrade = async (gradeData) => {
     try {
-      await configurarGradeHoraria(turmaSelecionada.id, gradeData);
+      const novosSlots = await configurarGradeHoraria(turmaSelecionada.id, gradeData);
       setGradeHoraria(gradeData);
-      
-      const aulasAgendadas = await carregarAulasAgendadas(turmaSelecionada.id);
-      setAulas(aulasAgendadas);
-      
+      setAulas(novosSlots);
       setIsConfigOpen(false);
-      alert("Grade horária configurada e aulas geradas com sucesso!");
     } catch (err) {
-      alert("Erro ao configurar grade: " + err.message);
+      alert('Erro ao salvar grade horária: ' + err.message);
     }
   };
 
@@ -124,7 +146,7 @@ export default function CalendarioPage() {
       const aulasAgendadas = await carregarAulasAgendadas(turmaSelecionada.id);
       setAulas(aulasAgendadas);
     } catch (err) {
-      alert("Erro ao associar tópico: " + err.message);
+      alert('Erro ao associar tópico: ' + err.message);
     }
   };
 
@@ -134,34 +156,72 @@ export default function CalendarioPage() {
       const aulasAgendadas = await carregarAulasAgendadas(turmaSelecionada.id);
       setAulas(aulasAgendadas);
     } catch (err) {
-      alert("Erro ao remover tópico: " + err.message);
+      alert('Erro ao remover tópico: ' + err.message);
     }
   };
 
   const handleClearPlanejamento = async () => {
-    if (confirm("Tem certeza que deseja limpar todo o planejamento importado para esta turma?")) {
+    if (confirm('Tem certeza que deseja limpar todo o planejamento importado para esta turma?')) {
       try {
         await salvarPlanejamento(turmaSelecionada.id, null);
         setPlanejamento(null);
       } catch (err) {
-        alert("Erro ao limpar planejamento: " + err.message);
+        alert('Erro ao limpar planejamento: ' + err.message);
       }
     }
   };
 
-  const handleUpdateStatus = async (aulaId, novoStatus) => {
+  const handleUpdateStatus = async (aulaId, novoStatus, aulaObj = null) => {
+    const aula = aulaObj || aulas.find((a) => a.id === aulaId);
+    const temTopicos = (aula?.topicosAssociados?.length > 0) || Boolean(aula?.topicoTitulo);
+
+    // Se tiver tópicos e for cancelada ou parcial, abre diálogo de decisão
+    if (temTopicos && (novoStatus === 'NAO_REALIZADA' || novoStatus === 'PARCIAL')) {
+      setDecisaoModalData({
+        isOpen: true,
+        aula,
+        novoStatus,
+      });
+      return;
+    }
+
     try {
       await atualizarStatusAula(aulaId, novoStatus);
       const aulasAgendadas = await carregarAulasAgendadas(turmaSelecionada.id);
       setAulas(aulasAgendadas);
     } catch (err) {
-      alert("Erro ao atualizar status: " + err.message);
+      alert('Erro ao atualizar status: ' + err.message);
+    }
+  };
+
+  const handleConfirmarDecisaoStatus = async (decisao) => {
+    const { aula, novoStatus } = decisaoModalData;
+    if (!aula || !novoStatus) return;
+
+    try {
+      const aulasAtualizadas = await atualizarStatusComDecisao(
+        turmaSelecionada.id,
+        aula.id,
+        aulas,
+        novoStatus,
+        decisao
+      );
+      if (aulasAtualizadas) {
+        setAulas(aulasAtualizadas);
+      }
+      setDecisaoModalData({ isOpen: false, aula: null, novoStatus: null });
+    } catch (err) {
+      alert('Erro ao aplicar decisão de status: ' + err.message);
     }
   };
 
   const handleSmartShift = async (aulaId) => {
     try {
-      const aulasAtualizadas = await cancelarAulaComRemanejamento(turmaSelecionada.id, aulaId, aulas);
+      const aulasAtualizadas = await cancelarAulaComRemanejamento(
+        turmaSelecionada.id,
+        aulaId,
+        aulas
+      );
       if (aulasAtualizadas) {
         setAulas(aulasAtualizadas);
       } else {
@@ -169,22 +229,103 @@ export default function CalendarioPage() {
         setAulas(aulasAgendadas);
       }
     } catch (err) {
-      alert("Erro ao executar Smart Shift: " + err.message);
+      alert('Erro ao executar Smart Shift: ' + err.message);
+    }
+  };
+
+  // Auto-distribuição em 1 clique
+  const handleConfirmarAutoDistribuir = async (options) => {
+    const topicos = planejamento?.topicos || [];
+    if (topicos.length === 0) {
+      alert('Nenhum tópico disponível no planejamento para distribuir.');
+      return;
+    }
+
+    try {
+      const aulasAtualizadas = await autoDistribuirTopicos(
+        turmaSelecionada.id,
+        aulas,
+        topicos,
+        {
+          ...options,
+          feriados,
+        }
+      );
+      if (aulasAtualizadas) {
+        setAulas(aulasAtualizadas);
+      }
+      alert('Tópicos distribuídos com sucesso no calendário!');
+    } catch (err) {
+      alert('Erro ao auto-distribuir tópicos: ' + err.message);
+    }
+  };
+
+  // Gestão de tópicos manuais (adicionar e editar)
+  const handleSalvarTopico = async (dadosTopico) => {
+    try {
+      if (dadosTopico.id && topicoEmEdicao) {
+        // Edição
+        const planAtualizado = await editarTopico(
+          turmaSelecionada.id,
+          dadosTopico.id,
+          dadosTopico,
+          planejamento,
+          aulas
+        );
+        setPlanejamento(planAtualizado);
+        const recarregadas = await carregarAulasAgendadas(turmaSelecionada.id);
+        setAulas(recarregadas);
+      } else {
+        // Adicionar novo
+        const planAtualizado = await adicionarTopicoManual(
+          turmaSelecionada.id,
+          dadosTopico,
+          planejamento
+        );
+        setPlanejamento(planAtualizado);
+      }
+      setIsTopicoModalOpen(false);
+      setTopicoEmEdicao(null);
+    } catch (err) {
+      alert('Erro ao salvar tópico: ' + err.message);
+    }
+  };
+
+  const handleExcluirTopico = async (topicoId) => {
+    try {
+      const planAtualizado = await excluirTopico(
+        turmaSelecionada.id,
+        topicoId,
+        planejamento,
+        aulas
+      );
+      setPlanejamento(planAtualizado);
+      const recarregadas = await carregarAulasAgendadas(turmaSelecionada.id);
+      setAulas(recarregadas);
+    } catch (err) {
+      alert('Erro ao excluir tópico: ' + err.message);
     }
   };
 
   const handleAddFeriado = async (novoFeriado) => {
     try {
-      const novosFeriados = [...feriados.filter(f => f.data !== novoFeriado.data), novoFeriado];
+      const novosFeriados = [
+        ...feriados.filter((f) => f.data !== novoFeriado.data),
+        novoFeriado,
+      ];
       await salvarFeriados(turmaSelecionada.id, novosFeriados);
       setFeriados(novosFeriados);
 
       // Aplica o feriado no calendário e executa Smart Shift nas aulas da data
-      let aulasAtualizadas = ScheduleGeneratorEngine.aplicarFeriadoNoCalendario(aulas, novoFeriado.data, novoFeriado.nome);
+      let aulasAtualizadas = ScheduleGeneratorEngine.aplicarFeriadoNoCalendario(
+        aulas,
+        novoFeriado.data,
+        novoFeriado.nome
+      );
       setAulas(aulasAtualizadas);
 
       // Persiste no Firestore
-      const aulasComFeriado = aulas.filter(a => a.dataAgendada === novoFeriado.data);
+      const aulasComFeriado = aulas.filter((a) => a.dataAgendada === novoFeriado.data);
       for (const a of aulasComFeriado) {
         await cancelarAulaComRemanejamento(turmaSelecionada.id, a.id, aulas);
       }
@@ -192,17 +333,17 @@ export default function CalendarioPage() {
       const recarregadas = await carregarAulasAgendadas(turmaSelecionada.id);
       setAulas(recarregadas);
     } catch (err) {
-      alert("Erro ao adicionar feriado: " + err.message);
+      alert('Erro ao adicionar feriado: ' + err.message);
     }
   };
 
   const handleRemoveFeriado = async (dataFeriado) => {
     try {
-      const novosFeriados = feriados.filter(f => f.data !== dataFeriado);
+      const novosFeriados = feriados.filter((f) => f.data !== dataFeriado);
       await salvarFeriados(turmaSelecionada.id, novosFeriados);
       setFeriados(novosFeriados);
     } catch (err) {
-      alert("Erro ao remover feriado: " + err.message);
+      alert('Erro ao remover feriado: ' + err.message);
     }
   };
 
@@ -210,10 +351,10 @@ export default function CalendarioPage() {
     try {
       const anoAtual = dataAtual.getFullYear();
       const padroes = ScheduleGeneratorEngine.obterFeriadosNacionais(anoAtual);
-      
+
       const unicos = [...feriados];
-      padroes.forEach(p => {
-        if (!unicos.some(f => f.data === p.data)) {
+      padroes.forEach((p) => {
+        if (!unicos.some((f) => f.data === p.data)) {
           unicos.push(p);
         }
       });
@@ -221,84 +362,108 @@ export default function CalendarioPage() {
       await salvarFeriados(turmaSelecionada.id, unicos);
       setFeriados(unicos);
 
-      // Aplica feriados nas aulas existentes
-      let aulasTemp = [...aulas];
-      for (const p of padroes) {
-        const temAula = aulasTemp.some(a => a.dataAgendada === p.data && a.status === 'AGENDADA');
-        if (temAula) {
-          aulasTemp = ScheduleGeneratorEngine.aplicarFeriadoNoCalendario(aulasTemp, p.data, p.nome);
-          const aulaDia = aulas.find(a => a.dataAgendada === p.data);
-          if (aulaDia) {
-            await cancelarAulaComRemanejamento(turmaSelecionada.id, aulaDia.id, aulas);
-          }
-        }
+      let aulasAtualizadas = [...aulas];
+      padroes.forEach((p) => {
+        aulasAtualizadas = ScheduleGeneratorEngine.aplicarFeriadoNoCalendario(
+          aulasAtualizadas,
+          p.data,
+          p.nome
+        );
+      });
+      setAulas(aulasAtualizadas);
+
+      const aulasComFeriado = aulas.filter((a) =>
+        padroes.some((p) => p.data === a.dataAgendada)
+      );
+      for (const a of aulasComFeriado) {
+        await cancelarAulaComRemanejamento(turmaSelecionada.id, a.id, aulas);
       }
 
       const recarregadas = await carregarAulasAgendadas(turmaSelecionada.id);
       setAulas(recarregadas);
       alert(`${padroes.length} feriados nacionais importados com sucesso!`);
     } catch (err) {
-      alert("Erro ao importar feriados nacionais: " + err.message);
+      alert('Erro ao importar feriados nacionais: ' + err.message);
     }
   };
 
-  if (authLoading || !user) {
-    return <div className="flex h-screen items-center justify-center bg-slate-50 text-slate-500">Carregando...</div>;
-  }
-
   return (
-    <div className="flex h-screen bg-[#f7f8fc] overflow-hidden font-sans selection:bg-[#f60c49] selection:text-white">
-      <Sidebar 
+    <div className="flex h-screen bg-[#f7f8fc] overflow-hidden">
+      {/* Barra Lateral do Calendário */}
+      <Sidebar
         turmas={turmas}
         turmaSelecionada={turmaSelecionada}
         onSelectTurma={setTurmaSelecionada}
         onOpenConfig={() => setIsConfigOpen(true)}
         onOpenImport={() => setIsImportOpen(true)}
+        onOpenAutoDistribuir={() => setIsAutoDistribuirOpen(true)}
+        onOpenNovoTopico={() => {
+          setTopicoEmEdicao(null);
+          setIsTopicoModalOpen(true);
+        }}
+        onOpenEditarTopico={(topico) => {
+          setTopicoEmEdicao(topico);
+          setIsTopicoModalOpen(true);
+        }}
+        onExcluirTopico={handleExcluirTopico}
         onClearPlanejamento={handleClearPlanejamento}
         planejamento={planejamento}
         aulas={aulas}
         user={user}
       />
-      
-      <main className="flex-1 flex flex-col min-w-0 h-screen overflow-hidden relative">
-        <header className="bg-white border-b border-[#dce0f0] px-6 sm:px-8 py-3.5 shrink-0 flex items-center justify-between shadow-2xs">
+
+      {/* Área Principal */}
+      <main className="flex-1 flex flex-col min-w-0 overflow-hidden">
+        {/* Header Superior */}
+        <header className="h-16 bg-white border-b border-[#dce0f0] flex items-center justify-between px-6 z-10">
           <div className="flex items-center gap-3">
             <button
               onClick={() => router.push('/')}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold bg-[#101942] hover:bg-[#090f28] text-white shadow-xs transition-all"
+              className="p-2 rounded-xl text-[#6070a0] hover:text-[#101942] hover:bg-[#f7f8fc] transition-colors"
+              title="Voltar ao Hub"
             >
-              <ArrowLeft size={14} />
-              <span>Hub</span>
+              <ArrowLeft size={18} />
             </button>
             <div>
-              <h1 className="font-head text-lg sm:text-xl font-extrabold text-[#101942]">
-                {turmaSelecionada ? `Calendário: ${turmaSelecionada.nome}` : 'Selecione uma turma'}
+              <h1 className="font-head font-extrabold text-[#101942] text-base leading-none">
+                {turmaSelecionada ? turmaSelecionada.nome : 'Selecione uma turma'}
               </h1>
-              <p className="text-xs text-[#6070a0]">
-                Grade horária e remanejamento automático de aulas
+              <p className="text-xs text-[#6070a0] font-medium mt-0.5">
+                {turmaSelecionada?.disciplina ? `${turmaSelecionada.disciplina} • ` : ''}
+                Grade Horária e Cronograma de Aulas
               </p>
             </div>
           </div>
-          
+
           {turmaSelecionada && (
             <div className="flex items-center gap-2">
               <button
                 onClick={() => setIsFeriadosOpen(true)}
-                className="btn-brand-ghost px-3 py-2 text-xs sm:text-sm flex items-center gap-1.5"
-                title="Gerenciar feriados e recessos escolares"
+                className="btn-brand-secondary px-3.5 py-2 text-xs sm:text-sm flex items-center gap-1.5 shadow-xs"
+                title="Gerenciar Feriados e Recessos"
               >
                 <CalendarOff size={14} className="text-[#f60c49]" />
-                <span className="hidden sm:inline">Feriados</span>
+                <span className="hidden sm:inline">Feriados ({feriados.length})</span>
               </button>
+
               <button
-                onClick={() => generateCalendarioPDF(aulas, turmaSelecionada.nome, user?.email)}
-                disabled={aulas.length === 0}
-                className="btn-brand-ghost px-3 py-2 text-xs sm:text-sm flex items-center gap-1.5 disabled:opacity-40"
-                title="Exportar cronograma de aulas em PDF"
+                onClick={() => {
+                  generateCalendarioPDF({
+                    turma: turmaSelecionada,
+                    grade: gradeHoraria,
+                    aulas,
+                    feriados,
+                    professorNome: user?.displayName || user?.email,
+                  });
+                }}
+                disabled={!aulas.length}
+                className="btn-brand-secondary px-3.5 py-2 text-xs sm:text-sm flex items-center gap-1.5 shadow-xs disabled:opacity-50"
+                title="Exportar Calendário em PDF"
               >
                 <Download size={14} className="text-[#f60c49]" />
                 <span className="hidden sm:inline">PDF</span>
               </button>
+
               <button
                 onClick={() => setIsConfigOpen(true)}
                 className="btn-brand-primary px-3.5 py-2 text-xs sm:text-sm flex items-center gap-1.5 shadow-sm"
@@ -316,8 +481,8 @@ export default function CalendarioPage() {
                 Carregando calendário...
               </div>
             ) : gradeHoraria || aulas.length > 0 ? (
-              <CalendarioView 
-                aulas={aulas} 
+              <CalendarioView
+                aulas={aulas}
                 dataAtual={dataAtual}
                 setDataAtual={setDataAtual}
                 feriados={feriados}
@@ -328,8 +493,10 @@ export default function CalendarioPage() {
               />
             ) : (
               <div className="flex flex-col h-full items-center justify-center text-[#6070a0] bg-white rounded-3xl border border-dashed border-[#dce0f0] p-8 text-center">
-                <p className="mb-4 font-medium text-sm">Nenhuma grade horária configurada para esta turma.</p>
-                <button 
+                <p className="mb-4 font-medium text-sm">
+                  Nenhuma grade horária configurada para esta turma.
+                </p>
+                <button
                   onClick={() => setIsConfigOpen(true)}
                   className="btn-brand-primary px-6 py-3 text-sm font-bold shadow-md"
                 >
@@ -345,8 +512,9 @@ export default function CalendarioPage() {
         </div>
       </main>
 
+      {/* Modais */}
       {isConfigOpen && (
-        <ConfigGradeModal 
+        <ConfigGradeModal
           isOpen={isConfigOpen}
           onClose={() => setIsConfigOpen(false)}
           onSave={handleSaveGrade}
@@ -356,7 +524,7 @@ export default function CalendarioPage() {
       )}
 
       {isImportOpen && (
-        <ImportPlanejamentoModal 
+        <ImportPlanejamentoModal
           isOpen={isImportOpen}
           onClose={() => setIsImportOpen(false)}
           onImportSuccess={async () => {
@@ -367,8 +535,41 @@ export default function CalendarioPage() {
         />
       )}
 
+      {isAutoDistribuirOpen && (
+        <AutoDistribuirModal
+          isOpen={isAutoDistribuirOpen}
+          onClose={() => setIsAutoDistribuirOpen(false)}
+          topicos={planejamento?.topicos || []}
+          aulas={aulas}
+          onConfirmar={handleConfirmarAutoDistribuir}
+        />
+      )}
+
+      {isTopicoModalOpen && (
+        <TopicoModal
+          isOpen={isTopicoModalOpen}
+          onClose={() => {
+            setIsTopicoModalOpen(false);
+            setTopicoEmEdicao(null);
+          }}
+          topicoEmEdicao={topicoEmEdicao}
+          onSalvar={handleSalvarTopico}
+          onExcluir={handleExcluirTopico}
+        />
+      )}
+
+      {decisaoModalData.isOpen && (
+        <DecisaoStatusModal
+          isOpen={decisaoModalData.isOpen}
+          onClose={() => setDecisaoModalData({ isOpen: false, aula: null, novoStatus: null })}
+          aula={decisaoModalData.aula}
+          novoStatus={decisaoModalData.novoStatus}
+          onConfirmar={handleConfirmarDecisaoStatus}
+        />
+      )}
+
       {isFeriadosOpen && (
-        <FeriadosModal 
+        <FeriadosModal
           isOpen={isFeriadosOpen}
           onClose={() => setIsFeriadosOpen(false)}
           feriados={feriados}

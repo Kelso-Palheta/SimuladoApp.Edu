@@ -26,9 +26,12 @@ O **SimuladoApp.Edu** é um Hub Pedagógico de Inteligência Artificial desenhad
    - Avaliação detalhada nas 5 competências do ENEM (0 a 200 pts cada).
    - Geração de devolutiva pedagógica e exportação em PDF formatado.
 3. **Calendário Pedagógico:**
-   - Configuração de grade horária semanal por turma.
+   - Configuração de grade horária semanal por turma e período letivo.
    - Importação inteligente de planos de aula anuais com IA (`sabiazinho-4`).
+   - Distribuição automática de planejamento em 1 clique (Auto-Schedule) com data inicial configurável.
    - Drag and Drop de tópicos para aulas com remanejamento automático.
+   - Decisão interativa ao mudar status: Smart Shift (empurrar em cascata) ou Pular Conteúdo.
+   - Monitoramento visual de cumprimento do currículo (% concluído, agendado e pendente).
 4. **Gerador de Atividades & Questões:**
    - Criação de listas de exercícios e provas alinhadas à BNCC e descritores do SAEB/ENEM.
 5. **Portal do Aluno:**

@@ -179,6 +179,103 @@ export class ScheduleGeneratorEngine {
 
     return aulasAtualizadas;
   }
+
+  /**
+   * Distribui automaticamente uma lista de tópicos nos slots de aula do calendário (RN-19).
+   * 
+   * @param {Array} aulas - Lista de todas as aulas da turma
+   * @param {Array} topicos - Lista de tópicos do planejamento
+   * @param {Object} options - { dataInicio: string, modo: 'substituir' | 'apenas_vagas', feriados: Array }
+   * @returns {Array} Aulas com os tópicos distribuídos
+   */
+  static autoDistribuirTopicos(aulas = [], topicos = [], options = {}) {
+    if (!aulas || aulas.length === 0 || !topicos || topicos.length === 0) {
+      return aulas || [];
+    }
+
+    const {
+      dataInicio = format(new Date(), 'yyyy-MM-dd'),
+      modo = 'substituir',
+      feriados = [],
+    } = options;
+
+    const feriadosSet = new Set(feriados.map(f => f.data));
+
+    // Clona e ordena as aulas cronologicamente
+    const copiaAulas = aulas.map(a => ({
+      ...a,
+      topicosAssociados: a.topicosAssociados ? [...a.topicosAssociados] : [],
+    }));
+    copiaAulas.sort((a, b) => new Date(a.dataAgendada) - new Date(b.dataAgendada));
+
+    // Ordena os tópicos por ordem sequencial
+    const topicosOrdenados = [...topicos].sort((a, b) => (a.ordem || 0) - (b.ordem || 0));
+
+    let topicoIndex = 0;
+
+    for (let i = 0; i < copiaAulas.length; i++) {
+      const aula = copiaAulas[i];
+
+      // Se acabaram os tópicos a distribuir, encerra
+      if (topicoIndex >= topicosOrdenados.length) {
+        break;
+      }
+
+      // Se a aula for anterior à data de início configurada, preserva intacta
+      if (aula.dataAgendada < dataInicio) {
+        continue;
+      }
+
+      // Se for feriado ou recesso, não aloca
+      if (feriadosSet.has(aula.dataAgendada)) {
+        continue;
+      }
+
+      // Se a aula estiver cancelada ou já concluída, não sobrescreve
+      if (aula.status === 'NAO_REALIZADA' || aula.status === 'CONCLUIDA') {
+        continue;
+      }
+
+      // Se o modo for apenas vagas e a aula já tiver tópico, preserva
+      if (modo === 'apenas_vagas' && aula.topicosAssociados.length > 0) {
+        continue;
+      }
+
+      // Aloca o próximo tópico disponível
+      const topicoAtual = topicosOrdenados[topicoIndex];
+      aula.topicosAssociados = [topicoAtual];
+      topicoIndex++;
+    }
+
+    return copiaAulas;
+  }
+
+  /**
+   * Atualiza o status de uma aula permitindo decidir entre Smart Shift ou Pular Conteúdo (RN-20).
+   * 
+   * @param {Array} aulas 
+   * @param {String} aulaId 
+   * @param {String} novoStatus - 'AGENDADA' | 'CONCLUIDA' | 'PARCIAL' | 'NAO_REALIZADA'
+   * @param {String} decisao - 'smart_shift' | 'pular'
+   * @returns {Array} Aulas atualizadas
+   */
+  static atualizarStatusComDecisao(aulas = [], aulaId, novoStatus, decisao = 'pular') {
+    if (!aulas || aulas.length === 0) return [];
+
+    if (decisao === 'smart_shift' && (novoStatus === 'NAO_REALIZADA' || novoStatus === 'PARCIAL')) {
+      return this.remanejarAulasEmCascata(aulas, aulaId);
+    }
+
+    // Se for 'pular' ou qualquer outro status sem smart shift:
+    return aulas.map(a => {
+      if (a.id !== aulaId) return a;
+      if (novoStatus === 'NAO_REALIZADA') {
+        return { ...a, status: novoStatus, topicosAssociados: [] };
+      }
+      return { ...a, status: novoStatus };
+    });
+  }
 }
+
 
 

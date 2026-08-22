@@ -75,11 +75,12 @@ export function CardAula({ aula, onDropTopico, onRemoveTopico, onUpdateStatus, o
 
   const handleSelectStatus = (novoStatus) => {
     setShowStatusMenu(false);
-    if (novoStatus === 'NAO_REALIZADA' && topicos.length > 0 && onSmartShift) {
-      if (window.confirm("Deseja cancelar esta aula e empurrar automaticamente seus tópicos para a próxima aula vaga (Smart Shift)?")) {
-        onSmartShift(aula.id);
-        return;
+    if ((novoStatus === 'NAO_REALIZADA' || novoStatus === 'PARCIAL') && topicos.length > 0 && onSmartShift) {
+      // Chama o modal de decisão inteligente
+      if (onUpdateStatus) {
+        onUpdateStatus(aula.id, novoStatus, aula);
       }
+      return;
     }
     if (onUpdateStatus) {
       onUpdateStatus(aula.id, novoStatus);

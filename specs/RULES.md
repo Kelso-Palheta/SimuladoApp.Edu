@@ -42,6 +42,13 @@ Este documento define as regras de negócio inegociáveis do sistema. Qualquer c
    - Se uma aula que possui tópicos associados for cancelada (`NAO_REALIZADA`), seus tópicos devem ser transferidos para a próxima aula ativa disponível no cronograma (`AGENDADA`), e os tópicos das aulas subsequentes devem ser deslocados em cascata (+1 slot) sem sobrescrita destrutiva.
 5. **RN-12 (Bloqueio de Dias Não Letivos & Feriados):**
    - Dias registrados como Feriado ou Recesso Escolar não comportam aulas ativas. Ao registrar um feriado em data que possua aulas com tópicos, o sistema deve acionar automaticamente o Smart Shift para transferir o conteúdo para o próximo dia letivo subsequente.
+6. **RN-19 (Auto-Agendamento com Ponto de Partida Flexível):**
+   - O auto-agendamento de planejamento permite selecionar uma `dataInicio` (ex: hoje, início do bimestre ou data personalizada).
+   - Apenas slots $\ge \text{dataInicio}$ com status `AGENDADA` e sem bloqueio de feriado/recesso são preenchidos sequencialmente com os tópicos não concluídos. Aulas anteriores a `dataInicio` ou marcadas como `CONCLUIDA` são estritamente preservadas.
+7. **RN-20 (Decisão Pedagógica de Remanejamento vs Pulo de Conteúdo):**
+   - Ao alterar o status de uma aula com tópico para `PARCIAL` ou `NAO_REALIZADA`, o sistema deve solicitar a decisão do professor:
+     - **Smart Shift:** Desloca o tópico da aula em cascata para a próxima aula letiva disponível.
+     - **Pular Conteúdo:** Mantém o cronograma das aulas subsequentes inalterado; o tópico não lecionado retorna ao banco de pendentes.
 
 ---
 

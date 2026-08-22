@@ -346,6 +346,216 @@ export function useCalendarioPedagogico() {
     }
   }, [user]);
 
+  /**
+   * Distribui automaticamente os tópicos de planejamento nas aulas a partir de uma data inicial.
+   */
+  const autoDistribuirTopicos = useCallback(async (turmaId, todasAulas, topicos, options = {}) => {
+    if (!user || !turmaId || !todasAulas || !topicos) return [];
+    setLoading(true);
+    try {
+      const aulasAtualizadas = ScheduleGeneratorEngine.autoDistribuirTopicos(todasAulas, topicos, options);
+
+      const batch = writeBatch(db);
+      const aulasRef = collection(db, 'professores', user.uid, 'aulas_agendadas');
+
+      aulasAtualizadas.forEach((aula) => {
+        const docRef = doc(aulasRef, aula.id);
+        batch.set(
+          docRef,
+          {
+            topicosAssociados: aula.topicosAssociados,
+            atualizadoEm: new Date().toISOString(),
+          },
+          { merge: true }
+        );
+      });
+
+      await batch.commit();
+      return aulasAtualizadas;
+    } catch (err) {
+      console.error('Erro ao auto-distribuir tópicos:', err);
+      setError(err.message);
+      throw err;
+    } finally {
+      setLoading(false);
+    }
+  }, [user]);
+
+  /**
+   * Atualiza status da aula com suporte à decisão interativa de remanejamento vs pular conteúdo.
+   */
+  const atualizarStatusComDecisao = useCallback(async (turmaId, aulaId, todasAulas, novoStatus, decisao = 'pular') => {
+    if (!user || !turmaId || !aulaId || !todasAulas) return [];
+    setLoading(true);
+    try {
+      const aulasAtualizadas = ScheduleGeneratorEngine.atualizarStatusComDecisao(
+        todasAulas,
+        aulaId,
+        novoStatus,
+        decisao
+      );
+
+      const batch = writeBatch(db);
+      const aulasRef = collection(db, 'professores', user.uid, 'aulas_agendadas');
+
+      aulasAtualizadas.forEach((aula) => {
+        const docRef = doc(aulasRef, aula.id);
+        batch.set(
+          docRef,
+          {
+            status: aula.status,
+            topicosAssociados: aula.topicosAssociados,
+            atualizadoEm: new Date().toISOString(),
+          },
+          { merge: true }
+        );
+      });
+
+      await batch.commit();
+      return aulasAtualizadas;
+    } catch (err) {
+      console.error('Erro ao atualizar status com decisão:', err);
+      setError(err.message);
+      throw err;
+    } finally {
+      setLoading(false);
+    }
+  }, [user]);
+
+  /**
+   * Adiciona um novo tópico manualmente ao planejamento da turma.
+   */
+  const adicionarTopicoManual = useCallback(async (turmaId, novoTopico, planejamentoAtual) => {
+    if (!user || !turmaId || !novoTopico) return null;
+    setLoading(true);
+    try {
+      const topicosAntigos = planejamentoAtual?.topicos || [];
+      const novaOrdem = topicosAntigos.length + 1;
+      const topicoCriado = {
+        id: novoTopico.id || `topico_${Date.now()}`,
+        ordem: novoTopico.ordem || novaOrdem,
+        titulo: novoTopico.titulo.trim(),
+        descricao: novoTopico.descricao ? novoTopico.descricao.trim() : '',
+        duracaoEstimadaAulas: Number(novoTopico.duracaoEstimadaAulas) || 1,
+      };
+
+      const topicosAtualizados = [...topicosAntigos, topicoCriado];
+      await salvarPlanejamento(turmaId, topicosAtualizados);
+
+      return {
+        ...planejamentoAtual,
+        topicos: topicosAtualizados,
+      };
+    } catch (err) {
+      console.error('Erro ao adicionar tópico manual:', err);
+      setError(err.message);
+      throw err;
+    } finally {
+      setLoading(false);
+    }
+  }, [user, salvarPlanejamento]);
+
+  /**
+   * Edita os dados de um tópico existente no planejamento e sincroniza com as aulas agendadas.
+   */
+  const editarTopico = useCallback(async (turmaId, topicoId, novosDados, planejamentoAtual, todasAulas = []) => {
+    if (!user || !turmaId || !topicoId || !novosDados) return null;
+    setLoading(true);
+    try {
+      const topicosAntigos = planejamentoAtual?.topicos || [];
+      const topicosAtualizados = topicosAntigos.map((t) => {
+        if (t.id !== topicoId) return t;
+        return {
+          ...t,
+          titulo: novosDados.titulo ? novosDados.titulo.trim() : t.titulo,
+          descricao: novosDados.descricao !== undefined ? novosDados.descricao.trim() : t.descricao,
+          duracaoEstimadaAulas: Number(novosDados.duracaoEstimadaAulas) || t.duracaoEstimadaAulas || 1,
+        };
+      });
+
+      await salvarPlanejamento(turmaId, topicosAtualizados);
+
+      // Sincroniza o título atualizado nas aulas que possuem este tópico associado
+      if (todasAulas.length > 0) {
+        const batch = writeBatch(db);
+        const aulasRef = collection(db, 'professores', user.uid, 'aulas_agendadas');
+        let houveAlteracaoEmAula = false;
+
+        todasAulas.forEach((aula) => {
+          if (aula.topicosAssociados && aula.topicosAssociados.some((ta) => ta.id === topicoId)) {
+            houveAlteracaoEmAula = true;
+            const topicosDaAula = aula.topicosAssociados.map((ta) => {
+              if (ta.id !== topicoId) return ta;
+              return { ...ta, ...novosDados };
+            });
+            const docRef = doc(aulasRef, aula.id);
+            batch.set(docRef, { topicosAssociados: topicosDaAula }, { merge: true });
+          }
+        });
+
+        if (houveAlteracaoEmAula) {
+          await batch.commit();
+        }
+      }
+
+      return {
+        ...planejamentoAtual,
+        topicos: topicosAtualizados,
+      };
+    } catch (err) {
+      console.error('Erro ao editar tópico:', err);
+      setError(err.message);
+      throw err;
+    } finally {
+      setLoading(false);
+    }
+  }, [user, salvarPlanejamento]);
+
+  /**
+   * Exclui um tópico do planejamento e desassocia de qualquer aula que o contenha.
+   */
+  const excluirTopico = useCallback(async (turmaId, topicoId, planejamentoAtual, todasAulas = []) => {
+    if (!user || !turmaId || !topicoId) return null;
+    setLoading(true);
+    try {
+      const topicosAntigos = planejamentoAtual?.topicos || [];
+      const topicosAtualizados = topicosAntigos.filter((t) => t.id !== topicoId);
+
+      await salvarPlanejamento(turmaId, topicosAtualizados);
+
+      // Remove de qualquer aula agendada
+      if (todasAulas.length > 0) {
+        const batch = writeBatch(db);
+        const aulasRef = collection(db, 'professores', user.uid, 'aulas_agendadas');
+        let houveAlteracaoEmAula = false;
+
+        todasAulas.forEach((aula) => {
+          if (aula.topicosAssociados && aula.topicosAssociados.some((ta) => ta.id === topicoId)) {
+            houveAlteracaoEmAula = true;
+            const topicosDaAula = aula.topicosAssociados.filter((ta) => ta.id !== topicoId);
+            const docRef = doc(aulasRef, aula.id);
+            batch.set(docRef, { topicosAssociados: topicosDaAula }, { merge: true });
+          }
+        });
+
+        if (houveAlteracaoEmAula) {
+          await batch.commit();
+        }
+      }
+
+      return {
+        ...planejamentoAtual,
+        topicos: topicosAtualizados,
+      };
+    } catch (err) {
+      console.error('Erro ao excluir tópico:', err);
+      setError(err.message);
+      throw err;
+    } finally {
+      setLoading(false);
+    }
+  }, [user, salvarPlanejamento]);
+
   return {
     loading,
     error,
@@ -357,8 +567,14 @@ export function useCalendarioPedagogico() {
     associarTopicoAula,
     desassociarTopicoAula,
     atualizarStatusAula,
+    atualizarStatusComDecisao,
     cancelarAulaComRemanejamento,
+    autoDistribuirTopicos,
+    adicionarTopicoManual,
+    editarTopico,
+    excluirTopico,
     salvarFeriados,
     carregarFeriados
   };
 }
+
