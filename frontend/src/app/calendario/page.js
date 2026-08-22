@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { useAuth } from '@/lib/auth-context';
 import { useRouter } from 'next/navigation';
 import { db } from '@/lib/firebase';
-import { doc, getDoc } from 'firebase/firestore';
+import { doc, getDoc, collection, writeBatch } from 'firebase/firestore';
 
 import { Sidebar } from '@/components/calendario/Sidebar';
 import { CalendarioView } from '@/components/calendario/CalendarioView';
@@ -14,10 +14,11 @@ import { FeriadosModal } from '@/components/calendario/FeriadosModal';
 import { AutoDistribuirModal } from '@/components/calendario/AutoDistribuirModal';
 import { DecisaoStatusModal } from '@/components/calendario/DecisaoStatusModal';
 import { TopicoModal } from '@/components/calendario/TopicoModal';
+import { DetalhesAulaModal } from '@/components/calendario/DetalhesAulaModal';
 import { useCalendarioPedagogico } from '@/hooks/calendario/useCalendarioPedagogico';
 import { generateCalendarioPDF } from '@/lib/calendario/pdf-generator';
 import { ScheduleGeneratorEngine } from '@/lib/engines/ScheduleGeneratorEngine';
-import { ArrowLeft, Download, CalendarOff, Sparkles } from 'lucide-react';
+import { ArrowLeft, Download, CalendarOff, Sparkles, RotateCcw } from 'lucide-react';
 
 export default function CalendarioPage() {
   const { user, loading: authLoading } = useAuth();
@@ -39,6 +40,7 @@ export default function CalendarioPage() {
   const [isAutoDistribuirOpen, setIsAutoDistribuirOpen] = useState(false);
   const [isTopicoModalOpen, setIsTopicoModalOpen] = useState(false);
   const [topicoEmEdicao, setTopicoEmEdicao] = useState(null);
+  const [aulaDetalhesModal, setAulaDetalhesModal] = useState(null);
 
   // Modal de Decisão de Status (Smart Shift vs Pular)
   const [decisaoModalData, setDecisaoModalData] = useState({
@@ -387,6 +389,62 @@ export default function CalendarioPage() {
     }
   };
 
+  const handleLimparTodosAgendamentos = async () => {
+    if (!turmaSelecionada || aulas.length === 0) return;
+    if (
+      window.confirm(
+        `Tem certeza que deseja desassociar todos os tópicos das aulas da turma "${turmaSelecionada.nome}"?\nOs tópicos continuarão salvos na barra lateral para você redistribuir quando quiser.`
+      )
+    ) {
+      try {
+        const aulasLimpass = aulas.map((a) => ({
+          ...a,
+          topicosAssociados: [],
+          status: a.status === 'NAO_REALIZADA' ? 'NAO_REALIZADA' : 'AGENDADA',
+        }));
+
+        const batch = writeBatch(db);
+        const aulasRef = collection(db, 'professores', user.uid, 'aulas_agendadas');
+
+        aulasLimpass.forEach((aula) => {
+          const docRef = doc(aulasRef, aula.id);
+          batch.set(
+            docRef,
+            {
+              topicosAssociados: [],
+              status: aula.status,
+              atualizadoEm: new Date().toISOString(),
+            },
+            { merge: true }
+          );
+        });
+
+        await batch.commit();
+        setAulas(aulasLimpass);
+        alert('Todas as aulas foram desassociadas com sucesso! Você pode redistribuir agora.');
+      } catch (err) {
+        alert('Erro ao limpar agendamentos: ' + err.message);
+      }
+    }
+  };
+
+  // Tópicos ainda disponíveis (não associados a nenhuma aula)
+  const topicosLivres = (planejamento?.topicos || []).filter((topico) => {
+    const targetId = topico.id || topico.ordem?.toString();
+    return !aulas.some(
+      (a) =>
+        a.topicoId === targetId ||
+        (a.topicosAssociados &&
+          a.topicosAssociados.some(
+            (ta) => ta.id === targetId || ta.topicoId === targetId || ta.topicoOrdem === topico.ordem
+          ))
+    );
+  });
+
+  const temAulasComTopicos = aulas.some(
+    (a) => (a.topicosAssociados && a.topicosAssociados.length > 0) || a.topicoTitulo
+  );
+
   return (
     <div className="flex h-screen bg-[#f7f8fc] overflow-hidden">
       {/* Barra Lateral do Calendário */}
@@ -437,6 +495,17 @@ export default function CalendarioPage() {
 
           {turmaSelecionada && (
             <div className="flex items-center gap-2">
+              {temAulasComTopicos && (
+                <button
+                  onClick={handleLimparTodosAgendamentos}
+                  className="px-3 py-2 text-xs font-bold text-slate-500 hover:text-rose-600 hover:bg-rose-50 border border-slate-200 rounded-xl transition-all flex items-center gap-1.5 shadow-2xs"
+                  title="Desassociar todos os tópicos das aulas para recomeçar ou redistribuir"
+                >
+                  <RotateCcw size={13} />
+                  <span className="hidden sm:inline">Desassociar Aulas</span>
+                </button>
+              )}
+
               <button
                 onClick={() => setIsFeriadosOpen(true)}
                 className="btn-brand-secondary px-3.5 py-2 text-xs sm:text-sm flex items-center gap-1.5 shadow-xs"
@@ -490,6 +559,7 @@ export default function CalendarioPage() {
                 onRemoveTopico={handleRemoveTopico}
                 onUpdateStatus={handleUpdateStatus}
                 onSmartShift={handleSmartShift}
+                onOpenDetalhes={(aula) => setAulaDetalhesModal(aula)}
               />
             ) : (
               <div className="flex flex-col h-full items-center justify-center text-[#6070a0] bg-white rounded-3xl border border-dashed border-[#dce0f0] p-8 text-center">
@@ -557,6 +627,18 @@ export default function CalendarioPage() {
           topicoEmEdicao={topicoEmEdicao}
           onSalvar={handleSalvarTopico}
           onExcluir={handleExcluirTopico}
+        />
+      )}
+
+      {aulaDetalhesModal && (
+        <DetalhesAulaModal
+          isOpen={Boolean(aulaDetalhesModal)}
+          onClose={() => setAulaDetalhesModal(null)}
+          aula={aulaDetalhesModal}
+          topicosDisponiveis={topicosLivres}
+          onUpdateStatus={handleUpdateStatus}
+          onRemoveTopico={handleRemoveTopico}
+          onAddTopico={handleDropTopico}
         />
       )}
 

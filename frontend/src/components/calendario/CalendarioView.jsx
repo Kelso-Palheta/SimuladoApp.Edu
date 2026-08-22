@@ -26,7 +26,8 @@ export function CalendarioView({
   onDropTopico, 
   onRemoveTopico, 
   onUpdateStatus, 
-  onSmartShift 
+  onSmartShift,
+  onOpenDetalhes,
 }) {
   const [modoVisualizacao, setModoVisualizacao] = useState('mes'); // 'mes' | 'semana'
 
@@ -224,6 +225,7 @@ export function CalendarioView({
                       onRemoveTopico={onRemoveTopico}
                       onUpdateStatus={onUpdateStatus}
                       onSmartShift={onSmartShift}
+                      onOpenDetalhes={onOpenDetalhes}
                     />
                   ))}
                 </div>
@@ -280,6 +282,7 @@ export function CalendarioView({
                         onRemoveTopico={onRemoveTopico}
                         onUpdateStatus={onUpdateStatus}
                         onSmartShift={onSmartShift}
+                        onOpenDetalhes={onOpenDetalhes}
                       />
                     ))
                   )}
