@@ -20,7 +20,6 @@ export function AutoDistribuirModal({
   if (!isOpen) return null;
 
   const hojeStr = format(new Date(), 'yyyy-MM-dd');
-  const primeiraAulaData = aulas.length > 0 ? aulas[0].dataAgendada : hojeStr;
 
   const getDataInicioEfetiva = () => {
     if (tipoInicio === 'hoje') return hojeStr;
