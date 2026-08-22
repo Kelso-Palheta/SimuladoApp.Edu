@@ -275,6 +275,57 @@ export function useCalendarioPedagogico() {
   }, [user]);
 
   /**
+   * Exclui em massa todas as aulas de um determinado dia da semana (ex: todas as Quintas-feiras do ano)
+   * e atualiza a grade horária da turma.
+   */
+  const excluirAulasPorDiaSemana = useCallback(async (turmaId, diaSemanaNum) => {
+    if (!user || !turmaId) return 0;
+    setLoading(true);
+    try {
+      const aulasRef = collection(db, 'professores', user.uid, 'aulas_agendadas');
+      const q = query(aulasRef, where("turmaId", "==", turmaId));
+      const snap = await getDocs(q);
+
+      const batch = writeBatch(db);
+      let count = 0;
+
+      snap.forEach((docSnap) => {
+        const data = docSnap.data();
+        if (data.dataAgendada) {
+          const [ano, mes, dia] = data.dataAgendada.split('-').map(Number);
+          const dt = new Date(ano, mes - 1, dia);
+          if (dt.getDay() === diaSemanaNum) {
+            batch.delete(docSnap.ref);
+            count++;
+          }
+        }
+      });
+
+      // Atualiza a grade horária removendo o dia excluído
+      const gradeRef = doc(db, 'professores', user.uid, 'grades_horarias', turmaId);
+      const gradeSnap = await getDoc(gradeRef);
+      if (gradeSnap.exists()) {
+        const gradeAtual = gradeSnap.data();
+        const novosDias = (gradeAtual.diasSemana || []).filter((d) => d.diaSemana !== diaSemanaNum);
+        batch.set(
+          gradeRef,
+          { ...gradeAtual, diasSemana: novosDias, atualizadoEm: new Date().toISOString() },
+          { merge: true }
+        );
+      }
+
+      await batch.commit();
+      return count;
+    } catch (err) {
+      console.error("Erro ao excluir aulas por dia da semana:", err);
+      setError(err.message);
+      throw err;
+    } finally {
+      setLoading(false);
+    }
+  }, [user]);
+
+  /**
    * Atualiza o status de uma aula agendada (ex: CONCLUIDA, PARCIAL, NAO_REALIZADA, AGENDADA).
    */
   const atualizarStatusAula = useCallback(async (aulaId, novoStatus) => {
@@ -599,6 +650,7 @@ export function useCalendarioPedagogico() {
     editarTopico,
     excluirTopico,
     excluirAula,
+    excluirAulasPorDiaSemana,
     salvarFeriados,
     carregarFeriados
   };

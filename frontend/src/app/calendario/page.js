@@ -66,6 +66,7 @@ export default function CalendarioPage() {
     editarTopico,
     excluirTopico,
     excluirAula,
+    excluirAulasPorDiaSemana,
     salvarFeriados,
     carregarFeriados,
   } = useCalendarioPedagogico();
@@ -192,6 +193,30 @@ export default function CalendarioPage() {
       setAulas(aulasAgendadas);
     } catch (err) {
       alert('Erro ao excluir aula: ' + err.message);
+    }
+  };
+
+  const handleExcluirDiaSemana = async (diaSemanaNum, nomeDiaSemana) => {
+    try {
+      // Atualização otimista na UI
+      setAulas((prev) =>
+        prev.filter((a) => {
+          if (!a.dataAgendada) return true;
+          const [ano, mes, dia] = a.dataAgendada.split('-').map(Number);
+          return new Date(ano, mes - 1, dia).getDay() !== diaSemanaNum;
+        })
+      );
+
+      const count = await excluirAulasPorDiaSemana(turmaSelecionada.id, diaSemanaNum);
+      const [grade, aulasAgendadas] = await Promise.all([
+        carregarGradeHoraria(turmaSelecionada.id),
+        carregarAulasAgendadas(turmaSelecionada.id),
+      ]);
+      setGradeHoraria(grade);
+      setAulas(aulasAgendadas || []);
+      alert(`Todas as ${count} aulas de ${nomeDiaSemana} foram removidas do ano letivo com sucesso!`);
+    } catch (err) {
+      alert('Erro ao excluir aulas por dia da semana: ' + err.message);
     }
   };
 
@@ -673,6 +698,7 @@ export default function CalendarioPage() {
           onRemoveTopico={handleRemoveTopico}
           onAddTopico={handleDropTopico}
           onExcluirAula={handleExcluirAula}
+          onExcluirDiaSemana={handleExcluirDiaSemana}
         />
       )}
 

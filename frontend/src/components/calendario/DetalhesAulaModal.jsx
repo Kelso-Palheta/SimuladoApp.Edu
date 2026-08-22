@@ -25,12 +25,22 @@ export function DetalhesAulaModal({
   onRemoveTopico,
   onAddTopico,
   onExcluirAula,
+  onExcluirDiaSemana,
 }) {
   if (!isOpen || !aula) return null;
 
   const dataFormatada = aula.dataAgendada
     ? format(parseISO(aula.dataAgendada), "EEEE, dd 'de' MMMM 'de' yyyy", { locale: ptBR })
     : '';
+
+  const diasNomes = ['Domingos', 'Segundas-feiras', 'Terças-feiras', 'Quartas-feiras', 'Quintas-feiras', 'Sextas-feiras', 'Sábados'];
+  let nomeDiaSemana = '';
+  let diaSemanaNum = null;
+  if (aula.dataAgendada) {
+    const [ano, mes, dia] = aula.dataAgendada.split('-').map(Number);
+    diaSemanaNum = new Date(ano, mes - 1, dia).getDay();
+    nomeDiaSemana = diasNomes[diaSemanaNum];
+  }
 
   const topicos = aula.topicosAssociados || [];
 
@@ -246,27 +256,51 @@ export function DetalhesAulaModal({
           </div>
         </div>
 
-        {/* Footer com botão de excluir aula */}
-        <div className="p-4 bg-slate-50 border-t border-slate-100 flex items-center justify-between">
-          {onExcluirAula && (
-            <button
-              type="button"
-              onClick={() => {
-                if (
-                  window.confirm(
-                    `Excluir o slot desta aula (${dataFormatada} - ${aula.horarioInicio}) do calendário?`
-                  )
-                ) {
-                  onExcluirAula(aula.id);
-                  onClose();
-                }
-              }}
-              className="px-3.5 py-2 rounded-xl text-rose-600 hover:bg-rose-50 border border-rose-200 text-xs font-bold transition-colors flex items-center gap-1.5"
-            >
-              <Trash2 size={14} />
-              <span>Excluir esta Aula</span>
-            </button>
-          )}
+        {/* Footer com ações de exclusão */}
+        <div className="p-4 bg-slate-50 border-t border-slate-100 flex flex-wrap items-center justify-between gap-2">
+          <div className="flex items-center gap-2">
+            {onExcluirAula && (
+              <button
+                type="button"
+                onClick={() => {
+                  if (
+                    window.confirm(
+                      `Excluir apenas o slot desta aula (${dataFormatada} - ${aula.horarioInicio}) do calendário?`
+                    )
+                  ) {
+                    onExcluirAula(aula.id);
+                    onClose();
+                  }
+                }}
+                className="px-3 py-2 rounded-xl text-rose-600 hover:bg-rose-50 border border-rose-200 text-xs font-bold transition-colors flex items-center gap-1.5"
+                title="Excluir apenas este dia"
+              >
+                <Trash2 size={13} />
+                <span>Excluir este Dia</span>
+              </button>
+            )}
+
+            {onExcluirDiaSemana && diaSemanaNum !== null && (
+              <button
+                type="button"
+                onClick={() => {
+                  if (
+                    window.confirm(
+                      `Excluir TODAS as ${nomeDiaSemana} do ano letivo desta turma?\n\nIsso removerá este dia da grade semanal para você cadastrar outro dia livremente.`
+                    )
+                  ) {
+                    onExcluirDiaSemana(diaSemanaNum, nomeDiaSemana);
+                    onClose();
+                  }
+                }}
+                className="px-3 py-2 rounded-xl text-amber-800 bg-amber-50 hover:bg-amber-100 border border-amber-200 text-xs font-bold transition-colors flex items-center gap-1.5"
+                title={`Excluir todas as ${nomeDiaSemana} do ano`}
+              >
+                <Trash2 size={13} />
+                <span>Excluir todas as {nomeDiaSemana}</span>
+              </button>
+            )}
+          </div>
 
           <button
             type="button"
