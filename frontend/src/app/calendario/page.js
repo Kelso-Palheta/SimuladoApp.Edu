@@ -65,6 +65,7 @@ export default function CalendarioPage() {
     adicionarTopicoManual,
     editarTopico,
     excluirTopico,
+    excluirAula,
     salvarFeriados,
     carregarFeriados,
   } = useCalendarioPedagogico();
@@ -110,7 +111,7 @@ export default function CalendarioPage() {
         ]);
 
         setGradeHoraria(grade);
-        setAulas(aulasAgendadas);
+        setAulas(aulasAgendadas || []);
         setPlanejamento(plan);
         setFeriados(feriadosCarregados || []);
 
@@ -118,7 +119,7 @@ export default function CalendarioPage() {
           setIsConfigOpen(true);
         }
       } catch (err) {
-        console.error('Erro ao carregar dados:', err);
+        console.error('Erro ao carregar dados do calendário:', err);
       }
     };
 
@@ -154,11 +155,43 @@ export default function CalendarioPage() {
 
   const handleRemoveTopico = async (aulaId, topicoId) => {
     try {
+      // Atualização otimista imediata na UI
+      setAulas((prev) =>
+        prev.map((a) => {
+          if (a.id !== aulaId) return a;
+          const novosTopicos = (a.topicosAssociados || []).filter((t) => {
+            const matchId = t.id === topicoId || t.topicoId === topicoId;
+            const matchOrdem =
+              String(t.ordem) === String(topicoId) || String(t.topicoOrdem) === String(topicoId);
+            return !matchId && !matchOrdem;
+          });
+          return {
+            ...a,
+            topicosAssociados: novosTopicos,
+            topicoId: null,
+            topicoOrdem: null,
+            topicoTitulo: null,
+          };
+        })
+      );
+
       await desassociarTopicoAula(aulaId, topicoId);
       const aulasAgendadas = await carregarAulasAgendadas(turmaSelecionada.id);
       setAulas(aulasAgendadas);
     } catch (err) {
       alert('Erro ao remover tópico: ' + err.message);
+    }
+  };
+
+  const handleExcluirAula = async (aulaId) => {
+    try {
+      // Atualização otimista imediata na UI
+      setAulas((prev) => prev.filter((a) => a.id !== aulaId));
+      await excluirAula(aulaId);
+      const aulasAgendadas = await carregarAulasAgendadas(turmaSelecionada.id);
+      setAulas(aulasAgendadas);
+    } catch (err) {
+      alert('Erro ao excluir aula: ' + err.message);
     }
   };
 
@@ -639,6 +672,7 @@ export default function CalendarioPage() {
           onUpdateStatus={handleUpdateStatus}
           onRemoveTopico={handleRemoveTopico}
           onAddTopico={handleDropTopico}
+          onExcluirAula={handleExcluirAula}
         />
       )}
 

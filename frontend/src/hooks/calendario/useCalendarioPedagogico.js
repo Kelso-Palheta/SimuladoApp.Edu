@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
 import { db } from '@/lib/firebase';
-import { doc, getDoc, setDoc, collection, getDocs, query, where, writeBatch } from 'firebase/firestore';
+import { doc, getDoc, setDoc, deleteDoc, collection, getDocs, query, where, writeBatch } from 'firebase/firestore';
 import { ScheduleGeneratorEngine } from '@/lib/engines/ScheduleGeneratorEngine';
 import { useAuth } from '@/lib/auth-context';
 
@@ -224,24 +224,49 @@ export function useCalendarioPedagogico() {
       const currentAula = snap.data() || {};
       
       let atuais = currentAula.topicosAssociados || [];
-      // Fallback para caso o item antigo ainda exista no card
-      if (currentAula.topicoId === topicoIdParaRemover) {
-        await setDoc(aulaRef, {
+
+      // Filtra por topicoId, id ou ordem
+      const novos = topicoIdParaRemover
+        ? atuais.filter((t) => {
+            const matchId = t.id === topicoIdParaRemover || t.topicoId === topicoIdParaRemover;
+            const matchOrdem =
+              String(t.ordem) === String(topicoIdParaRemover) ||
+              String(t.topicoOrdem) === String(topicoIdParaRemover);
+            return !matchId && !matchOrdem;
+          })
+        : [];
+
+      await setDoc(
+        aulaRef,
+        {
+          topicosAssociados: novos,
           topicoId: null,
           topicoOrdem: null,
           topicoTitulo: null,
-          duracaoAlocadaAulas: null
-        }, { merge: true });
-        return;
-      }
-
-      const novos = atuais.filter(t => t.topicoId !== topicoIdParaRemover);
-
-      await setDoc(aulaRef, {
-        topicosAssociados: novos
-      }, { merge: true });
+          atualizadoEm: new Date().toISOString(),
+        },
+        { merge: true }
+      );
     } catch (err) {
       console.error("Erro ao remover associação do tópico:", err);
+      setError(err.message);
+      throw err;
+    } finally {
+      setLoading(false);
+    }
+  }, [user]);
+
+  /**
+   * Exclui um slot de aula específico do calendário no Firestore.
+   */
+  const excluirAula = useCallback(async (aulaId) => {
+    if (!user || !aulaId) return;
+    setLoading(true);
+    try {
+      const aulaRef = doc(db, 'professores', user.uid, 'aulas_agendadas', aulaId);
+      await deleteDoc(aulaRef);
+    } catch (err) {
+      console.error("Erro ao excluir aula:", err);
       setError(err.message);
       throw err;
     } finally {
@@ -573,8 +598,8 @@ export function useCalendarioPedagogico() {
     adicionarTopicoManual,
     editarTopico,
     excluirTopico,
+    excluirAula,
     salvarFeriados,
     carregarFeriados
   };
 }
-

@@ -24,6 +24,7 @@ export function DetalhesAulaModal({
   onUpdateStatus,
   onRemoveTopico,
   onAddTopico,
+  onExcluirAula,
 }) {
   if (!isOpen || !aula) return null;
 
@@ -50,6 +51,11 @@ export function DetalhesAulaModal({
               <p className="text-xs text-slate-300 flex items-center gap-1.5 mt-0.5 font-medium">
                 <Clock size={12} className="text-amber-400" />
                 {aula.horarioInicio} às {aula.horarioFim}
+                {aula.duracaoAlocadaAulas > 1 && (
+                  <span className="ml-2 px-2 py-0.5 rounded-md bg-amber-500/20 text-amber-300 font-bold text-[10px]">
+                    Aula Dupla ({aula.duracaoAlocadaAulas} aulas)
+                  </span>
+                )}
               </p>
             </div>
             <button
@@ -240,12 +246,32 @@ export function DetalhesAulaModal({
           </div>
         </div>
 
-        {/* Footer */}
-        <div className="p-4 bg-slate-50 border-t border-slate-100 flex justify-end">
+        {/* Footer com botão de excluir aula */}
+        <div className="p-4 bg-slate-50 border-t border-slate-100 flex items-center justify-between">
+          {onExcluirAula && (
+            <button
+              type="button"
+              onClick={() => {
+                if (
+                  window.confirm(
+                    `Excluir o slot desta aula (${dataFormatada} - ${aula.horarioInicio}) do calendário?`
+                  )
+                ) {
+                  onExcluirAula(aula.id);
+                  onClose();
+                }
+              }}
+              className="px-3.5 py-2 rounded-xl text-rose-600 hover:bg-rose-50 border border-rose-200 text-xs font-bold transition-colors flex items-center gap-1.5"
+            >
+              <Trash2 size={14} />
+              <span>Excluir esta Aula</span>
+            </button>
+          )}
+
           <button
             type="button"
             onClick={onClose}
-            className="px-5 py-2.5 rounded-xl bg-[#101942] text-white text-xs font-bold hover:bg-[#101942]/90 transition-colors shadow-sm"
+            className="ml-auto px-5 py-2.5 rounded-xl bg-[#101942] text-white text-xs font-bold hover:bg-[#101942]/90 transition-colors shadow-sm"
           >
             Fechar
           </button>

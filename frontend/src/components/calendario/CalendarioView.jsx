@@ -211,7 +211,7 @@ export function CalendarioView({
                     </span>
                   ) : aulasDoDia.length > 0 ? (
                     <span className="text-[10px] font-bold text-[#6070a0] font-mono">
-                      {aulasDoDia.length} {aulasDoDia.length > 1 ? 'aulas' : 'aula'}
+                      {aulasDoDia.reduce((acc, a) => acc + (Number(a.duracaoAlocadaAulas) || 1), 0)} {aulasDoDia.reduce((acc, a) => acc + (Number(a.duracaoAlocadaAulas) || 1), 0) > 1 ? 'aulas' : 'aula'}
                     </span>
                   ) : null}
                 </div>
@@ -241,6 +241,7 @@ export function CalendarioView({
           {diasDaSemanaAtual.map(dia => {
             const dataStr = format(dia, 'yyyy-MM-dd');
             const aulasDoDia = aulasPorData.get(dataStr) || [];
+            const totalAulasCount = aulasDoDia.reduce((acc, a) => acc + (Number(a.duracaoAlocadaAulas) || 1), 0);
             const ehHoje = isToday(dia);
 
             return (
@@ -263,8 +264,8 @@ export function CalendarioView({
                   >
                     {format(dia, 'd')}
                   </span>
-                  <span className="text-[10px] text-[#6070a0] font-mono mt-0.5">
-                    {aulasDoDia.length} aula(s)
+                  <span className="text-[10px] text-[#6070a0] font-mono mt-0.5 font-bold">
+                    {totalAulasCount} {totalAulasCount > 1 ? 'aulas' : 'aula'}
                   </span>
                 </div>
 
