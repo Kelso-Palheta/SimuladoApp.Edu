@@ -102,6 +102,12 @@ export default function CalendarioPage() {
   useEffect(() => {
     if (!turmaSelecionada) return;
 
+    // Reseta imediatamente os estados locais para evitar vazamento entre turmas
+    setGradeHoraria(null);
+    setAulas([]);
+    setPlanejamento(null);
+    setFeriados([]);
+
     const loadData = async () => {
       try {
         const [grade, aulasAgendadas, plan, feriadosCarregados] = await Promise.all([
@@ -115,10 +121,6 @@ export default function CalendarioPage() {
         setAulas(aulasAgendadas || []);
         setPlanejamento(plan);
         setFeriados(feriadosCarregados || []);
-
-        if (!grade) {
-          setIsConfigOpen(true);
-        }
       } catch (err) {
         console.error('Erro ao carregar dados do calendário:', err);
       }
@@ -132,6 +134,28 @@ export default function CalendarioPage() {
     carregarPlanejamento,
     carregarFeriados,
   ]);
+
+  const handleCopiarPlanejamento = async (turmaOrigemId) => {
+    try {
+      const planOrigem = await carregarPlanejamento(turmaOrigemId);
+      if (!planOrigem || !planOrigem.topicos || planOrigem.topicos.length === 0) {
+        alert('A turma selecionada de origem não possui planejamento cadastrado.');
+        return;
+      }
+
+      const topicosClonados = planOrigem.topicos.map((t) => ({
+        ...t,
+        id: crypto.randomUUID(),
+        associado: false,
+      }));
+
+      await salvarPlanejamento(turmaSelecionada.id, topicosClonados);
+      setPlanejamento({ topicos: topicosClonados });
+      setIsAutoDistribuirOpen(true);
+    } catch (err) {
+      alert('Erro ao copiar planejamento: ' + err.message);
+    }
+  };
 
   const handleSaveGrade = async (gradeData) => {
     try {
@@ -523,6 +547,7 @@ export default function CalendarioPage() {
         }}
         onExcluirTopico={handleExcluirTopico}
         onClearPlanejamento={handleClearPlanejamento}
+        onCopiarPlanejamento={handleCopiarPlanejamento}
         planejamento={planejamento}
         aulas={aulas}
         user={user}
@@ -609,6 +634,7 @@ export default function CalendarioPage() {
               </div>
             ) : gradeHoraria || aulas.length > 0 ? (
               <CalendarioView
+                key={turmaSelecionada.id}
                 aulas={aulas}
                 dataAtual={dataAtual}
                 setDataAtual={setDataAtual}
@@ -643,6 +669,7 @@ export default function CalendarioPage() {
       {/* Modais */}
       {isConfigOpen && (
         <ConfigGradeModal
+          key={turmaSelecionada?.id}
           isOpen={isConfigOpen}
           onClose={() => setIsConfigOpen(false)}
           onSave={handleSaveGrade}

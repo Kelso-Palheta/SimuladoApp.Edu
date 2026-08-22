@@ -1,15 +1,28 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { X, Plus, Trash2 } from 'lucide-react';
 
 export function ConfigGradeModal({ isOpen, onClose, onSave, turmaSelecionada, initialGrade }) {
-  const [dataInicio, setDataInicio] = useState(initialGrade?.dataInicioPeriodo || '');
-  const [dataFim, setDataFim] = useState(initialGrade?.dataFimPeriodo || '');
+  const [dataInicio, setDataInicio] = useState(initialGrade?.dataInicioPeriodo || '2026-02-01');
+  const [dataFim, setDataFim] = useState(initialGrade?.dataFimPeriodo || '2026-12-15');
   const [diasSemana, setDiasSemana] = useState(initialGrade?.diasSemana || []);
 
   const [novoDia, setNovoDia] = useState(1); // 1 = Seg
   const [novoInicio, setNovoInicio] = useState('07:30');
   const [novoFim, setNovoFim] = useState('09:10');
   const [novaQtd, setNovaQtd] = useState(2);
+
+  // Sincroniza sempre que a turma ou initialGrade mudar
+  useEffect(() => {
+    if (initialGrade) {
+      setDataInicio(initialGrade.dataInicioPeriodo || '2026-02-01');
+      setDataFim(initialGrade.dataFimPeriodo || '2026-12-15');
+      setDiasSemana(initialGrade.diasSemana || []);
+    } else {
+      setDataInicio('2026-02-01');
+      setDataFim('2026-12-15');
+      setDiasSemana([]);
+    }
+  }, [initialGrade, turmaSelecionada, isOpen]);
 
   if (!isOpen) return null;
 
