@@ -241,9 +241,16 @@ export class ScheduleGeneratorEngine {
         continue;
       }
 
-      // Aloca o próximo tópico disponível
+      // Aloca o próximo tópico disponível com formato normalizado
       const topicoAtual = topicosOrdenados[topicoIndex];
-      aula.topicosAssociados = [topicoAtual];
+      aula.topicosAssociados = [{
+        topicoId: topicoAtual.id || topicoAtual.ordem?.toString(),
+        topicoOrdem: topicoAtual.ordem,
+        topicoTitulo: topicoAtual.titulo,
+        titulo: topicoAtual.titulo,
+        id: topicoAtual.id,
+        duracaoAlocadaAulas: topicoAtual.duracaoEstimadaAulas || 1,
+      }];
       topicoIndex++;
     }
 

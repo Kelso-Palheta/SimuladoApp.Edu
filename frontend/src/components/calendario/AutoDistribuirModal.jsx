@@ -12,8 +12,9 @@ export function AutoDistribuirModal({
   dataInicioPadrao,
   onConfirmar,
 }) {
-  const [tipoInicio, setTipoInicio] = useState('hoje'); // 'hoje' | 'inicio_ano' | 'custom'
-  const [dataCustom, setDataCustom] = useState(format(new Date(), 'yyyy-MM-dd'));
+  const primeiraAulaData = aulas.length > 0 ? aulas[0].dataAgendada : format(new Date(), 'yyyy-MM-dd');
+  const [tipoInicio, setTipoInicio] = useState(dataInicioPadrao || 'inicio_ano'); // 'inicio_ano' | 'hoje' | 'custom'
+  const [dataCustom, setDataCustom] = useState(primeiraAulaData);
   const [modo, setModo] = useState('substituir'); // 'substituir' | 'apenas_vagas'
 
   if (!isOpen) return null;

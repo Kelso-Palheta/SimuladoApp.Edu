@@ -152,23 +152,31 @@ export function CardAula({ aula, onDropTopico, onRemoveTopico, onUpdateStatus, o
       {/* Tópicos da Aula */}
       {topicos.length > 0 ? (
         <div className="space-y-1.5 mt-2">
-          {topicos.map(t => (
-            <div key={t.topicoId} className="flex items-start justify-between bg-white/80 border border-[#dce0f0] p-2 rounded-xl group shadow-2xs">
-              <span className="font-semibold line-clamp-2 text-[#101942] flex-1 leading-snug text-xs" title={t.topicoTitulo}>
-                {t.topicoTitulo}
-              </span>
-              <button 
-                onClick={(e) => {
-                  e.stopPropagation();
-                  onRemoveTopico(aula.id, t.topicoId);
-                }}
-                className="opacity-0 group-hover:opacity-100 text-[#d40840] hover:bg-[#fff2f6] rounded-lg ml-1 p-1 transition-all"
-                title="Remover Tópico"
+          {topicos.map((t, idx) => {
+            const titulo = t.topicoTitulo || t.titulo || `Aula ${t.topicoOrdem || t.ordem || idx + 1}`;
+            const topicoId = t.topicoId || t.id || t.ordem || idx;
+            return (
+              <div
+                key={topicoId}
+                className="flex items-start justify-between bg-white/90 border border-[#dce0f0] p-2 rounded-xl group shadow-2xs hover:border-slate-300 transition-colors"
               >
-                <X className="w-3.5 h-3.5" />
-              </button>
-            </div>
-          ))}
+                <span
+                  className="font-semibold line-clamp-2 text-[#101942] flex-1 leading-snug text-xs"
+                  title={titulo}
+                >
+                  {titulo}
+                </span>
+                <button
+                  type="button"
+                  onClick={() => onRemoveTopico(aula.id, topicoId)}
+                  className="opacity-0 group-hover:opacity-100 p-1 text-[#9098c0] hover:text-[#d40840] transition-opacity ml-1 shrink-0"
+                  title="Desassociar tópico"
+                >
+                  <X size={12} />
+                </button>
+              </div>
+            );
+          })}
         </div>
       ) : (
         <div className="mt-2 py-2 px-1 rounded-xl border border-dashed border-[#dce0f0] bg-[#f7f8fc]/60 text-center">

@@ -527,11 +527,13 @@ export default function CalendarioPage() {
         <ImportPlanejamentoModal
           isOpen={isImportOpen}
           onClose={() => setIsImportOpen(false)}
-          onImportSuccess={async () => {
+          onImportSuccess={async (topicosImportados) => {
             const plan = await carregarPlanejamento(turmaSelecionada.id);
-            setPlanejamento(plan);
+            setPlanejamento(plan || { topicos: topicosImportados });
+            // Abre o modal para o professor distribuir nos slots das aulas
+            setIsAutoDistribuirOpen(true);
           }}
-          turmaSelecionada={{ id: turmaSelecionada?.id, name: turmaSelecionada?.nome }}
+          turmaSelecionada={{ id: turmaSelecionada?.id, name: turmaSelecionada?.nome, disciplina: turmaSelecionada?.disciplina }}
         />
       )}
 
