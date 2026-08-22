@@ -14,6 +14,7 @@ import {
   X,
   User,
   Calendar,
+  BarChart3,
   ArrowRight,
   Sparkles,
 } from "lucide-react";
@@ -25,6 +26,7 @@ const ICON_MAP = {
   MessageSquare,
   ClipboardList,
   Calendar,
+  BarChart3,
 };
 
 function Toast({ message, onClose }) {
@@ -53,7 +55,12 @@ export default function Dashboard() {
   const permitidos = perfil?.modulos_permitidos || [];
 
   const handleCardClick = (mod) => {
-    if (permitidos.includes(mod.id) || mod.id === "calendario-pedagogico") {
+    if (
+      permitidos.includes(mod.id) ||
+      mod.id === "calendario-pedagogico" ||
+      mod.id === "analytics-pedagogico" ||
+      mod.id === "agente-linguagens"
+    ) {
       router.push(mod.path);
     } else {
       setToast(

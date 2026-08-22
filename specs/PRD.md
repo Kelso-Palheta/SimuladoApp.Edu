@@ -36,6 +36,10 @@ O **SimuladoApp.Edu** é um Hub Pedagógico de Inteligência Artificial desenhad
 6. **Agentes Pedagógicos (MVP):**
    - **Agente Ensino Médio:** Assistente conversacional especializado em ENEM, vestibulares, competências C1–C5 de redação e habilidades BNCC do Ensino Médio (`EM13...`). Atende professores do 1º ao 3º EM.
    - **Agente Fundamental II:** Assistente conversacional especializado em descritores SAEB, habilidades BNCC do Ensino Fundamental II (`EF06...` a `EF09...`) e avaliações diagnósticas estaduais. Atende professores do 6º ao 9º ano.
+7. **Dashboard Analytics Pedagógico:**
+   - Visualização integrada de indicadores de desempenho individual e por turma.
+   - Gráficos de evolução bimestral, taxas de aprovação/recuperação e histograma de faixas de notas.
+   - Painel de alerta preventivo para identificação precoce de estudantes em risco de retenção.
 
 ---
 

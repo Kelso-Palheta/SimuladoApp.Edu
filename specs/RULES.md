@@ -56,3 +56,21 @@ Este documento define as regras de negócio inegociáveis do sistema. Qualquer c
 4. **RN-16 (Segmentos Suportados no MVP):**
    - O MVP suporta exatamente dois segmentos de agente: `ensino-medio` (Ensino Médio — 1º ao 3º EM) e `fundamental-2` (Ensino Fundamental II — 6º ao 9º ano).
 
+---
+
+## 5. Regras do Dashboard Analytics Pedagógico
+
+1. **RN-17 (Agregação de Métricas Analíticas):**
+   - A média da turma em um bimestre é calculada como a soma das médias finais dos alunos válidos dividida pelo total de alunos com nota lançada no período.
+   - Um aluno é considerado "avaliado" se possuir nota de simulado ou em pelo menos uma atividade no bimestre correspondente (`temNota`).
+   - Se a turma ou bimestre não possuir notas lançadas, a média analítica deve retornar `null` (ou `0` com indicador visual de dados pendentes), sem gerar erros de divisão por zero (`NaN`).
+
+2. **RN-18 (Faixas de Desempenho e Alertas Pedagógicos):**
+   - A categorização das notas dos alunos nas métricas e distribuições analíticas segue estritamente:
+     - **Excelente:** Média $\ge 8.0$ (`excelente`)
+     - **Adequado / Aprovado:** $5.0 \le \text{Média} < 8.0$ (ou conforme `mediaAprovacao` configurada) (`aprovado`)
+     - **Em Recuperação / Atenção:** $4.0 \le \text{Média} < 5.0$ (ou conforme `mediaRecuperacao`) (`recuperacao`)
+     - **Crítico / Risco Alto:** Média $< 4.0$ (`critico`)
+   - O radar de alunos em risco lista prioritariamente estudantes classificados como `critico` e `recuperacao`, ordenados crescentemente pela média para intervenção imediata do professor.
+
+

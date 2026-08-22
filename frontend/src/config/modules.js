@@ -28,10 +28,17 @@ export const PLATFORM_MODULES = [
     descricao: "Grade horária e remanejamento automático de aulas",
   },
   {
+    id: "analytics-pedagogico",
+    nome: "Dashboard Analytics",
+    icon: "BarChart3",
+    path: "/analytics",
+    descricao: "Métricas, taxas de aprovação e evolução do rendimento das turmas",
+  },
+  {
     id: "agente-linguagens",
-    nome: "Agente ENEM: Linguagens",
+    nome: "Agentes Pedagógicos IA",
     icon: "MessageSquare",
-    path: "/agentes/linguagens",
-    descricao: "Assistente especializado em questões de Linguagens do ENEM",
+    path: "/agentes",
+    descricao: "Assistentes conversacionais especializados em Ensino Médio e Fundamental II",
   },
 ];

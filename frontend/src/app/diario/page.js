@@ -8,7 +8,7 @@ import { TurmaView } from '@/components/diario/TurmaView';
 import { ProfileModal } from '@/components/diario/ProfileModal';
 import { useTurmas } from '@/hooks/diario/useTurmas';
 import { useNotas } from '@/hooks/diario/useNotas';
-import { ArrowLeft, GraduationCap, ExternalLink, Copy, Check, Award, Menu } from 'lucide-react';
+import { ArrowLeft, GraduationCap, ExternalLink, Copy, Check, Award, Menu, BarChart3 } from 'lucide-react';
 import { db } from '@/lib/firebase';
 import { doc, getDoc, setDoc, serverTimestamp } from 'firebase/firestore';
 import { gerarLoginAluno, gerarLoginKey } from '@/utils/diario/loginAluno';
@@ -430,6 +430,15 @@ export default function DiarioPage() {
           </div>
 
           <div className="flex items-center gap-1.5 sm:gap-2">
+            <button
+              onClick={() => router.push('/analytics')}
+              className="inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-[#101942] hover:bg-[#090f28] text-white shadow-xs transition-all"
+              title="Ver Dashboard Analytics Pedagógico"
+            >
+              <BarChart3 size={16} className="text-blue-400" />
+              <span className="hidden sm:inline">Analytics</span>
+            </button>
+
             <button
               onClick={handlePublishGrades}
               disabled={publishing}
