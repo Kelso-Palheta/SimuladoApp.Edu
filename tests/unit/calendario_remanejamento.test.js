@@ -31,10 +31,10 @@ describe('RN-11: Remanejamento em Cascata (Smart Shift)', () => {
   test('deve empurrar tópicos para a próxima aula quando aula_1 for cancelada', () => {
     const resultado = ScheduleGeneratorEngine.remanejarAulasEmCascata(aulasIniciais, 'aula_1');
 
-    // Aula 1 deve estar marcada como NAO_REALIZADA e sem tópicos
+    // Aula 1 deve estar marcada como NAO_REALIZADA mantendo o registro do que foi cancelado
     const aula1 = resultado.find(a => a.id === 'aula_1');
     expect(aula1.status).toBe('NAO_REALIZADA');
-    expect(aula1.topicosAssociados).toEqual([]);
+    expect(aula1.topicosAssociados[0].topicoId).toBe('t1');
 
     // Aula 2 deve agora receber o tópico t1 da Aula 1
     const aula2 = resultado.find(a => a.id === 'aula_2');

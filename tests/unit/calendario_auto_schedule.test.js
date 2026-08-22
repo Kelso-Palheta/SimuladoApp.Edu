@@ -77,7 +77,7 @@ describe('RN-20: Decisão Pedagógica de Remanejamento vs Pulo de Conteúdo', ()
     const resultado = ScheduleGeneratorEngine.atualizarStatusComDecisao(
       aulasComTopicos,
       'a1',
-      'NAO_REALIZADA',
+      'PARCIAL',
       'smart_shift'
     );
 
@@ -85,8 +85,8 @@ describe('RN-20: Decisão Pedagógica de Remanejamento vs Pulo de Conteúdo', ()
     const a2 = resultado.find(a => a.id === 'a2');
     const a3 = resultado.find(a => a.id === 'a3');
 
-    expect(a1.status).toBe('NAO_REALIZADA');
-    expect(a1.topicosAssociados).toHaveLength(0);
+    expect(a1.status).toBe('PARCIAL');
+    expect(a1.topicosAssociados[0].id).toBe('t1'); // t1 permanece visível na aula original
     expect(a2.topicosAssociados[0].id).toBe('t1'); // t1 foi empurrado para a2
     expect(a3.topicosAssociados[0].id).toBe('t2'); // t2 foi empurrado para a3
   });
@@ -104,7 +104,7 @@ describe('RN-20: Decisão Pedagógica de Remanejamento vs Pulo de Conteúdo', ()
     const a3 = resultado.find(a => a.id === 'a3');
 
     expect(a1.status).toBe('NAO_REALIZADA');
-    expect(a1.topicosAssociados).toHaveLength(0);
+    expect(a1.topicosAssociados[0].id).toBe('t1'); // Mantém o tópico visível
     expect(a2.topicosAssociados[0].id).toBe('t2'); // t2 permaneceu inalterado!
     expect(a3.topicosAssociados[0].id).toBe('t3'); // t3 permaneceu inalterado!
   });
