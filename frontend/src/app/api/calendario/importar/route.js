@@ -64,55 +64,18 @@ export async function POST(request) {
         throw new Error("Chave Gemini não configurada");
       }
     } catch (geminiError) {
-      console.warn("[Importar Planejamento] Gemini falhou ou indisponível:", geminiError.message);
-      
-      // 2. Fallback para Maritaca AI (Sabiá-3)
-      if (process.env.MARITACA_API_KEY) {
-        console.log("[Importar Planejamento] Usando Fallback: Maritaca AI (Sabiá-3)");
-        const maritacaUrl = "https://chat.maritaca.ai/api/chat/completions";
-        
-        const maritacaRes = await fetch(maritacaUrl, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Key ${process.env.MARITACA_API_KEY}`
-          },
-          body: JSON.stringify({
-            model: "sabiazinho-4",
-            messages: [
-              { role: "system", content: SYSTEM_PROMPT },
-              { role: "user", content: prompt }
-            ],
-            temperature: 0.2
-          })
-        });
+      console.warn('[Importar Planejamento] Gemini falhou ou indisponível:', geminiError.message);
 
-        const maritacaData = await maritacaRes.json();
-        
-        if (!maritacaRes.ok) {
-          throw new Error(`Erro no Maritaca: ${maritacaData.error?.message || maritacaRes.statusText}`);
-        }
-        
-        responseContent = maritacaData.choices[0].message.content;
-      } 
-      // 3. Fallback para OpenAI
-      else if (process.env.OPENAI_API_KEY) {
-        console.log("[Importar Planejamento] Usando Fallback: OpenAI");
-        const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
-        const completion = await openai.chat.completions.create({
-          model: "gpt-4o-mini",
-          messages: [
-            { role: "system", content: SYSTEM_PROMPT },
-            { role: "user", content: prompt }
-          ],
-          response_format: { type: "json_object" },
-          temperature: 0.2,
-        });
-        responseContent = completion.choices[0].message.content;
-      } 
-      else {
-        throw new Error(`Falha no Gemini (${geminiError.message}) e não há outras chaves configuradas.`);
-      }
+      // 2. Fallback universal — usa o provider central (OpenRouter ou Maritaca conforme AI_PROVIDER)
+      const { callAI, getProviderName } = await import('@/lib/ai-provider-central');
+      console.log(`[Importar Planejamento] Usando fallback: ${getProviderName()}`);
+
+      responseContent = await callAI({
+        systemPrompt: SYSTEM_PROMPT,
+        messages: [{ role: 'user', content: prompt }],
+        temperature: 0.2,
+        maxTokens: 4000,
+      });
     }
 
     // Limpeza de crases caso o modelo (especialmente Sabiá-3) ignore a instrução de não usar markdown

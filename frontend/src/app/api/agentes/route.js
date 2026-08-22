@@ -1,9 +1,7 @@
 import { NextResponse } from 'next/server';
+import { callAI, getProviderName } from '@/lib/ai-provider-central';
 
-// RN-13: modelo exclusivo para agentes pedagógicos
-const MODELO = 'sabiazinho-4';
-
-// RN-14: systemPrompts pedagógicos imutáveis — residem APENAS no servidor
+// ─── systemPrompts pedagógicos imutáveis (RN-14: apenas no servidor) ────────
 const SYSTEM_PROMPTS = {
   'ensino-medio': `Você é um assistente pedagógico especializado no Ensino Médio brasileiro (1º ao 3º EM).
 Seu nome é "Agente EM" e você atua como um professor-consultor experiente.
@@ -46,7 +44,7 @@ export async function POST(request) {
   try {
     const { agentId, messages } = await request.json();
 
-    // RN-16: valida que o agentId é um segmento suportado no MVP
+    // RN-16: valida segmento
     if (!agentId || !AGENTES_VALIDOS.includes(agentId)) {
       return NextResponse.json(
         { error: `agentId inválido. Segmentos suportados: ${AGENTES_VALIDOS.join(', ')}` },
@@ -58,41 +56,21 @@ export async function POST(request) {
       return NextResponse.json({ error: 'messages deve ser um array não-vazio.' }, { status: 400 });
     }
 
-    const apiKey = process.env.MARITACA_API_KEY || process.env.NEXT_PUBLIC_MARITACA_API_KEY;
-    if (!apiKey) {
-      return NextResponse.json({ error: 'MARITACA_API_KEY não configurada.' }, { status: 500 });
-    }
+    console.log(`[/api/agentes] agentId=${agentId} via provider=${getProviderName()}`);
 
-    // RN-13: usa exclusivamente sabiazinho-4
-    // RN-14: injeta o systemPrompt seguro do servidor
-    const payload = {
-      model: MODELO,
-      messages: [
-        { role: 'system', content: SYSTEM_PROMPTS[agentId] },
-        ...messages,
-      ],
+    const content = await callAI({
+      systemPrompt: SYSTEM_PROMPTS[agentId],
+      messages,
       temperature: 0.7,
-      max_tokens: 1500,
-    };
-
-    const res = await fetch('https://chat.maritaca.ai/api/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${apiKey}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(payload),
+      maxTokens: 1500,
     });
 
-    const data = await res.json();
-
-    if (!res.ok) {
-      return NextResponse.json({ error: data }, { status: res.status });
-    }
-
-    return NextResponse.json(data);
+    // Retorna no formato OpenAI-compatible esperado pelo useAgentChat
+    return NextResponse.json({
+      choices: [{ message: { role: 'assistant', content } }],
+    });
   } catch (error) {
-    console.error('Erro na rota /api/agentes:', error);
+    console.error('[/api/agentes] Erro:', error.message);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }

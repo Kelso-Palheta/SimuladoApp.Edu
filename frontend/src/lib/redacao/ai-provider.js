@@ -1,9 +1,10 @@
 import OpenAI from "openai";
 import Anthropic from "@anthropic-ai/sdk";
 import { MASTER_ENEM_PROMPT } from "./constants";
+import { callAI } from "../ai-provider-central";
 
 export async function generateCorrection(payload) {
-  const provider = process.env.AI_PROVIDER || "openai";
+  const provider = process.env.AI_PROVIDER || "openrouter";
   let {
     text,
     imageBase64,
@@ -18,7 +19,8 @@ export async function generateCorrection(payload) {
 
   console.log(`[AI Provider] Iniciando correção (${depth}) via ${provider} para ${studentName}`);
 
-  const needsTranscriptionFallback = provider !== "openai" && provider !== "anthropic" && provider !== "maritaca";
+  // openrouter e maritaca não suportam vision diretamente neste fluxo — transcrever antes
+  const needsTranscriptionFallback = provider !== "openai" && provider !== "anthropic";
 
   if (needsTranscriptionFallback && imageBase64 && !text) {
     console.log(`[Vision Fallback] Transcrevendo imagem antes de corrigir com ${provider}...`);
@@ -35,12 +37,17 @@ export async function generateCorrection(payload) {
     .replace(/{motivatorText}/g, motivatorText);
 
   try {
-    if (provider === "maritaca") {
-      const maritaca = new OpenAI({
-        apiKey: process.env.MARITACA_API_KEY,
-        baseURL: "https://chat.maritaca.ai/api"
+    if (provider === "openrouter" || provider === "maritaca") {
+      // Usa o provider central (openrouter ou maritaca conforme AI_PROVIDER)
+      const essayContent = text
+        ? `Redação para correção:\n\n${text}`
+        : "Por favor, corrija a redação com os critérios do INEP.";
+      return await callAI({
+        systemPrompt: finalPrompt,
+        messages: [{ role: "user", content: essayContent }],
+        temperature: 0.3,
+        maxTokens: 4000,
       });
-      return await handleMaritaca(maritaca, text, imageBase64, mediaType, finalPrompt);
     } else if (provider === "openai") {
       const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
       return await handleOpenAI(openai, text, imageBase64, finalPrompt);
