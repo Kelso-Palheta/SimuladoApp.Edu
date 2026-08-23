@@ -3,16 +3,31 @@ import { extractTextOnly } from '@/lib/redacao/ai-provider';
 
 export async function POST(request) {
   try {
-    const { imageBase64, mediaType } = await request.json();
+    const body = await request.json();
 
-    if (!imageBase64) {
+    if (!body || typeof body !== 'object') {
+      return NextResponse.json({ error: 'Payload JSON inválido.' }, { status: 400 });
+    }
+
+    const { imageBase64, mediaType } = body;
+
+    if (!imageBase64 || typeof imageBase64 !== 'string') {
       return NextResponse.json(
-        { error: 'Você precisa enviar uma imagem para extração.' },
+        { error: 'Você precisa enviar uma imagem válida em base64 para extração.' },
         { status: 400 }
       );
     }
 
-    const text = await extractTextOnly(imageBase64, mediaType);
+    // Trava estrita de segurança: limite de 8MB em base64 (DoS protection)
+    if (imageBase64.length > 10000000) {
+      return NextResponse.json(
+        { error: 'A imagem excede o limite máximo permitido de 8MB.' },
+        { status: 400 }
+      );
+    }
+
+    const cleanMediaType = mediaType ? String(mediaType).slice(0, 50) : 'image/jpeg';
+    const text = await extractTextOnly(imageBase64, cleanMediaType);
 
     return NextResponse.json({ text });
   } catch (error) {
