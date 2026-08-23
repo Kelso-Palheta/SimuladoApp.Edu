@@ -22,7 +22,7 @@ const NOVOS_DEFAULTS = {
 
 const carregarLocal = () => {
   try {
-    const raw = localStorage.getItem(STORAGE_KEY);
+    const raw = sessionStorage.getItem(STORAGE_KEY);
     if (raw) return JSON.parse(raw);
   } catch { /* ignora */ }
   return null;
@@ -30,8 +30,8 @@ const carregarLocal = () => {
 
 const salvarLocal = (turmas, timestamp = null) => {
   try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(turmas));
-    localStorage.setItem(STORAGE_KEY + '_lastUpdated', String(timestamp || Date.now()));
+    sessionStorage.setItem(STORAGE_KEY, JSON.stringify(turmas));
+    sessionStorage.setItem(STORAGE_KEY + '_lastUpdated', String(timestamp || Date.now()));
   } catch { /* ignora */ }
 };
 
@@ -42,7 +42,7 @@ export default function DiarioPage() {
   const [initialTurmas, setInitialTurmas] = useState(() => {
     if (typeof window !== 'undefined') {
       try {
-        const raw = localStorage.getItem(STORAGE_KEY);
+        const raw = sessionStorage.getItem(STORAGE_KEY);
         if (raw) return JSON.parse(raw);
       } catch {}
     }
@@ -58,7 +58,7 @@ export default function DiarioPage() {
     return () => clearTimeout(safetyTimer);
   }, []);
 
-  // Carrega do Firestore se localStorage estiver vazio, ou sync em background
+  // Carrega do Firestore se sessionStorage estiver vazio, ou sync em background
   useEffect(() => {
     if (loading) return; // Aguarda o carregamento do estado de autenticação
     if (!user) {
@@ -69,7 +69,7 @@ export default function DiarioPage() {
     (async () => {
       let finalLoadedTurmas = [];
       try {
-        const storedUserId = typeof window !== 'undefined' ? localStorage.getItem(USER_KEY) : null;
+        const storedUserId = typeof window !== 'undefined' ? sessionStorage.getItem(USER_KEY) : null;
         const isSameUser = storedUserId === user.uid;
         const local = isSameUser ? carregarLocal() : null;
 
@@ -79,7 +79,7 @@ export default function DiarioPage() {
         if (snap.exists() && snap.data().turmas?.length > 0) {
           const cloud = snap.data().turmas;
           const cloudTime = snap.data().lastUpdated || 0;
-          const localTime = typeof window !== 'undefined' ? Number(localStorage.getItem(STORAGE_KEY + '_lastUpdated')) || 0 : 0;
+          const localTime = typeof window !== 'undefined' ? Number(sessionStorage.getItem(STORAGE_KEY + '_lastUpdated')) || 0 : 0;
 
           if (cloudTime >= localTime || !local) {
             setInitialTurmas(cloud);
@@ -90,7 +90,7 @@ export default function DiarioPage() {
             await setDoc(ref, { turmas: local, lastUpdated: localTime }, { merge: true });
             finalLoadedTurmas = local;
           }
-          if (typeof window !== 'undefined') localStorage.setItem(USER_KEY, user.uid);
+          if (typeof window !== 'undefined') sessionStorage.setItem(USER_KEY, user.uid);
         } else {
           // Sem dados na subcoleção: tenta migrar de caminhos antigos
           const oldRef = doc(db, 'users', user.uid, 'turmas', 'data');
@@ -120,12 +120,12 @@ export default function DiarioPage() {
               finalLoadedTurmas = [];
             }
           }
-          if (typeof window !== 'undefined') localStorage.setItem(USER_KEY, user.uid);
+          if (typeof window !== 'undefined') sessionStorage.setItem(USER_KEY, user.uid);
         }
       } catch (e) {
         console.error('Erro ao carregar turmas:', e);
         // Fallback local caso haja falha de rede/conexão para o mesmo usuário
-        const storedUserId = typeof window !== 'undefined' ? localStorage.getItem(USER_KEY) : null;
+        const storedUserId = typeof window !== 'undefined' ? sessionStorage.getItem(USER_KEY) : null;
         if (storedUserId === user.uid) {
           const local = carregarLocal();
           if (local) {
@@ -151,14 +151,14 @@ export default function DiarioPage() {
     latestTurmasRef.current = initialTurmas || [];
   }, [initialTurmas]);
 
-  // Persiste no Firestore (subcoleção isolada) + localStorage (com debounce)
+  // Persiste no Firestore (subcoleção isolada) + sessionStorage (com debounce)
   const persistir = useCallback((novasTurmas) => {
     if (loadingTurmas) return; // CRÍTICO: Não persiste enquanto estiver carregando os dados iniciais do Firestore!
     latestTurmasRef.current = novasTurmas;
     const nowTime = Date.now();
     salvarLocal(novasTurmas, nowTime);
     setInitialTurmas(novasTurmas);
-    if (typeof window !== 'undefined' && user) localStorage.setItem(USER_KEY, user.uid);
+    if (typeof window !== 'undefined' && user) sessionStorage.setItem(USER_KEY, user.uid);
     if (!user) return;
     if (persistTimeout.current) clearTimeout(persistTimeout.current);
     persistTimeout.current = setTimeout(async () => {
@@ -171,7 +171,7 @@ export default function DiarioPage() {
     }, 500);
   }, [user, loadingTurmas]);
 
-  // Salva imediatamente no Firestore/localStorage ao desmontar o componente (ex: mudar de módulo)
+  // Salva imediatamente no Firestore/sessionStorage ao desmontar o componente (ex: mudar de módulo)
   useEffect(() => {
     return () => {
       if (persistTimeout.current) {
@@ -264,12 +264,12 @@ export default function DiarioPage() {
   const alunoDropdownRef = useRef(null);
   const [showProfile, setShowProfile] = useState(false);
   const [bimestre, setBimestre] = useState(() => {
-    if (typeof window !== 'undefined') return Number(localStorage.getItem('diario_bimestre')) || 1;
+    if (typeof window !== 'undefined') return Number(sessionStorage.getItem('diario_bimestre')) || 1;
     return 1;
   });
   const configsMigradas = useRef(false);
 
-  const handleSetBimestre = (b) => { setBimestre(b); localStorage.setItem('diario_bimestre', b); };
+  const handleSetBimestre = (b) => { setBimestre(b); sessionStorage.setItem('diario_bimestre', b); };
   const turmaAtual = turmas.find((t) => t.id === turmaSelecionada?.id) || turmas[0] || null;
 
   const handleAddTurma = (nome) => {

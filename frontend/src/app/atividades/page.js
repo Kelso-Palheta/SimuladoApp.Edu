@@ -23,7 +23,7 @@ const USER_KEY = 'diario_userId';
 
 const carregarLocal = () => {
   try {
-    const raw = localStorage.getItem(STORAGE_KEY);
+    const raw = sessionStorage.getItem(STORAGE_KEY);
     if (raw) return JSON.parse(raw);
   } catch { /* ignora */ }
   return null;
@@ -31,8 +31,8 @@ const carregarLocal = () => {
 
 const salvarLocal = (turmas, timestamp = null) => {
   try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(turmas));
-    localStorage.setItem(STORAGE_KEY + '_lastUpdated', String(timestamp || Date.now()));
+    sessionStorage.setItem(STORAGE_KEY, JSON.stringify(turmas));
+    sessionStorage.setItem(STORAGE_KEY + '_lastUpdated', String(timestamp || Date.now()));
   } catch { /* ignora */ }
 };
 
@@ -43,7 +43,7 @@ export default function AtividadesPage() {
   const [initialTurmas, setInitialTurmas] = useState(() => {
     if (typeof window !== 'undefined') {
       try {
-        const raw = localStorage.getItem(STORAGE_KEY);
+        const raw = sessionStorage.getItem(STORAGE_KEY);
         if (raw) return JSON.parse(raw);
       } catch {}
     }
@@ -51,7 +51,7 @@ export default function AtividadesPage() {
   });
   const [loadingTurmas, setLoadingTurmas] = useState(true);
 
-  // Carrega do Firestore se localStorage estiver vazio, ou sync em background
+  // Carrega do Firestore se sessionStorage estiver vazio, ou sync em background
   useEffect(() => {
     if (loading) return; // Aguarda o carregamento do estado de autenticação
     if (!user) {
@@ -61,7 +61,7 @@ export default function AtividadesPage() {
 
     (async () => {
       try {
-        const storedUserId = typeof window !== 'undefined' ? localStorage.getItem(USER_KEY) : null;
+        const storedUserId = typeof window !== 'undefined' ? sessionStorage.getItem(USER_KEY) : null;
         const isSameUser = storedUserId === user.uid;
         const local = isSameUser ? carregarLocal() : null;
 
@@ -71,7 +71,7 @@ export default function AtividadesPage() {
         if (snap.exists() && snap.data().turmas?.length > 0) {
           const cloud = snap.data().turmas;
           const cloudTime = snap.data().lastUpdated || 0;
-          const localTime = typeof window !== 'undefined' ? Number(localStorage.getItem(STORAGE_KEY + '_lastUpdated')) || 0 : 0;
+          const localTime = typeof window !== 'undefined' ? Number(sessionStorage.getItem(STORAGE_KEY + '_lastUpdated')) || 0 : 0;
 
           if (cloudTime >= localTime || !local) {
             setInitialTurmas(cloud);
@@ -80,9 +80,9 @@ export default function AtividadesPage() {
             setInitialTurmas(local);
             await setDoc(ref, { turmas: local, lastUpdated: localTime }, { merge: true });
           }
-          if (typeof window !== 'undefined') localStorage.setItem(USER_KEY, user.uid);
+          if (typeof window !== 'undefined') sessionStorage.setItem(USER_KEY, user.uid);
         } else {
-          // Sem dados no Firestore nem localStorage: migra do caminho antigo ou usa padrão
+          // Sem dados no Firestore nem sessionStorage: migra do caminho antigo ou usa padrão
           const oldRef = doc(db, 'users', user.uid, 'turmas', 'data');
           const oldSnap = await getDoc(oldRef);
           if (oldSnap.exists() && oldSnap.data().turmas?.length > 0) {
@@ -106,12 +106,12 @@ export default function AtividadesPage() {
               salvarLocal([]);
             }
           }
-          if (typeof window !== 'undefined') localStorage.setItem(USER_KEY, user.uid);
+          if (typeof window !== 'undefined') sessionStorage.setItem(USER_KEY, user.uid);
         }
       } catch (e) {
         console.error('Erro ao carregar turmas:', e);
         // Fallback local caso haja falha de rede/conexão para o mesmo usuário
-        const storedUserId = typeof window !== 'undefined' ? localStorage.getItem(USER_KEY) : null;
+        const storedUserId = typeof window !== 'undefined' ? sessionStorage.getItem(USER_KEY) : null;
         if (storedUserId === user.uid) {
           const local = carregarLocal();
           if (local) setInitialTurmas(local);
@@ -122,13 +122,13 @@ export default function AtividadesPage() {
     })();
   }, [user, loading]);
 
-  // Persiste no Firestore (subcoleção isolada) + localStorage
+  // Persiste no Firestore (subcoleção isolada) + sessionStorage
   const persistir = (novasTurmas) => {
     if (loadingTurmas) return; // CRÍTICO: Não persiste enquanto estiver carregando os dados iniciais do Firestore!
     const nowTime = Date.now();
     salvarLocal(novasTurmas, nowTime);
     setInitialTurmas(novasTurmas);
-    if (typeof window !== 'undefined' && user) localStorage.setItem(USER_KEY, user.uid);
+    if (typeof window !== 'undefined' && user) sessionStorage.setItem(USER_KEY, user.uid);
     if (!user) return;
     const ref = doc(db, 'professores', user.uid, 'turmas', 'data');
     setDoc(ref, { turmas: novasTurmas, lastUpdated: nowTime }, { merge: true }).catch((e) => {
@@ -147,11 +147,11 @@ export default function AtividadesPage() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [viewMode, setViewMode] = useState('todas'); // 'turma' | 'todas'
   const [bimestre, setBimestre] = useState(() => {
-    if (typeof window !== 'undefined') return Number(localStorage.getItem('atividades_bimestre')) || 1;
+    if (typeof window !== 'undefined') return Number(sessionStorage.getItem('atividades_bimestre')) || 1;
     return 1;
   });
 
-  const handleSetBimestre = (b) => { setBimestre(b); localStorage.setItem('atividades_bimestre', b); };
+  const handleSetBimestre = (b) => { setBimestre(b); sessionStorage.setItem('atividades_bimestre', b); };
   const turmaAtual = turmas.find((t) => t.id === turmaSelecionada?.id) || turmas[0] || null;
 
   const handleAddTurma = (nome) => {

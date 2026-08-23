@@ -74,8 +74,12 @@ export function AuthProvider({ children }) {
 
   const logout = () => {
     if (typeof window !== "undefined") {
-      localStorage.removeItem("diario_bimestre");
-      localStorage.removeItem("atividades_bimestre");
+      try {
+        localStorage.clear();
+        sessionStorage.clear();
+      } catch (e) {
+        console.warn("Erro ao limpar storage:", e);
+      }
     }
     return signOut(auth);
   };

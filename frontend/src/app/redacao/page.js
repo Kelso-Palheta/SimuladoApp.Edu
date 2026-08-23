@@ -94,14 +94,14 @@ const STORAGE_KEY = 'diario_turmas';
 const USER_KEY = 'diario_userId';
 
 const carregarLocal = () => {
-  try { const raw = localStorage.getItem(STORAGE_KEY); if (raw) return JSON.parse(raw); } catch {}
+  try { const raw = sessionStorage.getItem(STORAGE_KEY); if (raw) return JSON.parse(raw); } catch {}
   return null;
 };
 
 const salvarLocal = (turmas, timestamp = null) => {
   try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(turmas));
-    localStorage.setItem(STORAGE_KEY + '_lastUpdated', String(timestamp || Date.now()));
+    sessionStorage.setItem(STORAGE_KEY, JSON.stringify(turmas));
+    sessionStorage.setItem(STORAGE_KEY + '_lastUpdated', String(timestamp || Date.now()));
   } catch { /* ignora */ }
 };
 
@@ -114,7 +114,7 @@ export default function RedacaoPage() {
   const [initialTurmas, setInitialTurmas] = useState(() => {
     if (typeof window !== 'undefined') {
       try {
-        const raw = localStorage.getItem(STORAGE_KEY);
+        const raw = sessionStorage.getItem(STORAGE_KEY);
         if (raw) return JSON.parse(raw);
       } catch {}
     }
@@ -122,7 +122,7 @@ export default function RedacaoPage() {
   });
   const [loadingTurmas, setLoadingTurmas] = useState(true);
 
-  // Carrega do Firestore se localStorage estiver vazio, ou sync em background
+  // Carrega do Firestore se sessionStorage estiver vazio, ou sync em background
   useEffect(() => {
     if (authLoading) return; // Aguarda o carregamento do estado de autenticação
     if (!user) {
@@ -132,7 +132,7 @@ export default function RedacaoPage() {
 
     (async () => {
       try {
-        const storedUserId = typeof window !== 'undefined' ? localStorage.getItem(USER_KEY) : null;
+        const storedUserId = typeof window !== 'undefined' ? sessionStorage.getItem(USER_KEY) : null;
         const isSameUser = storedUserId === user.uid;
         const local = isSameUser ? carregarLocal() : null;
 
@@ -142,7 +142,7 @@ export default function RedacaoPage() {
         if (snap.exists() && snap.data().turmas?.length > 0) {
           const cloud = snap.data().turmas;
           const cloudTime = snap.data().lastUpdated || 0;
-          const localTime = typeof window !== 'undefined' ? Number(localStorage.getItem(STORAGE_KEY + '_lastUpdated')) || 0 : 0;
+          const localTime = typeof window !== 'undefined' ? Number(sessionStorage.getItem(STORAGE_KEY + '_lastUpdated')) || 0 : 0;
 
           if (cloudTime >= localTime || !local) {
             setInitialTurmas(cloud);
@@ -151,9 +151,9 @@ export default function RedacaoPage() {
             setInitialTurmas(local);
             await setDoc(ref, { turmas: local, lastUpdated: localTime }, { merge: true });
           }
-          if (typeof window !== 'undefined') localStorage.setItem(USER_KEY, user.uid);
+          if (typeof window !== 'undefined') sessionStorage.setItem(USER_KEY, user.uid);
         } else {
-          // Sem dados no Firestore nem localStorage: migra do caminho antigo ou usa padrão
+          // Sem dados no Firestore nem sessionStorage: migra do caminho antigo ou usa padrão
           const oldRef = doc(db, 'users', user.uid, 'turmas', 'data');
           const oldSnap = await getDoc(oldRef);
           if (oldSnap.exists() && oldSnap.data().turmas?.length > 0) {
@@ -177,12 +177,12 @@ export default function RedacaoPage() {
               salvarLocal([]);
             }
           }
-          if (typeof window !== 'undefined') localStorage.setItem(USER_KEY, user.uid);
+          if (typeof window !== 'undefined') sessionStorage.setItem(USER_KEY, user.uid);
         }
       } catch (e) {
         console.error('Erro ao carregar turmas:', e);
         // Fallback local caso haja falha de rede/conexão para o mesmo usuário
-        const storedUserId = typeof window !== 'undefined' ? localStorage.getItem(USER_KEY) : null;
+        const storedUserId = typeof window !== 'undefined' ? sessionStorage.getItem(USER_KEY) : null;
         if (storedUserId === user.uid) {
           const local = carregarLocal();
           if (local) setInitialTurmas(local);

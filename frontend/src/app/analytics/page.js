@@ -48,7 +48,7 @@ export default function AnalyticsPage() {
       let turmasLocais = [];
       if (typeof window !== 'undefined') {
         try {
-          const raw = localStorage.getItem(STORAGE_KEY);
+          const raw = sessionStorage.getItem(STORAGE_KEY);
           if (raw) turmasLocais = JSON.parse(raw);
         } catch {}
       }
