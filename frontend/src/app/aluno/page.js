@@ -43,12 +43,20 @@ export default function AlunoLoginPage() {
     setLoading(true);
 
     try {
-      const dados = await validarLoginAluno(valor);
-      if (!dados) {
-        setErro('Login não encontrado. Verifique seu nome e data de nascimento.');
+      const res = await fetch('/api/aluno/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ login: valor }),
+      });
+      const data = await res.json();
+
+      if (!res.ok) {
+        setErro(data.error || 'Login não encontrado. Verifique seu nome e data de nascimento.');
         setLoading(false);
         return;
       }
+
+      const dados = data.aluno;
 
       if (!dados.vinculos || dados.vinculos.length === 0) {
         setErro('Nenhuma nota ou atividade vinculada a esta conta ainda.');

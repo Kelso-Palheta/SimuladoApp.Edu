@@ -35,8 +35,8 @@ export async function POST(request) {
     try {
       // 1. Tentar Gemini primeiro (se existir a chave)
       if (process.env.GEMINI_API_KEY) {
-        console.log("[Importar Planejamento] Tentando Gemini API Nativa");
-        const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key=${process.env.GEMINI_API_KEY}`;
+        console.log("[Importar Planejamento] Tentando Gemini API Nativa via Header Seguro");
+        const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent`;
         
         const geminiBody = {
           system_instruction: { parts: { text: SYSTEM_PROMPT } },
@@ -49,7 +49,10 @@ export async function POST(request) {
 
         const res = await fetch(geminiUrl, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: {
+            'Content-Type': 'application/json',
+            'x-goog-api-key': process.env.GEMINI_API_KEY,
+          },
           body: JSON.stringify(geminiBody)
         });
 

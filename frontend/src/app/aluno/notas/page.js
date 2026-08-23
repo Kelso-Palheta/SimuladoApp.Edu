@@ -129,51 +129,72 @@ export default function AlunoNotasPage() {
 
   useEffect(() => {
     const raw = sessionStorage.getItem('aluno_login');
-    if (!raw) { router.push('/aluno'); return; }
+    if (!raw) {
+      router.push('/aluno');
+      return;
+    }
 
     let alunoData;
-    try { alunoData = JSON.parse(raw); }
-    catch { sessionStorage.removeItem('aluno_login'); router.push('/aluno'); return; }
+    try {
+      alunoData = JSON.parse(raw);
+    } catch {
+      sessionStorage.removeItem('aluno_login');
+      router.push('/aluno');
+      return;
+    }
 
     const { professorUid, turmaId, alunoId, loginKey } = alunoData;
-    const recordId = `${professorUid}_${turmaId}_${alunoId}`;
+    const url = `/api/aluno/boletim?professorUid=${encodeURIComponent(professorUid)}&turmaId=${encodeURIComponent(turmaId)}&alunoId=${encodeURIComponent(alunoId)}`;
 
-    Promise.all([
-      getNotasAluno(recordId),
-      getAtividadesDoAluno(professorUid, turmaId),
-      getEntregasDoAluno(alunoId),
-      getRedacaoAluno(professorUid, alunoData.loginKey || alunoData.alunoId)
-    ]).then(async ([notasData, atvsData, entregasData, redacaoData]) => {
-      setDados({ ...alunoData, notas: notasData || {} });
-      if (redacaoData) {
-        setRedacao(redacaoData);
-        if (alunoData.openRedacao) {
-          sessionStorage.setItem('redacao_aluno', JSON.stringify({ professorUid: alunoData.professorUid }));
-          router.replace(`/redacao/aluno/${redacaoData.id}`);
-          return;
+    fetch(url)
+      .then(async (res) => {
+        if (!res.ok) {
+          throw new Error('Falha na autenticação ou permissão.');
         }
-      }
+        return res.json();
+      })
+      .then(async (data) => {
+        setDados({ ...alunoData, notas: data.notas || {} });
 
-      setAtividades(atvsData.sort((a, b) => {
-        const pa = a.dataEntrega?.toDate?.() || new Date(a.dataEntrega);
-        const pb = b.dataEntrega?.toDate?.() || new Date(b.dataEntrega);
-        return pa - pb;
-      }));
-      setEntregas(entregasData);
+        if (data.redacao) {
+          setRedacao(data.redacao);
+          if (alunoData.openRedacao) {
+            sessionStorage.setItem('redacao_aluno', JSON.stringify({ professorUid: alunoData.professorUid }));
+            router.replace(`/redacao/aluno/${data.redacao.id}`);
+            return;
+          }
+        }
 
-      const tks = {};
-      await Promise.all(atvsData.map(async (atv) => {
-        const t = await getTokenAluno(atv.id, alunoId);
-        if (t) tks[atv.id] = t;
-      }));
-      setTokens(tks);
-    }).catch((err) => {
-      console.error(err);
-      setErro('Erro ao carregar dados. Tente novamente mais tarde.');
-    }).finally(() => setLoading(false));
+        const atvsData = data.atividades || [];
+        setAtividades(
+          atvsData.sort((a, b) => {
+            const pa = a.dataEntrega?.toDate?.() || new Date(a.dataEntrega);
+            const pb = b.dataEntrega?.toDate?.() || new Date(b.dataEntrega);
+            return pa - pb;
+          })
+        );
+        setEntregas(data.entregas || []);
+
+        const tks = {};
+        await Promise.all(
+          atvsData.map(async (atv) => {
+            const t = await getTokenAluno(atv.id, alunoId);
+            if (t) tks[atv.id] = t;
+          })
+        );
+        setTokens(tks);
+      })
+      .catch((err) => {
+        console.error('Erro ao carregar boletim:', err);
+        setErro('Erro ao carregar dados. Tente novamente mais tarde.');
+      })
+      .finally(() => setLoading(false));
   }, [router]);
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    try {
+      await fetch('/api/aluno/logout', { method: 'POST' });
+    } catch {}
     if (typeof window !== 'undefined') {
       sessionStorage.removeItem('aluno_login');
       sessionStorage.removeItem('aluno_base');

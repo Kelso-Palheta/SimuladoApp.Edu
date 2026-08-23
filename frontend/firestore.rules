@@ -2,64 +2,67 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
 
-    // Professores: leem/escrevem próprio documento e subdocumentos
-    match /professores/{userId} {
-      allow read, write: if request.auth != null && request.auth.uid == userId;
+    // Helper functions
+    function isAuth() {
+      return request.auth != null;
+    }
 
-      // Subdocumentos internos (turmas, dados)
+    function isOwner(userId) {
+      return isAuth() && request.auth.uid == userId;
+    }
+
+    // 1. Professores: acesso estrito ao seu próprio UID e subcoleções
+    match /professores/{userId} {
+      allow read, write: if isOwner(userId);
+
       match /{document=**} {
-        allow read, write: if request.auth != null && request.auth.uid == userId;
+        allow read, write: if isOwner(userId);
       }
 
-      // Correções de redação: leitura pública (aluno), escrita pelo professor dono
+      // Correções de redação: apenas o professor dono pode ler e escrever diretamente
       match /correcoes/{corrId} {
-        allow read: if true;
-        allow write: if request.auth != null && request.auth.uid == userId;
+        allow read, write: if isOwner(userId);
       }
     }
 
-    // Atividades: leitura pública, escrita autenticada
+    // 2. Atividades: criação e leitura autenticada pelo professor
     match /atividades/{activityId} {
-      allow read: if true;
-      allow write: if request.auth != null && (
+      allow read: if isAuth();
+      allow write: if isAuth() && (
         !exists(/databases/$(database)/documents/atividades/$(activityId)) ||
         resource.data.professorId == request.auth.uid
       );
 
       match /tokens/{alunoId} {
-        allow read: if true;
-        allow write: if request.auth != null;
+        allow read, write: if isAuth();
       }
     }
 
-    // Entregas: acesso público total (aluno envia sem login Firebase)
+    // 3. Entregas: acessíveis apenas para o professor autenticado (alunos submetem via BFF)
     match /entregas/{entregaId} {
-      allow read, write: if true;
+      allow read, write: if isAuth();
     }
 
-    // Login do aluno: leitura pública, vínculos gerenciados por professores
+    // 4. Base de Alunos e Vínculos: gerenciados exclusivamente por professores autenticados
     match /alunoLogin/{loginKey} {
-      allow read: if true;
-      allow write: if request.auth != null;
+      allow read, write: if isAuth();
 
       match /vinculos/{profId} {
-        allow read: if true;
-        allow write: if request.auth != null;
+        allow read, write: if isAuth() && request.auth.uid == profId;
       }
     }
 
-    // Regra para permitir que o professor limpe/gerencie todos os seus vínculos (Collection Group)
+    // Regra para permitir que o professor limpe/gerencie seus vínculos (Collection Group)
     match /{path=**}/vinculos/{profId} {
-      allow read, write: if request.auth != null && request.auth.uid == profId;
+      allow read, write: if isAuth() && request.auth.uid == profId;
     }
 
-    // Notas do aluno: leitura pública
+    // 5. Notas dos Alunos: gerenciadas exclusivamente por professores autenticados (alunos consultam via BFF)
     match /notasAluno/{recordId} {
-      allow read: if true;
-      allow write: if request.auth != null;
+      allow read, write: if isAuth();
     }
 
-    // Regra padrão: negar tudo não explicitado
+    // 6. Regra padrão Zero-Trust: negar tudo que não for explicitamente autorizado
     match /{document=**} {
       allow read, write: if false;
     }

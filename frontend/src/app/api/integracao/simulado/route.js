@@ -7,12 +7,16 @@ export async function POST(request) {
     const authHeader = request.headers.get('authorization');
     const token = authHeader?.split(' ')[1];
     
-    // 1. Validar Token de Segurança da Variável de Ambiente
+    // 1. Validar Token de Segurança exclusivamente das Variáveis de Ambiente
     const validTokens = [
       process.env.DIARIO_INTEGRATION_TOKEN,
       process.env.SHARED_INTEGRATION_KEY,
-      'simulado_app_edu_secret_key_2026'
     ].filter(Boolean);
+
+    if (validTokens.length === 0) {
+      console.error('[/api/integracao/simulado] ERRO: Nenhuma chave de integração configurada no .env');
+      return NextResponse.json({ error: 'Configuração de segurança pendente no servidor.' }, { status: 500 });
+    }
 
     if (!token || !validTokens.includes(token)) {
       return NextResponse.json({ error: 'Não autorizado.' }, { status: 401 });

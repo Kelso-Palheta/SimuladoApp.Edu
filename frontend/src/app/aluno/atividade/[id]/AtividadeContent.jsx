@@ -23,29 +23,47 @@ export default function AtividadeContent() {
   const [enviando, setEnviando] = useState(false);
 
   useEffect(() => {
-    if (!token) { setErroTipo('token_invalido'); setEstado('erro'); return; }
+    if (!token) {
+      setErroTipo('token_invalido');
+      setEstado('erro');
+      return;
+    }
 
     const decoded = decodeToken(token);
     if (!decoded || decoded.activityId !== activityId) {
-      setErroTipo('token_invalido'); setEstado('erro'); return;
+      setErroTipo('token_invalido');
+      setEstado('erro');
+      return;
     }
 
-    const { alunoId } = decoded;
+    fetch(`/api/aluno/atividade/${activityId}?token=${encodeURIComponent(token)}`)
+      .then(async (res) => {
+        if (!res.ok) {
+          throw new Error('Falha ao carregar atividade.');
+        }
+        return res.json();
+      })
+      .then((data) => {
+        const atv = data.atividade;
+        const ent = data.entrega;
+        const info = data.alunoInfo || { alunoId: decoded.alunoId };
 
-    Promise.all([
-      getAtividadePublica(activityId),
-      getTokenInfo(activityId, alunoId),
-      getEntrega(activityId, alunoId)
-    ])
-      .then(([atv, info, ent]) => {
-        if (!atv) { setErroTipo('atividade_nao_encontrada'); setEstado('erro'); return; }
+        if (!atv) {
+          setErroTipo('atividade_nao_encontrada');
+          setEstado('erro');
+          return;
+        }
 
         setAtividade(atv);
         setAlunoInfo(info);
 
         const agora = new Date();
         const prazo = atv.dataEntrega?.toDate?.() || new Date(atv.dataEntrega);
-        if (prazo < agora && !ent) { setErroTipo('prazo_encerrado'); setEstado('erro'); return; }
+        if (prazo < agora && !ent) {
+          setErroTipo('prazo_encerrado');
+          setEstado('erro');
+          return;
+        }
 
         if (ent) {
           setEntrega(ent);
@@ -54,26 +72,44 @@ export default function AtividadeContent() {
           setEstado('form');
         }
       })
-      .catch(() => { setErroTipo('erro_carregamento'); setEstado('erro'); });
+      .catch(() => {
+        setErroTipo('erro_carregamento');
+        setEstado('erro');
+      });
   }, [activityId, token]);
 
   const handleSubmit = async (respostaTexto, respostas) => {
     if (!atividade || !alunoInfo) return;
     setEnviando(true);
     try {
-      await submitEntrega({
+      const res = await fetch('/api/aluno/entregar', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          activityId,
+          alunoId: alunoInfo.alunoId,
+          turmaId: alunoInfo.turmaId,
+          bimestre: atividade.bimestre,
+          ...(respostas != null ? { respostas } : { respostaTexto }),
+        }),
+      });
+
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.error || 'Erro ao enviar resposta.');
+      }
+
+      setEntrega({
         activityId,
         alunoId: alunoInfo.alunoId,
         turmaId: alunoInfo.turmaId,
-        bimestre: atividade.bimestre,
-        ...(respostas != null ? { respostas } : { respostaTexto })
+        status: 'entregue',
+        ...(respostas != null ? { respostas } : { respostaTexto }),
       });
-      const ent = await getEntrega(activityId, alunoInfo.alunoId);
-      setEntrega(ent);
       setEstado('confirmacao');
     } catch (err) {
       console.error('Erro ao enviar resposta:', err);
-      alert('Erro ao enviar resposta. Tente novamente.');
+      alert(err.message || 'Erro ao enviar resposta. Tente novamente.');
     } finally {
       setEnviando(false);
     }
