@@ -1,6 +1,6 @@
 'use client';
 
-import { BarChart3, Users, Calendar, ArrowLeft } from 'lucide-react';
+import { BarChart3, Users, Calendar, ArrowLeft, Download, FileText } from 'lucide-react';
 import Link from 'next/link';
 
 export function AnalyticsHeader({
@@ -9,6 +9,8 @@ export function AnalyticsHeader({
   onSelectTurma,
   bimestreSelecionado,
   onSelectBimestre,
+  onExportPDF,
+  exportingPDF = false,
 }) {
   return (
     <div className="bg-[#101942] text-white p-6 rounded-3xl shadow-xl border border-white/10 relative overflow-hidden">
@@ -46,45 +48,62 @@ export function AnalyticsHeader({
           </div>
         </div>
 
-        {/* Filtros de Turma e Bimestre */}
-        <div className="flex flex-wrap items-center gap-3 bg-white/5 p-2 rounded-2xl border border-white/10 backdrop-blur-md">
-          {/* Seletor de Turma */}
-          <div className="flex items-center gap-2 px-3 py-1.5 bg-white/10 rounded-xl border border-white/10">
-            <Users size={16} className="text-blue-400" />
-            <select
-              value={turmaSelecionadaId || 'todas'}
-              onChange={(e) => onSelectTurma(e.target.value === 'todas' ? null : e.target.value)}
-              className="bg-transparent text-white text-xs font-bold outline-none cursor-pointer pr-2"
-            >
-              <option value="todas" className="bg-[#101942] text-white">
-                Todas as Turmas ({turmas.length})
-              </option>
-              {turmas.map((t) => (
-                <option key={t.id} value={t.id} className="bg-[#101942] text-white">
-                  {t.nome} {t.disciplina ? `(${t.disciplina})` : ''}
-                </option>
-              ))}
-            </select>
-          </div>
+        {/* Filtros e Ações */}
+        <div className="flex flex-wrap items-center gap-3">
+          {/* Botão de Exportação de Relatório PDF */}
+          <button
+            onClick={onExportPDF}
+            disabled={exportingPDF || turmas.length === 0}
+            className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-[#f60c49] to-rose-600 hover:from-[#d8083e] hover:to-rose-700 disabled:opacity-50 disabled:cursor-not-allowed text-white text-xs font-bold rounded-2xl shadow-lg shadow-[#f60c49]/25 hover:shadow-xl hover:scale-102 transition-all cursor-pointer border border-white/10"
+          >
+            {exportingPDF ? (
+              <div className="w-4 h-4 rounded-full border-2 border-white border-t-transparent animate-spin" />
+            ) : (
+              <FileText size={15} />
+            )}
+            <span>{exportingPDF ? 'Gerando Relatório...' : 'Exportar Relatório PDF'}</span>
+          </button>
 
-          {/* Seletor de Bimestre */}
-          <div className="flex items-center gap-1 bg-white/10 p-1 rounded-xl border border-white/10">
-            <div className="px-2 text-slate-300">
-              <Calendar size={14} />
-            </div>
-            {['1', '2', '3', '4'].map((b) => (
-              <button
-                key={b}
-                onClick={() => onSelectBimestre(b)}
-                className={`px-3 py-1 text-xs font-bold rounded-lg transition-all ${
-                  bimestreSelecionado === b
-                    ? 'bg-[#f60c49] text-white shadow-md shadow-[#f60c49]/30 scale-105'
-                    : 'text-slate-300 hover:text-white hover:bg-white/10'
-                }`}
+          {/* Filtros de Turma e Bimestre */}
+          <div className="flex flex-wrap items-center gap-3 bg-white/5 p-2 rounded-2xl border border-white/10 backdrop-blur-md">
+            {/* Seletor de Turma */}
+            <div className="flex items-center gap-2 px-3 py-1.5 bg-white/10 rounded-xl border border-white/10">
+              <Users size={16} className="text-blue-400" />
+              <select
+                value={turmaSelecionadaId || 'todas'}
+                onChange={(e) => onSelectTurma(e.target.value === 'todas' ? null : e.target.value)}
+                className="bg-transparent text-white text-xs font-bold outline-none cursor-pointer pr-2"
               >
-                {b}º Bim
-              </button>
-            ))}
+                <option value="todas" className="bg-[#101942] text-white">
+                  Todas as Turmas ({turmas.length})
+                </option>
+                {turmas.map((t) => (
+                  <option key={t.id} value={t.id} className="bg-[#101942] text-white">
+                    {t.nome} {t.disciplina ? `(${t.disciplina})` : ''}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* Seletor de Bimestre */}
+            <div className="flex items-center gap-1 bg-white/10 p-1 rounded-xl border border-white/10">
+              <div className="px-2 text-slate-300">
+                <Calendar size={14} />
+              </div>
+              {['1', '2', '3', '4'].map((b) => (
+                <button
+                  key={b}
+                  onClick={() => onSelectBimestre(b)}
+                  className={`px-3 py-1 text-xs font-bold rounded-lg transition-all ${
+                    bimestreSelecionado === b
+                      ? 'bg-[#f60c49] text-white shadow-md shadow-[#f60c49]/30 scale-105'
+                      : 'text-slate-300 hover:text-white hover:bg-white/10'
+                  }`}
+                >
+                  {b}º Bim
+                </button>
+              ))}
+            </div>
           </div>
         </div>
       </div>

@@ -14,10 +14,9 @@
 - [x] **TASK-11:** Hub de Agentes Pedagógicos MVP — 2 agentes conversacionais (Ensino Médio e Fundamental II) com chat persistente, API segura e design glassmorphism.
 - [x] **TASK-12:** Dashboard Analytics Pedagógico (`/analytics`) — Métricas de rendimento (média geral, aprovação, radar de risco), gráficos Recharts (evolução bimestral, faixas de notas, comparativo multiturmas) e filtros interativos.
 - [x] **TASK-13:** Calendário Pedagógico Flexível — Auto-Agendamento em 1 clique com data de partida selecionável (RN-19), Decisão Pedagógica interativa ao mudar status (Smart Shift vs Pular Tópico - RN-20), Edição/Exclusão manual de tópicos e Barra de Progresso Curricular.
+- [x] **TASK-14:** Exportação de Relatórios Executivos Consolidados em PDF no Dashboard Analytics Pedagógico (`/analytics`) para a Coordenação e Direção Escolar.
 
 ---
 
 ## 🎯 Próximas Entregas (Backlog)
-- [ ] **TASK-07:** Implementação da suíte formal de testes unitários com Jest/Vitest em `tests/unit/`.
-- [ ] **TASK-08:** Otimização do pipeline de OCR para PDFs manuscritos escaneados.
-- [ ] **TASK-09:** Exportação de relatórios estatísticos consolidados por turma para a coordenação.
+- [ ] **TASK-15:** Otimização do pipeline de OCR para PDFs manuscritos escaneados em lote.

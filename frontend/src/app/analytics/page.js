@@ -28,17 +28,23 @@ import { DistribuicaoChart } from '@/components/analytics/DistribuicaoChart';
 import { ComparativoTurmasChart } from '@/components/analytics/ComparativoTurmasChart';
 import { AlunosRiscoTable } from '@/components/analytics/AlunosRiscoTable';
 import { AnalyticsHeader } from '@/components/analytics/AnalyticsHeader';
+import { generateAnalyticsPDF } from '@/lib/analytics/pdf-generator';
+import Toast from '@/components/ui/Toast';
+import { useToast } from '@/hooks/useToast';
+import { AnimatePresence } from 'framer-motion';
 
 const STORAGE_KEY = 'diario_turmas';
 
 export default function AnalyticsPage() {
   const { user, perfil, loading } = useAuth();
   const router = useRouter();
+  const { toast, showToast, hideToast } = useToast();
 
   const [turmas, setTurmas] = useState([]);
   const [loadingData, setLoadingData] = useState(true);
   const [turmaSelecionadaId, setTurmaSelecionadaId] = useState(null); // null = todas
   const [bimestreSelecionado, setBimestreSelecionado] = useState('1');
+  const [exportingPDF, setExportingPDF] = useState(false);
 
   // Carrega turmas do LocalStorage e Firestore
   useEffect(() => {
@@ -123,6 +129,38 @@ export default function AnalyticsPage() {
     return obterAlunosEmRisco(turmaAtiva ? [turmaAtiva] : turmas, bimestreSelecionado);
   }, [turmas, turmaAtiva, bimestreSelecionado]);
 
+  const handleExportPDF = async () => {
+    try {
+      setExportingPDF(true);
+      showToast('Gerando Relatório Executivo em PDF...', 'info');
+
+      const turmaNome = turmaSelecionadaId
+        ? turmas.find((t) => t.id === turmaSelecionadaId)?.nome || 'Turma Selecionada'
+        : 'Todas as Turmas';
+
+      await generateAnalyticsPDF({
+        turmas: turmaAtiva ? [turmaAtiva] : turmas,
+        metricas: {
+          totalAlunos: metricas.totalAlunos,
+          mediaGeral: metricas.mediaGeral || 0,
+          taxaAprovacao: metricas.taxaAprovacao || 0,
+          taxaRecuperacao: metricas.taxaRisco || 0,
+        },
+        alunosEmRisco,
+        turmaSelecionadaNome: turmaNome,
+        bimestre: bimestreSelecionado,
+        professorNome: perfil?.nome || user?.displayName || user?.email?.split('@')[0] || 'Professor(a)',
+      });
+
+      showToast('Relatório baixado com sucesso!', 'success');
+    } catch (err) {
+      console.error('Erro ao gerar PDF do Analytics:', err);
+      showToast('Erro ao gerar relatório: ' + err.message, 'error');
+    } finally {
+      setExportingPDF(false);
+    }
+  };
+
   if (loading || loadingData) {
     return (
       <div className="min-h-screen bg-slate-50 flex items-center justify-center">
@@ -137,7 +175,19 @@ export default function AnalyticsPage() {
   const temTurmas = turmas.length > 0;
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col">
+    <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col relative">
+      <AnimatePresence>
+        {toast && (
+          <Toast
+            key={toast.id}
+            message={toast.message}
+            type={toast.type}
+            duration={toast.duration}
+            onClose={hideToast}
+          />
+        )}
+      </AnimatePresence>
+
       <main className="flex-1 max-w-7xl w-full mx-auto p-4 md:p-8 space-y-6">
         {/* Cabeçalho e Filtros */}
         <AnalyticsHeader
@@ -146,6 +196,8 @@ export default function AnalyticsPage() {
           onSelectTurma={setTurmaSelecionadaId}
           bimestreSelecionado={bimestreSelecionado}
           onSelectBimestre={setBimestreSelecionado}
+          onExportPDF={handleExportPDF}
+          exportingPDF={exportingPDF}
         />
 
         {!temTurmas ? (
