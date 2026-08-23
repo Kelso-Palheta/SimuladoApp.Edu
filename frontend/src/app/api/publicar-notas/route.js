@@ -43,10 +43,14 @@ export async function POST(request) {
     const authHeader = request.headers.get('authorization') || '';
     const token = authHeader.startsWith('Bearer ') ? authHeader.slice(7) : null;
 
+    if (!token) {
+      return NextResponse.json({ error: 'Acesso não autorizado. Token de autenticação ausente.' }, { status: 401 });
+    }
+
     const { userId, nomeProfessor, turmas } = await request.json();
 
-    if (!userId || !turmas?.length) {
-      return NextResponse.json({ error: 'Dados inválidos' }, { status: 400 });
+    if (!userId || typeof userId !== 'string' || !Array.isArray(turmas) || turmas.length === 0) {
+      return NextResponse.json({ error: 'Dados inválidos ou incompletos.' }, { status: 400 });
     }
 
     let total = 0;

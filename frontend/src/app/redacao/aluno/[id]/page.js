@@ -114,43 +114,29 @@ export default function AlunoRedacaoViewPage() {
   useEffect(() => {
     const load = async () => {
       try {
-        let professorUid = null;
+        let professorUid = '';
         if (typeof window !== 'undefined') {
           const raw = sessionStorage.getItem('redacao_aluno');
           if (raw) {
-            try { const data = JSON.parse(raw); professorUid = data.professorUid; } catch {}
+            try {
+              const data = JSON.parse(raw);
+              professorUid = data.professorUid || '';
+            } catch {}
           }
         }
 
-        if (professorUid) {
-          const ref = doc(db, 'professores', professorUid, 'correcoes', id);
-          const snap = await getDoc(ref);
-          if (snap.exists()) {
-            setCorrection(snap.data());
-            setLoading(false);
-            return;
-          }
+        const url = `/api/aluno/redacao/${encodeURIComponent(id)}${professorUid ? `?professorUid=${encodeURIComponent(professorUid)}` : ''}`;
+        const res = await fetch(url);
+        const data = await res.json();
+
+        if (!res.ok || !data.correction) {
+          throw new Error(data.error || 'Correção não encontrada.');
         }
 
-        const loginSnap = await getDoc(doc(db, 'alunoLogin', id));
-        if (loginSnap.exists()) {
-          const loginData = loginSnap.data();
-          professorUid = loginData.professorUid;
-          if (professorUid) {
-            const ref = doc(db, 'professores', professorUid, 'correcoes', id);
-            const snap = await getDoc(ref);
-            if (snap.exists()) {
-              setCorrection(snap.data());
-              setLoading(false);
-              return;
-            }
-          }
-        }
-
-        setErro('Correção não encontrada. Verifique seu login.');
+        setCorrection(data.correction);
       } catch (err) {
         console.error('Erro ao buscar correção:', err);
-        setErro('Erro ao carregar. Tente novamente.');
+        setErro(err.message || 'Erro ao carregar. Tente novamente.');
       } finally {
         setLoading(false);
       }
