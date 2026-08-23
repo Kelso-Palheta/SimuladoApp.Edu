@@ -60,14 +60,17 @@ export function useCalendarioPedagogico() {
 
       // 3. Deletar os slots antigos dessa turma para não acumular "lixo"
       const aulasRef = collection(db, 'professores', user.uid, 'aulas_agendadas');
-      const q = query(aulasRef, where("turmaId", "==", turmaId));
-      const oldSlotsSnap = await getDocs(q);
+      const oldSlotsSnap = await getDocs(aulasRef);
       
       const batch = writeBatch(db);
       
-      // Apaga os slots antigos
+      // Apaga os slots antigos pertencentes a esta turma
       oldSlotsSnap.forEach(docSnap => {
-        batch.delete(docSnap.ref);
+        const data = docSnap.data();
+        const matchesTurma = String(data.turmaId) === String(turmaId) || docSnap.id.startsWith(`slot_${turmaId}_`);
+        if (matchesTurma) {
+          batch.delete(docSnap.ref);
+        }
       });
       
       // 4. Persistir os novos slots no Firestore usando Batch Write
@@ -97,12 +100,15 @@ export function useCalendarioPedagogico() {
     setLoading(true);
     try {
       const aulasRef = collection(db, 'professores', user.uid, 'aulas_agendadas');
-      const q = query(aulasRef, where("turmaId", "==", turmaId));
-      const querySnapshot = await getDocs(q);
+      const querySnapshot = await getDocs(aulasRef);
       
       const aulas = [];
       querySnapshot.forEach((docSnap) => {
-        aulas.push({ id: docSnap.id, ...docSnap.data() });
+        const data = docSnap.data();
+        const matchesTurma = String(data.turmaId) === String(turmaId) || docSnap.id.startsWith(`slot_${turmaId}_`);
+        if (matchesTurma) {
+          aulas.push({ id: docSnap.id, ...data });
+        }
       });
       
       // Ordena pelas datas
@@ -283,15 +289,15 @@ export function useCalendarioPedagogico() {
     setLoading(true);
     try {
       const aulasRef = collection(db, 'professores', user.uid, 'aulas_agendadas');
-      const q = query(aulasRef, where("turmaId", "==", turmaId));
-      const snap = await getDocs(q);
+      const snap = await getDocs(aulasRef);
 
       const batch = writeBatch(db);
       let count = 0;
 
       snap.forEach((docSnap) => {
         const data = docSnap.data();
-        if (data.dataAgendada) {
+        const matchesTurma = String(data.turmaId) === String(turmaId) || docSnap.id.startsWith(`slot_${turmaId}_`);
+        if (matchesTurma && data.dataAgendada) {
           const [ano, mes, dia] = data.dataAgendada.split('-').map(Number);
           const dt = new Date(ano, mes - 1, dia);
           if (dt.getDay() === diaSemanaNum) {
