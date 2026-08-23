@@ -1,4 +1,3 @@
-import { jsPDF } from "jspdf";
 import { format, parseISO } from "date-fns";
 import { ptBR } from "date-fns/locale";
 
@@ -9,11 +8,12 @@ import { ptBR } from "date-fns/locale";
  * @param {String} nomeTurma - Nome da turma selecionada
  * @param {String} professorEmail - Email ou nome do professor
  */
-export const generateCalendarioPDF = (
+export const generateCalendarioPDF = async (
   aulas = [],
   nomeTurma = "Turma",
   professorEmail = "Professor"
 ) => {
+  const { jsPDF } = await import("jspdf");
   const doc = new jsPDF("portrait", "mm", "a4");
 
   const pageWidth = doc.internal.pageSize.getWidth();

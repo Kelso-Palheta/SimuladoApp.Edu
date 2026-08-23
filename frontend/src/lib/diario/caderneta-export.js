@@ -1,10 +1,10 @@
-import { jsPDF } from "jspdf";
 import { calcDesempenhoAnual, fmt, titleCase } from "@/utils/diario/calculos";
 
 /**
  * Gera a Caderneta Escolar Oficial da Turma em PDF (formato Paisagem A4).
  */
-export const generateCadernetaPDF = (turma, professorNome = "Professor(a)") => {
+export const generateCadernetaPDF = async (turma, professorNome = "Professor(a)") => {
+  const { jsPDF } = await import("jspdf");
   const doc = new jsPDF("landscape", "mm", "a4");
 
   const pageWidth = doc.internal.pageSize.getWidth(); // 297mm
