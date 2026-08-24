@@ -8,7 +8,7 @@ import { TurmaView } from '@/components/diario/TurmaView';
 import { ProfileModal } from '@/components/diario/ProfileModal';
 import { useTurmas } from '@/hooks/diario/useTurmas';
 import { useNotas } from '@/hooks/diario/useNotas';
-import { ArrowLeft, GraduationCap, ExternalLink, Copy, Check, Award, Menu, BarChart3 } from 'lucide-react';
+import { ArrowLeft, GraduationCap, ExternalLink, Copy, Check, Award, Menu, BarChart3, ChevronDown } from 'lucide-react';
 import { db } from '@/lib/firebase';
 import { doc, getDoc, setDoc, serverTimestamp } from 'firebase/firestore';
 import { gerarLoginAluno, gerarLoginKey } from '@/utils/diario/loginAluno';
@@ -197,66 +197,26 @@ export default function DiarioPage() {
 
   const [publishing, setPublishing] = useState(false);
   const [toast, setToast] = useState('');
+  const [showPublishMenu, setShowPublishMenu] = useState(false);
+  const publishMenuRef = useRef(null);
 
   useEffect(() => {
     if (toast) {
-      const t = setTimeout(() => setToast(''), 3000);
+      const t = setTimeout(() => setToast(''), 3500);
       return () => clearTimeout(t);
     }
   }, [toast]);
 
-  const handlePublishGrades = async () => {
-    if (publishing || !user || turmas.length === 0) return;
-
-    // Verificar alunos sem dataNascimento antes de publicar
-    const alunosSemData = [];
-    turmas.forEach(t => {
-      (t.alunos || []).forEach(a => {
-        if (!a.dataNascimento) alunosSemData.push({ nome: a.nome, turma: t.nome });
-      });
-    });
-
-    if (alunosSemData.length > 0) {
-      const nomes = alunosSemData.slice(0, 5).map(a => `• ${a.nome} (${a.turma})`).join('\n');
-      const extra = alunosSemData.length > 5 ? `\n...e mais ${alunosSemData.length - 5} aluno(s)` : '';
-      const confirma = window.confirm(
-        `⚠️ ${alunosSemData.length} aluno(s) sem data de nascimento não terão login no Portal do Aluno:\n\n${nomes}${extra}\n\nPreencha a data (ddMM) no diário para gerar o login.\nDeseja publicar mesmo assim?`
-      );
-      if (!confirma) return;
-    }
-
-    setPublishing(true);
-    setToast('Publicando notas...');
-
-    try {
-      const nomeProfessor = perfil?.nome || user.displayName || 'Professor';
-      const token = await user.getIdToken();
-
-      const res = await fetch('/api/publicar-notas', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
-        body: JSON.stringify({ userId: user.uid, nomeProfessor, turmas })
-      });
-
-      const data = await res.json();
-
-      if (!res.ok) throw new Error(data.error || 'Erro desconhecido');
-
-      const parts = [];
-      if (data.total > 0) parts.push(`✅ ${data.total} publicados`);
-      if (data.semData > 0) parts.push(`⚠️ ${data.semData} sem data de nascimento`);
-      if (data.erros > 0) {
-        const errDetail = (data.errosDetails && data.errosDetails.length > 0) ? ` (${data.errosDetails[0]})` : '';
-        parts.push(`❌ ${data.erros} falhas${errDetail}`);
+  // Fecha menu de publicação ao clicar fora
+  useEffect(() => {
+    const handleClick = (e) => {
+      if (publishMenuRef.current && !publishMenuRef.current.contains(e.target)) {
+        setShowPublishMenu(false);
       }
-      setToast(parts.join(' · ') || '✅ Publicação concluída!');
-    } catch (e) {
-      console.error('Erro ao publicar notas:', e);
-      setToast(`Erro ao publicar: ${e.message}. Tente novamente.`);
-    } finally {
-      setPublishing(false);
-    }
-  };
+    };
+    if (showPublishMenu) document.addEventListener('click', handleClick);
+    return () => document.removeEventListener('click', handleClick);
+  }, [showPublishMenu]);
 
   const [turmaSelecionada, setTurmaSelecionada] = useState(null);
   const [showAlunoDropdown, setShowAlunoDropdown] = useState(false);
@@ -271,6 +231,63 @@ export default function DiarioPage() {
 
   const handleSetBimestre = (b) => { setBimestre(b); sessionStorage.setItem('diario_bimestre', b); };
   const turmaAtual = turmas.find((t) => t.id === turmaSelecionada?.id) || turmas[0] || null;
+
+  const handlePublishGrades = async (todasTurmas = false) => {
+    if (publishing || !user || turmas.length === 0) return;
+
+    const turmasParaPublicar = (todasTurmas || !turmaAtual) ? turmas : [turmaAtual];
+    const nomeAlvo = (todasTurmas || !turmaAtual) ? 'todas as turmas' : `Turma ${turmaAtual.nome}`;
+
+    // Verificar alunos sem dataNascimento antes de publicar
+    const alunosSemData = [];
+    turmasParaPublicar.forEach((t) => {
+      (t.alunos || []).forEach((a) => {
+        if (!a.dataNascimento) alunosSemData.push({ nome: a.nome, turma: t.nome });
+      });
+    });
+
+    if (alunosSemData.length > 0) {
+      const nomes = alunosSemData.slice(0, 5).map((a) => `• ${a.nome} (${a.turma})`).join('\n');
+      const extra = alunosSemData.length > 5 ? `\n...e mais ${alunosSemData.length - 5} aluno(s)` : '';
+      const confirma = window.confirm(
+        `⚠️ ${alunosSemData.length} aluno(s) sem data de nascimento não terão login no Portal do Aluno:\n\n${nomes}${extra}\n\nPreencha a data (ddMM) no diário para gerar o login.\nDeseja publicar mesmo assim?`
+      );
+      if (!confirma) return;
+    }
+
+    setPublishing(true);
+    setShowPublishMenu(false);
+    setToast(`Publicando notas (${nomeAlvo})...`);
+
+    try {
+      const nomeProfessor = perfil?.nome || user.displayName || 'Professor';
+      const token = await user.getIdToken();
+
+      const res = await fetch('/api/publicar-notas', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+        body: JSON.stringify({ userId: user.uid, nomeProfessor, turmas: turmasParaPublicar }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) throw new Error(data.error || 'Erro desconhecido');
+
+      const parts = [];
+      if (data.total > 0) parts.push(`✅ ${data.total} aluno(s) publicado(s)`);
+      if (data.semData > 0) parts.push(`⚠️ ${data.semData} sem data de nascimento`);
+      if (data.erros > 0) {
+        const errDetail = data.errosDetails && data.errosDetails.length > 0 ? ` (${data.errosDetails[0]})` : '';
+        parts.push(`❌ ${data.erros} falhas${errDetail}`);
+      }
+      setToast(parts.join(' · ') || '✅ Publicação concluída!');
+    } catch (e) {
+      console.error('Erro ao publicar notas:', e);
+      setToast(`Erro ao publicar: ${e.message}. Tente novamente.`);
+    } finally {
+      setPublishing(false);
+    }
+  };
 
   const handleAddTurma = (nome) => {
     const nova = addTurma(nome);
@@ -439,14 +456,63 @@ export default function DiarioPage() {
               <span className="hidden sm:inline">Analytics</span>
             </button>
 
-            <button
-              onClick={handlePublishGrades}
-              disabled={publishing}
-              className="inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-[#f60c49] hover:bg-[#d40840] text-white shadow-sm transition-all disabled:opacity-50"
-            >
-              <Award size={16} />
-              <span className="hidden sm:inline">{publishing ? 'Publicando...' : 'Publicar Notas'}</span>
-            </button>
+            {/* Botão Split de Publicação Inteligente */}
+            <div className="relative" ref={publishMenuRef}>
+              <div className="inline-flex rounded-xl shadow-xs">
+                <button
+                  onClick={() => handlePublishGrades(false)}
+                  disabled={publishing}
+                  className="inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 rounded-l-xl text-xs sm:text-sm font-bold bg-[#f60c49] hover:bg-[#d40840] text-white transition-all disabled:opacity-50 cursor-pointer"
+                  title={turmaAtual ? `Publicar notas da Turma ${turmaAtual.nome}` : 'Publicar Notas'}
+                >
+                  {publishing ? (
+                    <div className="w-4 h-4 rounded-full border-2 border-white border-t-transparent animate-spin" />
+                  ) : (
+                    <Award size={16} />
+                  )}
+                  <span className="hidden sm:inline">
+                    {publishing
+                      ? 'Publicando...'
+                      : turmaAtual
+                      ? `Publicar ${turmaAtual.nome}`
+                      : 'Publicar Notas'}
+                  </span>
+                </button>
+                {turmas.length > 1 && (
+                  <button
+                    onClick={() => setShowPublishMenu(!showPublishMenu)}
+                    disabled={publishing}
+                    className="px-2 py-2 rounded-r-xl bg-[#d40840] hover:bg-[#b50736] text-white border-l border-white/20 transition-all disabled:opacity-50 cursor-pointer"
+                    title="Mais opções de publicação"
+                  >
+                    <ChevronDown size={14} />
+                  </button>
+                )}
+              </div>
+
+              {showPublishMenu && (
+                <div className="absolute right-0 top-full mt-2 w-56 bg-white border border-[#dce0f0] rounded-2xl shadow-xl z-50 p-1.5 space-y-1">
+                  <button
+                    onClick={() => handlePublishGrades(false)}
+                    className="w-full text-left px-3 py-2 rounded-xl text-xs font-bold text-[#101942] hover:bg-[#eef0f8] transition-colors flex items-center justify-between cursor-pointer"
+                  >
+                    <span>Publicar Turma Atual</span>
+                    <span className="text-[10px] text-slate-400 font-mono">
+                      {turmaAtual?.alunos?.length || 0} alunos
+                    </span>
+                  </button>
+                  <button
+                    onClick={() => handlePublishGrades(true)}
+                    className="w-full text-left px-3 py-2 rounded-xl text-xs font-bold text-[#f60c49] hover:bg-[#fff2f6] transition-colors flex items-center justify-between cursor-pointer"
+                  >
+                    <span>Publicar Todas as Turmas</span>
+                    <span className="text-[10px] text-[#f60c49]/70 font-mono">
+                      {turmas.reduce((acc, t) => acc + (t.alunos?.length || 0), 0)} alunos
+                    </span>
+                  </button>
+                </div>
+              )}
+            </div>
 
             <div className="relative" ref={alunoDropdownRef}>
               <button

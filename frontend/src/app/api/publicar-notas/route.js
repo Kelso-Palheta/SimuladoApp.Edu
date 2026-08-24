@@ -10,7 +10,7 @@ async function firestorePatch(path, fields, token) {
   const res = await fetch(`${FIRESTORE_BASE}/${path}`, {
     method: 'PATCH',
     headers,
-    body: JSON.stringify({ fields })
+    body: JSON.stringify({ fields }),
   });
   if (!res.ok) {
     const err = await res.text();
@@ -53,57 +53,77 @@ export async function POST(request) {
       return NextResponse.json({ error: 'Dados inválidos ou incompletos.' }, { status: 400 });
     }
 
+    // Monta a lista plana de todos os alunos a serem publicados
+    const studentTasks = [];
+    for (const turma of turmas) {
+      for (const aluno of (turma.alunos || [])) {
+        studentTasks.push({ aluno, turma });
+      }
+    }
+
     let total = 0;
     let erros = 0;
     let semData = 0;
-    let alunosSemData = [];
-    let errosDetails = [];
+    const alunosSemData = [];
+    const errosDetails = [];
 
-    for (const turma of turmas) {
-      for (const aluno of (turma.alunos || [])) {
-        if (!aluno.dataNascimento) {
-          semData++;
-          alunosSemData.push({ nome: aluno.nome, turma: turma.nome });
-          continue;
-        }
+    const publishSingleStudent = async ({ aluno, turma }) => {
+      if (!aluno.dataNascimento) {
+        return { status: 'semData', aluno: { nome: aluno.nome, turma: turma.nome } };
+      }
 
-        try {
-          const loginStr = gerarLoginAluno(aluno.nome, aluno.dataNascimento);
-          const loginKey = await gerarLoginKey(loginStr);
-          const now = new Date().toISOString();
+      try {
+        const loginStr = gerarLoginAluno(aluno.nome, aluno.dataNascimento);
+        const loginKey = await gerarLoginKey(loginStr);
+        const now = new Date().toISOString();
 
-          // 1. Base aluno
-          await firestorePatch(`alunoLogin/${loginKey}`, {
+        const recordId = `${userId}_${turma.id}_${aluno.id}`;
+        const notaFields = toFirestoreValue({
+          nome: aluno.nome,
+          bimestres: turma.bimestres || {},
+          atualizadoEm: now,
+        }).mapValue.fields;
+
+        // Executa as 3 operações do aluno em paralelo
+        await Promise.all([
+          firestorePatch(`alunoLogin/${loginKey}`, {
             nome: { stringValue: aluno.nome },
-            login: { stringValue: loginStr }
-          }, token);
-
-          // 2. Vínculo professor-aluno
-          await firestorePatch(`alunoLogin/${loginKey}/vinculos/${userId}`, {
+            login: { stringValue: loginStr },
+          }, token),
+          firestorePatch(`alunoLogin/${loginKey}/vinculos/${userId}`, {
             professorUid: { stringValue: userId },
             turmaId: { stringValue: turma.id },
             turmaNome: { stringValue: turma.nome },
             alunoId: { stringValue: aluno.id },
             modulo: { stringValue: 'diario' },
             nomeProfessor: { stringValue: nomeProfessor || 'Professor' },
-            atualizadoEm: { stringValue: now }
-          }, token);
+            atualizadoEm: { stringValue: now },
+          }, token),
+          firestorePatch(`notasAluno/${recordId}`, notaFields, token),
+        ]);
 
-          // 3. Notas
-          const recordId = `${userId}_${turma.id}_${aluno.id}`;
-          const notaFields = toFirestoreValue({
-            nome: aluno.nome,
-            bimestres: turma.bimestres || {},
-            atualizadoEm: now
-          }).mapValue.fields;
+        return { status: 'ok' };
+      } catch (e) {
+        console.error(`Erro aluno ${aluno.nome}:`, e.message);
+        return { status: 'error', error: e.message, nome: aluno.nome };
+      }
+    };
 
-          await firestorePatch(`notasAluno/${recordId}`, notaFields, token);
+    // Processa os alunos em lotes concorrentes (chunks de 15 simultâneos)
+    const BATCH_SIZE = 15;
+    for (let i = 0; i < studentTasks.length; i += BATCH_SIZE) {
+      const batch = studentTasks.slice(i, i + BATCH_SIZE);
+      const results = await Promise.all(batch.map(publishSingleStudent));
 
+      for (const res of results) {
+        if (res.status === 'ok') {
           total++;
-        } catch (e) {
-          console.error(`Erro aluno ${aluno.nome}:`, e.message);
+        } else if (res.status === 'semData') {
+          semData++;
+          alunosSemData.push(res.aluno);
+        } else if (res.status === 'error') {
           erros++;
-          errosDetails.push(e.message);
+          errosDetails.push(res.error);
         }
       }
     }
