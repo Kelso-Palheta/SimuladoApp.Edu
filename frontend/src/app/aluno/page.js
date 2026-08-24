@@ -226,14 +226,14 @@ export default function AlunoLoginPage() {
                 type="text"
                 value={login}
                 onChange={(e) => { setLogin(e.target.value); setErro(''); }}
-                placeholder="Ex: kelso0407"
+                placeholder="Ex: pedrohenrique1111 ou maria1503"
                 className="w-full bg-[#f7f8fc] border border-[#dce0f0] rounded-2xl px-4 py-3.5 text-sm text-[#101942] placeholder-[#9098c0] outline-none focus:bg-white focus:ring-2 focus:ring-[#f60c49]/30 focus:border-[#f60c49] transition-all font-mono font-bold"
                 autoFocus
                 disabled={loading}
               />
               <p className="text-[11px] text-[#6070a0] mt-2 text-left leading-relaxed">
-                Insira seu primeiro nome + dia e mês de nascimento.<br />
-                Exemplo: <strong>KELSO</strong> nascido em 07/04 → <span className="font-mono text-[#101942] font-bold">kelso0407</span>
+                Insira seus 2 primeiros nomes + dia e mês de nascimento.<br />
+                Exemplo: <strong>Pedro Henrique</strong> nascido em 11/11 → <span className="font-mono text-[#101942] font-bold">pedrohenrique1111</span>
               </p>
             </div>
 
