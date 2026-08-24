@@ -80,4 +80,17 @@ Este documento define as regras de negócio inegociáveis do sistema. Qualquer c
      - **Crítico / Risco Alto:** Média $< 4.0$ (`critico`)
    - O radar de alunos em risco lista prioritariamente estudantes classificados como `critico` e `recuperacao`, ordenados crescentemente pela média para intervenção imediata do professor.
 
+---
+
+## 6. Regras de Planos e Entitlements de Módulos
+
+1. **RN-21 (Acesso Gratuito Universal ao Diário):**
+   - O módulo **Diário Pedagógico** (`diario-planejamento`) e a visualização de notas no **Portal do Aluno** são 100% gratuitos e irrestritos para todos os usuários cadastrados.
+
+2. **RN-22 (Matriz de Entitlements de Assinaturas):**
+   - **Plano Professor Geral:** Acesso a `diario-planejamento`, `calendario-pedagogico`, `gerador-atividades`, `agente-linguagens` e `analytics-pedagogico`. Módulo `redacao-corretor` é bloqueado com cadeado.
+   - **Plano Especialista Redação:** Acesso a `diario-planejamento` e `redacao-corretor`. Demais módulos de IA/calendário permanecem bloqueados.
+   - **Plano Hub Completo Pro:** Acesso irrestrito a todos os 6 módulos do Hub.
+   - **Plano Combo Total:** Acesso a todos os módulos do Hub + chave de integração com a plataforma básica do SimuladoApp (Django).
+
 

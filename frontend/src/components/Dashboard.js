@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/lib/auth-context";
 import { PLATFORM_MODULES } from "@/config/modules";
+import { verificarPermissaoModulo, PLANOS_CONFIG } from "@/config/planos";
 import {
   BookOpen,
   PenTool,
@@ -52,19 +53,13 @@ export default function Dashboard() {
   const [toast, setToast] = useState(null);
   const [showProfile, setShowProfile] = useState(false);
 
-  const permitidos = perfil?.modulos_permitidos || [];
-
   const handleCardClick = (mod) => {
-    if (
-      permitidos.includes(mod.id) ||
-      mod.id === "calendario-pedagogico" ||
-      mod.id === "analytics-pedagogico" ||
-      mod.id === "agente-linguagens"
-    ) {
+    const temAcesso = verificarPermissaoModulo(perfil, mod.id);
+    if (temAcesso) {
       router.push(mod.path);
     } else {
       setToast(
-        "Você não tem acesso a este módulo. Entre em contato com a coordenação."
+        `O módulo "${mod.nome}" não faz parte do seu plano atual. Faça upgrade para desbloquear.`
       );
     }
   };
@@ -164,9 +159,7 @@ export default function Dashboard() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {PLATFORM_MODULES.map((mod) => {
-              const temAcesso =
-                permitidos.includes(mod.id) ||
-                mod.id === "calendario-pedagogico";
+              const temAcesso = verificarPermissaoModulo(perfil, mod.id);
               const Icon = ICON_MAP[mod.icon] || BookOpen;
 
               return (
