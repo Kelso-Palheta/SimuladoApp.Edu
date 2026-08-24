@@ -15,11 +15,26 @@ export async function POST(request) {
       );
     }
 
-    const cleanLogin = login.trim().toUpperCase();
+    const cleanLogin = login
+      .trim()
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '');
+
     const loginKey = await gerarLoginKey(cleanLogin);
 
-    // 1. Busca na base de login do aluno no Firestore
-    const snap = await getDoc(doc(db, 'alunoLogin', loginKey));
+    // 1. Busca na base de login do aluno no Firestore (tenta lowercase e fallback)
+    let snap = await getDoc(doc(db, 'alunoLogin', loginKey));
+
+    if (!snap.exists()) {
+      // Fallback para hashes legados
+      const upperKey = await gerarLoginKey(cleanLogin.toUpperCase());
+      const upperSnap = await getDoc(doc(db, 'alunoLogin', upperKey));
+      if (upperSnap.exists()) {
+        snap = upperSnap;
+      }
+    }
+
     if (!snap.exists()) {
       return NextResponse.json(
         { error: 'Aluno não localizado. Verifique se o nome e a data de nascimento estão corretos.' },

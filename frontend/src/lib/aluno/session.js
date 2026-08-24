@@ -1,6 +1,6 @@
 import crypto from 'crypto';
 
-const SESSION_SECRET = process.env.SESSION_SECRET || process.env.NEXTAUTH_SECRET || 'simuladoapp_edu_super_secure_secret_key_2026_auth';
+const SESSION_SECRET = process.env.ALUNO_SESSION_SECRET || process.env.SESSION_SECRET || process.env.NEXTAUTH_SECRET || 'simuladoapp_edu_super_secure_secret_key_2026_auth';
 const COOKIE_NAME = 'aluno_session';
 const TOKEN_EXPIRY_SECONDS = 60 * 60 * 24 * 7; // 7 dias
 
