@@ -148,12 +148,127 @@ class ApiClient {
   diario = {
     listarTurmas: async () => {
       const res = await this.request('/api/v1/diario/turmas/');
+      return res.ok ? res.json() : [];
+    },
+    criarTurma: async (dados) => {
+      const res = await this.request('/api/v1/diario/turmas/', {
+        method: 'POST',
+        body: JSON.stringify(dados),
+      });
       return res.json();
+    },
+    atualizarTurma: async (turmaId, dados) => {
+      const res = await this.request(`/api/v1/diario/turmas/${turmaId}/`, {
+        method: 'PATCH',
+        body: JSON.stringify(dados),
+      });
+      return res.json();
+    },
+    excluirTurma: async (turmaId) => {
+      const res = await this.request(`/api/v1/diario/turmas/${turmaId}/`, {
+        method: 'DELETE',
+      });
+      return res.ok;
+    },
+    listarEstudantes: async (turmaId) => {
+      const query = turmaId ? `?turma_id=${turmaId}` : '';
+      const res = await this.request(`/api/v1/diario/estudantes/${query}`);
+      return res.ok ? res.json() : [];
     },
     publicarNotasBatch: async (turmaId, bimestre, notas) => {
       const res = await this.request(`/api/v1/diario/turmas/${turmaId}/publicar-notas/`, {
         method: 'POST',
         body: JSON.stringify({ bimestre, notas }),
+      });
+      return res.json();
+    },
+  };
+
+  // Calendário & Smart Shift Endpoints
+  calendario = {
+    listarGrades: async (turmaId) => {
+      const query = turmaId ? `?turma_id=${turmaId}` : '';
+      const res = await this.request(`/api/v1/calendario/grades/${query}`);
+      return res.ok ? res.json() : [];
+    },
+    salvarGrade: async (dados) => {
+      const res = await this.request('/api/v1/calendario/grades/', {
+        method: 'POST',
+        body: JSON.stringify(dados),
+      });
+      return res.json();
+    },
+    listarEmentas: async (turmaId) => {
+      const query = turmaId ? `?turma_id=${turmaId}` : '';
+      const res = await this.request(`/api/v1/calendario/ementas/${query}`);
+      return res.ok ? res.json() : [];
+    },
+    listarAulas: async (turmaId, mes, ano) => {
+      const params = new URLSearchParams();
+      if (turmaId) params.append('turma_id', turmaId);
+      if (mes) params.append('mes', mes);
+      if (ano) params.append('ano', ano);
+      const res = await this.request(`/api/v1/calendario/aulas/?${params.toString()}`);
+      return res.ok ? res.json() : [];
+    },
+    executarSmartShift: async (turmaId, dataCancelada, motivo) => {
+      const res = await this.request('/api/v1/calendario/smart-shift/', {
+        method: 'POST',
+        body: JSON.stringify({
+          turma_id: turmaId,
+          data_cancelada: dataCancelada,
+          motivo: motivo || 'Remanejamento Solicitado',
+        }),
+      });
+      return res.json();
+    },
+  };
+
+  // Atividades BNCC Endpoints
+  atividades = {
+    listarAtividades: async (turmaId = null) => {
+      const query = turmaId ? `?turma_id=${turmaId}` : '';
+      const res = await this.request(`/api/v1/atividades/atividades/${query}`);
+      return res.ok ? res.json() : [];
+    },
+    criarAtividade: async (dados) => {
+      const res = await this.request('/api/v1/atividades/atividades/', {
+        method: 'POST',
+        body: JSON.stringify(dados),
+      });
+      return res.json();
+    },
+    alternarPublicacao: async (atividadeId) => {
+      const res = await this.request(`/api/v1/atividades/atividades/${atividadeId}/publicar/`, {
+        method: 'POST',
+      });
+      return res.json();
+    },
+  };
+
+  // Redação ENEM Endpoints (OpenCV + Celery)
+  redacao = {
+    listarTemas: async () => {
+      const res = await this.request('/api/v1/redacao/temas/');
+      return res.ok ? res.json() : [];
+    },
+    listarSubmissoes: async (turmaId = null, temaId = null) => {
+      const params = new URLSearchParams();
+      if (turmaId) params.append('turma_id', turmaId);
+      if (temaId) params.append('tema_id', temaId);
+      const res = await this.request(`/api/v1/redacao/submissoes/?${params.toString()}`);
+      return res.ok ? res.json() : [];
+    },
+    enviarRedacao: async (dados) => {
+      const res = await this.request('/api/v1/redacao/submissoes/', {
+        method: 'POST',
+        body: JSON.stringify(dados),
+      });
+      return res.json();
+    },
+    reprocessar: async (submissaoId) => {
+      const res = await this.request(`/api/v1/redacao/submissoes/${submissaoId}/reprocessar/`, {
+        method: 'POST',
       });
       return res.json();
     },
