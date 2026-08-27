@@ -7,6 +7,7 @@ import { X, ArrowRight, Sparkles, CheckCircle2 } from "lucide-react";
 export function AuthModal({ isOpen, onClose, initialMode = "cadastro" }) {
   const { loginGoogle, loginEmail, cadastrarEmail, recuperarSenha } = useAuth();
   const [modo, setModo] = useState(initialMode); // "login" | "cadastro" | "recuperar"
+  const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
   const [erro, setErro] = useState("");
@@ -25,7 +26,7 @@ export function AuthModal({ isOpen, onClose, initialMode = "cadastro" }) {
         await loginEmail(email, senha);
         onClose();
       } else if (modo === "cadastro") {
-        await cadastrarEmail(email, senha);
+        await cadastrarEmail(email, senha, { nome });
         onClose();
       } else {
         await recuperarSenha(email);
@@ -40,7 +41,7 @@ export function AuthModal({ isOpen, onClose, initialMode = "cadastro" }) {
         "auth/invalid-email": "Formato de email inválido.",
         "auth/user-not-found": "Nenhum usuário encontrado com este email.",
       };
-      setErro(map[err.code] || `Erro: ${err.message || 'Tente novamente.'}`);
+      setErro(map[err.code] || err.message || "Erro ao processar solicitação.");
     } finally {
       setLoading(false);
     }
@@ -125,6 +126,22 @@ export function AuthModal({ isOpen, onClose, initialMode = "cadastro" }) {
 
           {/* Form */}
           <form onSubmit={handleSubmit} className="space-y-3.5">
+            {modo === "cadastro" && (
+              <div>
+                <label className="block text-xs font-bold text-[#101942] mb-1">
+                  Seu nome completo
+                </label>
+                <input
+                  type="text"
+                  value={nome}
+                  onChange={(e) => setNome(e.target.value)}
+                  placeholder="Ex: Profa. Mariana Silva"
+                  required
+                  className="w-full px-3.5 py-2.5 rounded-xl text-sm border border-[#dce0f0] bg-[#eef0f8]/30 text-[#101942] placeholder-[#9098c0] focus:outline-none focus:ring-2 focus:ring-[#f60c49]/30 focus:border-[#f60c49] transition-all"
+                />
+              </div>
+            )}
+
             <div>
               <label className="block text-xs font-bold text-[#101942] mb-1">
                 Email institucional ou pessoal

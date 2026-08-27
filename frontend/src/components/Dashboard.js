@@ -48,10 +48,13 @@ function Toast({ message, onClose }) {
 }
 
 export default function Dashboard() {
-  const { user, perfil, logout } = useAuth();
+  const { user, perfil, creditos, logout } = useAuth();
   const router = useRouter();
   const [toast, setToast] = useState(null);
   const [showProfile, setShowProfile] = useState(false);
+
+  const planoAtivoId = perfil?.plano || creditos?.tipo_plano || "gratuito";
+  const planoInfo = PLANOS_CONFIG[planoAtivoId] || PLANOS_CONFIG.gratuito;
 
   const handleCardClick = (mod) => {
     const temAcesso = verificarPermissaoModulo(perfil, mod.id);
@@ -69,7 +72,7 @@ export default function Dashboard() {
       {/* Header Superior Navy */}
       <header className="bg-[#101942] text-white border-b border-white/10 px-4 sm:px-8 py-4 shadow-md sticky top-0 z-40">
         <div className="max-w-7xl mx-auto w-full flex items-center justify-between">
-          {/* Logo SimuladoApp.Edu */}
+          {/* Logo RotinaDocente */}
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-[#f60c49] flex items-center justify-center text-white shadow-md">
               <svg
@@ -97,8 +100,16 @@ export default function Dashboard() {
             </div>
           </div>
 
-          {/* Ações de Usuário */}
-          <div className="flex items-center gap-2.5">
+          {/* Ações de Usuário & Carteira de Créditos */}
+          <div className="flex items-center gap-3">
+            {/* Saldo de IA Badge */}
+            <div className="hidden sm:flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white/10 border border-white/15 text-xs font-semibold text-white">
+              <Sparkles size={14} className="text-[#f60c49]" />
+              <span>
+                Créditos de IA: <strong className="text-[#f60c49]">{creditos?.saldo_disponivel ?? 0}</strong>
+              </span>
+            </div>
+
             <button
               onClick={() => setShowProfile(true)}
               className="flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-white/10 text-white border border-white/15 hover:bg-white/15 transition-all"
@@ -119,7 +130,7 @@ export default function Dashboard() {
 
       {/* Conteúdo Principal do Hub */}
       <main className="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-8 py-8 space-y-8">
-        {/* Banner de Boas-Vindas */}
+        {/* Banner de Boas-Vindas com Carteira de Créditos */}
         <div className="bg-gradient-to-r from-[#101942] via-[#1a255a] to-[#101942] rounded-3xl p-6 sm:p-8 text-white shadow-xl border border-[#101942]/20 relative overflow-hidden flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
           <div className="space-y-2 relative z-10 max-w-2xl">
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-extrabold bg-[#f60c49] text-white">
@@ -130,17 +141,40 @@ export default function Dashboard() {
               Seu Hub Pedagógico de Inteligência Artificial
             </h2>
             <p className="text-sm text-white/70 leading-relaxed">
-              Selecione uma ferramenta abaixo para gerenciar notas, planejar suas semanas de aula ou gerar e corrigir atividades e redações em segundos.
+              Toda a sua rotina letiva em 1 clique. Planeje aulas, gere atividades e corrija redações com alta velocidade.
             </p>
           </div>
 
-          <div className="relative z-10 shrink-0">
-            <div className="px-5 py-3 rounded-2xl bg-white/10 border border-white/15 backdrop-blur-md text-center">
-              <span className="text-[11px] text-white/60 block font-medium uppercase tracking-wider">Status da Assinatura</span>
-              <span className="text-sm font-extrabold text-[#f60c49] flex items-center justify-center gap-1.5 mt-0.5">
-                <span className="w-2 h-2 rounded-full bg-[#22c55e]"></span>
-                Acesso Liberado
-              </span>
+          <div className="relative z-10 shrink-0 w-full md:w-auto">
+            <div className="px-5 py-4 rounded-2xl bg-white/10 border border-white/15 backdrop-blur-md space-y-2.5 min-w-[240px]">
+              <div className="flex items-center justify-between gap-2">
+                <span className="text-[11px] text-white/60 font-bold uppercase tracking-wider">
+                  Plano Ativo
+                </span>
+                <span className="text-xs px-2.5 py-0.5 rounded-full font-bold bg-[#f60c49]/20 text-[#f60c49] border border-[#f60c49]/30">
+                  {planoInfo.tag}
+                </span>
+              </div>
+
+              <div className="pt-1">
+                <div className="flex items-center justify-between text-xs font-semibold mb-1">
+                  <span className="text-white/80">Carteira de IA</span>
+                  <span className="text-white font-extrabold text-sm">
+                    {creditos?.saldo_disponivel ?? 0} <span className="text-white/50 text-xs">créditos</span>
+                  </span>
+                </div>
+
+                <div className="w-full bg-white/10 rounded-full h-2 overflow-hidden">
+                  <div
+                    className="bg-gradient-to-r from-[#f60c49] to-[#ff4b72] h-full rounded-full transition-all duration-500"
+                    style={{
+                      width: creditos?.creditos_mensais_total
+                        ? `${Math.min(100, Math.max(5, (creditos.saldo_disponivel / creditos.creditos_mensais_total) * 100))}%`
+                        : "0%",
+                    }}
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </div>
