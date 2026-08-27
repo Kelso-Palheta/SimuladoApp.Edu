@@ -22,12 +22,12 @@ export function LandingHero({ onOpenAuth }) {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#f60c49] opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#f60c49]"></span>
               </span>
-              <span>NOVO: Hub de Inteligência Artificial para Professores</span>
+              <span>Toda a sua rotina letiva em 1 clique</span>
             </div>
 
             {/* Headline Manrope */}
             <h1 className="font-head text-4xl sm:text-5xl lg:text-6xl font-extrabold text-[#101942] tracking-tight leading-[1.08]">
-              O SimuladoApp.Edu{" "}
+              O Rotina<span className="text-[#f60c49]">Docente</span>{" "}
               <span className="text-[#f60c49] relative whitespace-nowrap inline-block">
                 devolve seus
                 <svg

@@ -1,4 +1,4 @@
-# ⚖️ Regras Invariantes de Negócio (RULES) — SimuladoApp.Edu
+# ⚖️ Regras Invariantes de Negócio (RULES) — RotinaDocente
 
 Este documento define as regras de negócio inegociáveis do sistema. Qualquer código que viole estas regras será rejeitado pela suíte de testes.
 

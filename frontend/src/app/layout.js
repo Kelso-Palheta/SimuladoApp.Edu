@@ -15,8 +15,8 @@ const inter = Inter({
 });
 
 export const metadata = {
-  title: "SimuladoApp.Edu — A plataforma completa de avaliação e gestão para professores",
-  description: "Crie atividades BNCC, corrija redações no padrão ENEM em segundos e automatize o diário e calendário pedagógico.",
+  title: "RotinaDocente — Toda a sua rotina letiva em 1 clique",
+  description: "Plataforma inteligente de gestão e automação pedagógica para professores: diário de notas, calendário letivo com Smart Shift, gerador de atividades BNCC, corretor de redações ENEM e agentes de IA.",
 };
 
 export default function RootLayout({ children }) {

@@ -1,4 +1,4 @@
-# ⚙️ Tech Stack & Dependências Travadas — SimuladoApp.Edu
+# ⚙️ Tech Stack & Dependências Travadas — RotinaDocente
 
 ## 1. Runtime & Frameworks
 - **Runtime:** Node.js `>= 18.x`

@@ -32,7 +32,7 @@ export const generateBoletimPDF = ({
   doc.setFont("helvetica", "bold");
   doc.setFontSize(18);
   doc.setTextColor(255, 255, 255);
-  doc.text("SimuladoApp.Edu — Boletim de Rendimento Escolar", margin, 18);
+  doc.text("RotinaDocente — Boletim de Rendimento Escolar", margin, 18);
 
   doc.setFontSize(10);
   doc.setFont("helvetica", "normal");

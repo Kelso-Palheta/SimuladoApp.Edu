@@ -49,25 +49,25 @@ export function LandingFooter({ onOpenAuth }) {
                 </svg>
               </div>
               <span className="font-head text-lg font-extrabold text-white">
-                SimuladoApp<span className="text-[#f60c49]">.Edu</span>
+                Rotina<span className="text-[#f60c49]">Docente</span>
               </span>
             </a>
             <p className="text-xs text-white/60 leading-relaxed">
-              O Hub Educacional completo que une inteligência artificial, avaliação contínua e gestão pedagógica para o professor moderno.
+              Toda a sua rotina letiva em 1 clique. O ecossistema inteligente de planejamento, avaliações, redações e gestão pedagógica.
             </p>
           </div>
 
           {/* Coluna 2 - Recursos */}
           <div className="space-y-3">
             <h4 className="font-head font-bold text-sm text-white uppercase tracking-wider">
-              Módulos do Hub
+              Módulos
             </h4>
             <ul className="space-y-2 text-xs text-white/60">
               <li><a href="#modulos" className="hover:text-white transition-colors">Diário Pedagógico</a></li>
-              <li><a href="#modulos" className="hover:text-white transition-colors">Redação Corrigida ENEM</a></li>
+              <li><a href="#modulos" className="hover:text-white transition-colors">Calendário & Smart Shift</a></li>
               <li><a href="#modulos" className="hover:text-white transition-colors">Gerador de Atividades BNCC</a></li>
-              <li><a href="#modulos" className="hover:text-white transition-colors">Calendário Pedagógico</a></li>
-              <li><a href="#modulos" className="hover:text-white transition-colors">Agentes Especialistas ENEM</a></li>
+              <li><a href="#modulos" className="hover:text-white transition-colors">Corretor de Redações ENEM</a></li>
+              <li><a href="#modulos" className="hover:text-white transition-colors">Agentes Pedagógicos IA</a></li>
             </ul>
           </div>
 
@@ -77,15 +77,15 @@ export function LandingFooter({ onOpenAuth }) {
               Navegação
             </h4>
             <ul className="space-y-2 text-xs text-white/60">
-              <li><a href="#problemas" className="hover:text-white transition-colors">Por que usar?</a></li>
-              <li><a href="#jornada" className="hover:text-white transition-colors">Como Funciona</a></li>
+              <li><a href="#problemas" className="hover:text-white transition-colors">Por que usar</a></li>
+              <li><a href="#jornada" className="hover:text-white transition-colors">Como funciona</a></li>
               <li><a href="#calculadora" className="hover:text-white transition-colors">Calculadora de Tempo</a></li>
               <li><a href="#precos" className="hover:text-white transition-colors">Planos e Preços</a></li>
-              <li><a href="#faq" className="hover:text-white transition-colors">Dúvidas Frequentes</a></li>
+              <li><a href="#faq" className="hover:text-white transition-colors">Perguntas Frequentes</a></li>
             </ul>
           </div>
 
-          {/* Coluna 4 - Segurança e Contato */}
+          {/* Coluna 4 - Segurança e Suporte */}
           <div className="space-y-3">
             <h4 className="font-head font-bold text-sm text-white uppercase tracking-wider">
               Segurança & Suporte
@@ -95,15 +95,15 @@ export function LandingFooter({ onOpenAuth }) {
                 <ShieldCheck className="w-4 h-4 text-[#22c55e]" />
                 Conformidade Total com LGPD Escolar
               </p>
-              <p>Suporte: suporte@simuladoapp.com.br</p>
-              <p>Plataforma oficial: simuladoapp.com.br</p>
+              <p>Suporte: suporte@rotinadocente.com.br</p>
+              <p>Ecossistema oficial: rotinadocente.com.br</p>
             </div>
           </div>
         </div>
 
         {/* Linha de Copyright */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-white/40 gap-4">
-          <p>© {new Date().getFullYear()} SimuladoApp.Edu — Todos os direitos reservados.</p>
+          <p>© {new Date().getFullYear()} RotinaDocente — Toda a sua rotina letiva em 1 clique. Todos os direitos reservados.</p>
           <p className="flex items-center gap-1">
             Desenvolvido com <Heart className="w-3.5 h-3.5 text-[#f60c49] fill-[#f60c49]" /> para os professores brasileiros.
           </p>

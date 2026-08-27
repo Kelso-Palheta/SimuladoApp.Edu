@@ -143,9 +143,9 @@ export default function AtividadeContent() {
           <div className="flex items-center justify-between mb-3">
             <div className="flex items-center gap-2">
               <div className="w-7 h-7 rounded-xl bg-[#101942] text-white flex items-center justify-center text-xs font-extrabold shadow-xs">
-                S
+                R
               </div>
-              <span className="text-xs text-[#6070a0] font-bold">SimuladoApp.Edu</span>
+              <span className="text-xs text-[#6070a0] font-bold">RotinaDocente</span>
             </div>
             <a 
               href={typeof window !== 'undefined' && sessionStorage.getItem('aluno_login') ? '/aluno/notas' : '/aluno'} 

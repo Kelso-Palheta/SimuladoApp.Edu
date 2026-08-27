@@ -1,5 +1,5 @@
 /**
- * Configuração Oficial de Planos e Entitlements de Módulos — SimuladoApp.Edu
+ * Configuração Oficial de Planos e Entitlements de Módulos — RotinaDocente
  */
 
 export const PLANOS_CONFIG = {

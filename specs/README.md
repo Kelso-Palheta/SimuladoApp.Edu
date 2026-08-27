@@ -1,6 +1,6 @@
-# 📚 Especificações do SimuladoApp.Edu (SDD)
+# 📚 Especificações do RotinaDocente (SDD)
 
-Bem-vindo à **Fonte Única da Verdade (Single Source of Truth)** do **SimuladoApp.Edu**, construída segundo a metodologia de **Spec-Driven Development (SDD)**.
+Bem-vindo à **Fonte Única da Verdade (Single Source of Truth)** do **RotinaDocente** (*Toda a sua rotina letiva em 1 clique*), construída segundo a metodologia de **Spec-Driven Development (SDD)**.
 
 ---
 

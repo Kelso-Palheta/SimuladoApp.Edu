@@ -42,7 +42,7 @@ export function LandingHeader({ onOpenAuth }) {
             </svg>
           </div>
           <span className="font-head text-xl font-extrabold text-[#101942] tracking-tight">
-            SimuladoApp<span className="text-[#f60c49]">.Edu</span>
+            Rotina<span className="text-[#f60c49]">Docente</span>
           </span>
         </a>
 
