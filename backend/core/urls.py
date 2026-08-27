@@ -12,4 +12,13 @@ urlpatterns = [
     
     # Diário Pedagógico (Turmas, Alunos, Notas)
     path('api/v1/diario/', include('apps.diario.urls')),
+
+    # Calendário Pedagógico & Smart Shift
+    path('api/v1/calendario/', include('apps.calendario.urls')),
+
+    # Atividades BNCC & Questões
+    path('api/v1/atividades/', include('apps.atividades.urls')),
+
+    # Redação ENEM & OpenCV
+    path('api/v1/redacao/', include('apps.redacao.urls')),
 ]

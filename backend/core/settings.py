@@ -30,6 +30,9 @@ INSTALLED_APPS = [
     # Apps do RotinaDocente
     'apps.autenticacao',
     'apps.diario',
+    'apps.calendario',
+    'apps.atividades',
+    'apps.redacao',
 ]
 
 MIDDLEWARE = [
