@@ -12,6 +12,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     pkg-config \
     libgl1-mesa-glx \
     libglib2.0-0 \
+    netcat-traditional \
     && rm -rf /var/lib/apt/lists/*
 
 # Instala dependencias Python
@@ -19,7 +20,8 @@ COPY requirements.txt /app/
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . /app/
+RUN chmod +x /app/entrypoint.sh
 
 EXPOSE 8000
 
-CMD ["gunicorn", "core.wsgi:application", "--bind", "0.0.0.0:8000", "--workers", "4"]
+ENTRYPOINT ["/app/entrypoint.sh"]

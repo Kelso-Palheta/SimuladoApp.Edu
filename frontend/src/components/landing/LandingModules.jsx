@@ -1,6 +1,6 @@
 "use client";
 
-import { BookOpen, PenTool, ClipboardList, Calendar, Check, ArrowRight, Sparkles, FileSpreadsheet, Layers, Award } from "lucide-react";
+import { BookOpen, PenTool, ClipboardList, Calendar, Check, ArrowRight, Sparkles, FileSpreadsheet, Layers, Award, Clock, Cpu } from "lucide-react";
 
 export function LandingModules({ onOpenAuth }) {
   return (
@@ -294,6 +294,79 @@ export function LandingModules({ onOpenAuth }) {
                   <span className="font-bold text-[#101942] block">Sex, 14 de Agosto</span>
                   <span className="text-[11px] text-[#6070a0] block">09:30 - 10:20 (1 Aula)</span>
                   <span className="font-bold text-[#6070a0] mt-1 block">Análise de Poemas</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Módulo 5: Horário Escolar Inteligente */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          <div className="lg:col-span-6 space-y-6">
+            <div className="w-12 h-12 rounded-xl bg-[#fff2f6] text-[#f60c49] flex items-center justify-center">
+              <Cpu className="w-6 h-6" />
+            </div>
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-extrabold bg-[#eef0f8] text-[#101942]">
+              ALOCAÇÃO COMBINATÓRIA & SALAS TEMÁTICAS
+            </div>
+            <h3 className="font-head text-2xl sm:text-3xl font-extrabold text-[#101942] leading-tight">
+              Horário Escolar Inteligente: Grade perfeita gerada por IA e Backtracking em segundos.
+            </h3>
+            <p className="text-base text-[#6070a0] leading-relaxed">
+              Otimize 45 tempos semanais para turmas de Tempo Integral. Alocação automática por salas temáticas da BNCC, respeito absoluto ao dia de planejamento dos professores e zero conflitos de choque de horários.
+            </p>
+            <ul className="space-y-3 text-sm text-[#101942] font-semibold">
+              <li className="flex items-center gap-3">
+                <span className="w-5 h-5 rounded-full bg-[#fff2f6] text-[#f60c49] flex items-center justify-center shrink-0">
+                  <Check className="w-3.5 h-3.5" />
+                </span>
+                Motor combinatório assíncrono com Celery e Redis
+              </li>
+              <li className="flex items-center gap-3">
+                <span className="w-5 h-5 rounded-full bg-[#fff2f6] text-[#f60c49] flex items-center justify-center shrink-0">
+                  <Check className="w-3.5 h-3.5" />
+                </span>
+                Assistente pedagógico com IA Sabiazinho-4 da Maritaca AI
+              </li>
+              <li className="flex items-center gap-3">
+                <span className="w-5 h-5 rounded-full bg-[#fff2f6] text-[#f60c49] flex items-center justify-center shrink-0">
+                  <Check className="w-3.5 h-3.5" />
+                </span>
+                Exportação de relatórios profissionais em Excel multi-aba e PDF
+              </li>
+            </ul>
+            <button
+              onClick={() => onOpenAuth("cadastro")}
+              className="btn-brand-ghost py-3 px-6 text-sm flex items-center gap-2"
+            >
+              <span>Conhecer Horário Escolar Inteligente</span>
+              <ArrowRight className="w-4 h-4 text-[#f60c49]" />
+            </button>
+          </div>
+
+          <div className="lg:col-span-6 bg-[#f7f8fc] p-6 rounded-3xl border border-[#dce0f0] shadow-md">
+            <div className="bg-white rounded-2xl p-5 shadow-xs border border-[#dce0f0] space-y-4">
+              <div className="flex items-center justify-between pb-3 border-b border-[#dce0f0]">
+                <div className="flex items-center gap-2">
+                  <Clock className="w-5 h-5 text-[#f60c49]" />
+                  <span className="font-bold text-sm text-[#101942]">Quadro Geral — 10 Turmas</span>
+                </div>
+                <span className="text-xs font-extrabold text-[#22c55e] bg-[#eef0f8] px-2 py-1 rounded-md">
+                  Score: 98.5 pts
+                </span>
+              </div>
+              <div className="space-y-2 text-xs">
+                <div className="flex justify-between items-center p-2 rounded-lg bg-[#eef0f8]/50">
+                  <span className="font-semibold text-[#101942]">Conflitos de Professor / Sala:</span>
+                  <span className="font-bold text-[#22c55e]">0 colisões (100% Blindado)</span>
+                </div>
+                <div className="flex justify-between items-center p-2 rounded-lg bg-[#eef0f8]/50">
+                  <span className="font-semibold text-[#101942]">Salas Temáticas BNCC:</span>
+                  <span className="font-bold text-[#101942]">16 salas alocadas por área</span>
+                </div>
+                <div className="flex justify-between items-center p-2 rounded-lg bg-[#fff2f6] border border-[#fde4ec]">
+                  <span className="font-semibold text-[#d40840]">Aulas Práticas Geminadas:</span>
+                  <span className="font-bold text-[#d40840]">100% de conformidade</span>
                 </div>
               </div>
             </div>

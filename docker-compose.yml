@@ -12,6 +12,7 @@ services:
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
       - ./backend/staticfiles:/var/www/static:ro
+      - ./backend/media:/var/www/media:ro
     depends_on:
       - django_api
       - nextjs_frontend
@@ -49,7 +50,7 @@ services:
       dockerfile: Dockerfile
     container_name: rotinadocente_celery
     restart: always
-    command: celery -A core worker -l info --concurrency=4
+    entrypoint: ["celery", "-A", "core", "worker", "-l", "info", "--concurrency=4"]
     volumes:
       - ./backend:/app
     environment:

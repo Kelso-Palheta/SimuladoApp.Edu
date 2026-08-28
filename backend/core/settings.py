@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     'apps.calendario',
     'apps.atividades',
     'apps.redacao',
+    'apps.horario_escolar_inteligente',
 ]
 
 MIDDLEWARE = [

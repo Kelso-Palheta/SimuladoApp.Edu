@@ -1,0 +1,4143 @@
+{
+  "meta": {
+    "nome_escola": "Escola Ensino Médio Integral",
+    "versao_grade": "v2.0",
+    "data_geracao": "2026-05-11",
+    "total_slots": 430,
+    "violacoes_planejamento": 0,
+    "conflitos_prof": 0,
+    "ch_preservada": true
+  },
+  "slots": [
+    {
+      "dia": "Segunda",
+      "aula": 1,
+      "turma": "1º ANO - 101",
+      "prof": "JOANA",
+      "disc": "Português",
+      "sala": "Sala L2"
+    },
+    {
+      "dia": "Segunda",
+      "aula": 1,
+      "turma": "1º ANO - 102",
+      "prof": "LUCIDALVA",
+      "disc": "Matemática",
+      "sala": "Sala M1"
+    },
+    {
+      "dia": "Segunda",
+      "aula": 1,
+      "turma": "1º ANO - 103",
+      "prof": "MILTON",
+      "disc": "Matemática",
+      "sala": "Sala M2"
+    },
+    {
+      "dia": "Segunda",
+      "aula": 1,
+      "turma": "1º ANO - 104",
+      "prof": "DIJANE",
+      "disc": "Biologia",
+      "sala": "Sala N1"
+    },
+    {
+      "dia": "Segunda",
+      "aula": 1,
+      "turma": "2º ANO - 201",
+      "prof": "ROGÉRIO",
+      "disc": "Matemática",
+      "sala": "Sala M3"
+    },
+    {
+      "dia": "Segunda",
+      "aula": 1,
+      "turma": "2º ANO - 202",
+      "prof": "JHONATAN",
+      "disc": "Ed. Física",
+      "sala": "Quadra"
+    },
+    {
+      "dia": "Segunda",
+      "aula": 1,
+      "turma": "2º ANO - 203",
+      "prof": "LUCÍLIO",
+      "disc": "Geografia",
+      "sala": "Sala H1"
+    },
+    {
+      "dia": "Segunda",
+      "aula": 1,
+      "turma": "2º ANO - 204",
+      "prof": "LUIZ",
+      "disc": "Matemática",
+      "sala": "Sala M3"
+    },
+    {
+      "dia": "Segunda",
+      "aula": 1,
+      "turma": "3º ANO - 301",
+      "prof": "VANESA",
+      "disc": "Inglês",
+      "sala": "Sala L3"
+    },
+    {
+      "dia": "Segunda",
+      "aula": 1,
+      "turma": "3º ANO - 302",
+      "prof": "ELIANA",
+      "disc": "Português",
+      "sala": "Sala L1"
+    },
+    {
+      "dia": "Segunda",
+      "aula": 2,
+      "turma": "1º ANO - 101",
+      "prof": "JOANA",
+      "disc": "Português",
+      "sala": "Sala L2"
+    },
+    {
+      "dia": "Segunda",
+      "aula": 2,
+      "turma": "1º ANO - 102",
+      "prof": "LUCIDALVA",
+      "disc": "Matemática",
+      "sala": "Sala M1"
+    },
+    {
+      "dia": "Segunda",
+      "aula": 2,
+      "turma": "1º ANO - 103",
+      "prof": "MILTON",
+      "disc": "Matemática",
+      "sala": "Sala M2"
+    },
+    {
+      "dia": "Segunda",
+      "aula": 2,
+      "turma": "1º ANO - 104",
+      "prof": "DIJANE",
+      "disc": "Biologia",
+      "sala": "Sala N1"
+    },
+    {
+      "dia": "Segunda",
+      "aula": 2,
+      "turma": "2º ANO - 201",
+      "prof": "ROGÉRIO",
+      "disc": "Matemática",
+      "sala": "Sala M3"
+    },
+    {
+      "dia": "Segunda",
+      "aula": 2,
+      "turma": "2º ANO - 202",
+      "prof": "JHONATAN",
+      "disc": "Ed. Física",
+      "sala": "Quadra"
+    },
+    {
+      "dia": "Segunda",
+      "aula": 2,
+      "turma": "2º ANO - 203",
+      "prof": "LUCÍLIO",
+      "disc": "Geografia",
+      "sala": "Sala H1"
+    },
+    {
+      "dia": "Segunda",
+      "aula": 2,
+      "turma": "2º ANO - 204",
+      "prof": "LUIZ",
+      "disc": "Matemática",
+      "sala": "Sala M3"
+    },
+    {
+      "dia": "Segunda",
+      "aula": 2,
+      "turma": "3º ANO - 301",
+      "prof": "VANESA",
+      "disc": "Inglês",
+      "sala": "Sala L3"
+    },
+    {
+      "dia": "Segunda",
+      "aula": 2,
+      "turma": "3º ANO - 302",
+      "prof": "ELIANA",
+      "disc": "Português",
+      "sala": "Sala L1"
+    },
+    {
+      "dia": "Segunda",
+      "aula": 3,
+      "turma": "1º ANO - 101",
+      "prof": "LUCÍLIO",
+      "disc": "Ed. Ambiental",
+      "sala": "Sala H1"
+    },
+    {
+      "dia": "Segunda",
+      "aula": 3,
+      "turma": "1º ANO - 102",
+      "prof": "JHONATAN",
+      "disc": "Ed. Física",
+      "sala": "Quadra"
+    },
+    {
+      "dia": "Segunda",
+      "aula": 3,
+      "turma": "1º ANO - 103",
+      "prof": "ELINELSON",
+      "disc": "Filosofia",
+      "sala": "Sala H2"
+    },
+    {
+      "dia": "Segunda",
+      "aula": 3,
+      "turma": "1º ANO - 104",
+      "prof": "LUIZ",
+      "disc": "Matemática",
+      "sala": "Sala M3"
+    },
+    {
+      "dia": "Segunda",
+      "aula": 3,
+      "turma": "2º ANO - 201",
+      "prof": "RODRIGO",
+      "disc": "Química",
+      "sala": "Sala N2"
+    },
+    {
+      "dia": "Segunda",
+      "aula": 3,
+      "turma": "2º ANO - 202",
+      "prof": "REGINA",
+      "disc": "Proj. de Vida",
+      "sala": "Sala L2"
+    },
+    {
+      "dia": "Segunda",
+      "aula": 3,
+      "turma": "2º ANO - 203",
+      "prof": "DIJANE",
+      "disc": "Ed. Ambiental",
+      "sala": "Sala N1"
+    },
+    {
+      "dia": "Segunda",
+      "aula": 3,
+      "turma": "2º ANO - 204",
+      "prof": "LOUISE",
+      "disc": "Física",
+      "sala": "Sala N2"
+    },
+    {
+      "dia": "Segunda",
+      "aula": 3,
+      "turma": "3º ANO - 301",
+      "prof": "KELSO",
+      "disc": "Arte",
+      "sala": "Sala Arte"
+    },
+    {
+      "dia": "Segunda",
+      "aula": 3,
+      "turma": "3º ANO - 302",
+      "prof": "VANESA",
+      "disc": "Inglês",
+      "sala": "Sala L3"
+    },
+    {
+      "dia": "Segunda",
+      "aula": 4,
+      "turma": "1º ANO - 101",
+      "prof": "LUIZ",
+      "disc": "PPA",
+      "sala": "Sala M3"
+    },
+    {
+      "dia": "Segunda",
+      "aula": 4,
+      "turma": "1º ANO - 102",
+      "prof": "JOANA",
+      "disc": "Português",
+      "sala": "Sala L2"
+    },
+    {
+      "dia": "Segunda",
+      "aula": 4,
+      "turma": "1º ANO - 103",
+      "prof": "ELINELSON",
+      "disc": "Filosofia",
+      "sala": "Sala H2"
+    },
+    {
+      "dia": "Segunda",
+      "aula": 4,
+      "turma": "1º ANO - 104",
+      "prof": "REGINA",
+      "disc": "Português",
+      "sala": "Sala L2"
+    },
+    {
+      "dia": "Segunda",
+      "aula": 4,
+      "turma": "2º ANO - 201",
+      "prof": "DIJANE",
+      "disc": "Ed. Ambiental",
+      "sala": "Sala N1"
+    },
+    {
+      "dia": "Segunda",
+      "aula": 4,
+      "turma": "2º ANO - 202",
+      "prof": "ROGÉRIO",
+      "disc": "Matemática",
+      "sala": "Sala M3"
+    },
+    {
+      "dia": "Segunda",
+      "aula": 4,
+      "turma": "2º ANO - 203",
+      "prof": "MILTON",
+      "disc": "Matemática",
+      "sala": "Sala M2"
+    },
+    {
+      "dia": "Segunda",
+      "aula": 4,
+      "turma": "2º ANO - 204",
+      "prof": "LUCÍLIO",
+      "disc": "Geografia",
+      "sala": "Sala H1"
+    },
+    {
+      "dia": "Segunda",
+      "aula": 4,
+      "turma": "3º ANO - 301",
+      "prof": "ELIANA",
+      "disc": "Português",
+      "sala": "Sala L1"
+    },
+    {
+      "dia": "Segunda",
+      "aula": 4,
+      "turma": "3º ANO - 302",
+      "prof": "VANESA",
+      "disc": "Inglês",
+      "sala": "Sala L3"
+    },
+    {
+      "dia": "Segunda",
+      "aula": 5,
+      "turma": "1º ANO - 101",
+      "prof": "LUIZ",
+      "disc": "PPA",
+      "sala": "Sala M3"
+    },
+    {
+      "dia": "Segunda",
+      "aula": 5,
+      "turma": "1º ANO - 102",
+      "prof": "JOANA",
+      "disc": "Português",
+      "sala": "Sala L2"
+    },
+    {
+      "dia": "Segunda",
+      "aula": 5,
+      "turma": "1º ANO - 103",
+      "prof": "DIJANE",
+      "disc": "Prát. Experimentais",
+      "sala": "Lab Multi"
+    },
+    {
+      "dia": "Segunda",
+      "aula": 5,
+      "turma": "1º ANO - 104",
+      "prof": "REGINA",
+      "disc": "Português",
+      "sala": "Sala L2"
+    },
+    {
+      "dia": "Segunda",
+      "aula": 5,
+      "turma": "2º ANO - 201",
+      "prof": "VANESA",
+      "disc": "Inglês",
+      "sala": "Sala L3"
+    },
+    {
+      "dia": "Segunda",
+      "aula": 5,
+      "turma": "2º ANO - 202",
+      "prof": "ROGÉRIO",
+      "disc": "Matemática",
+      "sala": "Sala M3"
+    },
+    {
+      "dia": "Segunda",
+      "aula": 5,
+      "turma": "2º ANO - 203",
+      "prof": "MILTON",
+      "disc": "Matemática",
+      "sala": "Sala M2"
+    },
+    {
+      "dia": "Segunda",
+      "aula": 5,
+      "turma": "2º ANO - 204",
+      "prof": "LUCÍLIO",
+      "disc": "Geografia",
+      "sala": "Sala H1"
+    },
+    {
+      "dia": "Segunda",
+      "aula": 5,
+      "turma": "3º ANO - 301",
+      "prof": "ELIANA",
+      "disc": "Português",
+      "sala": "Sala L1"
+    },
+    {
+      "dia": "Segunda",
+      "aula": 5,
+      "turma": "3º ANO - 302",
+      "prof": "RODRIGO",
+      "disc": "Prát. Experimentais",
+      "sala": "Lab Multi"
+    },
+    {
+      "dia": "Segunda",
+      "aula": 6,
+      "turma": "1º ANO - 101",
+      "prof": "ELINELSON",
+      "disc": "Aprof. Humanas",
+      "sala": "Sala H2"
+    },
+    {
+      "dia": "Segunda",
+      "aula": 6,
+      "turma": "1º ANO - 102",
+      "prof": "LUCIDALVA",
+      "disc": "Aprof. Matemática",
+      "sala": "Sala M1"
+    },
+    {
+      "dia": "Segunda",
+      "aula": 6,
+      "turma": "1º ANO - 103",
+      "prof": "VANESA",
+      "disc": "Aprof. Linguagens",
+      "sala": "Sala L3"
+    },
+    {
+      "dia": "Segunda",
+      "aula": 6,
+      "turma": "1º ANO - 104",
+      "prof": "RODRIGO",
+      "disc": "Aprof. Natureza",
+      "sala": "Sala N2"
+    },
+    {
+      "dia": "Segunda",
+      "aula": 6,
+      "turma": "2º ANO - 201",
+      "prof": "JOANA",
+      "disc": "Aprof. Linguagens",
+      "sala": "Sala L2"
+    },
+    {
+      "dia": "Segunda",
+      "aula": 6,
+      "turma": "2º ANO - 202",
+      "prof": "LOUISE",
+      "disc": "Física",
+      "sala": "Sala N2"
+    },
+    {
+      "dia": "Segunda",
+      "aula": 6,
+      "turma": "2º ANO - 203",
+      "prof": "REGINA",
+      "disc": "Português",
+      "sala": "Sala L2"
+    },
+    {
+      "dia": "Segunda",
+      "aula": 6,
+      "turma": "2º ANO - 204",
+      "prof": "DIJANE",
+      "disc": "Biologia",
+      "sala": "Sala N1"
+    },
+    {
+      "dia": "Segunda",
+      "aula": 6,
+      "turma": "3º ANO - 301",
+      "prof": "LUCÍLIO",
+      "disc": "Geografia",
+      "sala": "Sala H1"
+    },
+    {
+      "dia": "Segunda",
+      "aula": 6,
+      "turma": "3º ANO - 302",
+      "prof": "MILTON",
+      "disc": "Aprof. Matemática",
+      "sala": "Sala M2"
+    },
+    {
+      "dia": "Segunda",
+      "aula": 7,
+      "turma": "1º ANO - 101",
+      "prof": "ELINELSON",
+      "disc": "Aprof. Humanas",
+      "sala": "Sala H2"
+    },
+    {
+      "dia": "Segunda",
+      "aula": 7,
+      "turma": "1º ANO - 102",
+      "prof": "LUCIDALVA",
+      "disc": "Matemática",
+      "sala": "Sala M1"
+    },
+    {
+      "dia": "Segunda",
+      "aula": 7,
+      "turma": "1º ANO - 103",
+      "prof": "JOANA",
+      "disc": "Proj. de Vida",
+      "sala": "Sala L2"
+    },
+    {
+      "dia": "Segunda",
+      "aula": 7,
+      "turma": "1º ANO - 104",
+      "prof": "RODRIGO",
+      "disc": "Aprof. Natureza",
+      "sala": "Sala N2"
+    },
+    {
+      "dia": "Segunda",
+      "aula": 7,
+      "turma": "2º ANO - 201",
+      "prof": "KELSO",
+      "disc": "Arte",
+      "sala": "Sala Arte"
+    },
+    {
+      "dia": "Segunda",
+      "aula": 7,
+      "turma": "2º ANO - 202",
+      "prof": "LOUISE",
+      "disc": "Física",
+      "sala": "Sala N2"
+    },
+    {
+      "dia": "Segunda",
+      "aula": 7,
+      "turma": "2º ANO - 203",
+      "prof": "REGINA",
+      "disc": "Português",
+      "sala": "Sala L2"
+    },
+    {
+      "dia": "Segunda",
+      "aula": 7,
+      "turma": "2º ANO - 204",
+      "prof": "DIJANE",
+      "disc": "Biologia",
+      "sala": "Sala N1"
+    },
+    {
+      "dia": "Segunda",
+      "aula": 7,
+      "turma": "3º ANO - 301",
+      "prof": "LUCÍLIO",
+      "disc": "Geografia",
+      "sala": "Sala H1"
+    },
+    {
+      "dia": "Segunda",
+      "aula": 7,
+      "turma": "3º ANO - 302",
+      "prof": "MILTON",
+      "disc": "Aprof. Matemática",
+      "sala": "Sala M2"
+    },
+    {
+      "dia": "Segunda",
+      "aula": 8,
+      "turma": "1º ANO - 101",
+      "prof": "LUCIDALVA",
+      "disc": "Aprof. Matemática",
+      "sala": "Sala M1"
+    },
+    {
+      "dia": "Segunda",
+      "aula": 8,
+      "turma": "1º ANO - 102",
+      "prof": "LOUISE",
+      "disc": "Aprof. Natureza",
+      "sala": "Sala N2"
+    },
+    {
+      "dia": "Segunda",
+      "aula": 8,
+      "turma": "1º ANO - 103",
+      "prof": "JOANA",
+      "disc": "Português",
+      "sala": "Sala L2"
+    },
+    {
+      "dia": "Segunda",
+      "aula": 8,
+      "turma": "1º ANO - 104",
+      "prof": "KELSO",
+      "disc": "Arte",
+      "sala": "Sala Arte"
+    },
+    {
+      "dia": "Segunda",
+      "aula": 8,
+      "turma": "2º ANO - 201",
+      "prof": "ROGÉRIO",
+      "disc": "Aprof. Matemática",
+      "sala": "Sala M3"
+    },
+    {
+      "dia": "Segunda",
+      "aula": 8,
+      "turma": "2º ANO - 202",
+      "prof": "VANESA",
+      "disc": "PPA",
+      "sala": "Sala L3"
+    },
+    {
+      "dia": "Segunda",
+      "aula": 8,
+      "turma": "2º ANO - 203",
+      "prof": "RODRIGO",
+      "disc": "Aprof. Natureza",
+      "sala": "Sala N2"
+    },
+    {
+      "dia": "Segunda",
+      "aula": 8,
+      "turma": "2º ANO - 204",
+      "prof": "JHONATAN",
+      "disc": "Ed. Física",
+      "sala": "Quadra"
+    },
+    {
+      "dia": "Segunda",
+      "aula": 8,
+      "turma": "3º ANO - 301",
+      "prof": "LUIZ",
+      "disc": "E.O. Matemática",
+      "sala": "Sala M3"
+    },
+    {
+      "dia": "Segunda",
+      "aula": 8,
+      "turma": "3º ANO - 302",
+      "prof": "ELINELSON",
+      "disc": "Aprof. Humanas",
+      "sala": "Sala H2"
+    },
+    {
+      "dia": "Segunda",
+      "aula": 9,
+      "turma": "1º ANO - 101",
+      "prof": "LUCIDALVA",
+      "disc": "Aprof. Matemática",
+      "sala": "Sala M1"
+    },
+    {
+      "dia": "Segunda",
+      "aula": 9,
+      "turma": "1º ANO - 102",
+      "prof": "LOUISE",
+      "disc": "Aprof. Natureza",
+      "sala": "Sala N2"
+    },
+    {
+      "dia": "Segunda",
+      "aula": 9,
+      "turma": "1º ANO - 103",
+      "prof": "JOANA",
+      "disc": "Português",
+      "sala": "Sala L2"
+    },
+    {
+      "dia": "Segunda",
+      "aula": 9,
+      "turma": "1º ANO - 104",
+      "prof": "KELSO",
+      "disc": "Arte",
+      "sala": "Sala Arte"
+    },
+    {
+      "dia": "Segunda",
+      "aula": 9,
+      "turma": "2º ANO - 201",
+      "prof": "ROGÉRIO",
+      "disc": "Aprof. Matemática",
+      "sala": "Sala M3"
+    },
+    {
+      "dia": "Segunda",
+      "aula": 9,
+      "turma": "2º ANO - 202",
+      "prof": "VANESA",
+      "disc": "PPA",
+      "sala": "Sala L3"
+    },
+    {
+      "dia": "Segunda",
+      "aula": 9,
+      "turma": "2º ANO - 203",
+      "prof": "RODRIGO",
+      "disc": "Aprof. Natureza",
+      "sala": "Sala N2"
+    },
+    {
+      "dia": "Segunda",
+      "aula": 9,
+      "turma": "2º ANO - 204",
+      "prof": "JHONATAN",
+      "disc": "Ed. Física",
+      "sala": "Quadra"
+    },
+    {
+      "dia": "Segunda",
+      "aula": 9,
+      "turma": "3º ANO - 301",
+      "prof": "LUIZ",
+      "disc": "E.O. Matemática",
+      "sala": "Sala M3"
+    },
+    {
+      "dia": "Segunda",
+      "aula": 9,
+      "turma": "3º ANO - 302",
+      "prof": "ELINELSON",
+      "disc": "Aprof. Humanas",
+      "sala": "Sala H2"
+    },
+    {
+      "dia": "Terça",
+      "aula": 1,
+      "turma": "1º ANO - 101",
+      "prof": "JOANA",
+      "disc": "E.O. Português",
+      "sala": "Sala L2"
+    },
+    {
+      "dia": "Terça",
+      "aula": 1,
+      "turma": "1º ANO - 102",
+      "prof": "EDMUNDO",
+      "disc": "Química",
+      "sala": "Sala N2"
+    },
+    {
+      "dia": "Terça",
+      "aula": 1,
+      "turma": "1º ANO - 103",
+      "prof": "CASIANO",
+      "disc": "Sociologia",
+      "sala": "Sala H2"
+    },
+    {
+      "dia": "Terça",
+      "aula": 1,
+      "turma": "1º ANO - 104",
+      "prof": "REGINA",
+      "disc": "Aprof. Linguagens",
+      "sala": "Sala L2"
+    },
+    {
+      "dia": "Terça",
+      "aula": 1,
+      "turma": "2º ANO - 201",
+      "prof": "EUNICE",
+      "disc": "Português",
+      "sala": "Sala L1"
+    },
+    {
+      "dia": "Terça",
+      "aula": 1,
+      "turma": "2º ANO - 202",
+      "prof": "VANESA",
+      "disc": "Inglês",
+      "sala": "Sala L3"
+    },
+    {
+      "dia": "Terça",
+      "aula": 1,
+      "turma": "2º ANO - 203",
+      "prof": "JHONATAN",
+      "disc": "Ed. Física",
+      "sala": "Quadra"
+    },
+    {
+      "dia": "Terça",
+      "aula": 1,
+      "turma": "2º ANO - 204",
+      "prof": "KELSO",
+      "disc": "Arte",
+      "sala": "Sala Arte"
+    },
+    {
+      "dia": "Terça",
+      "aula": 1,
+      "turma": "3º ANO - 301",
+      "prof": "ELIANA",
+      "disc": "Português",
+      "sala": "Sala L1"
+    },
+    {
+      "dia": "Terça",
+      "aula": 1,
+      "turma": "3º ANO - 302",
+      "prof": "DIJANE",
+      "disc": "Biologia",
+      "sala": "Sala N1"
+    },
+    {
+      "dia": "Terça",
+      "aula": 2,
+      "turma": "1º ANO - 101",
+      "prof": "JOANA",
+      "disc": "E.O. Português",
+      "sala": "Sala L2"
+    },
+    {
+      "dia": "Terça",
+      "aula": 2,
+      "turma": "1º ANO - 102",
+      "prof": "EDMUNDO",
+      "disc": "Química",
+      "sala": "Sala N2"
+    },
+    {
+      "dia": "Terça",
+      "aula": 2,
+      "turma": "1º ANO - 103",
+      "prof": "CASIANO",
+      "disc": "Sociologia",
+      "sala": "Sala H2"
+    },
+    {
+      "dia": "Terça",
+      "aula": 2,
+      "turma": "1º ANO - 104",
+      "prof": "REGINA",
+      "disc": "Aprof. Linguagens",
+      "sala": "Sala L2"
+    },
+    {
+      "dia": "Terça",
+      "aula": 2,
+      "turma": "2º ANO - 201",
+      "prof": "EUNICE",
+      "disc": "Português",
+      "sala": "Sala L1"
+    },
+    {
+      "dia": "Terça",
+      "aula": 2,
+      "turma": "2º ANO - 202",
+      "prof": "ELINELSON",
+      "disc": "Filosofia",
+      "sala": "Sala H2"
+    },
+    {
+      "dia": "Terça",
+      "aula": 2,
+      "turma": "2º ANO - 203",
+      "prof": "JHONATAN",
+      "disc": "Ed. Física",
+      "sala": "Quadra"
+    },
+    {
+      "dia": "Terça",
+      "aula": 2,
+      "turma": "2º ANO - 204",
+      "prof": "LUIZ",
+      "disc": "Matemática",
+      "sala": "Sala M3"
+    },
+    {
+      "dia": "Terça",
+      "aula": 2,
+      "turma": "3º ANO - 301",
+      "prof": "ELIANA",
+      "disc": "Português",
+      "sala": "Sala L1"
+    },
+    {
+      "dia": "Terça",
+      "aula": 2,
+      "turma": "3º ANO - 302",
+      "prof": "DIJANE",
+      "disc": "Biologia",
+      "sala": "Sala N1"
+    },
+    {
+      "dia": "Terça",
+      "aula": 3,
+      "turma": "1º ANO - 101",
+      "prof": "EDMUNDO",
+      "disc": "Prát. Experimentais",
+      "sala": "Lab Multi"
+    },
+    {
+      "dia": "Terça",
+      "aula": 3,
+      "turma": "1º ANO - 102",
+      "prof": "DIJANE",
+      "disc": "Biologia",
+      "sala": "Sala N1"
+    },
+    {
+      "dia": "Terça",
+      "aula": 3,
+      "turma": "1º ANO - 103",
+      "prof": "VANESA",
+      "disc": "Inglês",
+      "sala": "Sala L3"
+    },
+    {
+      "dia": "Terça",
+      "aula": 3,
+      "turma": "1º ANO - 104",
+      "prof": "ELINELSON",
+      "disc": "Filosofia",
+      "sala": "Sala H2"
+    },
+    {
+      "dia": "Terça",
+      "aula": 3,
+      "turma": "2º ANO - 201",
+      "prof": "JOANA",
+      "disc": "Aprof. Linguagens",
+      "sala": "Sala L2"
+    },
+    {
+      "dia": "Terça",
+      "aula": 3,
+      "turma": "2º ANO - 202",
+      "prof": "EUNICE",
+      "disc": "Português",
+      "sala": "Sala L1"
+    },
+    {
+      "dia": "Terça",
+      "aula": 3,
+      "turma": "2º ANO - 203",
+      "prof": "KELSO",
+      "disc": "Arte",
+      "sala": "Sala Arte"
+    },
+    {
+      "dia": "Terça",
+      "aula": 3,
+      "turma": "2º ANO - 204",
+      "prof": "LUIZ",
+      "disc": "Matemática",
+      "sala": "Sala M3"
+    },
+    {
+      "dia": "Terça",
+      "aula": 3,
+      "turma": "3º ANO - 301",
+      "prof": "CASIANO",
+      "disc": "Sociologia",
+      "sala": "Sala H2"
+    },
+    {
+      "dia": "Terça",
+      "aula": 3,
+      "turma": "3º ANO - 302",
+      "prof": "ELENFLÁVIA",
+      "disc": "Proj. de Vida",
+      "sala": "Sala H1"
+    },
+    {
+      "dia": "Terça",
+      "aula": 4,
+      "turma": "1º ANO - 101",
+      "prof": "CASIANO",
+      "disc": "Sociologia",
+      "sala": "Sala H2"
+    },
+    {
+      "dia": "Terça",
+      "aula": 4,
+      "turma": "1º ANO - 102",
+      "prof": "DIJANE",
+      "disc": "Biologia",
+      "sala": "Sala N1"
+    },
+    {
+      "dia": "Terça",
+      "aula": 4,
+      "turma": "1º ANO - 103",
+      "prof": "EDMUNDO",
+      "disc": "Química",
+      "sala": "Sala N2"
+    },
+    {
+      "dia": "Terça",
+      "aula": 4,
+      "turma": "1º ANO - 104",
+      "prof": "ELINELSON",
+      "disc": "Filosofia",
+      "sala": "Sala H2"
+    },
+    {
+      "dia": "Terça",
+      "aula": 4,
+      "turma": "2º ANO - 201",
+      "prof": "JHONATAN",
+      "disc": "Ed. Física",
+      "sala": "Quadra"
+    },
+    {
+      "dia": "Terça",
+      "aula": 4,
+      "turma": "2º ANO - 202",
+      "prof": "EUNICE",
+      "disc": "Português",
+      "sala": "Sala L1"
+    },
+    {
+      "dia": "Terça",
+      "aula": 4,
+      "turma": "2º ANO - 203",
+      "prof": "VANESA",
+      "disc": "Inglês",
+      "sala": "Sala L3"
+    },
+    {
+      "dia": "Terça",
+      "aula": 4,
+      "turma": "2º ANO - 204",
+      "prof": "ELENFLÁVIA",
+      "disc": "História",
+      "sala": "Sala H1"
+    },
+    {
+      "dia": "Terça",
+      "aula": 4,
+      "turma": "3º ANO - 301",
+      "prof": "LUIZ",
+      "disc": "Matemática",
+      "sala": "Sala M3"
+    },
+    {
+      "dia": "Terça",
+      "aula": 4,
+      "turma": "3º ANO - 302",
+      "prof": "ELIANA",
+      "disc": "Português",
+      "sala": "Sala L1"
+    },
+    {
+      "dia": "Terça",
+      "aula": 5,
+      "turma": "1º ANO - 101",
+      "prof": "CASIANO",
+      "disc": "Sociologia",
+      "sala": "Sala H2"
+    },
+    {
+      "dia": "Terça",
+      "aula": 5,
+      "turma": "1º ANO - 102",
+      "prof": "JOANA",
+      "disc": "Português",
+      "sala": "Sala L2"
+    },
+    {
+      "dia": "Terça",
+      "aula": 5,
+      "turma": "1º ANO - 103",
+      "prof": "EDMUNDO",
+      "disc": "Química",
+      "sala": "Sala N2"
+    },
+    {
+      "dia": "Terça",
+      "aula": 5,
+      "turma": "1º ANO - 104",
+      "prof": "VANESA",
+      "disc": "Inglês",
+      "sala": "Sala L3"
+    },
+    {
+      "dia": "Terça",
+      "aula": 5,
+      "turma": "2º ANO - 201",
+      "prof": "JHONATAN",
+      "disc": "Ed. Física",
+      "sala": "Quadra"
+    },
+    {
+      "dia": "Terça",
+      "aula": 5,
+      "turma": "2º ANO - 202",
+      "prof": "DIJANE",
+      "disc": "Ed. Ambiental",
+      "sala": "Sala N1"
+    },
+    {
+      "dia": "Terça",
+      "aula": 5,
+      "turma": "2º ANO - 203",
+      "prof": "REGINA",
+      "disc": "Proj. de Vida",
+      "sala": "Sala L2"
+    },
+    {
+      "dia": "Terça",
+      "aula": 5,
+      "turma": "2º ANO - 204",
+      "prof": "ELENFLÁVIA",
+      "disc": "História",
+      "sala": "Sala H1"
+    },
+    {
+      "dia": "Terça",
+      "aula": 5,
+      "turma": "3º ANO - 301",
+      "prof": "LUIZ",
+      "disc": "Matemática",
+      "sala": "Sala M3"
+    },
+    {
+      "dia": "Terça",
+      "aula": 5,
+      "turma": "3º ANO - 302",
+      "prof": "ELIANA",
+      "disc": "E.O. Português",
+      "sala": "Sala L1"
+    },
+    {
+      "dia": "Terça",
+      "aula": 6,
+      "turma": "1º ANO - 101",
+      "prof": "EDMUNDO",
+      "disc": "Química",
+      "sala": "Sala N2"
+    },
+    {
+      "dia": "Terça",
+      "aula": 6,
+      "turma": "1º ANO - 102",
+      "prof": "KELSO",
+      "disc": "Arte",
+      "sala": "Sala Arte"
+    },
+    {
+      "dia": "Terça",
+      "aula": 6,
+      "turma": "1º ANO - 103",
+      "prof": "JOANA",
+      "disc": "E.O. Português",
+      "sala": "Sala L2"
+    },
+    {
+      "dia": "Terça",
+      "aula": 6,
+      "turma": "1º ANO - 104",
+      "prof": "CASIANO",
+      "disc": "Aprof. Humanas",
+      "sala": "Sala H2"
+    },
+    {
+      "dia": "Terça",
+      "aula": 6,
+      "turma": "2º ANO - 201",
+      "prof": "ELENFLÁVIA",
+      "disc": "Eletiva",
+      "sala": "Sala H1"
+    },
+    {
+      "dia": "Terça",
+      "aula": 6,
+      "turma": "2º ANO - 202",
+      "prof": "REGINA",
+      "disc": "Aprof. Linguagens",
+      "sala": "Sala L2"
+    },
+    {
+      "dia": "Terça",
+      "aula": 6,
+      "turma": "2º ANO - 203",
+      "prof": "JHONATAN",
+      "disc": "PPA",
+      "sala": "Sala L3"
+    },
+    {
+      "dia": "Terça",
+      "aula": 6,
+      "turma": "2º ANO - 204",
+      "prof": "EUNICE",
+      "disc": "E.O. Português",
+      "sala": "Sala L1"
+    },
+    {
+      "dia": "Terça",
+      "aula": 6,
+      "turma": "3º ANO - 301",
+      "prof": "ELINELSON",
+      "disc": "Aprof. Humanas",
+      "sala": "Sala H2"
+    },
+    {
+      "dia": "Terça",
+      "aula": 6,
+      "turma": "3º ANO - 302",
+      "prof": "VANESA",
+      "disc": "PPA",
+      "sala": "Sala L3"
+    },
+    {
+      "dia": "Terça",
+      "aula": 7,
+      "turma": "1º ANO - 101",
+      "prof": "EDMUNDO",
+      "disc": "Química",
+      "sala": "Sala N2"
+    },
+    {
+      "dia": "Terça",
+      "aula": 7,
+      "turma": "1º ANO - 102",
+      "prof": "KELSO",
+      "disc": "Arte",
+      "sala": "Sala Arte"
+    },
+    {
+      "dia": "Terça",
+      "aula": 7,
+      "turma": "1º ANO - 103",
+      "prof": "JOANA",
+      "disc": "E.O. Português",
+      "sala": "Sala L2"
+    },
+    {
+      "dia": "Terça",
+      "aula": 7,
+      "turma": "1º ANO - 104",
+      "prof": "CASIANO",
+      "disc": "Aprof. Humanas",
+      "sala": "Sala H2"
+    },
+    {
+      "dia": "Terça",
+      "aula": 7,
+      "turma": "2º ANO - 201",
+      "prof": "ELENFLÁVIA",
+      "disc": "Eletiva",
+      "sala": "Sala H1"
+    },
+    {
+      "dia": "Terça",
+      "aula": 7,
+      "turma": "2º ANO - 202",
+      "prof": "REGINA",
+      "disc": "Aprof. Linguagens",
+      "sala": "Sala L2"
+    },
+    {
+      "dia": "Terça",
+      "aula": 7,
+      "turma": "2º ANO - 203",
+      "prof": "JHONATAN",
+      "disc": "PPA",
+      "sala": "Sala L3"
+    },
+    {
+      "dia": "Terça",
+      "aula": 7,
+      "turma": "2º ANO - 204",
+      "prof": "EUNICE",
+      "disc": "E.O. Português",
+      "sala": "Sala L1"
+    },
+    {
+      "dia": "Terça",
+      "aula": 7,
+      "turma": "3º ANO - 301",
+      "prof": "ELINELSON",
+      "disc": "Aprof. Humanas",
+      "sala": "Sala H2"
+    },
+    {
+      "dia": "Terça",
+      "aula": 7,
+      "turma": "3º ANO - 302",
+      "prof": "VANESA",
+      "disc": "PPA",
+      "sala": "Sala L3"
+    },
+    {
+      "dia": "Terça",
+      "aula": 8,
+      "turma": "1º ANO - 101",
+      "prof": "JHONATAN",
+      "disc": "Eletiva",
+      "sala": "Sala L3"
+    },
+    {
+      "dia": "Terça",
+      "aula": 8,
+      "turma": "1º ANO - 102",
+      "prof": "VANESA",
+      "disc": "Eletiva",
+      "sala": "Sala L3"
+    },
+    {
+      "dia": "Terça",
+      "aula": 8,
+      "turma": "1º ANO - 103",
+      "prof": "KELSO",
+      "disc": "Eletiva",
+      "sala": "Sala Arte"
+    },
+    {
+      "dia": "Terça",
+      "aula": 8,
+      "turma": "1º ANO - 104",
+      "prof": "LUIZ",
+      "disc": "Aprof. Matemática",
+      "sala": "Sala M3"
+    },
+    {
+      "dia": "Terça",
+      "aula": 8,
+      "turma": "2º ANO - 201",
+      "prof": "ELINELSON",
+      "disc": "PPA",
+      "sala": "Sala H2"
+    },
+    {
+      "dia": "Terça",
+      "aula": 8,
+      "turma": "2º ANO - 202",
+      "prof": "JOANA",
+      "disc": "Eletiva",
+      "sala": "Sala L2"
+    },
+    {
+      "dia": "Terça",
+      "aula": 8,
+      "turma": "2º ANO - 203",
+      "prof": "DIJANE",
+      "disc": "Biologia",
+      "sala": "Sala N1"
+    },
+    {
+      "dia": "Terça",
+      "aula": 8,
+      "turma": "2º ANO - 204",
+      "prof": "REGINA",
+      "disc": "Proj. de Vida",
+      "sala": "Sala L2"
+    },
+    {
+      "dia": "Terça",
+      "aula": 8,
+      "turma": "3º ANO - 301",
+      "prof": "EUNICE",
+      "disc": "PPA",
+      "sala": "Sala L1"
+    },
+    {
+      "dia": "Terça",
+      "aula": 8,
+      "turma": "3º ANO - 302",
+      "prof": "ELENFLÁVIA",
+      "disc": "História",
+      "sala": "Sala H1"
+    },
+    {
+      "dia": "Terça",
+      "aula": 9,
+      "turma": "1º ANO - 101",
+      "prof": "JHONATAN",
+      "disc": "Eletiva",
+      "sala": "Sala L3"
+    },
+    {
+      "dia": "Terça",
+      "aula": 9,
+      "turma": "1º ANO - 102",
+      "prof": "VANESA",
+      "disc": "Eletiva",
+      "sala": "Sala L3"
+    },
+    {
+      "dia": "Terça",
+      "aula": 9,
+      "turma": "1º ANO - 103",
+      "prof": "KELSO",
+      "disc": "Eletiva",
+      "sala": "Sala Arte"
+    },
+    {
+      "dia": "Terça",
+      "aula": 9,
+      "turma": "1º ANO - 104",
+      "prof": "LUIZ",
+      "disc": "Aprof. Matemática",
+      "sala": "Sala M3"
+    },
+    {
+      "dia": "Terça",
+      "aula": 9,
+      "turma": "2º ANO - 201",
+      "prof": "ELINELSON",
+      "disc": "PPA",
+      "sala": "Sala H2"
+    },
+    {
+      "dia": "Terça",
+      "aula": 9,
+      "turma": "2º ANO - 202",
+      "prof": "JOANA",
+      "disc": "Eletiva",
+      "sala": "Sala L2"
+    },
+    {
+      "dia": "Terça",
+      "aula": 9,
+      "turma": "2º ANO - 203",
+      "prof": "DIJANE",
+      "disc": "Biologia",
+      "sala": "Sala N1"
+    },
+    {
+      "dia": "Terça",
+      "aula": 9,
+      "turma": "2º ANO - 204",
+      "prof": "REGINA",
+      "disc": "Proj. de Vida",
+      "sala": "Sala L2"
+    },
+    {
+      "dia": "Terça",
+      "aula": 9,
+      "turma": "3º ANO - 301",
+      "prof": "EUNICE",
+      "disc": "PPA",
+      "sala": "Sala L1"
+    },
+    {
+      "dia": "Terça",
+      "aula": 9,
+      "turma": "3º ANO - 302",
+      "prof": "ELENFLÁVIA",
+      "disc": "História",
+      "sala": "Sala H1"
+    },
+    {
+      "dia": "Quarta",
+      "aula": 1,
+      "turma": "1º ANO - 101",
+      "prof": "LUCIDALVA",
+      "disc": "Matemática",
+      "sala": "Sala M1"
+    },
+    {
+      "dia": "Quarta",
+      "aula": 1,
+      "turma": "1º ANO - 102",
+      "prof": "ELINELSON",
+      "disc": "Filosofia",
+      "sala": "Sala H2"
+    },
+    {
+      "dia": "Quarta",
+      "aula": 1,
+      "turma": "1º ANO - 103",
+      "prof": "DIJANE",
+      "disc": "Biologia",
+      "sala": "Sala N1"
+    },
+    {
+      "dia": "Quarta",
+      "aula": 1,
+      "turma": "1º ANO - 104",
+      "prof": "EDMUNDO",
+      "disc": "Química",
+      "sala": "Sala N2"
+    },
+    {
+      "dia": "Quarta",
+      "aula": 1,
+      "turma": "2º ANO - 201",
+      "prof": "LUCÍLIO",
+      "disc": "Geografia",
+      "sala": "Sala H1"
+    },
+    {
+      "dia": "Quarta",
+      "aula": 1,
+      "turma": "2º ANO - 202",
+      "prof": "CASIANO",
+      "disc": "Sociologia",
+      "sala": "Sala H2"
+    },
+    {
+      "dia": "Quarta",
+      "aula": 1,
+      "turma": "2º ANO - 203",
+      "prof": "REGINA",
+      "disc": "Português",
+      "sala": "Sala L2"
+    },
+    {
+      "dia": "Quarta",
+      "aula": 1,
+      "turma": "2º ANO - 204",
+      "prof": "EUNICE",
+      "disc": "Português",
+      "sala": "Sala L1"
+    },
+    {
+      "dia": "Quarta",
+      "aula": 1,
+      "turma": "3º ANO - 301",
+      "prof": "LUIZ",
+      "disc": "Matemática",
+      "sala": "Sala M3"
+    },
+    {
+      "dia": "Quarta",
+      "aula": 1,
+      "turma": "3º ANO - 302",
+      "prof": "KELSO",
+      "disc": "Arte",
+      "sala": "Sala Arte"
+    },
+    {
+      "dia": "Quarta",
+      "aula": 2,
+      "turma": "1º ANO - 101",
+      "prof": "LUCIDALVA",
+      "disc": "Matemática",
+      "sala": "Sala M1"
+    },
+    {
+      "dia": "Quarta",
+      "aula": 2,
+      "turma": "1º ANO - 102",
+      "prof": "ELINELSON",
+      "disc": "Filosofia",
+      "sala": "Sala H2"
+    },
+    {
+      "dia": "Quarta",
+      "aula": 2,
+      "turma": "1º ANO - 103",
+      "prof": "VANESA",
+      "disc": "Aprof. Linguagens",
+      "sala": "Sala L3"
+    },
+    {
+      "dia": "Quarta",
+      "aula": 2,
+      "turma": "1º ANO - 104",
+      "prof": "EDMUNDO",
+      "disc": "Química",
+      "sala": "Sala N2"
+    },
+    {
+      "dia": "Quarta",
+      "aula": 2,
+      "turma": "2º ANO - 201",
+      "prof": "LUCÍLIO",
+      "disc": "Geografia",
+      "sala": "Sala H1"
+    },
+    {
+      "dia": "Quarta",
+      "aula": 2,
+      "turma": "2º ANO - 202",
+      "prof": "RODRIGO",
+      "disc": "Prát. Experimentais",
+      "sala": "Lab Multi"
+    },
+    {
+      "dia": "Quarta",
+      "aula": 2,
+      "turma": "2º ANO - 203",
+      "prof": "REGINA",
+      "disc": "Português",
+      "sala": "Sala L2"
+    },
+    {
+      "dia": "Quarta",
+      "aula": 2,
+      "turma": "2º ANO - 204",
+      "prof": "EUNICE",
+      "disc": "Português",
+      "sala": "Sala L1"
+    },
+    {
+      "dia": "Quarta",
+      "aula": 2,
+      "turma": "3º ANO - 301",
+      "prof": "LUIZ",
+      "disc": "Matemática",
+      "sala": "Sala M3"
+    },
+    {
+      "dia": "Quarta",
+      "aula": 2,
+      "turma": "3º ANO - 302",
+      "prof": "ELIANA",
+      "disc": "Português",
+      "sala": "Sala L1"
+    },
+    {
+      "dia": "Quarta",
+      "aula": 3,
+      "turma": "1º ANO - 101",
+      "prof": "KELSO",
+      "disc": "Arte",
+      "sala": "Sala Arte"
+    },
+    {
+      "dia": "Quarta",
+      "aula": 3,
+      "turma": "1º ANO - 102",
+      "prof": "VANESA",
+      "disc": "Aprof. Linguagens",
+      "sala": "Sala L3"
+    },
+    {
+      "dia": "Quarta",
+      "aula": 3,
+      "turma": "1º ANO - 103",
+      "prof": "DIJANE",
+      "disc": "Biologia",
+      "sala": "Sala N1"
+    },
+    {
+      "dia": "Quarta",
+      "aula": 3,
+      "turma": "1º ANO - 104",
+      "prof": "LOUISE",
+      "disc": "Física",
+      "sala": "Sala N2"
+    },
+    {
+      "dia": "Quarta",
+      "aula": 3,
+      "turma": "2º ANO - 201",
+      "prof": "CASIANO",
+      "disc": "Sociologia",
+      "sala": "Sala H2"
+    },
+    {
+      "dia": "Quarta",
+      "aula": 3,
+      "turma": "2º ANO - 202",
+      "prof": "LUCÍLIO",
+      "disc": "Geografia",
+      "sala": "Sala H1"
+    },
+    {
+      "dia": "Quarta",
+      "aula": 3,
+      "turma": "2º ANO - 203",
+      "prof": "ELENFLÁVIA",
+      "disc": "História",
+      "sala": "Sala H1"
+    },
+    {
+      "dia": "Quarta",
+      "aula": 3,
+      "turma": "2º ANO - 204",
+      "prof": "RODRIGO",
+      "disc": "Química",
+      "sala": "Sala N2"
+    },
+    {
+      "dia": "Quarta",
+      "aula": 3,
+      "turma": "3º ANO - 301",
+      "prof": "EDMUNDO",
+      "disc": "Química",
+      "sala": "Sala N2"
+    },
+    {
+      "dia": "Quarta",
+      "aula": 3,
+      "turma": "3º ANO - 302",
+      "prof": "ELIANA",
+      "disc": "E.O. Português",
+      "sala": "Sala L1"
+    },
+    {
+      "dia": "Quarta",
+      "aula": 4,
+      "turma": "1º ANO - 101",
+      "prof": "KELSO",
+      "disc": "Arte",
+      "sala": "Sala Arte"
+    },
+    {
+      "dia": "Quarta",
+      "aula": 4,
+      "turma": "1º ANO - 102",
+      "prof": "VANESA",
+      "disc": "Aprof. Linguagens",
+      "sala": "Sala L3"
+    },
+    {
+      "dia": "Quarta",
+      "aula": 4,
+      "turma": "1º ANO - 103",
+      "prof": "LOUISE",
+      "disc": "Física",
+      "sala": "Sala N2"
+    },
+    {
+      "dia": "Quarta",
+      "aula": 4,
+      "turma": "1º ANO - 104",
+      "prof": "LUIZ",
+      "disc": "Matemática",
+      "sala": "Sala M3"
+    },
+    {
+      "dia": "Quarta",
+      "aula": 4,
+      "turma": "2º ANO - 201",
+      "prof": "EUNICE",
+      "disc": "Português",
+      "sala": "Sala L1"
+    },
+    {
+      "dia": "Quarta",
+      "aula": 4,
+      "turma": "2º ANO - 202",
+      "prof": "LUCÍLIO",
+      "disc": "Geografia",
+      "sala": "Sala H1"
+    },
+    {
+      "dia": "Quarta",
+      "aula": 4,
+      "turma": "2º ANO - 203",
+      "prof": "ELENFLÁVIA",
+      "disc": "História",
+      "sala": "Sala H1"
+    },
+    {
+      "dia": "Quarta",
+      "aula": 4,
+      "turma": "2º ANO - 204",
+      "prof": "RODRIGO",
+      "disc": "Química",
+      "sala": "Sala N2"
+    },
+    {
+      "dia": "Quarta",
+      "aula": 4,
+      "turma": "3º ANO - 301",
+      "prof": "EDMUNDO",
+      "disc": "Química",
+      "sala": "Sala N2"
+    },
+    {
+      "dia": "Quarta",
+      "aula": 4,
+      "turma": "3º ANO - 302",
+      "prof": "MILTON",
+      "disc": "Matemática",
+      "sala": "Sala M2"
+    },
+    {
+      "dia": "Quarta",
+      "aula": 5,
+      "turma": "1º ANO - 101",
+      "prof": "VANESA",
+      "disc": "Inglês",
+      "sala": "Sala L3"
+    },
+    {
+      "dia": "Quarta",
+      "aula": 5,
+      "turma": "1º ANO - 102",
+      "prof": "EDMUNDO",
+      "disc": "Prát. Experimentais",
+      "sala": "Lab Multi"
+    },
+    {
+      "dia": "Quarta",
+      "aula": 5,
+      "turma": "1º ANO - 103",
+      "prof": "LOUISE",
+      "disc": "Física",
+      "sala": "Sala N2"
+    },
+    {
+      "dia": "Quarta",
+      "aula": 5,
+      "turma": "1º ANO - 104",
+      "prof": "LUIZ",
+      "disc": "Matemática",
+      "sala": "Sala M3"
+    },
+    {
+      "dia": "Quarta",
+      "aula": 5,
+      "turma": "2º ANO - 201",
+      "prof": "EUNICE",
+      "disc": "Português",
+      "sala": "Sala L1"
+    },
+    {
+      "dia": "Quarta",
+      "aula": 5,
+      "turma": "2º ANO - 202",
+      "prof": "KELSO",
+      "disc": "Arte",
+      "sala": "Sala Arte"
+    },
+    {
+      "dia": "Quarta",
+      "aula": 5,
+      "turma": "2º ANO - 203",
+      "prof": "RODRIGO",
+      "disc": "Química",
+      "sala": "Sala N2"
+    },
+    {
+      "dia": "Quarta",
+      "aula": 5,
+      "turma": "2º ANO - 204",
+      "prof": "ELINELSON",
+      "disc": "Filosofia",
+      "sala": "Sala H2"
+    },
+    {
+      "dia": "Quarta",
+      "aula": 5,
+      "turma": "3º ANO - 301",
+      "prof": "JHONATAN",
+      "disc": "Ed. Física",
+      "sala": "Quadra"
+    },
+    {
+      "dia": "Quarta",
+      "aula": 5,
+      "turma": "3º ANO - 302",
+      "prof": "MILTON",
+      "disc": "Matemática",
+      "sala": "Sala M2"
+    },
+    {
+      "dia": "Quarta",
+      "aula": 6,
+      "turma": "1º ANO - 101",
+      "prof": "ELINELSON",
+      "disc": "Filosofia",
+      "sala": "Sala H2"
+    },
+    {
+      "dia": "Quarta",
+      "aula": 6,
+      "turma": "1º ANO - 102",
+      "prof": "LUCIDALVA",
+      "disc": "E.O. Matemática",
+      "sala": "Sala M1"
+    },
+    {
+      "dia": "Quarta",
+      "aula": 6,
+      "turma": "1º ANO - 103",
+      "prof": "MILTON",
+      "disc": "E.O. Matemática",
+      "sala": "Sala M2"
+    },
+    {
+      "dia": "Quarta",
+      "aula": 6,
+      "turma": "1º ANO - 104",
+      "prof": "ELENFLÁVIA",
+      "disc": "História",
+      "sala": "Sala H1"
+    },
+    {
+      "dia": "Quarta",
+      "aula": 6,
+      "turma": "2º ANO - 201",
+      "prof": "CASIANO",
+      "disc": "Aprof. Humanas",
+      "sala": "Sala H2"
+    },
+    {
+      "dia": "Quarta",
+      "aula": 6,
+      "turma": "2º ANO - 202",
+      "prof": "DIJANE",
+      "disc": "Biologia",
+      "sala": "Sala N1"
+    },
+    {
+      "dia": "Quarta",
+      "aula": 6,
+      "turma": "2º ANO - 203",
+      "prof": "REGINA",
+      "disc": "E.O. Português",
+      "sala": "Sala L2"
+    },
+    {
+      "dia": "Quarta",
+      "aula": 6,
+      "turma": "2º ANO - 204",
+      "prof": "MARÍLIA",
+      "disc": "Técnico",
+      "sala": "Sala Info"
+    },
+    {
+      "dia": "Quarta",
+      "aula": 6,
+      "turma": "3º ANO - 301",
+      "prof": "ELIANA",
+      "disc": "Aprof. Linguagens",
+      "sala": "Sala L1"
+    },
+    {
+      "dia": "Quarta",
+      "aula": 6,
+      "turma": "3º ANO - 302",
+      "prof": "JHONATAN",
+      "disc": "Eletiva",
+      "sala": "Sala L3"
+    },
+    {
+      "dia": "Quarta",
+      "aula": 7,
+      "turma": "1º ANO - 101",
+      "prof": "ELINELSON",
+      "disc": "Filosofia",
+      "sala": "Sala H2"
+    },
+    {
+      "dia": "Quarta",
+      "aula": 7,
+      "turma": "1º ANO - 102",
+      "prof": "LUCIDALVA",
+      "disc": "E.O. Matemática",
+      "sala": "Sala M1"
+    },
+    {
+      "dia": "Quarta",
+      "aula": 7,
+      "turma": "1º ANO - 103",
+      "prof": "MILTON",
+      "disc": "E.O. Matemática",
+      "sala": "Sala M2"
+    },
+    {
+      "dia": "Quarta",
+      "aula": 7,
+      "turma": "1º ANO - 104",
+      "prof": "ELENFLÁVIA",
+      "disc": "História",
+      "sala": "Sala H1"
+    },
+    {
+      "dia": "Quarta",
+      "aula": 7,
+      "turma": "2º ANO - 201",
+      "prof": "CASIANO",
+      "disc": "Aprof. Humanas",
+      "sala": "Sala H2"
+    },
+    {
+      "dia": "Quarta",
+      "aula": 7,
+      "turma": "2º ANO - 202",
+      "prof": "ROGÉRIO",
+      "disc": "E.O. Matemática",
+      "sala": "Sala M3"
+    },
+    {
+      "dia": "Quarta",
+      "aula": 7,
+      "turma": "2º ANO - 203",
+      "prof": "REGINA",
+      "disc": "E.O. Português",
+      "sala": "Sala L2"
+    },
+    {
+      "dia": "Quarta",
+      "aula": 7,
+      "turma": "2º ANO - 204",
+      "prof": "MARÍLIA",
+      "disc": "Técnico",
+      "sala": "Sala Info"
+    },
+    {
+      "dia": "Quarta",
+      "aula": 7,
+      "turma": "3º ANO - 301",
+      "prof": "ELIANA",
+      "disc": "Aprof. Linguagens",
+      "sala": "Sala L1"
+    },
+    {
+      "dia": "Quarta",
+      "aula": 7,
+      "turma": "3º ANO - 302",
+      "prof": "JHONATAN",
+      "disc": "Eletiva",
+      "sala": "Sala L3"
+    },
+    {
+      "dia": "Quinta",
+      "aula": 1,
+      "turma": "1º ANO - 101",
+      "prof": "LUCIDALVA",
+      "disc": "Matemática",
+      "sala": "Sala M1"
+    },
+    {
+      "dia": "Quinta",
+      "aula": 1,
+      "turma": "1º ANO - 102",
+      "prof": "ELENFLÁVIA",
+      "disc": "História",
+      "sala": "Sala H1"
+    },
+    {
+      "dia": "Quinta",
+      "aula": 1,
+      "turma": "1º ANO - 103",
+      "prof": "LUCÍLIO",
+      "disc": "Geografia",
+      "sala": "Sala H1"
+    },
+    {
+      "dia": "Quinta",
+      "aula": 1,
+      "turma": "1º ANO - 104",
+      "prof": "CASIANO",
+      "disc": "Sociologia",
+      "sala": "Sala H2"
+    },
+    {
+      "dia": "Quinta",
+      "aula": 1,
+      "turma": "2º ANO - 201",
+      "prof": "LOUISE",
+      "disc": "Física",
+      "sala": "Sala N2"
+    },
+    {
+      "dia": "Quinta",
+      "aula": 1,
+      "turma": "2º ANO - 202",
+      "prof": "EUNICE",
+      "disc": "Português",
+      "sala": "Sala L1"
+    },
+    {
+      "dia": "Quinta",
+      "aula": 1,
+      "turma": "2º ANO - 203",
+      "prof": "REGINA",
+      "disc": "Aprof. Linguagens",
+      "sala": "Sala L2"
+    },
+    {
+      "dia": "Quinta",
+      "aula": 1,
+      "turma": "2º ANO - 204",
+      "prof": "MARÍLIA",
+      "disc": "Técnico",
+      "sala": "Sala Info"
+    },
+    {
+      "dia": "Quinta",
+      "aula": 1,
+      "turma": "3º ANO - 301",
+      "prof": "ROGÉRIO",
+      "disc": "Aprof. Matemática",
+      "sala": "Sala M3"
+    },
+    {
+      "dia": "Quinta",
+      "aula": 1,
+      "turma": "3º ANO - 302",
+      "prof": "MILTON",
+      "disc": "Matemática",
+      "sala": "Sala M2"
+    },
+    {
+      "dia": "Quinta",
+      "aula": 2,
+      "turma": "1º ANO - 101",
+      "prof": "LUCIDALVA",
+      "disc": "E.O. Matemática",
+      "sala": "Sala M1"
+    },
+    {
+      "dia": "Quinta",
+      "aula": 2,
+      "turma": "1º ANO - 102",
+      "prof": "ELENFLÁVIA",
+      "disc": "História",
+      "sala": "Sala H1"
+    },
+    {
+      "dia": "Quinta",
+      "aula": 2,
+      "turma": "1º ANO - 103",
+      "prof": "LUCÍLIO",
+      "disc": "Geografia",
+      "sala": "Sala H1"
+    },
+    {
+      "dia": "Quinta",
+      "aula": 2,
+      "turma": "1º ANO - 104",
+      "prof": "CASIANO",
+      "disc": "Sociologia",
+      "sala": "Sala H2"
+    },
+    {
+      "dia": "Quinta",
+      "aula": 2,
+      "turma": "2º ANO - 201",
+      "prof": "LOUISE",
+      "disc": "Física",
+      "sala": "Sala N2"
+    },
+    {
+      "dia": "Quinta",
+      "aula": 2,
+      "turma": "2º ANO - 202",
+      "prof": "EUNICE",
+      "disc": "Português",
+      "sala": "Sala L1"
+    },
+    {
+      "dia": "Quinta",
+      "aula": 2,
+      "turma": "2º ANO - 203",
+      "prof": "REGINA",
+      "disc": "Aprof. Linguagens",
+      "sala": "Sala L2"
+    },
+    {
+      "dia": "Quinta",
+      "aula": 2,
+      "turma": "2º ANO - 204",
+      "prof": "MARÍLIA",
+      "disc": "Técnico",
+      "sala": "Sala Info"
+    },
+    {
+      "dia": "Quinta",
+      "aula": 2,
+      "turma": "3º ANO - 301",
+      "prof": "ROGÉRIO",
+      "disc": "Aprof. Matemática",
+      "sala": "Sala M3"
+    },
+    {
+      "dia": "Quinta",
+      "aula": 2,
+      "turma": "3º ANO - 302",
+      "prof": "MILTON",
+      "disc": "Matemática",
+      "sala": "Sala M2"
+    },
+    {
+      "dia": "Quinta",
+      "aula": 3,
+      "turma": "1º ANO - 101",
+      "prof": "REGINA",
+      "disc": "Proj. de Vida",
+      "sala": "Sala L2"
+    },
+    {
+      "dia": "Quinta",
+      "aula": 3,
+      "turma": "1º ANO - 102",
+      "prof": "LUCIDALVA",
+      "disc": "Aprof. Matemática",
+      "sala": "Sala M1"
+    },
+    {
+      "dia": "Quinta",
+      "aula": 3,
+      "turma": "1º ANO - 103",
+      "prof": "KELSO",
+      "disc": "Arte",
+      "sala": "Sala Arte"
+    },
+    {
+      "dia": "Quinta",
+      "aula": 3,
+      "turma": "1º ANO - 104",
+      "prof": "LOUISE",
+      "disc": "Física",
+      "sala": "Sala N2"
+    },
+    {
+      "dia": "Quinta",
+      "aula": 3,
+      "turma": "2º ANO - 201",
+      "prof": "ROGÉRIO",
+      "disc": "E.O. Matemática",
+      "sala": "Sala M3"
+    },
+    {
+      "dia": "Quinta",
+      "aula": 3,
+      "turma": "2º ANO - 202",
+      "prof": "RODRIGO",
+      "disc": "Química",
+      "sala": "Sala N2"
+    },
+    {
+      "dia": "Quinta",
+      "aula": 3,
+      "turma": "2º ANO - 203",
+      "prof": "MILTON",
+      "disc": "Matemática",
+      "sala": "Sala M2"
+    },
+    {
+      "dia": "Quinta",
+      "aula": 3,
+      "turma": "2º ANO - 204",
+      "prof": "MARÍLIA",
+      "disc": "Técnico",
+      "sala": "Sala Info"
+    },
+    {
+      "dia": "Quinta",
+      "aula": 3,
+      "turma": "3º ANO - 301",
+      "prof": "LUCÍLIO",
+      "disc": "Ed. Ambiental",
+      "sala": "Sala H1"
+    },
+    {
+      "dia": "Quinta",
+      "aula": 3,
+      "turma": "3º ANO - 302",
+      "prof": "CASIANO",
+      "disc": "Sociologia",
+      "sala": "Sala H2"
+    },
+    {
+      "dia": "Quinta",
+      "aula": 4,
+      "turma": "1º ANO - 101",
+      "prof": "ELENFLÁVIA",
+      "disc": "História",
+      "sala": "Sala H1"
+    },
+    {
+      "dia": "Quinta",
+      "aula": 4,
+      "turma": "1º ANO - 102",
+      "prof": "CASIANO",
+      "disc": "Sociologia",
+      "sala": "Sala H2"
+    },
+    {
+      "dia": "Quinta",
+      "aula": 4,
+      "turma": "1º ANO - 103",
+      "prof": "KELSO",
+      "disc": "Arte",
+      "sala": "Sala Arte"
+    },
+    {
+      "dia": "Quinta",
+      "aula": 4,
+      "turma": "1º ANO - 104",
+      "prof": "MARÍLIA",
+      "disc": "Técnico",
+      "sala": "Sala Info"
+    },
+    {
+      "dia": "Quinta",
+      "aula": 4,
+      "turma": "2º ANO - 201",
+      "prof": "ROGÉRIO",
+      "disc": "E.O. Matemática",
+      "sala": "Sala M3"
+    },
+    {
+      "dia": "Quinta",
+      "aula": 4,
+      "turma": "2º ANO - 202",
+      "prof": "RODRIGO",
+      "disc": "Química",
+      "sala": "Sala N2"
+    },
+    {
+      "dia": "Quinta",
+      "aula": 4,
+      "turma": "2º ANO - 203",
+      "prof": "MILTON",
+      "disc": "Matemática",
+      "sala": "Sala M2"
+    },
+    {
+      "dia": "Quinta",
+      "aula": 4,
+      "turma": "2º ANO - 204",
+      "prof": "LUIZ",
+      "disc": "E.O. Matemática",
+      "sala": "Sala M3"
+    },
+    {
+      "dia": "Quinta",
+      "aula": 4,
+      "turma": "3º ANO - 301",
+      "prof": "LOUISE",
+      "disc": "Física",
+      "sala": "Sala N2"
+    },
+    {
+      "dia": "Quinta",
+      "aula": 4,
+      "turma": "3º ANO - 302",
+      "prof": "LUCÍLIO",
+      "disc": "Geografia",
+      "sala": "Sala H1"
+    },
+    {
+      "dia": "Quinta",
+      "aula": 5,
+      "turma": "1º ANO - 101",
+      "prof": "ELENFLÁVIA",
+      "disc": "História",
+      "sala": "Sala H1"
+    },
+    {
+      "dia": "Quinta",
+      "aula": 5,
+      "turma": "1º ANO - 102",
+      "prof": "CASIANO",
+      "disc": "Sociologia",
+      "sala": "Sala H2"
+    },
+    {
+      "dia": "Quinta",
+      "aula": 5,
+      "turma": "1º ANO - 103",
+      "prof": "MILTON",
+      "disc": "Matemática",
+      "sala": "Sala M2"
+    },
+    {
+      "dia": "Quinta",
+      "aula": 5,
+      "turma": "1º ANO - 104",
+      "prof": "MARÍLIA",
+      "disc": "Técnico",
+      "sala": "Sala Info"
+    },
+    {
+      "dia": "Quinta",
+      "aula": 5,
+      "turma": "2º ANO - 201",
+      "prof": "REGINA",
+      "disc": "Proj. de Vida",
+      "sala": "Sala L2"
+    },
+    {
+      "dia": "Quinta",
+      "aula": 5,
+      "turma": "2º ANO - 202",
+      "prof": "ROGÉRIO",
+      "disc": "E.O. Matemática",
+      "sala": "Sala M3"
+    },
+    {
+      "dia": "Quinta",
+      "aula": 5,
+      "turma": "2º ANO - 203",
+      "prof": "RODRIGO",
+      "disc": "Química",
+      "sala": "Sala N2"
+    },
+    {
+      "dia": "Quinta",
+      "aula": 5,
+      "turma": "2º ANO - 204",
+      "prof": "LUIZ",
+      "disc": "Matemática",
+      "sala": "Sala M3"
+    },
+    {
+      "dia": "Quinta",
+      "aula": 5,
+      "turma": "3º ANO - 301",
+      "prof": "LOUISE",
+      "disc": "Física",
+      "sala": "Sala N2"
+    },
+    {
+      "dia": "Quinta",
+      "aula": 5,
+      "turma": "3º ANO - 302",
+      "prof": "LUCÍLIO",
+      "disc": "Geografia",
+      "sala": "Sala H1"
+    },
+    {
+      "dia": "Quinta",
+      "aula": 6,
+      "turma": "1º ANO - 101",
+      "prof": "LUCÍLIO",
+      "disc": "Geografia",
+      "sala": "Sala H1"
+    },
+    {
+      "dia": "Quinta",
+      "aula": 6,
+      "turma": "1º ANO - 102",
+      "prof": "LOUISE",
+      "disc": "Física",
+      "sala": "Sala N2"
+    },
+    {
+      "dia": "Quinta",
+      "aula": 6,
+      "turma": "1º ANO - 103",
+      "prof": "ELENFLÁVIA",
+      "disc": "História",
+      "sala": "Sala H1"
+    },
+    {
+      "dia": "Quinta",
+      "aula": 6,
+      "turma": "1º ANO - 104",
+      "prof": "REGINA",
+      "disc": "Português",
+      "sala": "Sala L2"
+    },
+    {
+      "dia": "Quinta",
+      "aula": 6,
+      "turma": "2º ANO - 201",
+      "prof": "RODRIGO",
+      "disc": "Aprof. Natureza",
+      "sala": "Sala N2"
+    },
+    {
+      "dia": "Quinta",
+      "aula": 6,
+      "turma": "2º ANO - 202",
+      "prof": "ROGÉRIO",
+      "disc": "Aprof. Matemática",
+      "sala": "Sala M3"
+    },
+    {
+      "dia": "Quinta",
+      "aula": 6,
+      "turma": "2º ANO - 203",
+      "prof": "CASIANO",
+      "disc": "Aprof. Humanas",
+      "sala": "Sala H2"
+    },
+    {
+      "dia": "Quinta",
+      "aula": 6,
+      "turma": "2º ANO - 204",
+      "prof": "LUIZ",
+      "disc": "E.O. Matemática",
+      "sala": "Sala M3"
+    },
+    {
+      "dia": "Quinta",
+      "aula": 6,
+      "turma": "3º ANO - 301",
+      "prof": "ELIANA",
+      "disc": "E.O. Português",
+      "sala": "Sala L1"
+    },
+    {
+      "dia": "Quinta",
+      "aula": 6,
+      "turma": "3º ANO - 302",
+      "prof": "EDMUNDO",
+      "disc": "Aprof. Natureza",
+      "sala": "Sala N2"
+    },
+    {
+      "dia": "Quinta",
+      "aula": 7,
+      "turma": "1º ANO - 101",
+      "prof": "LUCÍLIO",
+      "disc": "Geografia",
+      "sala": "Sala H1"
+    },
+    {
+      "dia": "Quinta",
+      "aula": 7,
+      "turma": "1º ANO - 102",
+      "prof": "LOUISE",
+      "disc": "Física",
+      "sala": "Sala N2"
+    },
+    {
+      "dia": "Quinta",
+      "aula": 7,
+      "turma": "1º ANO - 103",
+      "prof": "ELENFLÁVIA",
+      "disc": "História",
+      "sala": "Sala H1"
+    },
+    {
+      "dia": "Quinta",
+      "aula": 7,
+      "turma": "1º ANO - 104",
+      "prof": "MARÍLIA",
+      "disc": "Técnico",
+      "sala": "Sala Info"
+    },
+    {
+      "dia": "Quinta",
+      "aula": 7,
+      "turma": "2º ANO - 201",
+      "prof": "RODRIGO",
+      "disc": "Química",
+      "sala": "Sala N2"
+    },
+    {
+      "dia": "Quinta",
+      "aula": 7,
+      "turma": "2º ANO - 202",
+      "prof": "ROGÉRIO",
+      "disc": "Aprof. Matemática",
+      "sala": "Sala M3"
+    },
+    {
+      "dia": "Quinta",
+      "aula": 7,
+      "turma": "2º ANO - 203",
+      "prof": "CASIANO",
+      "disc": "Aprof. Humanas",
+      "sala": "Sala H2"
+    },
+    {
+      "dia": "Quinta",
+      "aula": 7,
+      "turma": "2º ANO - 204",
+      "prof": "REGINA",
+      "disc": "Proj. de Vida",
+      "sala": "Sala L2"
+    },
+    {
+      "dia": "Quinta",
+      "aula": 7,
+      "turma": "3º ANO - 301",
+      "prof": "ELIANA",
+      "disc": "E.O. Português",
+      "sala": "Sala L1"
+    },
+    {
+      "dia": "Quinta",
+      "aula": 7,
+      "turma": "3º ANO - 302",
+      "prof": "EDMUNDO",
+      "disc": "Aprof. Natureza",
+      "sala": "Sala N2"
+    },
+    {
+      "dia": "Quinta",
+      "aula": 8,
+      "turma": "1º ANO - 101",
+      "prof": "LUCIDALVA",
+      "disc": "E.O. Matemática",
+      "sala": "Sala M1"
+    },
+    {
+      "dia": "Quinta",
+      "aula": 8,
+      "turma": "1º ANO - 102",
+      "prof": "LUCÍLIO",
+      "disc": "Geografia",
+      "sala": "Sala H1"
+    },
+    {
+      "dia": "Quinta",
+      "aula": 8,
+      "turma": "1º ANO - 103",
+      "prof": "RODRIGO",
+      "disc": "Aprof. Natureza",
+      "sala": "Sala N2"
+    },
+    {
+      "dia": "Quinta",
+      "aula": 8,
+      "turma": "1º ANO - 104",
+      "prof": "MARÍLIA",
+      "disc": "Técnico",
+      "sala": "Sala Info"
+    },
+    {
+      "dia": "Quinta",
+      "aula": 8,
+      "turma": "2º ANO - 201",
+      "prof": "ELENFLÁVIA",
+      "disc": "História",
+      "sala": "Sala H1"
+    },
+    {
+      "dia": "Quinta",
+      "aula": 8,
+      "turma": "2º ANO - 202",
+      "prof": "CASIANO",
+      "disc": "Aprof. Humanas",
+      "sala": "Sala H2"
+    },
+    {
+      "dia": "Quinta",
+      "aula": 8,
+      "turma": "2º ANO - 203",
+      "prof": "ROGÉRIO",
+      "disc": "Eletiva",
+      "sala": "Sala M3"
+    },
+    {
+      "dia": "Quinta",
+      "aula": 8,
+      "turma": "2º ANO - 204",
+      "prof": "EUNICE",
+      "disc": "Português",
+      "sala": "Sala L1"
+    },
+    {
+      "dia": "Quinta",
+      "aula": 8,
+      "turma": "3º ANO - 301",
+      "prof": "EDMUNDO",
+      "disc": "Aprof. Natureza",
+      "sala": "Sala N2"
+    },
+    {
+      "dia": "Quinta",
+      "aula": 8,
+      "turma": "3º ANO - 302",
+      "prof": "REGINA",
+      "disc": "Aprof. Linguagens",
+      "sala": "Sala L2"
+    },
+    {
+      "dia": "Quinta",
+      "aula": 9,
+      "turma": "1º ANO - 101",
+      "prof": "LOUISE",
+      "disc": "Física",
+      "sala": "Sala N2"
+    },
+    {
+      "dia": "Quinta",
+      "aula": 9,
+      "turma": "1º ANO - 102",
+      "prof": "LUCÍLIO",
+      "disc": "Geografia",
+      "sala": "Sala H1"
+    },
+    {
+      "dia": "Quinta",
+      "aula": 9,
+      "turma": "1º ANO - 103",
+      "prof": "RODRIGO",
+      "disc": "Aprof. Natureza",
+      "sala": "Sala N2"
+    },
+    {
+      "dia": "Quinta",
+      "aula": 9,
+      "turma": "1º ANO - 104",
+      "prof": "MARÍLIA",
+      "disc": "Técnico",
+      "sala": "Sala Info"
+    },
+    {
+      "dia": "Quinta",
+      "aula": 9,
+      "turma": "2º ANO - 201",
+      "prof": "ELENFLÁVIA",
+      "disc": "História",
+      "sala": "Sala H1"
+    },
+    {
+      "dia": "Quinta",
+      "aula": 9,
+      "turma": "2º ANO - 202",
+      "prof": "CASIANO",
+      "disc": "Aprof. Humanas",
+      "sala": "Sala H2"
+    },
+    {
+      "dia": "Quinta",
+      "aula": 9,
+      "turma": "2º ANO - 203",
+      "prof": "ROGÉRIO",
+      "disc": "Eletiva",
+      "sala": "Sala M3"
+    },
+    {
+      "dia": "Quinta",
+      "aula": 9,
+      "turma": "2º ANO - 204",
+      "prof": "EUNICE",
+      "disc": "Português",
+      "sala": "Sala L1"
+    },
+    {
+      "dia": "Quinta",
+      "aula": 9,
+      "turma": "3º ANO - 301",
+      "prof": "EDMUNDO",
+      "disc": "Aprof. Natureza",
+      "sala": "Sala N2"
+    },
+    {
+      "dia": "Quinta",
+      "aula": 9,
+      "turma": "3º ANO - 302",
+      "prof": "REGINA",
+      "disc": "Aprof. Linguagens",
+      "sala": "Sala L2"
+    },
+    {
+      "dia": "Sexta",
+      "aula": 1,
+      "turma": "1º ANO - 101",
+      "prof": "VANESA",
+      "disc": "Aprof. Linguagens",
+      "sala": "Sala L3"
+    },
+    {
+      "dia": "Sexta",
+      "aula": 1,
+      "turma": "1º ANO - 102",
+      "prof": "JOANA",
+      "disc": "E.O. Português",
+      "sala": "Sala L2"
+    },
+    {
+      "dia": "Sexta",
+      "aula": 1,
+      "turma": "1º ANO - 103",
+      "prof": "JHONATAN",
+      "disc": "Ed. Física",
+      "sala": "Quadra"
+    },
+    {
+      "dia": "Sexta",
+      "aula": 1,
+      "turma": "1º ANO - 104",
+      "prof": "LUCÍLIO",
+      "disc": "Geografia",
+      "sala": "Sala H1"
+    },
+    {
+      "dia": "Sexta",
+      "aula": 1,
+      "turma": "2º ANO - 201",
+      "prof": "ROGÉRIO",
+      "disc": "Matemática",
+      "sala": "Sala M3"
+    },
+    {
+      "dia": "Sexta",
+      "aula": 1,
+      "turma": "2º ANO - 202",
+      "prof": "EUNICE",
+      "disc": "E.O. Português",
+      "sala": "Sala L1"
+    },
+    {
+      "dia": "Sexta",
+      "aula": 1,
+      "turma": "2º ANO - 203",
+      "prof": "RODRIGO",
+      "disc": "Prát. Experimentais",
+      "sala": "Lab Multi"
+    },
+    {
+      "dia": "Sexta",
+      "aula": 1,
+      "turma": "2º ANO - 204",
+      "prof": "MARÍLIA",
+      "disc": "Técnico",
+      "sala": "Sala Info"
+    },
+    {
+      "dia": "Sexta",
+      "aula": 1,
+      "turma": "3º ANO - 301",
+      "prof": "DIJANE",
+      "disc": "Biologia",
+      "sala": "Sala N1"
+    },
+    {
+      "dia": "Sexta",
+      "aula": 1,
+      "turma": "3º ANO - 302",
+      "prof": "ELINELSON",
+      "disc": "Filosofia",
+      "sala": "Sala H2"
+    },
+    {
+      "dia": "Sexta",
+      "aula": 2,
+      "turma": "1º ANO - 101",
+      "prof": "VANESA",
+      "disc": "Aprof. Linguagens",
+      "sala": "Sala L3"
+    },
+    {
+      "dia": "Sexta",
+      "aula": 2,
+      "turma": "1º ANO - 102",
+      "prof": "JOANA",
+      "disc": "E.O. Português",
+      "sala": "Sala L2"
+    },
+    {
+      "dia": "Sexta",
+      "aula": 2,
+      "turma": "1º ANO - 103",
+      "prof": "ELINELSON",
+      "disc": "Aprof. Humanas",
+      "sala": "Sala H2"
+    },
+    {
+      "dia": "Sexta",
+      "aula": 2,
+      "turma": "1º ANO - 104",
+      "prof": "LUCÍLIO",
+      "disc": "Geografia",
+      "sala": "Sala H1"
+    },
+    {
+      "dia": "Sexta",
+      "aula": 2,
+      "turma": "2º ANO - 201",
+      "prof": "ROGÉRIO",
+      "disc": "Matemática",
+      "sala": "Sala M3"
+    },
+    {
+      "dia": "Sexta",
+      "aula": 2,
+      "turma": "2º ANO - 202",
+      "prof": "EUNICE",
+      "disc": "E.O. Português",
+      "sala": "Sala L1"
+    },
+    {
+      "dia": "Sexta",
+      "aula": 2,
+      "turma": "2º ANO - 203",
+      "prof": "LOUISE",
+      "disc": "Física",
+      "sala": "Sala N2"
+    },
+    {
+      "dia": "Sexta",
+      "aula": 2,
+      "turma": "2º ANO - 204",
+      "prof": "MARÍLIA",
+      "disc": "Técnico",
+      "sala": "Sala Info"
+    },
+    {
+      "dia": "Sexta",
+      "aula": 2,
+      "turma": "3º ANO - 301",
+      "prof": "DIJANE",
+      "disc": "Biologia",
+      "sala": "Sala N1"
+    },
+    {
+      "dia": "Sexta",
+      "aula": 2,
+      "turma": "3º ANO - 302",
+      "prof": "JHONATAN",
+      "disc": "Ed. Física",
+      "sala": "Quadra"
+    },
+    {
+      "dia": "Sexta",
+      "aula": 3,
+      "turma": "1º ANO - 101",
+      "prof": "JOANA",
+      "disc": "Português",
+      "sala": "Sala L2"
+    },
+    {
+      "dia": "Sexta",
+      "aula": 3,
+      "turma": "1º ANO - 102",
+      "prof": "CASIANO",
+      "disc": "Aprof. Humanas",
+      "sala": "Sala H2"
+    },
+    {
+      "dia": "Sexta",
+      "aula": 3,
+      "turma": "1º ANO - 103",
+      "prof": "ELINELSON",
+      "disc": "Aprof. Humanas",
+      "sala": "Sala H2"
+    },
+    {
+      "dia": "Sexta",
+      "aula": 3,
+      "turma": "1º ANO - 104",
+      "prof": "JHONATAN",
+      "disc": "Ed. Física",
+      "sala": "Quadra"
+    },
+    {
+      "dia": "Sexta",
+      "aula": 3,
+      "turma": "2º ANO - 201",
+      "prof": "DIJANE",
+      "disc": "Biologia",
+      "sala": "Sala N1"
+    },
+    {
+      "dia": "Sexta",
+      "aula": 3,
+      "turma": "2º ANO - 202",
+      "prof": "ROGÉRIO",
+      "disc": "Matemática",
+      "sala": "Sala M3"
+    },
+    {
+      "dia": "Sexta",
+      "aula": 3,
+      "turma": "2º ANO - 203",
+      "prof": "LOUISE",
+      "disc": "Física",
+      "sala": "Sala N2"
+    },
+    {
+      "dia": "Sexta",
+      "aula": 3,
+      "turma": "2º ANO - 204",
+      "prof": "MARÍLIA",
+      "disc": "Técnico",
+      "sala": "Sala Info"
+    },
+    {
+      "dia": "Sexta",
+      "aula": 3,
+      "turma": "3º ANO - 301",
+      "prof": "RODRIGO",
+      "disc": "Prát. Experimentais",
+      "sala": "Lab Multi"
+    },
+    {
+      "dia": "Sexta",
+      "aula": 3,
+      "turma": "3º ANO - 302",
+      "prof": "LUCÍLIO",
+      "disc": "Ed. Ambiental",
+      "sala": "Sala H1"
+    },
+    {
+      "dia": "Sexta",
+      "aula": 4,
+      "turma": "1º ANO - 101",
+      "prof": "JHONATAN",
+      "disc": "Ed. Física",
+      "sala": "Quadra"
+    },
+    {
+      "dia": "Sexta",
+      "aula": 4,
+      "turma": "1º ANO - 102",
+      "prof": "CASIANO",
+      "disc": "Aprof. Humanas",
+      "sala": "Sala H2"
+    },
+    {
+      "dia": "Sexta",
+      "aula": 4,
+      "turma": "1º ANO - 103",
+      "prof": "LUCÍLIO",
+      "disc": "Ed. Ambiental",
+      "sala": "Sala H1"
+    },
+    {
+      "dia": "Sexta",
+      "aula": 4,
+      "turma": "1º ANO - 104",
+      "prof": "MARÍLIA",
+      "disc": "Técnico",
+      "sala": "Sala Info"
+    },
+    {
+      "dia": "Sexta",
+      "aula": 4,
+      "turma": "2º ANO - 201",
+      "prof": "DIJANE",
+      "disc": "Biologia",
+      "sala": "Sala N1"
+    },
+    {
+      "dia": "Sexta",
+      "aula": 4,
+      "turma": "2º ANO - 202",
+      "prof": "ROGÉRIO",
+      "disc": "Matemática",
+      "sala": "Sala M3"
+    },
+    {
+      "dia": "Sexta",
+      "aula": 4,
+      "turma": "2º ANO - 203",
+      "prof": "MILTON",
+      "disc": "E.O. Matemática",
+      "sala": "Sala M2"
+    },
+    {
+      "dia": "Sexta",
+      "aula": 4,
+      "turma": "2º ANO - 204",
+      "prof": "LOUISE",
+      "disc": "Física",
+      "sala": "Sala N2"
+    },
+    {
+      "dia": "Sexta",
+      "aula": 4,
+      "turma": "3º ANO - 301",
+      "prof": "ELENFLÁVIA",
+      "disc": "História",
+      "sala": "Sala H1"
+    },
+    {
+      "dia": "Sexta",
+      "aula": 4,
+      "turma": "3º ANO - 302",
+      "prof": "RODRIGO",
+      "disc": "Química",
+      "sala": "Sala N2"
+    },
+    {
+      "dia": "Sexta",
+      "aula": 5,
+      "turma": "1º ANO - 101",
+      "prof": "LOUISE",
+      "disc": "Física",
+      "sala": "Sala N2"
+    },
+    {
+      "dia": "Sexta",
+      "aula": 5,
+      "turma": "1º ANO - 102",
+      "prof": "LUCÍLIO",
+      "disc": "Ed. Ambiental",
+      "sala": "Sala H1"
+    },
+    {
+      "dia": "Sexta",
+      "aula": 5,
+      "turma": "1º ANO - 103",
+      "prof": "JOANA",
+      "disc": "Português",
+      "sala": "Sala L2"
+    },
+    {
+      "dia": "Sexta",
+      "aula": 5,
+      "turma": "1º ANO - 104",
+      "prof": "MARÍLIA",
+      "disc": "Técnico",
+      "sala": "Sala Info"
+    },
+    {
+      "dia": "Sexta",
+      "aula": 5,
+      "turma": "2º ANO - 201",
+      "prof": "ELINELSON",
+      "disc": "Filosofia",
+      "sala": "Sala H2"
+    },
+    {
+      "dia": "Sexta",
+      "aula": 5,
+      "turma": "2º ANO - 202",
+      "prof": "DIJANE",
+      "disc": "Biologia",
+      "sala": "Sala N1"
+    },
+    {
+      "dia": "Sexta",
+      "aula": 5,
+      "turma": "2º ANO - 203",
+      "prof": "MILTON",
+      "disc": "E.O. Matemática",
+      "sala": "Sala M2"
+    },
+    {
+      "dia": "Sexta",
+      "aula": 5,
+      "turma": "2º ANO - 204",
+      "prof": "CASIANO",
+      "disc": "Sociologia",
+      "sala": "Sala H2"
+    },
+    {
+      "dia": "Sexta",
+      "aula": 5,
+      "turma": "3º ANO - 301",
+      "prof": "ELENFLÁVIA",
+      "disc": "História",
+      "sala": "Sala H1"
+    },
+    {
+      "dia": "Sexta",
+      "aula": 5,
+      "turma": "3º ANO - 302",
+      "prof": "RODRIGO",
+      "disc": "Química",
+      "sala": "Sala N2"
+    },
+    {
+      "dia": "Sexta",
+      "aula": 6,
+      "turma": "1º ANO - 101",
+      "prof": "DIJANE",
+      "disc": "Biologia",
+      "sala": "Sala N1"
+    },
+    {
+      "dia": "Sexta",
+      "aula": 6,
+      "turma": "1º ANO - 102",
+      "prof": "JHONATAN",
+      "disc": "PPA",
+      "sala": "Sala L3"
+    },
+    {
+      "dia": "Sexta",
+      "aula": 6,
+      "turma": "1º ANO - 103",
+      "prof": "ROGÉRIO",
+      "disc": "Aprof. Matemática",
+      "sala": "Sala M3"
+    },
+    {
+      "dia": "Sexta",
+      "aula": 6,
+      "turma": "1º ANO - 104",
+      "prof": "LUCÍLIO",
+      "disc": "Ed. Ambiental",
+      "sala": "Sala H1"
+    },
+    {
+      "dia": "Sexta",
+      "aula": 6,
+      "turma": "2º ANO - 201",
+      "prof": "EUNICE",
+      "disc": "E.O. Português",
+      "sala": "Sala L1"
+    },
+    {
+      "dia": "Sexta",
+      "aula": 6,
+      "turma": "2º ANO - 202",
+      "prof": "RODRIGO",
+      "disc": "Aprof. Natureza",
+      "sala": "Sala N2"
+    },
+    {
+      "dia": "Sexta",
+      "aula": 6,
+      "turma": "2º ANO - 203",
+      "prof": "MILTON",
+      "disc": "Aprof. Matemática",
+      "sala": "Sala M2"
+    },
+    {
+      "dia": "Sexta",
+      "aula": 6,
+      "turma": "2º ANO - 204",
+      "prof": "VANESA",
+      "disc": "Inglês 2",
+      "sala": "Sala L3"
+    },
+    {
+      "dia": "Sexta",
+      "aula": 6,
+      "turma": "3º ANO - 301",
+      "prof": "ELENFLÁVIA",
+      "disc": "Proj. de Vida",
+      "sala": "Sala H1"
+    },
+    {
+      "dia": "Sexta",
+      "aula": 6,
+      "turma": "3º ANO - 302",
+      "prof": "LOUISE",
+      "disc": "Física",
+      "sala": "Sala N2"
+    },
+    {
+      "dia": "Sexta",
+      "aula": 7,
+      "turma": "1º ANO - 101",
+      "prof": "DIJANE",
+      "disc": "Biologia",
+      "sala": "Sala N1"
+    },
+    {
+      "dia": "Sexta",
+      "aula": 7,
+      "turma": "1º ANO - 102",
+      "prof": "JHONATAN",
+      "disc": "PPA",
+      "sala": "Sala L3"
+    },
+    {
+      "dia": "Sexta",
+      "aula": 7,
+      "turma": "1º ANO - 103",
+      "prof": "ROGÉRIO",
+      "disc": "Aprof. Matemática",
+      "sala": "Sala M3"
+    },
+    {
+      "dia": "Sexta",
+      "aula": 7,
+      "turma": "1º ANO - 104",
+      "prof": "MARÍLIA",
+      "disc": "Técnico",
+      "sala": "Sala Info"
+    },
+    {
+      "dia": "Sexta",
+      "aula": 7,
+      "turma": "2º ANO - 201",
+      "prof": "EUNICE",
+      "disc": "E.O. Português",
+      "sala": "Sala L1"
+    },
+    {
+      "dia": "Sexta",
+      "aula": 7,
+      "turma": "2º ANO - 202",
+      "prof": "RODRIGO",
+      "disc": "Aprof. Natureza",
+      "sala": "Sala N2"
+    },
+    {
+      "dia": "Sexta",
+      "aula": 7,
+      "turma": "2º ANO - 203",
+      "prof": "MILTON",
+      "disc": "Aprof. Matemática",
+      "sala": "Sala M2"
+    },
+    {
+      "dia": "Sexta",
+      "aula": 7,
+      "turma": "2º ANO - 204",
+      "prof": "VANESA",
+      "disc": "Inglês",
+      "sala": "Sala L3"
+    },
+    {
+      "dia": "Sexta",
+      "aula": 7,
+      "turma": "3º ANO - 301",
+      "prof": "ELINELSON",
+      "disc": "Filosofia",
+      "sala": "Sala H2"
+    },
+    {
+      "dia": "Sexta",
+      "aula": 7,
+      "turma": "3º ANO - 302",
+      "prof": "LOUISE",
+      "disc": "Física",
+      "sala": "Sala N2"
+    },
+    {
+      "dia": "Sexta",
+      "aula": 8,
+      "turma": "1º ANO - 101",
+      "prof": "LOUISE",
+      "disc": "Aprof. Natureza",
+      "sala": "Sala N2"
+    },
+    {
+      "dia": "Sexta",
+      "aula": 8,
+      "turma": "1º ANO - 102",
+      "prof": "VANESA",
+      "disc": "Proj. de Vida",
+      "sala": "Sala L3"
+    },
+    {
+      "dia": "Sexta",
+      "aula": 8,
+      "turma": "1º ANO - 103",
+      "prof": "JOANA",
+      "disc": "PPA",
+      "sala": "Sala L2"
+    },
+    {
+      "dia": "Sexta",
+      "aula": 8,
+      "turma": "1º ANO - 104",
+      "prof": "MARÍLIA",
+      "disc": "Técnico",
+      "sala": "Sala Info"
+    },
+    {
+      "dia": "Sexta",
+      "aula": 8,
+      "turma": "2º ANO - 201",
+      "prof": "RODRIGO",
+      "disc": "Prát. Experimentais",
+      "sala": "Lab Multi"
+    },
+    {
+      "dia": "Sexta",
+      "aula": 8,
+      "turma": "2º ANO - 202",
+      "prof": "ELENFLÁVIA",
+      "disc": "História",
+      "sala": "Sala H1"
+    },
+    {
+      "dia": "Sexta",
+      "aula": 8,
+      "turma": "2º ANO - 203",
+      "prof": "CASIANO",
+      "disc": "Sociologia",
+      "sala": "Sala H2"
+    },
+    {
+      "dia": "Sexta",
+      "aula": 8,
+      "turma": "2º ANO - 204",
+      "prof": "EUNICE",
+      "disc": "Português",
+      "sala": "Sala L1"
+    },
+    {
+      "dia": "Sexta",
+      "aula": 8,
+      "turma": "3º ANO - 301",
+      "prof": "JHONATAN",
+      "disc": "Eletiva",
+      "sala": "Sala L3"
+    },
+    {
+      "dia": "Sexta",
+      "aula": 8,
+      "turma": "3º ANO - 302",
+      "prof": "MILTON",
+      "disc": "E.O. Matemática",
+      "sala": "Sala M2"
+    },
+    {
+      "dia": "Sexta",
+      "aula": 9,
+      "turma": "1º ANO - 101",
+      "prof": "LOUISE",
+      "disc": "Aprof. Natureza",
+      "sala": "Sala N2"
+    },
+    {
+      "dia": "Sexta",
+      "aula": 9,
+      "turma": "1º ANO - 102",
+      "prof": "VANESA",
+      "disc": "Inglês",
+      "sala": "Sala L3"
+    },
+    {
+      "dia": "Sexta",
+      "aula": 9,
+      "turma": "1º ANO - 103",
+      "prof": "JOANA",
+      "disc": "PPA",
+      "sala": "Sala L2"
+    },
+    {
+      "dia": "Sexta",
+      "aula": 9,
+      "turma": "1º ANO - 104",
+      "prof": "MARÍLIA",
+      "disc": "Técnico",
+      "sala": "Sala Info"
+    },
+    {
+      "dia": "Sexta",
+      "aula": 9,
+      "turma": "2º ANO - 201",
+      "prof": "RODRIGO",
+      "disc": "Aprof. Natureza",
+      "sala": "Sala N2"
+    },
+    {
+      "dia": "Sexta",
+      "aula": 9,
+      "turma": "2º ANO - 202",
+      "prof": "ELENFLÁVIA",
+      "disc": "História",
+      "sala": "Sala H1"
+    },
+    {
+      "dia": "Sexta",
+      "aula": 9,
+      "turma": "2º ANO - 203",
+      "prof": "ELINELSON",
+      "disc": "Filosofia",
+      "sala": "Sala H2"
+    },
+    {
+      "dia": "Sexta",
+      "aula": 9,
+      "turma": "2º ANO - 204",
+      "prof": "DIJANE",
+      "disc": "Ed. Ambiental",
+      "sala": "Sala N1"
+    },
+    {
+      "dia": "Sexta",
+      "aula": 9,
+      "turma": "3º ANO - 301",
+      "prof": "JHONATAN",
+      "disc": "Eletiva",
+      "sala": "Sala L3"
+    },
+    {
+      "dia": "Sexta",
+      "aula": 9,
+      "turma": "3º ANO - 302",
+      "prof": "MILTON",
+      "disc": "E.O. Matemática",
+      "sala": "Sala M2"
+    }
+  ],
+  "dias": [
+    "Segunda",
+    "Terça",
+    "Quarta",
+    "Quinta",
+    "Sexta"
+  ],
+  "turmas": [
+    "1º ANO - 101",
+    "1º ANO - 102",
+    "1º ANO - 103",
+    "1º ANO - 104",
+    "2º ANO - 201",
+    "2º ANO - 202",
+    "2º ANO - 203",
+    "2º ANO - 204",
+    "3º ANO - 301",
+    "3º ANO - 302"
+  ],
+  "profs": [
+    "CASIANO",
+    "DIJANE",
+    "EDMUNDO",
+    "ELENFLÁVIA",
+    "ELIANA",
+    "ELINELSON",
+    "EUNICE",
+    "JHONATAN",
+    "JOANA",
+    "KELSO",
+    "LOUISE",
+    "LUCIDALVA",
+    "LUCÍLIO",
+    "LUIZ",
+    "MARÍLIA",
+    "MILTON",
+    "REGINA",
+    "RODRIGO",
+    "ROGÉRIO",
+    "VANESA"
+  ],
+  "profs_detail": {
+    "CASIANO": {
+      "ch": 24,
+      "disciplinas": [
+        "Aprof. Humanas",
+        "Sociologia"
+      ],
+      "turmas": [
+        "1º ANO - 101",
+        "1º ANO - 102",
+        "1º ANO - 103",
+        "1º ANO - 104",
+        "2º ANO - 201",
+        "2º ANO - 202",
+        "2º ANO - 203",
+        "2º ANO - 204",
+        "3º ANO - 301",
+        "3º ANO - 302"
+      ],
+      "n_turmas": 10
+    },
+    "DIJANE": {
+      "ch": 25,
+      "disciplinas": [
+        "Biologia",
+        "Ed. Ambiental",
+        "Prát. Experimentais"
+      ],
+      "turmas": [
+        "1º ANO - 101",
+        "1º ANO - 102",
+        "1º ANO - 103",
+        "1º ANO - 104",
+        "2º ANO - 201",
+        "2º ANO - 202",
+        "2º ANO - 203",
+        "2º ANO - 204",
+        "3º ANO - 301",
+        "3º ANO - 302"
+      ],
+      "n_turmas": 10
+    },
+    "EDMUNDO": {
+      "ch": 16,
+      "disciplinas": [
+        "Aprof. Natureza",
+        "Prát. Experimentais",
+        "Química"
+      ],
+      "turmas": [
+        "1º ANO - 101",
+        "1º ANO - 102",
+        "1º ANO - 103",
+        "1º ANO - 104",
+        "3º ANO - 301",
+        "3º ANO - 302"
+      ],
+      "n_turmas": 6
+    },
+    "ELENFLÁVIA": {
+      "ch": 24,
+      "disciplinas": [
+        "Eletiva",
+        "História",
+        "Proj. de Vida"
+      ],
+      "turmas": [
+        "1º ANO - 101",
+        "1º ANO - 102",
+        "1º ANO - 103",
+        "1º ANO - 104",
+        "2º ANO - 201",
+        "2º ANO - 202",
+        "2º ANO - 203",
+        "2º ANO - 204",
+        "3º ANO - 301",
+        "3º ANO - 302"
+      ],
+      "n_turmas": 10
+    },
+    "ELIANA": {
+      "ch": 14,
+      "disciplinas": [
+        "Aprof. Linguagens",
+        "E.O. Português",
+        "Português"
+      ],
+      "turmas": [
+        "3º ANO - 301",
+        "3º ANO - 302"
+      ],
+      "n_turmas": 2
+    },
+    "ELINELSON": {
+      "ch": 24,
+      "disciplinas": [
+        "Aprof. Humanas",
+        "Filosofia",
+        "PPA"
+      ],
+      "turmas": [
+        "1º ANO - 101",
+        "1º ANO - 102",
+        "1º ANO - 103",
+        "1º ANO - 104",
+        "2º ANO - 201",
+        "2º ANO - 202",
+        "2º ANO - 203",
+        "2º ANO - 204",
+        "3º ANO - 301",
+        "3º ANO - 302"
+      ],
+      "n_turmas": 10
+    },
+    "EUNICE": {
+      "ch": 21,
+      "disciplinas": [
+        "E.O. Português",
+        "PPA",
+        "Português"
+      ],
+      "turmas": [
+        "2º ANO - 201",
+        "2º ANO - 202",
+        "2º ANO - 204",
+        "3º ANO - 301"
+      ],
+      "n_turmas": 4
+    },
+    "JHONATAN": {
+      "ch": 24,
+      "disciplinas": [
+        "Ed. Física",
+        "Eletiva",
+        "PPA"
+      ],
+      "turmas": [
+        "1º ANO - 101",
+        "1º ANO - 102",
+        "1º ANO - 103",
+        "1º ANO - 104",
+        "2º ANO - 201",
+        "2º ANO - 202",
+        "2º ANO - 203",
+        "2º ANO - 204",
+        "3º ANO - 301",
+        "3º ANO - 302"
+      ],
+      "n_turmas": 10
+    },
+    "JOANA": {
+      "ch": 22,
+      "disciplinas": [
+        "Aprof. Linguagens",
+        "E.O. Português",
+        "Eletiva",
+        "PPA",
+        "Português",
+        "Proj. de Vida"
+      ],
+      "turmas": [
+        "1º ANO - 101",
+        "1º ANO - 102",
+        "1º ANO - 103",
+        "2º ANO - 201",
+        "2º ANO - 202"
+      ],
+      "n_turmas": 5
+    },
+    "KELSO": {
+      "ch": 16,
+      "disciplinas": [
+        "Arte",
+        "Eletiva"
+      ],
+      "turmas": [
+        "1º ANO - 101",
+        "1º ANO - 102",
+        "1º ANO - 103",
+        "1º ANO - 104",
+        "2º ANO - 201",
+        "2º ANO - 202",
+        "2º ANO - 203",
+        "2º ANO - 204",
+        "3º ANO - 301",
+        "3º ANO - 302"
+      ],
+      "n_turmas": 10
+    },
+    "LOUISE": {
+      "ch": 24,
+      "disciplinas": [
+        "Aprof. Natureza",
+        "Física"
+      ],
+      "turmas": [
+        "1º ANO - 101",
+        "1º ANO - 102",
+        "1º ANO - 103",
+        "1º ANO - 104",
+        "2º ANO - 201",
+        "2º ANO - 202",
+        "2º ANO - 203",
+        "2º ANO - 204",
+        "3º ANO - 301",
+        "3º ANO - 302"
+      ],
+      "n_turmas": 10
+    },
+    "LUCIDALVA": {
+      "ch": 14,
+      "disciplinas": [
+        "Aprof. Matemática",
+        "E.O. Matemática",
+        "Matemática"
+      ],
+      "turmas": [
+        "1º ANO - 101",
+        "1º ANO - 102"
+      ],
+      "n_turmas": 2
+    },
+    "LUCÍLIO": {
+      "ch": 26,
+      "disciplinas": [
+        "Ed. Ambiental",
+        "Geografia"
+      ],
+      "turmas": [
+        "1º ANO - 101",
+        "1º ANO - 102",
+        "1º ANO - 103",
+        "1º ANO - 104",
+        "2º ANO - 201",
+        "2º ANO - 202",
+        "2º ANO - 203",
+        "2º ANO - 204",
+        "3º ANO - 301",
+        "3º ANO - 302"
+      ],
+      "n_turmas": 10
+    },
+    "LUIZ": {
+      "ch": 20,
+      "disciplinas": [
+        "Aprof. Matemática",
+        "E.O. Matemática",
+        "Matemática",
+        "PPA"
+      ],
+      "turmas": [
+        "1º ANO - 101",
+        "1º ANO - 104",
+        "2º ANO - 204",
+        "3º ANO - 301"
+      ],
+      "n_turmas": 4
+    },
+    "MARÍLIA": {
+      "ch": 18,
+      "disciplinas": [
+        "Técnico"
+      ],
+      "turmas": [
+        "1º ANO - 104",
+        "2º ANO - 204"
+      ],
+      "n_turmas": 2
+    },
+    "MILTON": {
+      "ch": 21,
+      "disciplinas": [
+        "Aprof. Matemática",
+        "E.O. Matemática",
+        "Matemática"
+      ],
+      "turmas": [
+        "1º ANO - 103",
+        "2º ANO - 203",
+        "3º ANO - 302"
+      ],
+      "n_turmas": 3
+    },
+    "REGINA": {
+      "ch": 24,
+      "disciplinas": [
+        "Aprof. Linguagens",
+        "E.O. Português",
+        "Português",
+        "Proj. de Vida"
+      ],
+      "turmas": [
+        "1º ANO - 101",
+        "1º ANO - 104",
+        "2º ANO - 201",
+        "2º ANO - 202",
+        "2º ANO - 203",
+        "2º ANO - 204",
+        "3º ANO - 302"
+      ],
+      "n_turmas": 7
+    },
+    "RODRIGO": {
+      "ch": 25,
+      "disciplinas": [
+        "Aprof. Natureza",
+        "Prát. Experimentais",
+        "Química"
+      ],
+      "turmas": [
+        "1º ANO - 103",
+        "1º ANO - 104",
+        "2º ANO - 201",
+        "2º ANO - 202",
+        "2º ANO - 203",
+        "2º ANO - 204",
+        "3º ANO - 301",
+        "3º ANO - 302"
+      ],
+      "n_turmas": 8
+    },
+    "ROGÉRIO": {
+      "ch": 22,
+      "disciplinas": [
+        "Aprof. Matemática",
+        "E.O. Matemática",
+        "Eletiva",
+        "Matemática"
+      ],
+      "turmas": [
+        "1º ANO - 103",
+        "2º ANO - 201",
+        "2º ANO - 202",
+        "2º ANO - 203",
+        "3º ANO - 301"
+      ],
+      "n_turmas": 5
+    },
+    "VANESA": {
+      "ch": 26,
+      "disciplinas": [
+        "Aprof. Linguagens",
+        "Eletiva",
+        "Inglês",
+        "Inglês 2",
+        "PPA",
+        "Proj. de Vida"
+      ],
+      "turmas": [
+        "1º ANO - 101",
+        "1º ANO - 102",
+        "1º ANO - 103",
+        "1º ANO - 104",
+        "2º ANO - 201",
+        "2º ANO - 202",
+        "2º ANO - 203",
+        "2º ANO - 204",
+        "3º ANO - 301",
+        "3º ANO - 302"
+      ],
+      "n_turmas": 10
+    }
+  },
+  "prof_area": {
+    "ELIANA": "Linguagens",
+    "EUNICE": "Linguagens",
+    "JOANA": "Linguagens",
+    "KELSO": "Linguagens",
+    "REGINA": "Linguagens",
+    "VANESA": "Linguagens",
+    "JHONATAN": "Linguagens",
+    "LUCIDALVA": "Matemática",
+    "MILTON": "Matemática",
+    "LUIZ": "Matemática",
+    "ROGÉRIO": "Matemática",
+    "DIJANE": "Natureza",
+    "EDMUNDO": "Natureza",
+    "LOUISE": "Natureza",
+    "RODRIGO": "Natureza",
+    "ELENFLÁVIA": "Humanas",
+    "ELINELSON": "Humanas",
+    "CASIANO": "Humanas",
+    "LUCÍLIO": "Humanas",
+    "MARÍLIA": "Itinerário"
+  },
+  "salas": [
+    "Sala L1",
+    "Sala L2",
+    "Sala L3",
+    "Sala Leitura",
+    "Sala M1",
+    "Sala M2",
+    "Sala M3",
+    "Sala N1",
+    "Sala N2",
+    "Lab Multi",
+    "Sala H1",
+    "Sala H2",
+    "Auditório",
+    "Sala Arte",
+    "Sala Info",
+    "Quadra"
+  ],
+  "areas": {
+    "Linguagens": [
+      "Português",
+      "Inglês",
+      "Inglês 2",
+      "Arte",
+      "Ed. Física",
+      "E.O. Português",
+      "Aprof. Linguagens"
+    ],
+    "Matemática": [
+      "Matemática",
+      "E.O. Matemática",
+      "Aprof. Matemática"
+    ],
+    "Natureza": [
+      "Biologia",
+      "Química",
+      "Física",
+      "Ed. Ambiental",
+      "Prát. Experimentais",
+      "Aprof. Natureza"
+    ],
+    "Humanas": [
+      "História",
+      "Geografia",
+      "Filosofia",
+      "Sociologia",
+      "Aprof. Humanas"
+    ],
+    "Itinerário": [
+      "Eletiva",
+      "PPA",
+      "Proj. de Vida",
+      "Técnico"
+    ]
+  },
+  "planejamento": {
+    "Segunda": [
+      {
+        "prof": "EDMUNDO",
+        "periodo": "all"
+      },
+      {
+        "prof": "EUNICE",
+        "periodo": "all"
+      },
+      {
+        "prof": "CASIANO",
+        "periodo": "all"
+      },
+      {
+        "prof": "ELENFLÁVIA",
+        "periodo": "all"
+      },
+      {
+        "prof": "ELIANA",
+        "periodo": "tarde"
+      }
+    ],
+    "Terça": [
+      {
+        "prof": "LUCÍLIO",
+        "periodo": "all"
+      },
+      {
+        "prof": "MILTON",
+        "periodo": "all"
+      },
+      {
+        "prof": "ROGÉRIO",
+        "periodo": "all"
+      },
+      {
+        "prof": "LOUISE",
+        "periodo": "all"
+      },
+      {
+        "prof": "RODRIGO",
+        "periodo": "all"
+      },
+      {
+        "prof": "ELIANA",
+        "periodo": "tarde"
+      }
+    ],
+    "Quarta": [],
+    "Quinta": [
+      {
+        "prof": "JHONATAN",
+        "periodo": "all"
+      },
+      {
+        "prof": "VANESA",
+        "periodo": "all"
+      },
+      {
+        "prof": "ELINELSON",
+        "periodo": "all"
+      },
+      {
+        "prof": "JOANA",
+        "periodo": "all"
+      },
+      {
+        "prof": "DIJANE",
+        "periodo": "all"
+      }
+    ],
+    "Sexta": [
+      {
+        "prof": "LUIZ",
+        "periodo": "all"
+      },
+      {
+        "prof": "KELSO",
+        "periodo": "all"
+      },
+      {
+        "prof": "REGINA",
+        "periodo": "all"
+      },
+      {
+        "prof": "LUCIDALVA",
+        "periodo": "all"
+      }
+    ]
+  },
+  "horarios_aula": {
+    "1": "07:20-08:10",
+    "2": "08:10-09:00",
+    "3": "09:20-10:10",
+    "4": "10:10-11:00",
+    "5": "11:00-11:45",
+    "6": "13:15-14:00",
+    "7": "14:00-14:45",
+    "8": "15:00-15:45",
+    "9": "15:45-16:30"
+  },
+  "quarta_clubes": {
+    "aulas": [
+      8,
+      9
+    ],
+    "descricao": "Clubes/Tutoria - distribuição livre"
+  },
+  "historico_mudancas": [
+    {
+      "data": "2026-05-11",
+      "tipo": "Swap Eletivas",
+      "descricao": "1º-101 Tue A8-A9: KELSO ↔ JHONATAN | 1º-103: JHONATAN ↔ KELSO"
+    },
+    {
+      "data": "2026-05-11",
+      "tipo": "Fix Planejamento",
+      "descricao": "2º-202 Qui A5 (DIJANE/Bio) ↔ Qua A6 (ROGÉRIO/E.O.Mat)"
+    },
+    {
+      "data": "2026-05-11",
+      "tipo": "Dupla Cadeia 1º-103",
+      "descricao": "Chain A: KELSO Mon A6→Qui A3, VANESA Wed A1→Mon A6, DIJANE Qui A3→Wed A1"
+    },
+    {
+      "data": "2026-05-11",
+      "tipo": "Dupla Cadeia 1º-103",
+      "descricao": "Chain B: KELSO Qui A5→Qui A4, MILTON Wed A3→Qui A5, DIJANE Qui A4→Wed A3"
+    },
+    {
+      "data": "2026-05-11",
+      "tipo": "Plano Salas v3",
+      "descricao": "Linguagens 3+Leitura | Mat 3 | Natureza 2+Lab | Humanas 2+Auditório"
+    },
+    {
+      "data": "2026-05-11",
+      "tipo": "Geografia",
+      "descricao": "LUCÍLIO (Geografia) movido para área Humanas (Sala H1)"
+    }
+  ],
+  "salas_alocacao": {
+    "Linguagens": {
+      "salas": [
+        "Sala L1",
+        "Sala L2",
+        "Sala L3",
+        "Sala Leitura"
+      ],
+      "profs": [
+        "ELIANA",
+        "EUNICE",
+        "JOANA",
+        "REGINA",
+        "VANESA"
+      ]
+    },
+    "Matemática": {
+      "salas": [
+        "Sala M1",
+        "Sala M2",
+        "Sala M3"
+      ],
+      "profs": [
+        "LUCIDALVA",
+        "MILTON",
+        "LUIZ",
+        "ROGÉRIO"
+      ]
+    },
+    "Natureza": {
+      "salas": [
+        "Sala N1",
+        "Sala N2",
+        "Lab Multi"
+      ],
+      "profs": [
+        "DIJANE",
+        "EDMUNDO",
+        "LOUISE",
+        "RODRIGO"
+      ]
+    },
+    "Humanas": {
+      "salas": [
+        "Sala H1",
+        "Sala H2",
+        "Auditório"
+      ],
+      "profs": [
+        "ELENFLÁVIA",
+        "LUCÍLIO",
+        "ELINELSON",
+        "CASIANO"
+      ]
+    },
+    "Especiais": {
+      "salas": [
+        "Sala Arte",
+        "Sala Info",
+        "Quadra"
+      ],
+      "profs": [
+        "KELSO",
+        "MARÍLIA",
+        "JHONATAN"
+      ]
+    }
+  }
+}

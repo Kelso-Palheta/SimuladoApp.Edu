@@ -21,4 +21,7 @@ urlpatterns = [
 
     # Redação ENEM & OpenCV
     path('api/v1/redacao/', include('apps.redacao.urls')),
+
+    # Horário Escolar Inteligente (Backtracking, Salas Temáticas, Celery & Sabiazinho-4)
+    path('api/v1/horario-escolar/', include('apps.horario_escolar_inteligente.urls')),
 ]

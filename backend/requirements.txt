@@ -10,3 +10,6 @@ redis>=5.0.3
 opencv-python-headless>=4.9.0.80
 gunicorn>=21.2.0
 requests>=2.31.0
+pdfplumber>=0.11.0
+pypdf>=4.2.0
+openpyxl>=3.1.2
