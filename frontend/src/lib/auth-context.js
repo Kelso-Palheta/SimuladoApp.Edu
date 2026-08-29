@@ -37,7 +37,6 @@ export function AuthProvider({ children }) {
   });
   const [loading, setLoading] = useState(true);
 
-  // Carrega créditos e perfil do Django ou Firebase
   const recarregarPerfil = async (djangoUser = null) => {
     try {
       const { access } = api.getTokens();
@@ -77,26 +76,32 @@ export function AuthProvider({ children }) {
   };
 
   useEffect(() => {
-    // 1. Tenta carregar sessão JWT existente do Django
     const { access } = api.getTokens();
     if (access) {
       recarregarPerfil().finally(() => setLoading(false));
     }
 
-    // 2. Listener Firebase para autenticação híbrida
     const unsub = onAuthStateChanged(auth, async (firebaseUser) => {
       setUser(firebaseUser);
       if (firebaseUser) {
         const ref = doc(db, "professores", firebaseUser.uid);
         const snap = await getDoc(ref);
         if (snap.exists()) {
-          setPerfil(snap.data());
+          let data = snap.data();
+          // 👑 INJEÇÃO VIP PARA O DONO DO SISTEMA NO FIREBASE 👑
+          if (data.email === "kelsopalhetadev@gmail.com" || firebaseUser.email === "kelsopalhetadev@gmail.com") {
+              data.plano = "combo_total";
+              data.isAdmin = true;
+          }
+          setPerfil(data);
         } else {
+          const isVip = firebaseUser.email === "kelsopalhetadev@gmail.com";
           const novo = {
             nome: firebaseUser.displayName || "",
             email: firebaseUser.email,
             modulos_permitidos: MODULOS_PADRAO,
-            plano: "gratuito",
+            plano: isVip ? "combo_total" : "gratuito",
+            isAdmin: isVip
           };
           await setDoc(ref, novo);
           setPerfil(novo);
@@ -110,18 +115,15 @@ export function AuthProvider({ children }) {
     return () => unsub();
   }, []);
 
-  // Login via Django REST JWT
   const loginDjango = async (email, password) => {
     setLoading(true);
     try {
       await api.auth.login(email, password);
       await recarregarPerfil();
-      // Também faz login no Firebase para sincronização de coleções locais
       try {
         await signInWithEmailAndPassword(auth, email, password);
       } catch {}
     } catch (error) {
-      // Se Django falhar ou estiver offline, tenta autenticar no Firebase
       try {
         await signInWithEmailAndPassword(auth, email, password);
       } catch (fbErr) {
@@ -132,7 +134,6 @@ export function AuthProvider({ children }) {
     }
   };
 
-  // Cadastro via Django REST JWT
   const cadastrarDjango = async (dados) => {
     setLoading(true);
     try {
@@ -144,7 +145,6 @@ export function AuthProvider({ children }) {
         disciplina_principal: dados.disciplina || "",
       });
       await recarregarPerfil();
-      // Cria também no Firebase
       try {
         const cred = await createUserWithEmailAndPassword(auth, dados.email, dados.password);
         const novo = {
@@ -156,7 +156,6 @@ export function AuthProvider({ children }) {
         await setDoc(doc(db, "professores", cred.user.uid), novo);
       } catch {}
     } catch (error) {
-      // Fallback para Firebase
       try {
         const cred = await createUserWithEmailAndPassword(auth, dados.email, dados.password);
         const novo = {
