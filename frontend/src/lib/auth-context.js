@@ -48,6 +48,12 @@ export function AuthProvider({ children }) {
         ]);
 
         if (perfilDjango) {
+          setUser({
+            uid: String(perfilDjango.id),
+            email: perfilDjango.email,
+            displayName: perfilDjango.nome_completo || perfilDjango.email.split("@")[0],
+            isDjango: true
+          });
           setPerfil((prev) => ({
             ...prev,
             id: perfilDjango.id,

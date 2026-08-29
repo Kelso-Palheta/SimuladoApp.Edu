@@ -23,10 +23,10 @@ export function AuthModal({ isOpen, onClose, initialMode = "cadastro" }) {
     setLoading(true);
     try {
       if (modo === "login") {
-        await loginEmail(email, senha);
+        await loginEmail(email, senha); window.location.href = "/";
         onClose();
       } else if (modo === "cadastro") {
-        await cadastrarEmail(email, senha, { nome });
+        await cadastrarEmail(email, senha, { nome }); window.location.href = "/";
         onClose();
       } else {
         await recuperarSenha(email);
@@ -50,7 +50,7 @@ export function AuthModal({ isOpen, onClose, initialMode = "cadastro" }) {
   const handleGoogleLogin = async () => {
     try {
       setErro("");
-      await loginGoogle();
+      await loginGoogle(); window.location.href = "/";
       onClose();
     } catch (err) {
       if (err.code === "auth/operation-not-allowed") {
