@@ -61,7 +61,8 @@ export function AuthProvider({ children }) {
             email: perfilDjango.email,
             escola: perfilDjango.escola,
             disciplina_principal: perfilDjango.disciplina_principal,
-            plano: perfilDjango.assinatura?.tipo_plano || "gratuito",
+            plano: perfilDjango.plano || perfilDjango.assinatura?.tipo_plano || (perfilDjango.email === "kelsopalhetadev@gmail.com" ? "combo_total" : "gratuito"),
+            isAdmin: perfilDjango.email === "kelsopalhetadev@gmail.com" || perfilDjango.is_superuser || false,
             modulos_permitidos: MODULOS_PADRAO,
           }));
         }
