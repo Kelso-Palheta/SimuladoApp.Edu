@@ -1,5 +1,12 @@
 export const PLATFORM_MODULES = [
   {
+    id: "horario-escolar-inteligente",
+    nome: "Horário Inteligente",
+    icon: "Calendar",
+    path: "/modules/horario-inteligente/index.html",
+    descricao: "Crie e organize as grades escolares da escola com IA",
+  },
+  {
     id: "diario-planejamento",
     nome: "Diário Pedagógico",
     icon: "BookOpen",

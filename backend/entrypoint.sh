@@ -3,17 +3,19 @@ set -e
 
 echo "🚀 Iniciando Backend Django REST — RotinaDocente..."
 
-# Aguarda o banco MySQL estar acessível se configurado
+# Garante compatibilidade entre MYSQL_HOST e DB_HOST
+TARGET_HOST="${MYSQL_HOST:-${DB_HOST:-mysql_db}}"
+TARGET_PORT="${MYSQL_PORT:-${DB_PORT:-3306}}"
+
 if [ "$DB_ENGINE" = "mysql" ]; then
-    echo "⏳ Aguardando banco de dados MySQL ($DB_HOST:$DB_PORT)..."
-    while ! nc -z $DB_HOST $DB_PORT; do
+    echo "⏳ Aguardando banco de dados MySQL ($TARGET_HOST:$TARGET_PORT)..."
+    while ! nc -z "$TARGET_HOST" "$TARGET_PORT"; do
       sleep 1
     done
     echo "✅ Banco de dados MySQL conectado!"
 fi
 
 echo "📦 Executando migrações do banco de dados..."
-python manage.py makemigrations --noinput
 python manage.py migrate --noinput
 
 echo "🎨 Coletando arquivos estáticos..."

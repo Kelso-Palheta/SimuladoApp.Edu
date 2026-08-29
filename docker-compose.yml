@@ -7,8 +7,7 @@ services:
     container_name: rotinadocente_nginx
     restart: always
     ports:
-      - "80:80"
-      - "443:443"
+      - "8088:80"
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
       - ./backend/staticfiles:/var/www/static:ro
@@ -36,7 +35,7 @@ services:
       - MYSQL_HOST=mysql_db
       - MYSQL_PORT=3306
       - REDIS_URL=redis://redis_broker:6379/0
-      - DJANGO_ALLOWED_HOSTS=localhost,127.0.0.1,rotinadocente.com.br,*.rotinadocente.com.br
+      - DJANGO_ALLOWED_HOSTS=*
     depends_on:
       mysql_db:
         condition: service_healthy
@@ -72,8 +71,6 @@ services:
       dockerfile: Dockerfile
     container_name: rotinadocente_frontend
     restart: always
-    ports:
-      - "3000:3000"
     environment:
       - NEXT_PUBLIC_API_URL=http://django_api:8000
     depends_on:

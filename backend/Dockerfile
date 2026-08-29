@@ -10,8 +10,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
     libmariadb-dev \
     pkg-config \
-    libgl1-mesa-glx \
-    libglib2.0-0 \
     netcat-traditional \
     && rm -rf /var/lib/apt/lists/*
 
@@ -24,4 +22,4 @@ RUN chmod +x /app/entrypoint.sh
 
 EXPOSE 8000
 
-ENTRYPOINT ["/app/entrypoint.sh"]
+ENTRYPOINT ["sh", "/app/entrypoint.sh"]

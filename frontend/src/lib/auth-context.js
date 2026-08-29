@@ -23,6 +23,7 @@ const MODULOS_PADRAO = [
   "redacao-corretor",
   "agente-linguagens",
   "analytics-pedagogico",
+  "horario-escolar-inteligente",
 ];
 
 export function AuthProvider({ children }) {
